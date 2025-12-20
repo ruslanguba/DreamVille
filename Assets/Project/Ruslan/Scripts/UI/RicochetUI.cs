@@ -1,0 +1,38 @@
+using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class RicochetUI : MonoBehaviour
+{
+    [SerializeField] private Image[] _images;
+    private Camera _camera;
+
+    private void Awake()
+    {
+        _camera = Camera.main;
+    }
+
+    public void Bind(BulletEventRelay relay)
+    {
+        Debug.Log("Bullet binded to UI");
+        relay.BulletHit += OnBulletHit;
+    }
+
+    private void OnBulletHit(BulletHitInfo info)
+    {
+        Debug.Log("RicochetUI OnBulletHit");
+        int index = info.RicochetCount - 2;
+        if (index < 0 || index >= _images.Length) return;
+
+        var img = _images[index];
+        img.gameObject.SetActive(true);
+        img.rectTransform.position = _camera.WorldToScreenPoint(info.HitPoint);
+        StartCoroutine(Hide(img));
+    }
+
+    private IEnumerator Hide(Image img)
+    {
+        yield return new WaitForSeconds(0.5f);
+        img.gameObject.SetActive(false);
+    }
+}
