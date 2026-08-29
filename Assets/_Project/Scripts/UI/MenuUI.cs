@@ -1,5 +1,6 @@
 using UnityEngine.EventSystems;
 using UnityEngine;
+using Zenject;
 
 using DreamVille.Core;
 
@@ -15,11 +16,19 @@ namespace DreamVille.UI
 
         [SerializeField] GameObject _comics;
 
+        private InGameMenuController _menu;
+
+        [Inject]
+        public void Construct(InGameMenuController menu)
+        {
+            _menu = menu;
+        }
+
         private void Start()
         {
-            GameManager.Instance.OnCloseMenu += CloseMenu;
-            GameManager.Instance.OnOpenComics += OpenCommics;
-            GameManager.Instance.OnOpenMenu += OpenMenu;
+            _menu.MenuClosed += CloseMenu;
+            _menu.ComicsOpened += OpenCommics;
+            _menu.MenuOpened += OpenMenu;
             _menuParent.SetActive(false);
             _mainMenuPanel.SetActive(false);
             _settingsPanel.SetActive(false);
@@ -29,9 +38,12 @@ namespace DreamVille.UI
 
         private void OnDisable()
         {
-            GameManager.Instance.OnCloseMenu -= CloseMenu;
-            GameManager.Instance.OnOpenComics -= OpenCommics;
-            GameManager.Instance.OnOpenMenu -= OpenMenu;
+            if (_menu == null)
+                return;
+
+            _menu.MenuClosed -= CloseMenu;
+            _menu.ComicsOpened -= OpenCommics;
+            _menu.MenuOpened -= OpenMenu;
         }
 
         private void OpenMenu()

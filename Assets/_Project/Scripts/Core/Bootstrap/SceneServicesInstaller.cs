@@ -17,7 +17,10 @@ namespace DreamVille.Core.Bootstrap
             Container.Bind<PlayerInputSwitch>().FromComponentInHierarchy().AsSingle();
             Container.Bind<DialogueService>().AsSingle();
             Container.Bind<DialogueManager>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<GameManager>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<CursorService>().AsSingle();
+            Container.Bind<PauseService>().AsSingle();
+            Container.Bind<GameFlowService>().AsSingle();
+            Container.Bind<InGameMenuController>().FromComponentInHierarchy().AsSingle();
         }
     }
 }
