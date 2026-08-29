@@ -1,0 +1,23 @@
+{
+    "name": "DreamVille",
+    "rootNamespace": "DreamVille",
+    "references": [
+        "DreamVille.Configs",
+        "Unity.InputSystem",
+        "Unity.Cinemachine",
+        "Unity.Localization",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.VisualEffectGraph.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
