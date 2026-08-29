@@ -4,21 +4,15 @@ public class GameUIRoot : MonoBehaviour
 {
     [Header("UI Blocks")]
     [SerializeField] private RicochetUI _ricochetUI;
-    [SerializeField] private ScoreUI _scoreUI;
     [SerializeField] private PillowUI _pillowUI;
+    [SerializeField] private EnemyCounterUI _enemyCounterUI;
+    [SerializeField] private ScorePopupUI _scorePopupUI;
+    [SerializeField] private StarsUI _starsUI;
 
-    public void BindScore(ScoreManager score)
-    {
-        _scoreUI.Bind(score);
-    }
-
-    public void BindRicochets(BulletEventRelay relay)
-    {
-        _ricochetUI.Bind(relay);
-    }
-
-    public void BindPillows(PillowThrowHandler handler)
-    {
-        _pillowUI.Bind(handler);
-    }
+    // Публичные ссылки для централизованных подписок
+    public RicochetUI RicochetUI => _ricochetUI;
+    public PillowUI PillowUI => _pillowUI;
+    public EnemyCounterUI EnemyCounter => _enemyCounterUI;
+    public ScorePopupUI ScorePopup => _scorePopupUI;
+    public StarsUI StarsUI => _starsUI;
 }

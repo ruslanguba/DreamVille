@@ -55,10 +55,7 @@ GameObject:
   - component: {fileID: 7969951425661181974}
   - component: {fileID: 4398140863521126373}
   - component: {fileID: 3577984015724085081}
-  - component: {fileID: 719793317702484639}
-  - component: {fileID: 1798037525359448836}
   - component: {fileID: 5441727292613907416}
-  - component: {fileID: 609694134678718017}
   m_Layer: 0
   m_Name: LevelProgressSystem
   m_TagString: Untagged
@@ -98,6 +95,10 @@ MonoBehaviour:
   _scoreCanvasPrefab: {fileID: 3762938405868998827, guid: 61c362074c83cd140a9ed145f44edafd, type: 3}
   enemiesToKill: []
   _distance: 8
+  _levelId: 
+  _screToFillFirstStar: 0
+  _screToFillSecondStar: 0
+  _screToFillThirdStar: 0
 --- !u!114 &3577984015724085081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,31 +109,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94c040a65e6bf0d42bcab0bc0ddcfd6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &719793317702484639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 935719085804823929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c4dac263a5316e4cb754b728e1cce86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _screPerKill: 10
---- !u!114 &1798037525359448836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 935719085804823929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bdf7cca80473d84a9ae387eebc95583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &5441727292613907416
@@ -148,18 +124,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueUIPrefab: {fileID: 6633340737771868357, guid: b2572f3218ff5e64a8e9e76a451405a6, type: 3}
---- !u!114 &609694134678718017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 935719085804823929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4b2286655b107145b7c458b65fd3f77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2002264554293452287
 GameObject:
   m_ObjectHideFlags: 0

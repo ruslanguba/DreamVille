@@ -327,7 +327,6 @@ GameObject:
   - component: {fileID: 5353354549315275434}
   - component: {fileID: 2305441017332907874}
   - component: {fileID: 4075486940518562214}
-  - component: {fileID: 2910567664296643195}
   - component: {fileID: 7863899753236708386}
   - component: {fileID: 1793419508162467940}
   - component: {fileID: 3699286833143479731}
@@ -424,18 +423,6 @@ MonoBehaviour:
   _cinemachineCamera: {fileID: 5568298666733986410}
   _orbitalFollow: {fileID: 5047119252384295686}
   _playerRotationHandler: {fileID: 1002936613353828547}
---- !u!114 &2910567664296643195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2837625493992388818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d52969204a1a1834aa0b54cf5ad52cad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7863899753236708386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,7 +480,6 @@ MonoBehaviour:
   _pillows:
   - {fileID: 861708476874599261}
   - {fileID: 0}
-  _uiBinder: {fileID: 0}
   _throwForce: 10
   _recallSpeed: 12
 --- !u!114 &587611958773598010
@@ -1131,13 +1117,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawn: {fileID: 4438013171343362864}
   _shotPeriod: 0.5
-  _bulletPrefab: {fileID: 6276465115899784245, guid: b6880e24fc26d4e4ebd6ce1f5a577844, type: 3}
-  _bulletConfig: {fileID: 11400000, guid: 9cd4245fdfd6695448fcfac1693068c4, type: 2}
-  _damage: 10
-  _bulletLifeTime: 8
-  _bulletSpeed: 20
-  _maxCollisionCount: 0
+  _config: {fileID: 0}
   _character: {fileID: 3836863985700584883}
+  _spawner: {fileID: 0}
 --- !u!1 &7163060359338124453
 GameObject:
   m_ObjectHideFlags: 0

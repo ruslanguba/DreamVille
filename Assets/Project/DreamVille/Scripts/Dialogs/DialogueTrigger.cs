@@ -2,29 +2,28 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
-using UnityEngine.Localization;
 
 public class DialogueTrigger : MonoBehaviour
 {
     public event Action OnDialogueStarted;
     public event Action OnDialogueEnded;
 
-    [SerializeField] private bool deleteOnEnd;
     private PlayerDetectorTrigger _actionSender;
     [SerializeField] private List<Dialogue> sentence;
     [SerializeField] private List<Dialogue> sentenceEn;
 
     [SerializeField] private AudioClip[] mumbels;
+    [SerializeField] private bool deleteOnEnd;
 
     private void OnEnable()
     {
         _actionSender = GetComponentInChildren<PlayerDetectorTrigger>();
-        _actionSender.OnTriggerEnterAction += TriggerDialog;
+        _actionSender.OnPlayerTriggered += TriggerDialog;
     }
 
     private void OnDisable()
     {
-        _actionSender.OnTriggerEnterAction -= TriggerDialog;
+        _actionSender.OnPlayerTriggered -= TriggerDialog;
     }
 
     public void TriggerDialog()
@@ -46,12 +45,14 @@ public class DialogueTrigger : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void EnableTrigger()
     {
-        if (other.GetComponent<PlayerSafePosition>() != null)
-        {
-            TriggerDialog();
-        }
+        _actionSender.gameObject.SetActive(true);
+    }
+
+    public void DisableTrigger()
+    {
+        _actionSender.gameObject.SetActive(false);
     }
 
     public void DialogueCompleted()

@@ -7,14 +7,12 @@ public class BulletEventRelay : MonoBehaviour
 
     public void Register(Bullet bullet)
     {
-        Debug.Log("Bullet registered");
         bullet.Hit += OnBulletHit;
         bullet.ReturnedToPool += Unregister;
     }
 
     private void OnBulletHit(BulletHitInfo info)
     {
-        Debug.Log("BulletEventRelay OnBulletHit");
         BulletHit?.Invoke(info);
     }
 

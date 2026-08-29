@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class BulletVFXHandler : MonoBehaviour
 {
-    private ParticleSystem _effect;
+    [SerializeField] private ParticleSystem _hitEffect;
+    [SerializeField] private TrailRenderer[] _trailEffect;
     private Bullet _bullet;
 
     private void Awake()
@@ -17,18 +19,18 @@ public class BulletVFXHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        _bullet.Hit -= OnHit;
-    }
+        foreach (TrailRenderer trail in _trailEffect)
+        {
+            trail.Clear();
+        }
 
-    public void Init(BulletConfig config)
-    {
-        _effect = config.HitEffect;
+        _bullet.Hit -= OnHit;
     }
 
     private void OnHit(BulletHitInfo info)
     {
-        if (_effect == null) return;
-        _effect.transform.position = info.HitPoint;
-        _effect.Play();
+        if (_hitEffect == null) return;
+        _hitEffect.transform.position = info.HitPoint;
+        _hitEffect.Play();
     }
 }

@@ -1,0 +1,41 @@
+using UnityEngine;
+
+public class AimingHandler : MonoBehaviour
+{
+    [SerializeField] private BounceRayTrajectory _rayTrajectory;
+    [SerializeField] private Transform _aimingPivot;
+    private bool _isAnimating = false;
+    private IPlayerInput _input;
+
+    private void Awake()
+    {
+        _input = GetComponent<IPlayerInput>();
+        _input.SecondaryFirePressed += ShowTrajectory;
+        _input.SecondaryFireReleased += ClearTrajectory;
+    }
+
+    private void OnDisable()
+    {
+        _input.SecondaryFirePressed -= ShowTrajectory;
+        _input.SecondaryFireReleased -= ClearTrajectory;
+    }
+
+    private void ShowTrajectory()
+    {
+        _isAnimating = true;
+    }
+
+    private void ClearTrajectory()
+    {
+        _isAnimating = false;
+        _rayTrajectory.Clear();
+    }
+
+    private void Update()
+    {
+        if(_isAnimating)
+        {
+            _rayTrajectory.DrawTrajectory(_aimingPivot.forward);
+        }
+    }
+}

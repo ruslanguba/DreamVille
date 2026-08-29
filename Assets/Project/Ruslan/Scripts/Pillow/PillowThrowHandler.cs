@@ -14,7 +14,7 @@ public class PillowThrowHandler : MonoBehaviour
     [SerializeField] private Transform _spawnPoint; // точка броска
     [SerializeField] private Transform _character;
     [SerializeField] private List<GameObject> _pillows; // заранее созданные подушки
-    [SerializeField] private PillowUiBinder _uiBinder;
+    //[SerializeField] private PillowUiBinder _uiBinder;
     //[SerializeField] private DynamicObjectsRegistry _dynamicObjectsRegistry;
     private Stack<GameObject> _thrownPillows = new Stack<GameObject>();
 
@@ -27,11 +27,9 @@ public class PillowThrowHandler : MonoBehaviour
     private int _currentIndex = -1; // индекс текущей летящей подушки
     private Rigidbody _currentRb;
 
-    private void Awake()
+    public void Initialize()
     {
         _input = GetComponent<IPlayerInput>();
-        //_dynamicObjectsRegistry = GetComponentInChildren<DynamicObjectsRegistry>();
-        // делаем все подушки неактивными и кинематикой на старте
         foreach (var pillow in _pillows)
         {
             pillow.SetActive(false);
@@ -44,16 +42,34 @@ public class PillowThrowHandler : MonoBehaviour
                 rb.angularVelocity = Vector3.zero;
             }
         }
-        if (_uiBinder == null)
-            _uiBinder = FindFirstObjectByType<PillowUiBinder>();
-        //_uiBinder.SetHandler(this);
-    }
-
-    private void OnEnable()
-    {
         _input.Recall += HandleThrowOrStop;
         _input.Throw += HandleRecall;
+
+        OnPillowAdded?.Invoke(_pillows.Count);
     }
+
+    //private void Awake()
+    //{
+    //    _input = GetComponent<IPlayerInput>();
+    //    foreach (var pillow in _pillows)
+    //    {
+    //        pillow.SetActive(false);
+    //        var rb = pillow.GetComponent<Rigidbody>();
+    //        pillow.transform.parent = null;
+    //        if (rb != null)
+    //        {
+    //            rb.isKinematic = true;
+    //            rb.linearVelocity = Vector3.zero;
+    //            rb.angularVelocity = Vector3.zero;
+    //        }
+    //    }
+    //}
+
+    //private void OnEnable()
+    //{
+    //    _input.Recall += HandleThrowOrStop;
+    //    _input.Throw += HandleRecall;
+    //}
 
     private void OnDisable()
     {
@@ -62,11 +78,11 @@ public class PillowThrowHandler : MonoBehaviour
         //_uiBinder.Unbind();
     }
 
-    private void Start()
-    {
-        //_uiBinder.Bind();
-        OnPillowAdded?.Invoke(_pillows.Count);
-    }
+    //private void Start()
+    //{
+    //    //_uiBinder.Bind();
+    //    OnPillowAdded?.Invoke(_pillows.Count);
+    //}
 
     private void HandleThrowOrStop()
     {

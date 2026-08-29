@@ -13,9 +13,9 @@ public class AnimatorHandler
     private static readonly int MoveDirHash = Animator.StringToHash("moveDirection");
     private static readonly int AnimSpeedMultiplierHash = Animator.StringToHash("animSpeedMultiplier");
 
-    //public AnimatorHandler(Animator animator)
+    //public AnimatorHandler(Animator _animator)
     //{
-    //    _animator = animator;
+    //    _animator = _animator;
     //}
     public AnimatorHandler(PlayerContext playerContext)
     {

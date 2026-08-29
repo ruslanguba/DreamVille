@@ -2,21 +2,21 @@ using UnityEngine;
 
 public class StarPersistenceService
 {
-    private readonly string _key;
+    //private readonly string _key;
 
-    public StarPersistenceService(string levelId)
-    {
-        _key = $"{levelId}_Stars";
-    }
+    //public StarPersistenceService(string levelId)
+    //{
+    //    _key = $"{levelId}_Stars";
+    //}
 
-    public void Save(int stars)
-    {
-        PlayerPrefs.SetInt(_key, stars);
-        PlayerPrefs.Save();
-    }
+    //public void Save(int stars)
+    //{
+    //    PlayerPrefs.SetInt(_key, stars);
+    //    PlayerPrefs.Save();
+    //}
 
-    public int Load()
-    {
-        return PlayerPrefs.GetInt(_key, 0);
-    }
+    //public int Load()
+    //{
+    //    return PlayerPrefs.GetInt(_key, 0);
+    //}
 }

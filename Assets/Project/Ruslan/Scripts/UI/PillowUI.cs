@@ -10,27 +10,9 @@ public class PillowUI : MonoBehaviour
     [SerializeField] private float _posOffset = 160f;
     [SerializeField] private float _alphaVisible;
     [SerializeField] private float _alphaHidden = 0f;
-    private PillowThrowHandler _handler;
+
     private int _usedPillows;
     private List<Image> _pillowIcons = new List<Image>();
-
-    public void Bind(PillowThrowHandler handler)
-    {
-        _handler = handler;
-
-        _handler.OnPillowAdded += SpawnIcons;
-        _handler.OnThrow += HidePillow;
-        _handler.OnRecall += ShowPillow;
-    }
-
-    private void OnDisable()
-    {
-        if (_handler == null) return;
-
-        _handler.OnPillowAdded -= SpawnIcons;
-        _handler.OnThrow -= HidePillow;
-        _handler.OnRecall -= ShowPillow;
-    }
 
     // Создаём иконки
     public void SpawnIcons(int count)

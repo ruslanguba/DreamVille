@@ -16953,10 +16953,12 @@ GameObject:
   - component: {fileID: 3762938405868998827}
   - component: {fileID: 4684940828778357400}
   - component: {fileID: 6116757246349192753}
-  - component: {fileID: 8827456014169299147}
   - component: {fileID: -4913736258904067530}
   - component: {fileID: 3927690454592185637}
   - component: {fileID: 459705769865869607}
+  - component: {fileID: 8222316846690186365}
+  - component: {fileID: 2598657108585796505}
+  - component: {fileID: 8309906831363799464}
   m_Layer: 5
   m_Name: GamePlayHUDCanvas
   m_TagString: Untagged
@@ -17050,28 +17052,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8827456014169299147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8759060285947471991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79da0d548d2e88c43bd36b1f814f2867, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _levelId: 
-  _enemiesToKill: {fileID: 1506231801116283639}
-  _score: {fileID: 0}
-  _addedScore: {fileID: 1957959107061111402}
-  _addedScoreImage: {fileID: 8936677382519995073}
-  _scoreManager: {fileID: 0}
-  _scoreStars:
-  - {fileID: 8659539929364287032}
-  - {fileID: 842886353839767900}
-  - {fileID: 6123677246597486763}
 --- !u!114 &-4913736258904067530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17121,8 +17101,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ricochetUI: {fileID: -4913736258904067530}
-  _scoreUI: {fileID: 8827456014169299147}
   _pillowUI: {fileID: 3927690454592185637}
+  _enemyCounterUI: {fileID: 8309906831363799464}
+  _scorePopupUI: {fileID: 8222316846690186365}
+  _starsUI: {fileID: 2598657108585796505}
+--- !u!114 &8222316846690186365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8759060285947471991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fda3d9a26a9e6f443bfeca2f39d99528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _addedScore: {fileID: 1957959107061111402}
+  _addedScoreImage: {fileID: 8936677382519995073}
+--- !u!114 &2598657108585796505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8759060285947471991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fd190e33d1cca243b95994560cc84eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scoreStars:
+  - {fileID: 8659539929364287032}
+  - {fileID: 842886353839767900}
+  - {fileID: 6123677246597486763}
+--- !u!114 &8309906831363799464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8759060285947471991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43efd35bca7a23348850dcf4222d95c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemiesToKill: {fileID: 1506231801116283639}
 --- !u!1 &8784281485065280635
 GameObject:
   m_ObjectHideFlags: 0

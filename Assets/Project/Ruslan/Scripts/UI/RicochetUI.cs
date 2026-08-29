@@ -12,15 +12,8 @@ public class RicochetUI : MonoBehaviour
         _camera = Camera.main;
     }
 
-    public void Bind(BulletEventRelay relay)
+    public void OnBulletHit(BulletHitInfo info)
     {
-        Debug.Log("Bullet binded to UI");
-        relay.BulletHit += OnBulletHit;
-    }
-
-    private void OnBulletHit(BulletHitInfo info)
-    {
-        Debug.Log("RicochetUI OnBulletHit");
         int index = info.RicochetCount - 2;
         if (index < 0 || index >= _images.Length) return;
 

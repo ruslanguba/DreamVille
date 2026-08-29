@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class PlayerCollector : MonoBehaviour
 {
-    ScoreManager scoreManager;
+    // TODO Refactor
+    ScoreService _scoreService;
 
-    private void Awake()
+    public void Bind(ScoreService scoreService)
     {
-        if(scoreManager == null)
-            scoreManager = FindFirstObjectByType<ScoreManager>();
+        _scoreService = scoreService;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -15,7 +15,7 @@ public class PlayerCollector : MonoBehaviour
         if(other.TryGetComponent(out Collectable collectable))
         {
             collectable.Collect(transform);
-            scoreManager.AddScore(collectable.ScoreToAdd);    
+            _scoreService.AddScore(collectable.ScoreToAdd);    
         }
     }
 }

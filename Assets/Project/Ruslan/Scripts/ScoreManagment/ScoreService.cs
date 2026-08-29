@@ -4,17 +4,35 @@ using UnityEngine;
 public class ScoreService
 {
     public event Action<float> OnScoreAdded;
-    public event Action<float> OnScoreChanged;
+    public event Action<float> OnTotalScoreChanged;
 
+    private readonly ScoreRulesSO _rules;
     private float _totalScore;
-    private readonly float _scorePerKill = 10f;
 
-    public void AddScore(int collisionsCount)
+    public float TotalScore => _totalScore;
+
+    public ScoreService(ScoreRulesSO rules)
     {
-        float score = collisionsCount * _scorePerKill;
-        _totalScore += score;
+        _rules = rules;
+    }
 
+    public void HandleEnemyKilled(int ricochetCount)
+    {
+        float score = CalculateScore(ricochetCount);
+        AddScore(score);
+    }
+
+    private float CalculateScore(int ricochets)
+    {
+        float score = _rules.scorePerKill * ricochets;
+        return score;
+    }
+
+    public void AddScore(float score)
+    {
+        Debug.Log("ScoreService " + score);
+        _totalScore += score;
         OnScoreAdded?.Invoke(score);
-        OnScoreChanged?.Invoke(_totalScore);
+        OnTotalScoreChanged?.Invoke(_totalScore);
     }
 }

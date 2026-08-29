@@ -40,7 +40,7 @@ public class Lobby1Progress : MonoBehaviour
 
         second_Dilogue.OnDialogueStarted += SetApplauseAnim;
         second_Dilogue.OnDialogueEnded += StopAudio;
-        //third_Dilogue.OnDialogueStarted += SetApplauseAnim;
+        //third_Dilogue.OnDialogueStarted += SetApplause;
 
         //pillowGun.Deactivate();
         second_Dilogue.gameObject.SetActive(false);
@@ -54,7 +54,7 @@ public class Lobby1Progress : MonoBehaviour
         second_Dilogue.OnDialogueStarted -= SetApplauseAnim;
         second_Dilogue.OnDialogueEnded -= StopAudio;
 
-        //third_Dilogue.OnDialogueStarted -= SetApplauseAnim;
+        //third_Dilogue.OnDialogueStarted -= SetApplause;
     }
     private void CalculateFirstQuestProgress(EnemyHealth enemy, int collisions)
     {
