@@ -8,8 +8,6 @@ namespace DreamVille.Audio
 {
     public class AudioManager : MonoBehaviour
     {
-        public static AudioManager Instance { get; private set; }
-
         [Header("Audio Mixer")]
         [SerializeField] private AudioMixer audioMixer;
         [SerializeField] private AudioSettingsData musicDatabase;
@@ -18,16 +16,9 @@ namespace DreamVille.Audio
         public AudioSource musicSource;
         public AudioSource sfxSource;
 
+        // Время жизни задаёт ProjectContext: ни DontDestroyOnLoad, ни защиты от дублей не требуется.
         private void Awake()
         {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
             SetStartVoliums();
         }
         private void OnEnable()

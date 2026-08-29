@@ -1,6 +1,7 @@
 using System;
 using UnityEngine.Events;
 using UnityEngine;
+using Zenject;
 
 using DreamVille.Audio;
 using DreamVille.Gameplay.Damage;
@@ -14,6 +15,14 @@ namespace DreamVille.Gameplay.Enemies
         [SerializeField] private AudioClip _clip;
         //[SerializeField] private ParticleSystem _particleSystem;
         protected int _collisionsCount;
+
+        private AudioManager _audio;
+
+        [Inject]
+        public void Construct(AudioManager audio)
+        {
+            _audio = audio;
+        }
 
         public virtual void TakeDamage(float damageValue, int collisionsCount)
         {
@@ -36,7 +45,7 @@ namespace DreamVille.Gameplay.Enemies
         {
             if (_clip != null)
             {
-                AudioManager.Instance.PlaySFX(_clip);
+                _audio?.PlaySFX(_clip);
             }
             OnDeath?.Invoke(this, _collisionsCount);
         }

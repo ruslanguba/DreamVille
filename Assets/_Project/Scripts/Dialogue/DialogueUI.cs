@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
+using Zenject;
 
 namespace DreamVille.Dialogue
 {
@@ -24,6 +25,14 @@ namespace DreamVille.Dialogue
 
         private Vector3 leftOriginalPos;
         private Vector3 rightOriginalPos;
+
+        private DialogueService _dialogue;
+
+        [Inject]
+        public void Construct(DialogueService dialogue)
+        {
+            _dialogue = dialogue;
+        }
 
 
         private void Awake()
@@ -85,7 +94,7 @@ namespace DreamVille.Dialogue
 
         public void OnNextButtonClick()
         {
-            DialogueManager.Instance.DisplayNextSentence();
+            _dialogue?.ShowNext();
         }
 
         public void ShowPanel()

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 using DreamVille.Gameplay.Enemies.StateMachine;
 using DreamVille.Gameplay.Interactables;
@@ -19,6 +20,13 @@ namespace DreamVille.Gameplay.Enemies
         private Rigidbody _rb;
         private bool _isMoving;
         private Transform _target;
+        private PlayerContext _player;
+
+        [Inject]
+        public void Construct(PlayerContext player)
+        {
+            _player = player;
+        }
 
         private void Start()
         {
@@ -88,7 +96,8 @@ namespace DreamVille.Gameplay.Enemies
                 else
                 {
                     _rb.linearVelocity = Vector3.zero;
-                    GetComponent<EnemyRotationHandler>().RoteteToPlayer(PlayerManager.Instance.GetPlayerTransform.position);
+                    if (_player != null)
+                        GetComponent<EnemyRotationHandler>().RoteteToPlayer(_player.BodyTransform.position);
                 }
             }
         }

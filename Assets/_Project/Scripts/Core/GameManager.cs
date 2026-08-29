@@ -1,6 +1,7 @@
 using System;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using Zenject;
 
 using DreamVille.Core.Input;
 using DreamVille.Core.SceneManagement;
@@ -22,6 +23,21 @@ namespace DreamVille.Core
         [SerializeField] private GameInput gameInput;
         private bool _isPaused;
 
+        private DialogueService _dialogue;
+        private PlayerInputSwitch _playerInput;
+        private SceneTransitionManager _transitions;
+
+        [Inject]
+        public void Construct(
+            DialogueService dialogue,
+            PlayerInputSwitch playerInput,
+            SceneTransitionManager transitions)
+        {
+            _dialogue = dialogue;
+            _playerInput = playerInput;
+            _transitions = transitions;
+        }
+
         private void Awake()
         {
             if (Instance != null)
@@ -37,7 +53,13 @@ namespace DreamVille.Core
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            DialogueManager.Instance.OnDialogueActive += StartDialog;
+            _dialogue.ActiveChanged += StartDialog;
+        }
+
+        private void OnDestroy()
+        {
+            if (_dialogue != null)
+                _dialogue.ActiveChanged -= StartDialog;
         }
         private void OnEnable()
         {
@@ -48,7 +70,6 @@ namespace DreamVille.Core
         {
             gameInput.OnPause -= ShowMenu;
             gameInput.OnTub -= ShowInstruction;
-            DialogueManager.Instance.OnDialogueActive -= StartDialog;
         }
 
         private void ShowMenu()
@@ -75,7 +96,7 @@ namespace DreamVille.Core
             else
             {
                 // Закрыли меню, но нужно учитывать диалог
-                if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogActive)
+                if (_dialogue is { IsActive: true })
                 {
                     // Идёт диалог игра должна оставаться на паузе
                     OnCloseMenu?.Invoke();        // Закрываем меню
@@ -95,7 +116,7 @@ namespace DreamVille.Core
         public void PauseGame()
         {
             Time.timeScale = 0;
-            PlayerManager.Instance.DisableInput();
+            _playerInput.DisableInput();
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
         }
@@ -103,7 +124,7 @@ namespace DreamVille.Core
         public void ContinueGame()
         {
             Time.timeScale = 1;
-            PlayerManager.Instance.EnableInput();
+            _playerInput.EnableInput();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             _isPaused = false;
@@ -116,7 +137,7 @@ namespace DreamVille.Core
             Cursor.visible = true;
             Time.timeScale = 1;
             var request = new SceneTransitionRequest("Main menu 1");
-            SceneTransitionManager.Instance.Transition(request);
+            _transitions.Transition(request);
         }
 
         public void Restart()
@@ -129,13 +150,13 @@ namespace DreamVille.Core
         {
             if (isActive)
             {
-                PlayerManager.Instance.DisableInput();
+                _playerInput.DisableInput();
                 Cursor.lockState = CursorLockMode.Confined;
                 Cursor.visible = true;
             }
             else 
             {
-                PlayerManager.Instance.EnableInput();
+                _playerInput.EnableInput();
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
             }

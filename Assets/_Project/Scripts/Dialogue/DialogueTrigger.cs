@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine.Localization.Settings;
+using Zenject;
 using UnityEngine;
 
 using DreamVille.Gameplay.Player;
@@ -13,6 +14,14 @@ namespace DreamVille.Dialogue
         public event Action OnDialogueEnded;
 
         private PlayerDetectorTrigger _actionSender;
+        private DialogueService _dialogue;
+
+        [Inject]
+        public void Construct(DialogueService dialogue)
+        {
+            _dialogue = dialogue;
+        }
+
         [SerializeField] private List<Dialogue> sentence;
         [SerializeField] private List<Dialogue> sentenceEn;
 
@@ -36,17 +45,8 @@ namespace DreamVille.Dialogue
 
             var selectedLocale = LocalizationSettings.SelectedLocale.Identifier;
 
-            if (selectedLocale == "en")
-            {
-                Debug.Log("Selected English locale");
-                DialogueManager.Instance.StartDialog(sentenceEn, this);
-            }
-
-            else
-            {
-                Debug.Log("Selected Russian or another locale");
-                DialogueManager.Instance.StartDialog(sentence, this);
-            }
+            var lines = selectedLocale == "en" ? sentenceEn : sentence;
+            _dialogue.Begin(lines, DialogueCompleted);
         }
 
         public void EnableTrigger()

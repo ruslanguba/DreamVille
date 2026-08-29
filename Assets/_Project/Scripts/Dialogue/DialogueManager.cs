@@ -1,98 +1,67 @@
-using System.Collections.Generic;
-using System;
-using UnityEngine.EventSystems;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using Zenject;
 
 namespace DreamVille.Dialogue
 {
+    /// <summary>
+    /// Презентер диалога: показывает состояние <see cref="DialogueService"/> на экране.
+    /// Логика очереди реплик живёт в сервисе, ввод — в DialogueInputHandler.
+    /// </summary>
     public class DialogueManager : MonoBehaviour
     {
-        public event Action<bool> OnDialogueActive;
-        public event Action OnDialogueEnded;
-
-        public static DialogueManager Instance;
-
         [SerializeField] private DialogueUI dialogueUIPrefab;
-        private DialogueUI dialogueUI;
 
-        private Queue<Dialogue> sentenses;
-        private DialogueTrigger _currentTrigger;
+        private DialogueService _dialogue;
+        private DialogueUI _ui;
 
-
-
-        public bool IsDialogActive { get; private set; }
-
-        private void Awake()
+        [Inject]
+        public void Construct(DialogueService dialogue)
         {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(this);
-            }
-            else
-            {
-                Instance = this;
-            }
+            _dialogue = dialogue;
         }
 
         private void Start()
         {
-            CreateEventSystemIfNoExist();
-            dialogueUI = Instantiate(dialogueUIPrefab);
-            sentenses = new Queue<Dialogue>();
+            EnsureEventSystem();
+
+            _ui = Instantiate(dialogueUIPrefab);
+
+            _dialogue.ActiveChanged += OnActiveChanged;
+            _dialogue.SentenceShown += OnSentenceShown;
         }
 
-        private void Update()
+        private void OnDestroy()
         {
-            if(!IsDialogActive)
+            if (_dialogue == null)
                 return;
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                DisplayNextSentence();
-            }
-        }
-        private void CreateEventSystemIfNoExist()
-        {
-            if (EventSystem.current == null)
-            {
-                GameObject esGO = new GameObject("EventSystem");
-                esGO.AddComponent<EventSystem>();
-                esGO.AddComponent<StandaloneInputModule>();
-            }
+
+            _dialogue.ActiveChanged -= OnActiveChanged;
+            _dialogue.SentenceShown -= OnSentenceShown;
         }
 
-        public void StartDialog(List<Dialogue> dialogs, DialogueTrigger trigger)
+        private void OnActiveChanged(bool isActive)
         {
-            IsDialogActive = true;
-            OnDialogueActive?.Invoke(IsDialogActive);
-            sentenses.Clear();
-            dialogueUI.ShowPanel();
-            _currentTrigger = trigger;
-            foreach (Dialogue sentence in dialogs)
-            {
-                sentenses.Enqueue(sentence);
-            }
-            DisplayNextSentence();
+            if (isActive)
+                _ui.ShowPanel();
+            else
+                _ui.HidePanel();
         }
 
-        public void DisplayNextSentence()
+        private void OnSentenceShown(Dialogue sentence)
         {
-            Debug.Log("next Sentence");
-            if (sentenses.Count == 0)
-            {
-                EndDialog();
+            _ui.ShowNexSentence(sentence.IsPluh, sentence.Sentence);
+        }
+
+        // TODO: EventSystem должен лежать в сцене, а не создаваться в рантайме.
+        private void EnsureEventSystem()
+        {
+            if (EventSystem.current != null)
                 return;
-            }
-            Dialogue sentence = sentenses.Dequeue();
-            dialogueUI.ShowNexSentence(sentence.IsPluh, sentence.Sentence);
-        }
 
-        private void EndDialog()
-        {
-            IsDialogActive = false;
-            OnDialogueActive?.Invoke(IsDialogActive);
-            _currentTrigger.DialogueCompleted();
-            dialogueUI.HidePanel();
-            Debug.Log("End Dialogue");
+            var go = new GameObject(nameof(EventSystem));
+            go.AddComponent<EventSystem>();
+            go.AddComponent<StandaloneInputModule>();
         }
     }
 }

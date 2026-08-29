@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
+using Zenject;
 
 using DreamVille.Audio;
 
@@ -12,6 +13,14 @@ namespace DreamVille.UI
         //[SerializeField] private Slider masterSlider;
         [SerializeField] private Slider musicSlider;
         [SerializeField] private Slider sfxSlider;
+
+        private AudioManager _audio;
+
+        [Inject]
+        public void Construct(AudioManager audio)
+        {
+            _audio = audio;
+        }
 
         private IEnumerator Start()
         {
@@ -25,8 +34,8 @@ namespace DreamVille.UI
 
             // Подписываем события
             //masterSlider.onValueChanged.AddListener(AudioManager.Instance.SetMasterVolume);
-            musicSlider.onValueChanged.AddListener(AudioManager.Instance.SetMusicVolume);
-            sfxSlider.onValueChanged.AddListener(AudioManager.Instance.SetSFXVolume);
+            musicSlider.onValueChanged.AddListener(_audio.SetMusicVolume);
+            sfxSlider.onValueChanged.AddListener(_audio.SetSFXVolume);
         }
     }
 }

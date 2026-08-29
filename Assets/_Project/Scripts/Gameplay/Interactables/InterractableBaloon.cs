@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 using DreamVille.Audio;
 using DreamVille.Gameplay.Environment;
@@ -9,6 +10,13 @@ namespace DreamVille.Gameplay.Interactables
     {
         [SerializeField] private AudioClip _clip;
         private PropsMover _propsMover;
+        private AudioManager _audio;
+
+        [Inject]
+        public void Construct(AudioManager audio)
+        {
+            _audio = audio;
+        }
 
         private void Awake()
         {
@@ -16,7 +24,7 @@ namespace DreamVille.Gameplay.Interactables
         }
         public override void OnInteract()
         {
-            AudioManager.Instance.PlaySFX( _clip );
+            _audio?.PlaySFX(_clip);
             _propsMover.GetHit();
         }
     }

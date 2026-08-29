@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 using DreamVille.Gameplay.Player;
 
@@ -8,13 +9,20 @@ namespace DreamVille.Core.SceneManagement
     {
         [SerializeField] private string _sceneToLoad;
 
+        private SceneTransitionManager _transitions;
+
+        [Inject]
+        public void Construct(SceneTransitionManager transitions)
+        {
+            _transitions = transitions;
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.GetComponent<PlayerSafePosition>() != null)
             {
                 var request = new SceneTransitionRequest(_sceneToLoad);
-                SceneTransitionManager.Instance.Transition(request);
-                Debug.Log("trigger");
+                _transitions.Transition(request);
             }
         }
     }

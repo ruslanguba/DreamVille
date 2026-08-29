@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 using DreamVille.Audio;
 using DreamVille.Gameplay.Enemies;
@@ -53,6 +54,14 @@ namespace DreamVille.Gameplay.Enemies.StateMachine
         public EnemyDeathState DeathState => deathState;
 
         private EnemyStateMachine stateMachine;
+        private PlayerContext _player;
+
+        [Inject]
+        public void Construct(PlayerContext player)
+        {
+            _player = player;
+        }
+
 
         private EnemyPatrolState patrolState;
         private EnemyAttackState attackState;
@@ -69,7 +78,9 @@ namespace DreamVille.Gameplay.Enemies.StateMachine
             eventListener = GetComponentInChildren<AnimationEventListener>();
             rotationHandler = GetComponent<EnemyRotationHandler>();
             actorAudio = GetComponent<ActorAudio>();
-            playerTransform = PlayerManager.Instance.GetPlayerTransform;
+            // Врагов из EnemyCreator контейнер не инжектит — там трансформ ставится вручную.
+            if (_player != null)
+                playerTransform = _player.BodyTransform;
 
             stateMachine = new EnemyStateMachine();
 
