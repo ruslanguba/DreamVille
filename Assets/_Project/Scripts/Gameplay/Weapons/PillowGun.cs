@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 using DreamVille.Audio;
 using DreamVille.Configs;
@@ -11,24 +12,35 @@ namespace DreamVille.Gameplay.Weapons
 
         [SerializeField] private BulletConfig _config;
         [SerializeField] private Transform _character;
-        [SerializeField] private BulletSpawner _spawner;
+
+        // Сценный сервис: приходит из контейнера, а не из инспектора.
+        private BulletSpawner _spawner;
         private ActorAudio _audio;
+
+        [Inject]
+        public void Construct(BulletSpawner spawner)
+        {
+            _spawner = spawner;
+        }
+
         private void Awake()
         {
             _audio = GetComponentInParent<ActorAudio>();
-        }
-        public void SetSpawner(BulletSpawner spawner)
-        {
-            _spawner = spawner;
         }
 
         public override void TryShoot()
         {
             if (!CanShoot() || _spawn == null || _character == null) return;
 
-            if (_spawner == null || _config == null)
+            if (_spawner == null)
             {
-                Debug.LogWarning($"{nameof(PillowGun)} на '{name}': не назначен {nameof(_spawner)} или {nameof(_config)}, выстрел невозможен.", this);
+                Debug.LogWarning($"{nameof(PillowGun)} на '{name}': нет {nameof(BulletSpawner)} — в сцене отсутствует SceneContext.", this);
+                return;
+            }
+
+            if (_config == null)
+            {
+                Debug.LogWarning($"{nameof(PillowGun)} на '{name}': не назначен {nameof(_config)}.", this);
                 return;
             }
 

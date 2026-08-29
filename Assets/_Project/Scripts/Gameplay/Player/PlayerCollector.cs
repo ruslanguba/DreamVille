@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 using DreamVille.Gameplay.Interactables;
 using DreamVille.Progression;
@@ -7,21 +8,28 @@ namespace DreamVille.Gameplay.Player
 {
     public class PlayerCollector : MonoBehaviour
     {
-        // TODO Refactor
-        ScoreService _scoreService;
+        private ScoreService _scoreService;
 
-        public void Bind(ScoreService scoreService)
+        [Inject]
+        public void Construct(ScoreService scoreService)
         {
             _scoreService = scoreService;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if(other.TryGetComponent(out Collectable collectable))
+            if (!other.TryGetComponent(out Collectable collectable))
+                return;
+
+            collectable.Collect(transform);
+
+            if (_scoreService == null)
             {
-                collectable.Collect(transform);
-                _scoreService.AddScore(collectable.ScoreToAdd);    
+                Debug.LogWarning($"{nameof(PlayerCollector)} на '{name}': нет {nameof(ScoreService)} — в сцене отсутствует SceneContext.", this);
+                return;
             }
+
+            _scoreService.AddScore(collectable.ScoreToAdd);
         }
     }
 }

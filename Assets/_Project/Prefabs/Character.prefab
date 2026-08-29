@@ -442,7 +442,7 @@ MonoBehaviour:
   _secondaryFire: {fileID: -6507731803240713867, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
   _recallAction: {fileID: -140423579040724872, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
   _throwAction: {fileID: 2036044140802393820, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
-  _interactAction: {fileID: 0}
+  _interactAction: {fileID: 3315331455547496477, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
   _scrollAction: {fileID: -3965661978932412175, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
 --- !u!114 &1793419508162467940
 MonoBehaviour:
@@ -1117,9 +1117,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawn: {fileID: 4438013171343362864}
   _shotPeriod: 0.5
-  _config: {fileID: 0}
+  _config: {fileID: 11400000, guid: 9cd4245fdfd6695448fcfac1693068c4, type: 2}
   _character: {fileID: 3836863985700584883}
-  _spawner: {fileID: 0}
 --- !u!1 &7163060359338124453
 GameObject:
   m_ObjectHideFlags: 0
