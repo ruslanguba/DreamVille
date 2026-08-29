@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class PillowThrowHandler : MonoBehaviour
 {
@@ -11,9 +10,9 @@ public class PillowThrowHandler : MonoBehaviour
     public event Action<int> OnPillowAdded;
 
     [Header("References")]
-    [SerializeField] private Transform _spawnPoint; // точка броска
+    [SerializeField] private Transform _spawnPoint; // С‚РѕС‡РєР° Р±СЂРѕСЃРєР°
     [SerializeField] private Transform _character;
-    [SerializeField] private List<GameObject> _pillows; // заранее созданные подушки
+    [SerializeField] private List<GameObject> _pillows; // Р·Р°СЂР°РЅРµРµ СЃРѕР·РґР°РЅРЅС‹Рµ РїРѕРґСѓС€РєРё
     //[SerializeField] private PillowUiBinder _uiBinder;
     //[SerializeField] private DynamicObjectsRegistry _dynamicObjectsRegistry;
     private Stack<GameObject> _thrownPillows = new Stack<GameObject>();
@@ -24,7 +23,7 @@ public class PillowThrowHandler : MonoBehaviour
 
     private IPlayerInput _input;
 
-    private int _currentIndex = -1; // индекс текущей летящей подушки
+    private int _currentIndex = -1; // РёРЅРґРµРєСЃ С‚РµРєСѓС‰РµР№ Р»РµС‚СЏС‰РµР№ РїРѕРґСѓС€РєРё
     private Rigidbody _currentRb;
 
     public void Initialize()
@@ -73,6 +72,10 @@ public class PillowThrowHandler : MonoBehaviour
 
     private void OnDisable()
     {
+        // Initialize() РІС‹Р·С‹РІР°РµС‚ GameplaySceneEntryPoint. Р’ СЃС†РµРЅР°С… Р±РµР· РЅРµРіРѕ РїРѕРґРїРёСЃРєРё РЅРµ СЃРѕР·РґР°РІР°Р»РёСЃСЊ.
+        if (_input == null)
+            return;
+
         _input.Recall -= HandleThrowOrStop;
         _input.Throw -= HandleRecall;
         //_uiBinder.Unbind();
@@ -86,14 +89,14 @@ public class PillowThrowHandler : MonoBehaviour
 
     private void HandleThrowOrStop()
     {
-        // если сейчас летит подушка, останавливаем её
+        // РµСЃР»Рё СЃРµР№С‡Р°СЃ Р»РµС‚РёС‚ РїРѕРґСѓС€РєР°, РѕСЃС‚Р°РЅР°РІР»РёРІР°РµРј РµС‘
         if (_currentRb != null)
         {
             StopCurrentPillow();
             return;
         }
 
-        // иначе ищем следующую доступную подушку
+        // РёРЅР°С‡Рµ РёС‰РµРј СЃР»РµРґСѓСЋС‰СѓСЋ РґРѕСЃС‚СѓРїРЅСѓСЋ РїРѕРґСѓС€РєСѓ
         GameObject nextPillow = GetNextPillow();
         if (nextPillow != null)
         {
@@ -112,7 +115,7 @@ public class PillowThrowHandler : MonoBehaviour
                 return _pillows[index];
             }
         }
-        return null; // все подушки в полёте
+        return null; // РІСЃРµ РїРѕРґСѓС€РєРё РІ РїРѕР»С‘С‚Рµ
     }
 
     private void ThrowPillow(GameObject pillow)
@@ -126,7 +129,7 @@ public class PillowThrowHandler : MonoBehaviour
         _currentRb.angularVelocity = Vector3.zero;
         _currentRb.AddForce(_character.forward * _throwForce, ForceMode.Impulse);
         _currentRb.detectCollisions = true;
-        _thrownPillows.Push(pillow); // кладём подушку в стек
+        _thrownPillows.Push(pillow); // РєР»Р°РґС‘Рј РїРѕРґСѓС€РєСѓ РІ СЃС‚РµРє
         OnThrow?.Invoke();
     }
 
@@ -160,10 +163,10 @@ public class PillowThrowHandler : MonoBehaviour
 
         if (distance > 10f)
         {
-            // Получаем направление от подушки к игроку
+            // РџРѕР»СѓС‡Р°РµРј РЅР°РїСЂР°РІР»РµРЅРёРµ РѕС‚ РїРѕРґСѓС€РєРё Рє РёРіСЂРѕРєСѓ
             Vector3 dir = (_spawnPoint.position - pillowRb.position).normalized;
 
-            // Новая позиция на расстоянии 10 м от игрока (в сторону подушки)
+            // РќРѕРІР°СЏ РїРѕР·РёС†РёСЏ РЅР° СЂР°СЃСЃС‚РѕСЏРЅРёРё 10 Рј РѕС‚ РёРіСЂРѕРєР° (РІ СЃС‚РѕСЂРѕРЅСѓ РїРѕРґСѓС€РєРё)
             pillowRb.position = _spawnPoint.position - dir * 10f;
         }
 

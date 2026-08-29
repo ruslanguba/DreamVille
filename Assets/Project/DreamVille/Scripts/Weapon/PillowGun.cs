@@ -20,6 +20,12 @@ public class PillowGun : GunBase
     {
         if (!CanShoot() || _spawn == null || _character == null) return;
 
+        if (_spawner == null || _config == null)
+        {
+            Debug.LogWarning($"{nameof(PillowGun)} на '{name}': не назначен {nameof(_spawner)} или {nameof(_config)}, выстрел невозможен.", this);
+            return;
+        }
+
         Bullet bullet = _spawner.SpawnBullet(_spawn.position, _spawn.rotation, _config);
         bullet.Launch(_character.forward);
 

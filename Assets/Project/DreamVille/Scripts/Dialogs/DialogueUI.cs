@@ -59,7 +59,7 @@ public class DialogueUI : MonoBehaviour
     private void ChangeIconsSize(bool isRight)
     {
 
-        // Определяем выбранный и другой элементы
+        // РћРїСЂРµРґРµР»СЏРµРј РІС‹Р±СЂР°РЅРЅС‹Р№ Рё РґСЂСѓРіРѕР№ СЌР»РµРјРµРЅС‚С‹
         RectTransform selected = isRight ? rightImage.rectTransform : leftImage.rectTransform;
         RectTransform other = isRight ? leftImage.rectTransform : rightImage.rectTransform;
 
@@ -69,10 +69,10 @@ public class DialogueUI : MonoBehaviour
         leftImage.rectTransform.localPosition = leftOriginalPos;
         rightImage.rectTransform.localPosition= rightOriginalPos;
 
-        // Восстанавливаем размер и позицию невыбранного
+        // Р’РѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЂР°Р·РјРµСЂ Рё РїРѕР·РёС†РёСЋ РЅРµРІС‹Р±СЂР°РЅРЅРѕРіРѕ
         other.sizeDelta = originalSize;
 
-        // Увеличиваем выбранный элемент и смещаем его
+        // РЈРІРµР»РёС‡РёРІР°РµРј РІС‹Р±СЂР°РЅРЅС‹Р№ СЌР»РµРјРµРЅС‚ Рё СЃРјРµС‰Р°РµРј РµРіРѕ
         selected.sizeDelta += Vector2.one * sizeOffset;
         positionOffset = sizeOffset / 2;
         Vector3 newPos = selected.localPosition;

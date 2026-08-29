@@ -23,23 +23,23 @@ public class BounceRayTrajectory : MonoBehaviour
 
         for (int i = 0; i < maxBounces; i++)
         {
-            // SphereCast âìåñòî Raycast
+            // SphereCast Ð²Ð¼ÐµÑÑ‚Ð¾ Raycast
             if (Physics.SphereCast(currentPos, sphereRadius, currentDir, out RaycastHit hit, maxDistance))
             {
-                // Öåíòð ñôåðû ïðè êàñàíèè äîëæåí áûòü ñìåù¸í íàçàä îò òî÷êè êàñàíèÿ
+                // Ð¦ÐµÐ½Ñ‚Ñ€ ÑÑ„ÐµÑ€Ñ‹ Ð¿Ñ€Ð¸ ÐºÐ°ÑÐ°Ð½Ð¸Ð¸ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð±Ñ‹Ñ‚ÑŒ ÑÐ¼ÐµÑ‰Ñ‘Ð½ Ð½Ð°Ð·Ð°Ð´ Ð¾Ñ‚ Ñ‚Ð¾Ñ‡ÐºÐ¸ ÐºÐ°ÑÐ°Ð½Ð¸Ñ
                 Vector3 sphereCenterHit = hit.point - currentDir * sphereRadius;
 
                 points.Add(sphereCenterHit);
 
-                // îòðàæåíèå îò íîðìàëè
+                // Ð¾Ñ‚Ñ€Ð°Ð¶ÐµÐ½Ð¸Ðµ Ð¾Ñ‚ Ð½Ð¾Ñ€Ð¼Ð°Ð»Ð¸
                 currentDir = Vector3.Reflect(currentDir, hit.normal);
 
-                // íîâàÿ ñòàðòîâàÿ òî÷êà — öåíòð ñôåðû ïîñëå êàñàíèÿ
+                // Ð½Ð¾Ð²Ð°Ñ ÑÑ‚Ð°Ñ€Ñ‚Ð¾Ð²Ð°Ñ Ñ‚Ð¾Ñ‡ÐºÐ° â€” Ñ†ÐµÐ½Ñ‚Ñ€ ÑÑ„ÐµÑ€Ñ‹ Ð¿Ð¾ÑÐ»Ðµ ÐºÐ°ÑÐ°Ð½Ð¸Ñ
                 currentPos = sphereCenterHit;
             }
             else
             {
-                // ïóñòîòà — ðèñóåì ïðÿìóþ
+                // Ð¿ÑƒÑÑ‚Ð¾Ñ‚Ð° â€” Ñ€Ð¸ÑÑƒÐµÐ¼ Ð¿Ñ€ÑÐ¼ÑƒÑŽ
                 points.Add(currentPos + currentDir * maxDistance);
                 break;
             }

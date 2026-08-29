@@ -40,7 +40,7 @@ public class Collectable : MonoBehaviour
 
     private IEnumerator AnimateCollect()
     {
-        // Увеличение
+        // РЈРІРµР»РёС‡РµРЅРёРµ
         float t = 0;
         Vector3 bigScale = _originalScale * 1.3f;
 
@@ -52,7 +52,7 @@ public class Collectable : MonoBehaviour
             yield return null;
         }
 
-        // Полёт + уменьшение
+        // РџРѕР»С‘С‚ + СѓРјРµРЅСЊС€РµРЅРёРµ
         t = 0;
         Vector3 startPos = transform.position;
 
@@ -61,17 +61,17 @@ public class Collectable : MonoBehaviour
             t += Time.deltaTime;
             float p = t / _hideScaleTime;
 
-            // движение к цели
+            // РґРІРёР¶РµРЅРёРµ Рє С†РµР»Рё
             if (_targetPoint != null)
                 transform.position = Vector3.Lerp(startPos, _targetPoint.position, p);
 
-            // уменьшение
+            // СѓРјРµРЅСЊС€РµРЅРёРµ
             transform.localScale = Vector3.Lerp(bigScale, Vector3.zero, p);
 
             yield return null;
         }
 
-        // Уничтожаем
+        // РЈРЅРёС‡С‚РѕР¶Р°РµРј
         Destroy(gameObject);
     }
 }

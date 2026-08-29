@@ -10,7 +10,7 @@ public class EnemyDeathState: BaseState
     public override void Enter()
     {
         enemy.RotationHandler.enabled = false;
-        // Отключаем движение
+        // РћС‚РєР»СЋС‡Р°РµРј РґРІРёР¶РµРЅРёРµ
         enemy.Rb.freezeRotation = false;
         enemy.Rb.isKinematic = false;
         enemy.Rb.useGravity = true;

@@ -41,20 +41,20 @@ public class PlayerLook
 
     private void AimMode()
     {
-        // Берём yaw камеры
+        // Р‘РµСЂС‘Рј yaw РєР°РјРµСЂС‹
         float cameraYaw = _cineCam.State.RawOrientation.eulerAngles.y;
 
-        // Текущий yaw персонажа
+        // РўРµРєСѓС‰РёР№ yaw РїРµСЂСЃРѕРЅР°Р¶Р°
         float currentYaw = _bodyTransform.eulerAngles.y;
 
-        // Плавно приближаем персонажа к yaw камеры
+        // РџР»Р°РІРЅРѕ РїСЂРёР±Р»РёР¶Р°РµРј РїРµСЂСЃРѕРЅР°Р¶Р° Рє yaw РєР°РјРµСЂС‹
         float newYaw = Mathf.LerpAngle(
             currentYaw,
             cameraYaw,
             _settings.rotationSpeed * Time.deltaTime
         );
 
-        // Применяем
+        // РџСЂРёРјРµРЅСЏРµРј
         _bodyTransform.rotation = Quaternion.Euler(0f, newYaw, 0f);
     }
 }

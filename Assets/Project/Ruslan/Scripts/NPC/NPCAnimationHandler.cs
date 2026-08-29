@@ -30,7 +30,20 @@ public class NPCAnimationHandler : MonoBehaviour
         _animator.SetBool("isTalk", _isTalk);
         _animator.SetBool("isGreeting", _isGreeting);
         _animator.SetBool("isApplause", _isApplause);
-        _animator.SetBool("isSwim", _isSwim);
+        SetBoolIfExists("isSwim", _isSwim);
+    }
+
+    // isSwim объявлен не во всех контроллерах NPC, поэтому проверяем наличие параметра.
+    private void SetBoolIfExists(string parameterName, bool value)
+    {
+        foreach (AnimatorControllerParameter parameter in _animator.parameters)
+        {
+            if (parameter.type == AnimatorControllerParameterType.Bool && parameter.name == parameterName)
+            {
+                _animator.SetBool(parameterName, value);
+                return;
+            }
+        }
     }
     public void SetisApplauseAnim()
     {

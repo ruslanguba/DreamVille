@@ -6,6 +6,13 @@ public class CollectableGun : Collectable
     override protected void Awake()
     {
         base.Awake();
+
+        if (pillowGun == null)
+        {
+            Debug.LogWarning($"{nameof(CollectableGun)} на '{name}': не назначен {nameof(pillowGun)}.", this);
+            return;
+        }
+
         pillowGun.Deactivate();
         pillowGun.enabled = false;
     }
@@ -13,6 +20,10 @@ public class CollectableGun : Collectable
     public override void Collect(Transform target)
     {
         base.Collect(target);
+
+        if (pillowGun == null)
+            return;
+
         pillowGun.Activate();
         pillowGun.enabled = true;
     }

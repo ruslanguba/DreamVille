@@ -1,12 +1,12 @@
 using UnityEngine;
 
-[ExecuteAlways] // Работает в Edit Mode
+[ExecuteAlways] // Р Р°Р±РѕС‚Р°РµС‚ РІ Edit Mode
 public class ReflectingRay : MonoBehaviour
 {
-    public Transform origin;          // откуда летит сфера
-    public float radius = 0.25f;      // радиус сферы
-    public float maxDistance = 30f;   // максимальная длина луча
-    public int maxBounces = 5;        // сколько раз может отскочить
+    public Transform origin;          // РѕС‚РєСѓРґР° Р»РµС‚РёС‚ СЃС„РµСЂР°
+    public float radius = 0.25f;      // СЂР°РґРёСѓСЃ СЃС„РµСЂС‹
+    public float maxDistance = 30f;   // РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР° Р»СѓС‡Р°
+    public int maxBounces = 5;        // СЃРєРѕР»СЊРєРѕ СЂР°Р· РјРѕР¶РµС‚ РѕС‚СЃРєРѕС‡РёС‚СЊ
 
     public Color lineColor = Color.yellow;
     public float hitSphereSize = 0.15f;
@@ -24,22 +24,22 @@ public class ReflectingRay : MonoBehaviour
         {
             if (Physics.SphereCast(pos, radius, dir, out RaycastHit hit, maxDistance))
             {
-                // рисуем линию до касания
+                // СЂРёСЃСѓРµРј Р»РёРЅРёСЋ РґРѕ РєР°СЃР°РЅРёСЏ
                 Vector3 sphereCenterAtHit = hit.point - dir * radius;
                 Gizmos.DrawLine(pos, sphereCenterAtHit);
 
-                // показываем точку касания
+                // РїРѕРєР°Р·С‹РІР°РµРј С‚РѕС‡РєСѓ РєР°СЃР°РЅРёСЏ
                 Gizmos.DrawWireSphere(sphereCenterAtHit, radius);
 
-                // рассчитываем отражение
+                // СЂР°СЃСЃС‡РёС‚С‹РІР°РµРј РѕС‚СЂР°Р¶РµРЅРёРµ
                 dir = Vector3.Reflect(dir, hit.normal);
 
-                // новая стартовая позиция
+                // РЅРѕРІР°СЏ СЃС‚Р°СЂС‚РѕРІР°СЏ РїРѕР·РёС†РёСЏ
                 pos = sphereCenterAtHit;
             }
             else
             {
-                // пустота — просто рисуем прямую
+                // РїСѓСЃС‚РѕС‚Р° вЂ” РїСЂРѕСЃС‚Рѕ СЂРёСЃСѓРµРј РїСЂСЏРјСѓСЋ
                 Gizmos.DrawLine(pos, pos + dir * maxDistance);
                 break;
             }

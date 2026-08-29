@@ -29,7 +29,7 @@ public class ShaderPaintablePrototype : InteractableBase
         {
             _collider = GetComponentInChildren<Collider>();
         }
-        // Если ты хочешь, чтобы количество шагов зависело от хитпоинтов:
+        // Р•СЃР»Рё С‚С‹ С…РѕС‡РµС€СЊ, С‡С‚РѕР±С‹ РєРѕР»РёС‡РµСЃС‚РІРѕ С€Р°РіРѕРІ Р·Р°РІРёСЃРµР»Рѕ РѕС‚ С…РёС‚РїРѕРёРЅС‚РѕРІ:
         _steps = _maxHitPoints;
     }
 

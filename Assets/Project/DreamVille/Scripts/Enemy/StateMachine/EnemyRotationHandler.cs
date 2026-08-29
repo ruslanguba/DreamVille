@@ -14,11 +14,11 @@ public class EnemyRotationHandler : MonoBehaviour
     {
         Vector3 vel = rb.linearVelocity;
 
-        // если нет движения – не поворачиваем
+        // РµСЃР»Рё РЅРµС‚ РґРІРёР¶РµРЅРёСЏ вЂ“ РЅРµ РїРѕРІРѕСЂР°С‡РёРІР°РµРј
         if (vel.sqrMagnitude < 0.01f)
             return;
 
-        // игнорируем вертикаль
+        // РёРіРЅРѕСЂРёСЂСѓРµРј РІРµСЂС‚РёРєР°Р»СЊ
         vel.y = 0f;
 
         Quaternion targetRot = Quaternion.LookRotation(vel);

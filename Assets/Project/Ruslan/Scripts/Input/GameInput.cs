@@ -10,6 +10,16 @@ public class GameInput : MonoBehaviour
     public event Action OnPause;
     public event Action OnTub;
 
+    // Делегаты кэшируются: подписка и отписка должны ссылаться на один и тот же экземпляр.
+    private Action<InputAction.CallbackContext> _onPausePerformed;
+    private Action<InputAction.CallbackContext> _onTubPerformed;
+
+    private void Awake()
+    {
+        _onPausePerformed = _ => OnPause?.Invoke();
+        _onTubPerformed = _ => OnTub?.Invoke();
+    }
+
     private void OnEnable()
     {
         EnableAllActions();
@@ -36,13 +46,13 @@ public class GameInput : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        if (_pauseAction?.action != null) _pauseAction.action.performed += ctx => OnPause?.Invoke();
-        if (_tubAction?.action != null) _tubAction.action.performed += ctx => OnTub?.Invoke();
+        if (_pauseAction?.action != null) _pauseAction.action.performed += _onPausePerformed;
+        if (_tubAction?.action != null) _tubAction.action.performed += _onTubPerformed;
     }
 
     private void UnsubscribeEvents()
     {
-        if (_pauseAction?.action != null) _pauseAction.action.performed -= ctx => OnPause?.Invoke();
-        if (_tubAction?.action != null) _tubAction.action.performed -= ctx => OnTub?.Invoke();
+        if (_pauseAction?.action != null) _pauseAction.action.performed -= _onPausePerformed;
+        if (_tubAction?.action != null) _tubAction.action.performed -= _onTubPerformed;
     }
 }

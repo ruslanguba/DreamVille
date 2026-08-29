@@ -18,7 +18,7 @@ public class RotationHandler : MonoBehaviour
 
     private void RotateTowardsMouse()
     {
-        if (Mouse.current == null) return; // защита для билда без мыши
+        if (Mouse.current == null) return; // Р·Р°С‰РёС‚Р° РґР»СЏ Р±РёР»РґР° Р±РµР· РјС‹С€Рё
 
         Vector2 mousePosition = Mouse.current.position.ReadValue();
         Ray ray = _camera.ScreenPointToRay(mousePosition);

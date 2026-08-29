@@ -4,19 +4,19 @@ using UnityEngine;
 public class RandomFloatting : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] private float _radius = 5f;         // Радиус выбора точки
+    [SerializeField] private float _radius = 5f;         // Р Р°РґРёСѓСЃ РІС‹Р±РѕСЂР° С‚РѕС‡РєРё
     [SerializeField] private float _minSpeed = 2f;
-    [SerializeField] private float _maxSpeed = 4f;          // Скорость движения
+    [SerializeField] private float _maxSpeed = 4f;          // РЎРєРѕСЂРѕСЃС‚СЊ РґРІРёР¶РµРЅРёСЏ
 
 
     [Header("Height Limit")]
-    [SerializeField] private float minY = -50f;             // Минимальная высота
-    [SerializeField] private float maxY = 50f;             // Максимальная высота
+    [SerializeField] private float minY = -50f;             // РњРёРЅРёРјР°Р»СЊРЅР°СЏ РІС‹СЃРѕС‚Р°
+    [SerializeField] private float maxY = 50f;             // РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РІС‹СЃРѕС‚Р°
 
     [Header("Pause")]
-    public float stopTime = 2f;       // Время остановки
+    public float stopTime = 2f;       // Р’СЂРµРјСЏ РѕСЃС‚Р°РЅРѕРІРєРё
 
-    private Vector3 targetPoint;      // Текущая цель
+    private Vector3 targetPoint;      // РўРµРєСѓС‰Р°СЏ С†РµР»СЊ
     private bool isMoving = true;
     private float _speed;
 
@@ -31,7 +31,7 @@ public class RandomFloatting : MonoBehaviour
     {
         while (true)
         {
-            // Пока не долетел — летим
+            // РџРѕРєР° РЅРµ РґРѕР»РµС‚РµР» вЂ” Р»РµС‚РёРј
             while (Vector3.Distance(transform.position, targetPoint) > 0.1f)
             {
                 transform.position = Vector3.MoveTowards(
@@ -42,11 +42,11 @@ public class RandomFloatting : MonoBehaviour
                 yield return null;
             }
 
-            // Долетел – остановка
+            // Р”РѕР»РµС‚РµР» вЂ“ РѕСЃС‚Р°РЅРѕРІРєР°
             isMoving = false;
             yield return new WaitForSeconds(stopTime);
 
-            // Новая точка
+            // РќРѕРІР°СЏ С‚РѕС‡РєР°
             PickNewPoint();
             isMoving = true;
         }

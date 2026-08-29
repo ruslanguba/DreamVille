@@ -57,7 +57,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public void DialogueCompleted()
     {
-        OnDialogueEnded?.Invoke();  // Если события нет - ничего не произойдет
+        OnDialogueEnded?.Invoke();  // Р•СЃР»Рё СЃРѕР±С‹С‚РёСЏ РЅРµС‚ - РЅРёС‡РµРіРѕ РЅРµ РїСЂРѕРёР·РѕР№РґРµС‚
 
         if (deleteOnEnd)
         {

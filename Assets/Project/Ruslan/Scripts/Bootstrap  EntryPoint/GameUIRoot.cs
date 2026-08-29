@@ -9,7 +9,7 @@ public class GameUIRoot : MonoBehaviour
     [SerializeField] private ScorePopupUI _scorePopupUI;
     [SerializeField] private StarsUI _starsUI;
 
-    // Ïóáëè÷íûå ññûëêè äëÿ öåíòðàëèçîâàííûõ ïîäïèñîê
+    // ÐŸÑƒÐ±Ð»Ð¸Ñ‡Ð½Ñ‹Ðµ ÑÑÑ‹Ð»ÐºÐ¸ Ð´Ð»Ñ Ñ†ÐµÐ½Ñ‚Ñ€Ð°Ð»Ð¸Ð·Ð¾Ð²Ð°Ð½Ð½Ñ‹Ñ… Ð¿Ð¾Ð´Ð¿Ð¸ÑÐ¾Ðº
     public RicochetUI RicochetUI => _ricochetUI;
     public PillowUI PillowUI => _pillowUI;
     public EnemyCounterUI EnemyCounter => _enemyCounterUI;

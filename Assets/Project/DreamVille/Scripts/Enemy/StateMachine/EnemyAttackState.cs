@@ -20,14 +20,14 @@ public class EnemyAttackState : BaseState
         enemy.RotationHandler.RoteteToPlayer(enemy.PlayerTransform.position);
         float dist = Vector3.Distance(enemy.transform.position, enemy.PlayerTransform.position);
 
-        // Если игрок ушёл из зоны атаки — возвращаемся к преследованию
+        // Р•СЃР»Рё РёРіСЂРѕРє СѓС€С‘Р» РёР· Р·РѕРЅС‹ Р°С‚Р°РєРё вЂ” РІРѕР·РІСЂР°С‰Р°РµРјСЃСЏ Рє РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЋ
         if (dist > enemy.AttackRange)
         {
             stateMachine.ChangeState(enemy.ChaseState);
             return;
         }
 
-        // Таймер атаки
+        // РўР°Р№РјРµСЂ Р°С‚Р°РєРё
         attackTimer -= Time.deltaTime;
         if (attackTimer <= 0f)
         {

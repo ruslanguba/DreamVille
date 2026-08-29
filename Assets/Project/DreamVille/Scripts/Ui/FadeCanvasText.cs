@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class FadeCanvasText : MonoBehaviour
 {
-    [Tooltip("Длительность исчезновения")]
+    [Tooltip("Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ РёСЃС‡РµР·РЅРѕРІРµРЅРёСЏ")]
     [SerializeField] private float _fadeDuration = 2;
 
-    [Tooltip("Время задержки перед началом исчезновения")]
+    [Tooltip("Р’СЂРµРјСЏ Р·Р°РґРµСЂР¶РєРё РїРµСЂРµРґ РЅР°С‡Р°Р»РѕРј РёСЃС‡РµР·РЅРѕРІРµРЅРёСЏ")]
     [SerializeField] private float _startFade = 4;
 
     private TMP_Text text;

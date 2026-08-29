@@ -18,11 +18,11 @@ public class TrajectorySimulator
         var physicsScene = _sceneProvider.PhysicsScene;
         var predictionScene = _sceneProvider.Scene;
 
-        // Создаём ghost-снаряд
+        // РЎРѕР·РґР°С‘Рј ghost-СЃРЅР°СЂСЏРґ
         GameObject ghost = Object.Instantiate(_projectilePrefab, startPos, Quaternion.identity);
         SceneManager.MoveGameObjectToScene(ghost, predictionScene);
 
-        // Делаем ghost невидимым
+        // Р”РµР»Р°РµРј ghost РЅРµРІРёРґРёРјС‹Рј
         foreach (var renderer in ghost.GetComponentsInChildren<Renderer>())
             renderer.enabled = false;
 

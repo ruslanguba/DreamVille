@@ -14,7 +14,7 @@ public class PlayerDamageReciver : MonoBehaviour
     [SerializeField] private float firstHitIntensity  = 0.6f;
 
     [Header("Damage Settings")]
-    [SerializeField] private int _maxHits = 5;     // кол-во попаданий до полного эффекта
+    [SerializeField] private int _maxHits = 5;     // РєРѕР»-РІРѕ РїРѕРїР°РґР°РЅРёР№ РґРѕ РїРѕР»РЅРѕРіРѕ СЌС„С„РµРєС‚Р°
     [SerializeField] private int _minHits = 0;
     [SerializeField] private float restoreDelay = 5f;
 
@@ -56,7 +56,7 @@ public class PlayerDamageReciver : MonoBehaviour
 
     private void Update()
     {
-        // Автовосстановление после таймера
+        // РђРІС‚РѕРІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ РїРѕСЃР»Рµ С‚Р°Р№РјРµСЂР°
         if (hits > _minHits)
         {
             restoreTimer -= Time.deltaTime;
@@ -75,7 +75,7 @@ public class PlayerDamageReciver : MonoBehaviour
 
         hits = Mathf.Min(hits + 1, _maxHits);
 
-        // Вычисляем интенсивность с учетом правил
+        // Р’С‹С‡РёСЃР»СЏРµРј РёРЅС‚РµРЅСЃРёРІРЅРѕСЃС‚СЊ СЃ СѓС‡РµС‚РѕРј РїСЂР°РІРёР»
         float targetIntensity = CalculateIntensity(hits, _maxHits);
 
         ChangeVignetteSmoothly(targetIntensity, smoothChangeDuration);

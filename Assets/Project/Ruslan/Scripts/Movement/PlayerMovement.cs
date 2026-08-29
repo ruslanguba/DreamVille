@@ -68,7 +68,7 @@ public class PlayerMovement
 
     private void SetAnimatorParams(Vector2 moveInput)
     {
-        bool isMoving = moveInput.magnitude > 0.05f; // движение / Idle
+        bool isMoving = moveInput.magnitude > 0.05f; // РґРІРёР¶РµРЅРёРµ / Idle
         int moveDir = 0;
         float multiplier = 1f;
 
@@ -81,28 +81,28 @@ public class PlayerMovement
 
             if (forward)
             {
-                if (right) moveDir = 2;   // вперед+вправо
-                else if (left) moveDir = -2; // вперед+влево
-                else moveDir = 1;          // только вперед
+                if (right) moveDir = 2;   // РІРїРµСЂРµРґ+РІРїСЂР°РІРѕ
+                else if (left) moveDir = -2; // РІРїРµСЂРµРґ+РІР»РµРІРѕ
+                else moveDir = 1;          // С‚РѕР»СЊРєРѕ РІРїРµСЂРµРґ
                 multiplier = 1f;
             }
             else if (backward)
             {
-                if (right) moveDir = -2;    // назад+вправо - воспроизводим влево задом
-                else if (left) moveDir = 2; // назад+влево - воспроизводим вправо задом
-                else moveDir = 1;            // только назад
+                if (right) moveDir = -2;    // РЅР°Р·Р°Рґ+РІРїСЂР°РІРѕ - РІРѕСЃРїСЂРѕРёР·РІРѕРґРёРј РІР»РµРІРѕ Р·Р°РґРѕРј
+                else if (left) moveDir = 2; // РЅР°Р·Р°Рґ+РІР»РµРІРѕ - РІРѕСЃРїСЂРѕРёР·РІРѕРґРёРј РІРїСЂР°РІРѕ Р·Р°РґРѕРј
+                else moveDir = 1;            // С‚РѕР»СЊРєРѕ РЅР°Р·Р°Рґ
                 multiplier = -1f;
             }
             else
             {
-                // чисто боковое движение
+                // С‡РёСЃС‚Рѕ Р±РѕРєРѕРІРѕРµ РґРІРёР¶РµРЅРёРµ
                 if (right) moveDir = 2;
                 else if (left) moveDir = -2;
                 multiplier = 1f;
             }
         }
 
-        // --- Передаем параметры в AnimatorHandler ---
+        // --- РџРµСЂРµРґР°РµРј РїР°СЂР°РјРµС‚СЂС‹ РІ AnimatorHandler ---
         _animator.SetSpeed(_currentSpeed);
         _animator.SetMoving(isMoving);
         _animator.SetMoveDirection(moveDir);

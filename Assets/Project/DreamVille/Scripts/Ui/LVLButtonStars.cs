@@ -26,7 +26,7 @@ public class LVLButtonStars : MonoBehaviour
 
     private void UpdateButtonState()
     {
-        // Разрешаем первый уровень всегда
+        // Р Р°Р·СЂРµС€Р°РµРј РїРµСЂРІС‹Р№ СѓСЂРѕРІРµРЅСЊ РІСЃРµРіРґР°
         if (_levelId == "1")
         {
             _button.interactable = true;

@@ -49,9 +49,9 @@ public class PlayerSafePosition : MonoBehaviour
         foreach (var hit in hits)
         {
             if (hit.GetComponent<Pillow>() != null)
-                return true;   // Нашли Pillow
+                return true;   // РќР°С€Р»Рё Pillow
         }
 
-        return false; // Ничего подходящего нет
+        return false; // РќРёС‡РµРіРѕ РїРѕРґС…РѕРґСЏС‰РµРіРѕ РЅРµС‚
     }
 }

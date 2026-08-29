@@ -14,7 +14,7 @@ public class PillowUI : MonoBehaviour
     private int _usedPillows;
     private List<Image> _pillowIcons = new List<Image>();
 
-    // Создаём иконки
+    // РЎРѕР·РґР°С‘Рј РёРєРѕРЅРєРё
     public void SpawnIcons(int count)
     {
         //ClearIcons();
@@ -26,20 +26,20 @@ public class PillowUI : MonoBehaviour
             Image icon = Instantiate(_iconPrefab, _pillowsPanel);
             icon.transform.localPosition = startPos + new Vector3(i * _posOffset, 0f, 0f);
             _alphaVisible = icon.color.a;
-            //SetAlpha(icon, _alphaVisible); // изначально скрыты
+            //SetAlpha(icon, _alphaVisible); // РёР·РЅР°С‡Р°Р»СЊРЅРѕ СЃРєСЂС‹С‚С‹
             
             _pillowIcons.Add(icon);
         }
     }
 
-    // Показываем иконку с начала списка
+    // РџРѕРєР°Р·С‹РІР°РµРј РёРєРѕРЅРєСѓ СЃ РЅР°С‡Р°Р»Р° СЃРїРёСЃРєР°
     public void ShowPillow()
     {
         SetAlpha(_pillowIcons[_pillowIcons.Count - _usedPillows], _alphaVisible);
         _usedPillows--;
     }
 
-    // Скрываем иконку с конца списка
+    // РЎРєСЂС‹РІР°РµРј РёРєРѕРЅРєСѓ СЃ РєРѕРЅС†Р° СЃРїРёСЃРєР°
     public void HidePillow()
     {
         _usedPillows++;

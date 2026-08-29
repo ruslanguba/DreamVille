@@ -1,5 +1,4 @@
 using System;
-using UnityEditor;
 using UnityEngine;
 
 public class StarProgressService
@@ -22,7 +21,7 @@ public class StarProgressService
     {
 
         _totalScore += score;
-        Debug.Log("Тотал в StarProgressService " + _totalScore);
+        Debug.Log("РўРѕС‚Р°Р» РІ StarProgressService " + _totalScore);
         UpdateCurrentStarProgress();
 
         while (CanUnlockNextStar())

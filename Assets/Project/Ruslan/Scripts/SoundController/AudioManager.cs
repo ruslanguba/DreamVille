@@ -51,7 +51,7 @@ public class AudioManager : MonoBehaviour
             }
         }
 
-        Debug.LogWarning($"AudioManager: Нет музыки для сцены {sceneName}");
+        Debug.LogWarning($"AudioManager: РќРµС‚ РјСѓР·С‹РєРё РґР»СЏ СЃС†РµРЅС‹ {sceneName}");
     }
 
     public void PlayMusic(AudioClip clip, bool loop = true)

@@ -4,5 +4,5 @@ using UnityEngine;
 public class StarRulesSO : ScriptableObject
 {
     public string levelId;
-    public float[] starThresholds; // например: [50, 100, 150]
+    public float[] starThresholds; // РЅР°РїСЂРёРјРµСЂ: [50, 100, 150]
 }

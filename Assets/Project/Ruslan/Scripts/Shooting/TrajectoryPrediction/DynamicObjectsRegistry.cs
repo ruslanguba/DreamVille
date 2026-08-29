@@ -7,7 +7,7 @@ public class DynamicObjectsRegistry : MonoBehaviour
     [SerializeField] private List<Rigidbody> _dynamicBodies = new();
     public IReadOnlyList<Rigidbody> DynamicBodies => _dynamicBodies;
 
-    [SerializeField] private int _batchSize = 50; // сколько объектов обрабатывать за кадр
+    [SerializeField] private int _batchSize = 50; // СЃРєРѕР»СЊРєРѕ РѕР±СЉРµРєС‚РѕРІ РѕР±СЂР°Р±Р°С‚С‹РІР°С‚СЊ Р·Р° РєР°РґСЂ
 
     private void Start()
     {
@@ -23,11 +23,11 @@ public class DynamicObjectsRegistry : MonoBehaviour
 
         foreach (var rb in bodies)
         {
-            if (  !rb.gameObject.TryGetComponent(out PlayerContext player) 
-                ||!rb.gameObject.TryGetComponent(out Bullet bullet)
-                ||!rb.gameObject.TryGetComponent(out Pillow pillow)
-                ||!rb.gameObject.TryGetComponent(out EnemyBullet enemybullet)
-                ||!rb.gameObject.TryGetComponent(out PlayerSafePosition playerSafePosition))
+            if (!rb.gameObject.TryGetComponent(out PlayerContext _)
+                && !rb.gameObject.TryGetComponent(out Bullet _)
+                && !rb.gameObject.TryGetComponent(out Pillow _)
+                && !rb.gameObject.TryGetComponent(out EnemyBullet _)
+                && !rb.gameObject.TryGetComponent(out PlayerSafePosition _))
             {
                 Register(rb);
             }
@@ -36,7 +36,7 @@ public class DynamicObjectsRegistry : MonoBehaviour
             if (counter >= _batchSize)
             {
                 counter = 0;
-                yield return null; // пропускаем кадр, чтобы сцена не зависла
+                yield return null; // РїСЂРѕРїСѓСЃРєР°РµРј РєР°РґСЂ, С‡С‚РѕР±С‹ СЃС†РµРЅР° РЅРµ Р·Р°РІРёСЃР»Р°
             }
         }
     }

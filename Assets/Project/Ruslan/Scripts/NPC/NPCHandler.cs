@@ -75,7 +75,7 @@ public class NPCHandler : MonoBehaviour
                 _rotationSpeed * Time.deltaTime
             );
 
-            // Поворот закончен
+            // РџРѕРІРѕСЂРѕС‚ Р·Р°РєРѕРЅС‡РµРЅ
             if (Quaternion.Angle(transform.rotation, targetRot) < 0.5f)
             {
                 _isTurning = false;

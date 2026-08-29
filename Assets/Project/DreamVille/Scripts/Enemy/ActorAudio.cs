@@ -32,7 +32,7 @@ public class ActorAudio : MonoBehaviour
     }
     private void Update()
     {
-        // Вызов случайного звука таймером
+        // Р’С‹Р·РѕРІ СЃР»СѓС‡Р°Р№РЅРѕРіРѕ Р·РІСѓРєР° С‚Р°Р№РјРµСЂРѕРј
         if (Time.time >= _nextRandomTime)
         {
             PlayRandomClip();
@@ -68,7 +68,7 @@ public class ActorAudio : MonoBehaviour
     {
         if (_jumpClip != null)
         {
-            audioSource.pitch = Random.Range(0.9f, 1.1f); // Случайный питч
+            audioSource.pitch = Random.Range(0.9f, 1.1f); // РЎР»СѓС‡Р°Р№РЅС‹Р№ РїРёС‚С‡
             audioSource.PlayOneShot(_jumpClip);
         }
     }
@@ -93,7 +93,7 @@ public class ActorAudio : MonoBehaviour
         if (_footstepClips == null || _footstepClips.Length == 0)
             return;
 
-        // Случайный индекс, но не повторяем тот же самый звук дважды подряд
+        // РЎР»СѓС‡Р°Р№РЅС‹Р№ РёРЅРґРµРєСЃ, РЅРѕ РЅРµ РїРѕРІС‚РѕСЂСЏРµРј С‚РѕС‚ Р¶Рµ СЃР°РјС‹Р№ Р·РІСѓРє РґРІР°Р¶РґС‹ РїРѕРґСЂСЏРґ
         int index;
         do
         {

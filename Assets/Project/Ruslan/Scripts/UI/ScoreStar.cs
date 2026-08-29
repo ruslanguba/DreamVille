@@ -53,7 +53,7 @@ public class ScoreStar : MonoBehaviour
         Vector3 targetScale = _originalScale * _popScale;
         float startFill = _image.fillAmount;
 
-        // Увеличение
+        // РЈРІРµР»РёС‡РµРЅРёРµ
         while (t < _popTime)
         {
             t += Time.deltaTime;
@@ -63,7 +63,7 @@ public class ScoreStar : MonoBehaviour
             yield return null;
         }
 
-        // Возврат
+        // Р’РѕР·РІСЂР°С‚
         t = 0;
         while (t < _popTime)
         {

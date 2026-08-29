@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NpcQueueManager : MonoBehaviour
 {
-    [SerializeField] private List<NPCMover> jumpers; // только персонажи
+    [SerializeField] private List<NPCMover> jumpers; // С‚РѕР»СЊРєРѕ РїРµСЂСЃРѕРЅР°Р¶Рё
     [SerializeField] private float moveDuration = 1f;
     [SerializeField] private float delayBetweenJumps = 1.5f;
 
@@ -12,7 +12,7 @@ public class NpcQueueManager : MonoBehaviour
     NPCMover _first;
     private void Start()
     {
-        // Сохраняем стартовые позиции всех персонажей
+        // РЎРѕС…СЂР°РЅСЏРµРј СЃС‚Р°СЂС‚РѕРІС‹Рµ РїРѕР·РёС†РёРё РІСЃРµС… РїРµСЂСЃРѕРЅР°Р¶РµР№
         foreach (var j in jumpers)
             queuePositions.Add(j.transform.position);
 
@@ -23,14 +23,14 @@ public class NpcQueueManager : MonoBehaviour
     {
         while (true)
         {
-            // 1. Первый прыгает
+            // 1. РџРµСЂРІС‹Р№ РїСЂС‹РіР°РµС‚
             _first = jumpers[0];
             TriggerJump();
 
-            // 2. Ждём
+            // 2. Р–РґС‘Рј
             yield return new WaitForSeconds(delayBetweenJumps);
 
-            // 3. Двигаем всех на позицию вперёд
+            // 3. Р”РІРёРіР°РµРј РІСЃРµС… РЅР° РїРѕР·РёС†РёСЋ РІРїРµСЂС‘Рґ
             for (int i = 0; i < jumpers.Count; i++)
             {
                 Vector3 targetPos = queuePositions[i];
@@ -64,7 +64,7 @@ public class NpcQueueManager : MonoBehaviour
     private void TriggerJump()
     {
         _first.JumpForward();
-        Debug.Log(_first.name + " прыгает!");
+        Debug.Log(_first.name + " РїСЂС‹РіР°РµС‚!");
         StartCoroutine(JumpRoutine());
     }
 }

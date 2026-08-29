@@ -8,6 +8,12 @@ public class LevelCompletionFlow : MonoBehaviour
 
     void Start()
     {
+        if (_trigger == null)
+        {
+            Debug.LogWarning($"{nameof(LevelCompletionFlow)} РЅР° '{name}': РЅРµ РЅР°Р·РЅР°С‡РµРЅ {nameof(_trigger)}.", this);
+            return;
+        }
+
         _trigger.OnDialogueStarted += StartNPCTalking;
         _trigger.OnDialogueEnded += FinalAction;
         _trigger.DisableTrigger();
@@ -21,17 +27,30 @@ public class LevelCompletionFlow : MonoBehaviour
     private void FinalAction()
     {
         _npc.SetIdle();
+
+        if (_portalActivator == null)
+        {
+            Debug.LogWarning($"{nameof(LevelCompletionFlow)} РЅР° '{name}': РЅРµ РЅР°Р·РЅР°С‡РµРЅ {nameof(_portalActivator)}, РїРѕСЂС‚Р°Р» РЅРµ РѕС‚РєСЂРѕРµС‚СЃСЏ.", this);
+            return;
+        }
+
         _portalActivator.ActivatePortal();
     }
 
     private void OnDisable()
     {
+        if (_trigger == null)
+            return;
+
         _trigger.OnDialogueStarted -= StartNPCTalking;
         _trigger.OnDialogueEnded -= FinalAction;
     }
 
     public virtual void LevelCompleat()
     {
+        if (_trigger == null)
+            return;
+
         _trigger.EnableTrigger();
         _npc.SetGreeting();
     }
@@ -54,8 +73,8 @@ public class LevelCompletionFlow : MonoBehaviour
 
 //    private void StartFlow()
 //    {
-//        _npc.PlayGreeting();          // анимация + звук
-//        _dialogue.Enable();           // включаем триггер
+//        _npc.PlayGreeting();          // Р°РЅРёРјР°С†РёСЏ + Р·РІСѓРє
+//        _dialogue.Enable();           // РІРєР»СЋС‡Р°РµРј С‚СЂРёРіРіРµСЂ
 //        _dialogue.OnDialogueEnded += OnDialogueFinished;
 //    }
 
@@ -63,8 +82,8 @@ public class LevelCompletionFlow : MonoBehaviour
 //    {
 //        _dialogue.OnDialogueEnded -= OnDialogueFinished;
 
-//        _npc.SetApplause();    // финальная анимация
-//        _portal.Enable();             // портал
+//        _npc.SetApplause();    // С„РёРЅР°Р»СЊРЅР°СЏ Р°РЅРёРјР°С†РёСЏ
+//        _portal.Enable();             // РїРѕСЂС‚Р°Р»
 //    }
 
 

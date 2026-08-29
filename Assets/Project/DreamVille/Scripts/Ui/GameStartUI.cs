@@ -52,20 +52,20 @@ public class GameStartUI : MonoBehaviour
 
     IEnumerator SequenceRoutine()
     {
-        // Первая картинка
+        // РџРµСЂРІР°СЏ РєР°СЂС‚РёРЅРєР°
         yield return StartCoroutine(FadeAndGrowFirst());
 
-        // Остальные
+        // РћСЃС‚Р°Р»СЊРЅС‹Рµ
         while (collageIndex < collageImages.Length)
         {
-            skip = false; // чтобы Space переключал только текущий этап
+            skip = false; // С‡С‚РѕР±С‹ Space РїРµСЂРµРєР»СЋС‡Р°Р» С‚РѕР»СЊРєРѕ С‚РµРєСѓС‰РёР№ СЌС‚Р°Рї
 
             yield return StartCoroutine(ShowNextCollageImage(collageImages[collageIndex]));
 
             collageIndex++;
         }
 
-        // В конце — грузим сцену
+        // Р’ РєРѕРЅС†Рµ вЂ” РіСЂСѓР·РёРј СЃС†РµРЅСѓ
         SceneManager.LoadScene(_sceneToLoad);
     }
 

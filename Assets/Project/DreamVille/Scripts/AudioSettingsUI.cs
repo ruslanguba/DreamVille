@@ -14,12 +14,12 @@ public class AudioSettingsUI : MonoBehaviour
         yield return new WaitForEndOfFrame();
         musicSlider.onValueChanged.RemoveAllListeners();
         sfxSlider.onValueChanged.RemoveAllListeners();
-        // Загружаем текущие громкости в UI
+        // Р—Р°РіСЂСѓР¶Р°РµРј С‚РµРєСѓС‰РёРµ РіСЂРѕРјРєРѕСЃС‚Рё РІ UI
         //masterSlider.value = AudioManager.Instance.GetVolume("MasterVolume");
         musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.3f);
         sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 0.3f);
 
-        // Подписываем события
+        // РџРѕРґРїРёСЃС‹РІР°РµРј СЃРѕР±С‹С‚РёСЏ
         //masterSlider.onValueChanged.AddListener(AudioManager.Instance.SetMasterVolume);
         musicSlider.onValueChanged.AddListener(AudioManager.Instance.SetMusicVolume);
         sfxSlider.onValueChanged.AddListener(AudioManager.Instance.SetSFXVolume);

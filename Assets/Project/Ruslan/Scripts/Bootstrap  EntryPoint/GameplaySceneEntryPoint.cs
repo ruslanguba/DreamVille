@@ -36,7 +36,7 @@ public class GameplaySceneEntryPoint : MonoBehaviour
 
     private void BindUI()
     {
-        // Подписка UI на сервисы
+        // РџРѕРґРїРёСЃРєР° UI РЅР° СЃРµСЂРІРёСЃС‹
         _scoreService.OnScoreAdded += _ui.ScorePopup.ShowScore;
         _starProgressService.OnStarProgressChanged += _ui.StarsUI.SetStarProgress;
         _starProgressService.OnStarUnlocked += _ui.StarsUI.UnlockStar;

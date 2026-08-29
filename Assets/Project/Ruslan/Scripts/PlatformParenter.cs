@@ -29,11 +29,11 @@ public class PlatformParenter : MonoBehaviour
             }
         }
 
-        // зашли на платформу
+        // Р·Р°С€Р»Рё РЅР° РїР»Р°С‚С„РѕСЂРјСѓ
         if (newPlatform != null)
             _currentPlatform = newPlatform;
 
-        // ушли
+        // СѓС€Р»Рё
         else
             _currentPlatform = null;
     }

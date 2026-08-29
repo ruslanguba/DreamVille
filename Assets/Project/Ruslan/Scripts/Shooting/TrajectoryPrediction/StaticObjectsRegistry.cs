@@ -6,8 +6,8 @@ public class StaticObjectsRegistry : MonoBehaviour
     [SerializeField] private List<Collider> _staticColliders = new();
     public IReadOnlyList<Collider> StaticColliders => _staticColliders;
 
-    [SerializeField] private PredictionSceneProvider _sceneProvider; // ссылка на сцену для клонирования
-    [SerializeField] private int _batchSize = 50; // сколько объектов обрабатывать за кадр
+    [SerializeField] private PredictionSceneProvider _sceneProvider; // СЃСЃС‹Р»РєР° РЅР° СЃС†РµРЅСѓ РґР»СЏ РєР»РѕРЅРёСЂРѕРІР°РЅРёСЏ
+    [SerializeField] private int _batchSize = 50; // СЃРєРѕР»СЊРєРѕ РѕР±СЉРµРєС‚РѕРІ РѕР±СЂР°Р±Р°С‚С‹РІР°С‚СЊ Р·Р° РєР°РґСЂ
 
     private void Start()
     {
@@ -35,7 +35,7 @@ public class StaticObjectsRegistry : MonoBehaviour
             if (counter >= _batchSize)
             {
                 counter = 0;
-                yield return null; // пропускаем кадр
+                yield return null; // РїСЂРѕРїСѓСЃРєР°РµРј РєР°РґСЂ
             }
         }
     }

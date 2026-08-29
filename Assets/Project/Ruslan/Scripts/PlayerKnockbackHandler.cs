@@ -13,7 +13,7 @@ public class PlayerKnockbackHandler : MonoBehaviour
 
     public void AddKnockback(Vector3 direction, float force)
     {
-        direction.y = 0; // чтобы не подбрасывало вверх
+        direction.y = 0; // С‡С‚РѕР±С‹ РЅРµ РїРѕРґР±СЂР°СЃС‹РІР°Р»Рѕ РІРІРµСЂС…
         knockVelocity = direction.normalized * force;
     }
 

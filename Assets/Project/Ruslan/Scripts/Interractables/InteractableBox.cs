@@ -71,10 +71,10 @@ public class InteractableBox : InteractableBase
             t += Time.deltaTime;
             float normalized = t / _hideDuration;
 
-            // Движение
+            // Р”РІРёР¶РµРЅРёРµ
             enemy.transform.position = Vector3.Lerp(startPos, endPos, normalized);
 
-            // Уменьшение масштаба
+            // РЈРјРµРЅСЊС€РµРЅРёРµ РјР°СЃС€С‚Р°Р±Р°
             enemy.transform.localScale = Vector3.Lerp(startScale, endScale, normalized);
             if (enemy == null)
                 break;
@@ -88,7 +88,7 @@ public class InteractableBox : InteractableBase
             enemy.OnDestroyed += RemoveEnemy;
             CloseDoor();
         }
-        // Финальная фиксация
+        // Р¤РёРЅР°Р»СЊРЅР°СЏ С„РёРєСЃР°С†РёСЏ
         enemy.transform.position = endPos;
         enemy.transform.localScale = endScale;
         enemy.gameObject.SetActive(false);

@@ -14,11 +14,11 @@ public class PredictionSceneProvider
     {
         if (_scene.IsValid()) return;
 
-        // Создаём отдельную сцену с физикой 3D
+        // РЎРѕР·РґР°С‘Рј РѕС‚РґРµР»СЊРЅСѓСЋ СЃС†РµРЅСѓ СЃ С„РёР·РёРєРѕР№ 3D
         _scene = SceneManager.CreateScene("PredictionScene", new CreateSceneParameters(LocalPhysicsMode.Physics3D));
         _physicsScene = _scene.GetPhysicsScene();
 
-        // Включаем ручную симуляцию Physics
+        // Р’РєР»СЋС‡Р°РµРј СЂСѓС‡РЅСѓСЋ СЃРёРјСѓР»СЏС†РёСЋ Physics
         Physics.simulationMode = SimulationMode.Script;
         Physics.Simulate(Time.fixedDeltaTime);
     }

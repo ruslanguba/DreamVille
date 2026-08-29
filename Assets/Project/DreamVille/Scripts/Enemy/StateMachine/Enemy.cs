@@ -8,13 +8,13 @@ public class Enemy : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float moveSpeed = 3f;
     [SerializeField] private float acceleration = 6f;
-    [SerializeField] private float attackRange = 5f; // дистанция на которой начинает атаковать
+    [SerializeField] private float attackRange = 5f; // РґРёСЃС‚Р°РЅС†РёСЏ РЅР° РєРѕС‚РѕСЂРѕР№ РЅР°С‡РёРЅР°РµС‚ Р°С‚Р°РєРѕРІР°С‚СЊ
     [SerializeField] private float throwForce = 5f;
-    [SerializeField] private float chaseRange = 7f; // дистанция на которой начинает преследовать
+    [SerializeField] private float chaseRange = 7f; // РґРёСЃС‚Р°РЅС†РёСЏ РЅР° РєРѕС‚РѕСЂРѕР№ РЅР°С‡РёРЅР°РµС‚ РїСЂРµСЃР»РµРґРѕРІР°С‚СЊ
     [SerializeField] private EnemyRotationHandler rotationHandler;
-    [SerializeField] private float attackCooldown = 2f; // время между атаками
-    [SerializeField] private GameObject attackPrefab; // объект, который враг кидает
-    [SerializeField] private Transform attackSpawn; // точка спауна атаки
+    [SerializeField] private float attackCooldown = 2f; // РІСЂРµРјСЏ РјРµР¶РґСѓ Р°С‚Р°РєР°РјРё
+    [SerializeField] private GameObject attackPrefab; // РѕР±СЉРµРєС‚, РєРѕС‚РѕСЂС‹Р№ РІСЂР°Рі РєРёРґР°РµС‚
+    [SerializeField] private Transform attackSpawn; // С‚РѕС‡РєР° СЃРїР°СѓРЅР° Р°С‚Р°РєРё
 
     [SerializeField] private Transform[] patrolPoints;
     [SerializeField] private Transform playerTransform;

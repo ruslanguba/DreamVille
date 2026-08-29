@@ -18,13 +18,13 @@ public class WorldGeometryReplicator
     {
         Scene predictionScene = _sceneProvider.Scene;
 
-        // Клонируем динамические объекты с Rigidbody
+        // РљР»РѕРЅРёСЂСѓРµРј РґРёРЅР°РјРёС‡РµСЃРєРёРµ РѕР±СЉРµРєС‚С‹ СЃ Rigidbody
         foreach (Rigidbody rbOriginal in _dynamicObjectsRegistry.DynamicBodies)
         {
             GameObject clone = Object.Instantiate(rbOriginal.gameObject);
             SceneManager.MoveGameObjectToScene(clone, predictionScene);
 
-            // Отключаем визуал и скрипты
+            // РћС‚РєР»СЋС‡Р°РµРј РІРёР·СѓР°Р» Рё СЃРєСЂРёРїС‚С‹
             foreach (var renderer in clone.GetComponentsInChildren<Renderer>())
                 renderer.enabled = false;
 
@@ -35,12 +35,12 @@ public class WorldGeometryReplicator
             {
                 foreach (var mb in clone.GetComponentsInChildren<MonoBehaviour>())
                 {
-                    mb.enabled = false; // отключаем все скрипты на клоне
+                    mb.enabled = false; // РѕС‚РєР»СЋС‡Р°РµРј РІСЃРµ СЃРєСЂРёРїС‚С‹ РЅР° РєР»РѕРЅРµ
                 }
             }
         }
 
-        // Клонируем статичные Collider без Rigidbody
+        // РљР»РѕРЅРёСЂСѓРµРј СЃС‚Р°С‚РёС‡РЅС‹Рµ Collider Р±РµР· Rigidbody
         CloneStatic();
     }
 

@@ -17,7 +17,7 @@ public class RotationObject : MonoBehaviour
 
     void LateUpdate()
     {
-        // вычисляем разницу между прошлой и новой ротацией
+        // РІС‹С‡РёСЃР»СЏРµРј СЂР°Р·РЅРёС†Сѓ РјРµР¶РґСѓ РїСЂРѕС€Р»РѕР№ Рё РЅРѕРІРѕР№ СЂРѕС‚Р°С†РёРµР№
         DeltaRot = transform.rotation * Quaternion.Inverse(_lastRotation);
 
         _lastRotation = transform.rotation;
