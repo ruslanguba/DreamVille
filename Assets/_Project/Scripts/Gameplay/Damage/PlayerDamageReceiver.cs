@@ -7,7 +7,7 @@ using DreamVille.Gameplay.Player;
 
 namespace DreamVille.Gameplay.Damage
 {
-    public class PlayerDamageReciver : MonoBehaviour
+    public class PlayerDamageReceiver : MonoBehaviour
     {
         private PlayerKnockbackHandler knockbackHandler;
 

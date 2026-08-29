@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine;
 
 using DreamVille.Progression;
+using DreamVille.Scoring;
 
 namespace DreamVille.UI
 {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 using DreamVille.Dialogue;
 
-namespace DreamVille.Gameplay.Player
+namespace DreamVille.Dialogue
 {
     public class CameraPriorityHandler : MonoBehaviour
     {

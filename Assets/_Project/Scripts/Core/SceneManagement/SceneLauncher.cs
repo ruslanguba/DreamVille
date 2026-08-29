@@ -4,7 +4,7 @@ using DreamVille.Gameplay.Player;
 
 namespace DreamVille.Core.SceneManagement
 {
-    public class SceneLouncher : MonoBehaviour
+    public class SceneLauncher : MonoBehaviour
     {
         [SerializeField] private PlayerContext _character;
         [SerializeField] private Transform _startPosition;

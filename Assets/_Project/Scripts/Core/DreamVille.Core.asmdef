@@ -1,0 +1,20 @@
+{
+    "name": "DreamVille.Core",
+    "rootNamespace": "DreamVille.Core",
+    "references": [
+        "DreamVille.Dialogue",
+        "DreamVille.Gameplay",
+        "DreamVille.Input",
+        "DreamVille.SceneManagement",
+        "Zenject"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

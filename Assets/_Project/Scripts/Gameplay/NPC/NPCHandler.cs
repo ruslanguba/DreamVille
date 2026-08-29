@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-using DreamVille.UI.Hints;
+using DreamVille.Gameplay.Triggers;
 
 namespace DreamVille.Gameplay.NPC
 {

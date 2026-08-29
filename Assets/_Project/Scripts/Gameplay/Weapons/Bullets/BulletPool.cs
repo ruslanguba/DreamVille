@@ -16,7 +16,6 @@ namespace DreamVille.Gameplay.Weapons.Bullets
             Bullet bullet = _pool.Dequeue();
             bullet.gameObject.SetActive(true);
             bullet.SetPool(this);
-            Debug.Log("Bullet created");
             return bullet;
         }
 

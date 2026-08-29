@@ -60,12 +60,10 @@ namespace DreamVille.Gameplay.Player
         private void OnEnable()
         {
             _inputReader.Jump += _jump.Jump;
-            //_inputReader.OnScroll += _look.Zoom;
         }
         private void OnDisable()
         {
             _inputReader.Jump -= _jump.Jump;
-            //_inputReader.OnScroll += _look.Zoom;
         }
         private void Update()
         {

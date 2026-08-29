@@ -33,7 +33,6 @@ namespace DreamVille.UI
 
         public void SetFill(float normalized)
         {
-            Debug.Log("SetFill " + normalized);
             _currentScore = Mathf.Clamp(normalized * _scoreToFill, 0, _scoreToFill);
             _image.fillAmount = _currentScore / _scoreToFill;
         }

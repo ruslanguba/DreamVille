@@ -13,14 +13,13 @@ namespace DreamVille.Gameplay.Trajectory
             public Vector3 angularVelocity;
         }
 
-        //public Dictionary<Rigidbody, BodyData> Bodies => _bodiesData;
         private Dictionary<Rigidbody, BodyData> _bodiesData = new Dictionary<Rigidbody, BodyData>();
         private void Awake()
         {
-            RegisterRigitbodiesOnScine();
+            RegisterRigidbodiesOnScene();
         }
 
-        private void RegisterRigitbodiesOnScine()
+        private void RegisterRigidbodiesOnScene()
         {
             foreach (var rb in FindObjectsByType<Rigidbody>(0))
             {
@@ -28,12 +27,12 @@ namespace DreamVille.Gameplay.Trajectory
             }
         }
 
-        public void RegisterNewRigitbody(Rigidbody rb)
+        public void RegisterNewRigidbody(Rigidbody rb)
         {
             _bodiesData.Add(rb, new BodyData());
         }
 
-        public void DeleateRigitbody(Rigidbody rb)
+        public void DeleteRigidbody(Rigidbody rb)
         {
             _bodiesData.Remove(rb);
         }

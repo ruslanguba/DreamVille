@@ -4,7 +4,6 @@ using Zenject;
 using DreamVille.Audio;
 using DreamVille.Gameplay.Enemies;
 using DreamVille.Gameplay.Player;
-using DreamVille.Legacy;
 
 namespace DreamVille.Gameplay.Enemies.StateMachine
 {

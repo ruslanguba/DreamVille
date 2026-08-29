@@ -1,0 +1,16 @@
+{
+    "name": "DreamVille.Audio",
+    "rootNamespace": "DreamVille.Audio",
+    "references": [
+        "DreamVille.Configs"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

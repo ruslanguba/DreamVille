@@ -6,7 +6,7 @@ using DreamVille.Gameplay.Environment;
 
 namespace DreamVille.Gameplay.Interactables
 {
-    public class InterractableBaloon : InteractableBase
+    public class InteractableBalloon : InteractableBase
     {
         [SerializeField] private AudioClip _clip;
         private PropsMover _propsMover;

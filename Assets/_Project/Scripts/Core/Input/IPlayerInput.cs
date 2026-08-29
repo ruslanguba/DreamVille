@@ -12,7 +12,6 @@ namespace DreamVille.Core.Input
         bool IsFireHeld { get; }
         bool IsAimHeld { get; }
 
-        // Push (одноразовые события)
         event Action Jump;
         event Action FirePressed;
         event Action FireReleased;
@@ -21,7 +20,6 @@ namespace DreamVille.Core.Input
         event Action Recall;
         event Action Throw;
         event Action Interact;
-        //event Action Pause;
         event Action<float> Scroll;
     }
 }

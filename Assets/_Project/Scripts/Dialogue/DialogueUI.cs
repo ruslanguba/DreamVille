@@ -50,7 +50,7 @@ namespace DreamVille.Dialogue
             leftImage.sprite = sprite;
         }
 
-        public void ShowNexSentence(bool isPluh, string text)
+        public void ShowNextSentence(bool isPluh, string text)
         {
             if (isPluh)
             {

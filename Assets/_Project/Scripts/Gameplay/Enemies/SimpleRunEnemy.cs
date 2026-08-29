@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 using DreamVille.Gameplay.Enemies.StateMachine;
@@ -13,7 +14,8 @@ namespace DreamVille.Gameplay.Enemies
         public event Action<SimpleRunEnemy> OnDestroyed;
         [SerializeField] private float _speed;
         [SerializeField] private float _acceleration;
-        [SerializeField] private float _stoppingDistannce;
+        [FormerlySerializedAs("_stoppingDistannce")]
+        [SerializeField] private float _stoppingDistance;
         [SerializeField] private Animator _animator;
         [SerializeField] private SimpleDie _health;
 
@@ -76,7 +78,7 @@ namespace DreamVille.Gameplay.Enemies
 
         private void CheckDistanceToTarget()
         {
-            if (Vector3.Distance(transform.position, _target.position) < _stoppingDistannce)
+            if (Vector3.Distance(transform.position, _target.position) < _stoppingDistance)
             {
                 ReachTarget();
             }
@@ -97,7 +99,7 @@ namespace DreamVille.Gameplay.Enemies
                 {
                     _rb.linearVelocity = Vector3.zero;
                     if (_player != null)
-                        GetComponent<EnemyRotationHandler>().RoteteToPlayer(_player.BodyTransform.position);
+                        GetComponent<EnemyRotationHandler>().RotateToPlayer(_player.BodyTransform.position);
                 }
             }
         }

@@ -3,7 +3,6 @@ using System.Collections;
 using System;
 using UnityEngine;
 
-using DreamVille.Core.Bootstrap;
 using DreamVille.Core.Input;
 using DreamVille.Gameplay.Trajectory;
 
@@ -19,8 +18,6 @@ namespace DreamVille.Gameplay.Weapons.Pillow
         [SerializeField] private Transform _spawnPoint; // точка броска
         [SerializeField] private Transform _character;
         [SerializeField] private List<GameObject> _pillows; // заранее созданные подушки
-        //[SerializeField] private PillowUiBinder _uiBinder;
-        //[SerializeField] private DynamicObjectsRegistry _dynamicObjectsRegistry;
         private Stack<GameObject> _thrownPillows = new Stack<GameObject>();
 
         [Header("Settings")]
@@ -53,29 +50,6 @@ namespace DreamVille.Gameplay.Weapons.Pillow
             OnPillowAdded?.Invoke(_pillows.Count);
         }
 
-        //private void Awake()
-        //{
-        //    _input = GetComponent<IPlayerInput>();
-        //    foreach (var pillow in _pillows)
-        //    {
-        //        pillow.SetActive(false);
-        //        var rb = pillow.GetComponent<Rigidbody>();
-        //        pillow.transform.parent = null;
-        //        if (rb != null)
-        //        {
-        //            rb.isKinematic = true;
-        //            rb.linearVelocity = Vector3.zero;
-        //            rb.angularVelocity = Vector3.zero;
-        //        }
-        //    }
-        //}
-
-        //private void OnEnable()
-        //{
-        //    _input.Recall += HandleThrowOrStop;
-        //    _input.Throw += HandleRecall;
-        //}
-
         private void OnDisable()
         {
             // Initialize() вызывает GameplaySceneEntryPoint. В сценах без него подписки не создавались.
@@ -84,14 +58,7 @@ namespace DreamVille.Gameplay.Weapons.Pillow
 
             _input.Recall -= HandleThrowOrStop;
             _input.Throw -= HandleRecall;
-            //_uiBinder.Unbind();
         }
-
-        //private void Start()
-        //{
-        //    //_uiBinder.Bind();
-        //    OnPillowAdded?.Invoke(_pillows.Count);
-        //}
 
         private void HandleThrowOrStop()
         {

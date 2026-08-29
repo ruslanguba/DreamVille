@@ -1,6 +1,5 @@
 using UnityEngine;
 
-using DreamVille.Legacy;
 
 namespace DreamVille.Gameplay.Enemies.StateMachine
 {

@@ -3,7 +3,7 @@ using UnityEngine;
 
 using DreamVille.Configs;
 
-namespace DreamVille.Progression
+namespace DreamVille.Scoring
 {
     public class StarProgressService
     {
@@ -25,7 +25,6 @@ namespace DreamVille.Progression
         {
 
             _totalScore += score;
-            Debug.Log("Тотал в StarProgressService " + _totalScore);
             UpdateCurrentStarProgress();
 
             while (CanUnlockNextStar())
@@ -48,7 +47,6 @@ namespace DreamVille.Progression
             float progress =
                 Mathf.Clamp01((_totalScore - prevThreshold) /
                               (nextThreshold - prevThreshold));
-            Debug.Log("UpdateCurrentStarProgress " + progress);
             OnStarProgressChanged?.Invoke(_currentStarIndex, progress);
         }
 
@@ -73,10 +71,6 @@ namespace DreamVille.Progression
             PlayerPrefs.Save();
         }
 
-        //private void LoadProgress()
-        //{
         //    _currentStarIndex =
-        //        PlayerPrefs.GetInt(_rules.levelId + "_Stars", 0);
-        //}
     }
 }

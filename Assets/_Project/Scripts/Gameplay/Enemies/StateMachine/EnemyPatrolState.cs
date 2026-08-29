@@ -1,7 +1,6 @@
 using UnityEngine;
 
 using DreamVille.Audio;
-using DreamVille.Legacy;
 
 namespace DreamVille.Gameplay.Enemies.StateMachine
 {
@@ -45,7 +44,7 @@ namespace DreamVille.Gameplay.Enemies.StateMachine
             }
             else
             {
-                enemy.RotationHandler.RoteteToPlayer(enemy.PlayerTransform.position);       
+                enemy.RotationHandler.RotateToPlayer(enemy.PlayerTransform.position);       
             }
 
             if (Vector3.Distance(enemy.transform.position, _target) < 0.5f)

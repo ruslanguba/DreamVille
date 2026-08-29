@@ -1,0 +1,22 @@
+{
+    "name": "DreamVille.Dialogue",
+    "rootNamespace": "DreamVille.Dialogue",
+    "references": [
+        "DreamVille.Gameplay",
+        "Unity.Cinemachine",
+        "Unity.InputSystem",
+        "Unity.Localization",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI",
+        "Zenject"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

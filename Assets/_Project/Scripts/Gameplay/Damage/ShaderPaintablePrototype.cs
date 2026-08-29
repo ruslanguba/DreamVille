@@ -1,8 +1,9 @@
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 using DreamVille.Gameplay.Interactables;
-using DreamVille.Progression;
+using DreamVille.Scoring;
 
 namespace DreamVille.Gameplay.Damage
 {
@@ -38,7 +39,8 @@ namespace DreamVille.Gameplay.Damage
             _steps = _maxHitPoints;
         }
 
-        public void Bind(ScoreService scoreService)
+        [Inject]
+        public void Construct(ScoreService scoreService)
         {
             _scoreService = scoreService;
         }
@@ -54,9 +56,9 @@ namespace DreamVille.Gameplay.Damage
                 return;
 
             _currentStep++;
-            if(_currentStep <= _steps)
+            if (_currentStep <= _steps)
             {
-                _scoreService.AddScore(10);
+                _scoreService?.AddScore(10);
             }
             float t = _currentStep / _steps;
             foreach (var renderer in _renderer)

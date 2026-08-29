@@ -1,0 +1,24 @@
+{
+    "name": "DreamVille.UI",
+    "rootNamespace": "DreamVille.UI",
+    "references": [
+        "DreamVille.Audio",
+        "DreamVille.Core",
+        "DreamVille.Gameplay",
+        "DreamVille.Input",
+        "DreamVille.SceneManagement",
+        "Unity.Localization",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI",
+        "Zenject"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

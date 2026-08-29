@@ -11,7 +11,6 @@ namespace DreamVille.Gameplay.Weapons.Bullets
 
         public Bullet SpawnBullet(Vector3 position, Quaternion rotation, BulletConfig bulletConfig)
         {
-            Debug.Log("Bullet spawned");
             Bullet bullet = _pool.Get();
             bullet.transform.SetPositionAndRotation(position, rotation);
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 using DreamVille.Dialogue;
 using DreamVille.Gameplay.Enemies;
@@ -13,18 +14,18 @@ namespace DreamVille.Progression
         [SerializeField] private EnemyHealth[] first_Enemies;
         [SerializeField] private EnemyHealth[] second_Enemies;
 
-        //[SerializeField] private PillowGun pillowGun;
-
-        [SerializeField] private DialogueTrigger first_Dilogue;
-        [SerializeField] private DialogueTrigger second_Dilogue;
-        //[SerializeField] private DialogueTrigger third_Dilogue;
+        [FormerlySerializedAs("first_Dilogue")]
+        [SerializeField] private DialogueTrigger _firstDialogue;
+        [FormerlySerializedAs("second_Dilogue")]
+        [SerializeField] private DialogueTrigger _secondDialogue;
 
         [SerializeField] private Animator first_door;
         [SerializeField] private Animator second_door;
 
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip doorOpenSound;
-        [SerializeField] private AudioClip[] mombleSound;
+        [FormerlySerializedAs("mombleSound")]
+        [SerializeField] private AudioClip[] _mumbleSounds;
         [SerializeField] private NPCAnimationHandler npcAnimationHandler;
 
         [SerializeField] private int _counter;
@@ -42,33 +43,30 @@ namespace DreamVille.Progression
                 enemy.OnDeath += CalculateSecondQuestProgress;
             }
 
-            first_Dilogue.OnDialogueStarted += SetTalkAnim;
-            first_Dilogue.OnDialogueEnded += OpenFirstDoor;
+            _firstDialogue.OnDialogueStarted += SetTalkAnim;
+            _firstDialogue.OnDialogueEnded += OpenFirstDoor;
 
-            second_Dilogue.OnDialogueStarted += SetApplauseAnim;
-            second_Dilogue.OnDialogueEnded += StopAudio;
-            //third_Dilogue.OnDialogueStarted += SetApplause;
+            _secondDialogue.OnDialogueStarted += SetApplauseAnim;
+            _secondDialogue.OnDialogueEnded += StopAudio;
 
-            //pillowGun.Deactivate();
-            second_Dilogue.gameObject.SetActive(false);
+            _secondDialogue.gameObject.SetActive(false);
         }
 
         private void OnDisable()
         {
-            first_Dilogue.OnDialogueStarted -= SetTalkAnim;
-            first_Dilogue.OnDialogueEnded -= OpenFirstDoor;
+            _firstDialogue.OnDialogueStarted -= SetTalkAnim;
+            _firstDialogue.OnDialogueEnded -= OpenFirstDoor;
 
-            second_Dilogue.OnDialogueStarted -= SetApplauseAnim;
-            second_Dilogue.OnDialogueEnded -= StopAudio;
+            _secondDialogue.OnDialogueStarted -= SetApplauseAnim;
+            _secondDialogue.OnDialogueEnded -= StopAudio;
 
-            //third_Dilogue.OnDialogueStarted -= SetApplause;
         }
         private void CalculateFirstQuestProgress(EnemyHealth enemy, int collisions)
         {
             _counter++;
             if(_counter >= 2)
             {
-                second_Dilogue.gameObject.SetActive(true);
+                _secondDialogue.gameObject.SetActive(true);
                 npcAnimationHandler.SetGreetingAnim();
                 _counter = 0;
             }
@@ -85,7 +83,6 @@ namespace DreamVille.Progression
 
         private void OpenFirstDoor()
         {
-            //pillowGun.Activate();
             audioSource.Stop();
             audioSource.transform.position = first_door.transform.position;
             audioSource.PlayOneShot(doorOpenSound);
@@ -104,15 +101,15 @@ namespace DreamVille.Progression
 
         private void SetTalkAnim()
         {
-            int rnd = Random.Range(0, mombleSound.Length);
-            audioSource.PlayOneShot(mombleSound[rnd]);
+            int rnd = Random.Range(0, _mumbleSounds.Length);
+            audioSource.PlayOneShot(_mumbleSounds[rnd]);
             npcAnimationHandler.SetTalkAnim();
         }
 
         private void SetApplauseAnim()
         {
-            int rnd = Random.Range(0, mombleSound.Length);
-            audioSource.PlayOneShot(mombleSound[rnd]);
+            int rnd = Random.Range(0, _mumbleSounds.Length);
+            audioSource.PlayOneShot(_mumbleSounds[rnd]);
             StartCoroutine(StartApplauseAndTalk());
         }
 

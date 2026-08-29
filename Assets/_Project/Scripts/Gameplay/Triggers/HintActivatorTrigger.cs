@@ -3,7 +3,7 @@ using UnityEngine;
 
 using DreamVille.Core.Input;
 
-namespace DreamVille.UI.Hints
+namespace DreamVille.Gameplay.Triggers
 {
     public class HintActivatorTrigger : MonoBehaviour
     {

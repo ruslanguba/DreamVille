@@ -5,6 +5,7 @@ using DreamVille.Gameplay.Enemies;
 using DreamVille.Gameplay.Weapons.Bullets;
 using DreamVille.Gameplay.Weapons.Pillow;
 using DreamVille.Progression;
+using DreamVille.Scoring;
 
 namespace DreamVille.Core.Bootstrap
 {
@@ -89,13 +90,13 @@ namespace DreamVille.Core.Bootstrap
         private void SubscribeServices()
         {
             _scoreService.OnScoreAdded += _starProgressService.AddScore;
-            _enemyRegistry.OnAllEnemiesKilled += _levelCompletionFlow.LevelCompleat;
+            _enemyRegistry.OnAllEnemiesKilled += _levelCompletionFlow.LevelComplete;
         }
 
         private void UnsubscribeServices()
         {
             _scoreService.OnScoreAdded -= _starProgressService.AddScore;
-            _enemyRegistry.OnAllEnemiesKilled -= _levelCompletionFlow.LevelCompleat;
+            _enemyRegistry.OnAllEnemiesKilled -= _levelCompletionFlow.LevelComplete;
         }
 
         private void OnEnemyKilled(int remainingEnemies, int collisionsCount)

@@ -17,11 +17,11 @@ namespace DreamVille.Legacy
 
         private Vignette vignette;
         private Coroutine routine;
-        private PlayerDamageReciver health;
+        private PlayerDamageReceiver health;
 
         private void Awake()
         {
-            health = GetComponent<PlayerDamageReciver>();
+            health = GetComponent<PlayerDamageReceiver>();
         }
 
         private void Start()

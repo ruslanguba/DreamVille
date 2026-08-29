@@ -3,6 +3,7 @@ using Zenject;
 
 using DreamVille.Configs;
 using DreamVille.Progression;
+using DreamVille.Scoring;
 
 namespace DreamVille.Core.Bootstrap
 {

@@ -2,7 +2,7 @@ using UnityEngine;
 using Zenject;
 
 using DreamVille.Gameplay.Interactables;
-using DreamVille.Progression;
+using DreamVille.Scoring;
 
 namespace DreamVille.Gameplay.Player
 {

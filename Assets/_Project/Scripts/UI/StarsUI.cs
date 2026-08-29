@@ -9,7 +9,6 @@ namespace DreamVille.UI
 
         public void SetStarProgress(int index, float normalized)
         {
-            Debug.Log("SetStarProgress " + normalized);
             if (index < 0 || index >= _scoreStars.Count) return;
             _scoreStars[index].SetFill(normalized);
         }

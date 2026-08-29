@@ -27,7 +27,7 @@ namespace DreamVille.Gameplay.Enemies.StateMachine
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
         }
 
-        public void RoteteToPlayer(Vector3 target)
+        public void RotateToPlayer(Vector3 target)
         {
             Vector3 dir = target - transform.position;
             dir.y = 0;

@@ -56,7 +56,6 @@ namespace DreamVille.Gameplay.Trajectory
             }
             else
             {
-                Debug.Log(rb);
             }
         }
 

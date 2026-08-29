@@ -4,7 +4,7 @@ using DreamVille.Gameplay.Enemies;
 
 namespace DreamVille.Gameplay.Enemies.StateMachine
 {
-    public class EnemySwichCollider : MonoBehaviour
+    public class EnemySwitchCollider : MonoBehaviour
     {
         [SerializeField] private Collider _aliveCollider;
         [SerializeField] private Collider _deadCollider;
@@ -31,7 +31,6 @@ namespace DreamVille.Gameplay.Enemies.StateMachine
 
         private void SwitchCollider(EnemyHealth enemy, int collisionsCount)
         {
-            Debug.Log("SwitchCollider");
             _aliveCollider.enabled = false;
             _deadCollider.enabled = true;
         }

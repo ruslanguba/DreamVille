@@ -66,7 +66,6 @@ namespace DreamVille.Gameplay.NPC
         private void TriggerJump()
         {
             _first.JumpForward();
-            Debug.Log(_first.name + " прыгает!");
             StartCoroutine(JumpRoutine());
         }
     }

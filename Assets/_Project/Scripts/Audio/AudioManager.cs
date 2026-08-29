@@ -19,7 +19,7 @@ namespace DreamVille.Audio
         // Время жизни задаёт ProjectContext: ни DontDestroyOnLoad, ни защиты от дублей не требуется.
         private void Awake()
         {
-            SetStartVoliums();
+            SetStartVolumes();
         }
         private void OnEnable()
         {
@@ -84,9 +84,8 @@ namespace DreamVille.Audio
             return 1;
         }
 
-        private void SetStartVoliums()
+        private void SetStartVolumes()
         {
-            Debug.Log("SetStart");
             float startVolium = musicDatabase.StartVolume;
             SetMusicVolume(startVolium);
             SetSFXVolume(startVolium);    

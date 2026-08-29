@@ -17,7 +17,8 @@ namespace DreamVille.Gameplay.Weapons
         private BulletSpawner _spawner;
         private ActorAudio _audio;
 
-        [Inject]
+        // В сценах без боевой обвязки спавнера нет — оружие просто не стреляет.
+        [Inject(Optional = true)]
         public void Construct(BulletSpawner spawner)
         {
             _spawner = spawner;

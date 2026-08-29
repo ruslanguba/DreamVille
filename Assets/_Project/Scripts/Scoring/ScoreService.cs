@@ -3,7 +3,7 @@ using UnityEngine;
 
 using DreamVille.Configs;
 
-namespace DreamVille.Progression
+namespace DreamVille.Scoring
 {
     public class ScoreService
     {
@@ -34,7 +34,6 @@ namespace DreamVille.Progression
 
         public void AddScore(float score)
         {
-            Debug.Log("ScoreService " + score);
             _totalScore += score;
             OnScoreAdded?.Invoke(score);
             OnTotalScoreChanged?.Invoke(_totalScore);

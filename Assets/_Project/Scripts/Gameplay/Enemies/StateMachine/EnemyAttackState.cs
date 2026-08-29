@@ -1,7 +1,6 @@
 using UnityEngine;
 
 using DreamVille.Audio;
-using DreamVille.Legacy;
 
 namespace DreamVille.Gameplay.Enemies.StateMachine
 {
@@ -22,7 +21,7 @@ namespace DreamVille.Gameplay.Enemies.StateMachine
 
         public override void Update()
         {
-            enemy.RotationHandler.RoteteToPlayer(enemy.PlayerTransform.position);
+            enemy.RotationHandler.RotateToPlayer(enemy.PlayerTransform.position);
             float dist = Vector3.Distance(enemy.transform.position, enemy.PlayerTransform.position);
 
             // Если игрок ушёл из зоны атаки — возвращаемся к преследованию

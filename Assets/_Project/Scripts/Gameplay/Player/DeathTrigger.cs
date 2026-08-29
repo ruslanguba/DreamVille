@@ -11,7 +11,6 @@ namespace DreamVille.Gameplay.Player
             if (other.TryGetComponent(out PlayerSafePosition playerSafePosition))
             {
                 playerSafePosition.ReturnPlayerToPlatform();
-                Debug.Log(other);
             }
 
             if (other.TryGetComponent(out EnemyHealth health))

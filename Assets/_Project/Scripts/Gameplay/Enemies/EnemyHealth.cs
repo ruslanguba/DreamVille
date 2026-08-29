@@ -13,7 +13,6 @@ namespace DreamVille.Gameplay.Enemies
         public event Action<EnemyHealth, int> OnDeath;
         [SerializeField] private float _health = 2f;
         [SerializeField] private AudioClip _clip;
-        //[SerializeField] private ParticleSystem _particleSystem;
         protected int _collisionsCount;
 
         private AudioManager _audio;
@@ -30,16 +29,9 @@ namespace DreamVille.Gameplay.Enemies
             _collisionsCount = collisionsCount;
             if (_health <= 0)
             {
-                //_particleSystem.Play();
                 Die();
             }
         }
-
-        //private void PlayParticle()
-        //{
-        //    _particleSystem.transform.position = point;
-        //    _particle.Play();
-        //}
 
         protected virtual void Die()
         {

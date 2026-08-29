@@ -19,7 +19,6 @@ namespace DreamVille.UI
         // Создаём иконки
         public void SpawnIcons(int count)
         {
-            //ClearIcons();
 
             Vector3 startPos = _firstPosition.localPosition;
 

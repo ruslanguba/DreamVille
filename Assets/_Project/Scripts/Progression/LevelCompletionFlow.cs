@@ -53,7 +53,7 @@ namespace DreamVille.Progression
             _trigger.OnDialogueEnded -= FinalAction;
         }
 
-        public virtual void LevelCompleat()
+        public virtual void LevelComplete()
         {
             if (_trigger == null)
                 return;
@@ -63,36 +63,14 @@ namespace DreamVille.Progression
         }
     }
 
-
-    //{
     //    [Header("Actors")]
-    //    [SerializeField] private NPCReactionController _npc;
-    //    [SerializeField] private DialogueTrigger _dialogue;
-    //    [SerializeField] private PortalActivator _portal;
 
     //    [Header("Save")]
-    //    [SerializeField] private string _levelId;
 
-    //    public void Initialize(EnemyRegistry enemyRegistry)
-    //    {
-    //        enemyRegistry.OnAllEnemiesKilled += StartFlow;
-    //    }
-
-    //    private void StartFlow()
-    //    {
     //        _npc.PlayGreeting();          // анимация + звук
     //        _dialogue.Enable();           // включаем триггер
-    //        _dialogue.OnDialogueEnded += OnDialogueFinished;
-    //    }
-
-    //    private void OnDialogueFinished()
-    //    {
-    //        _dialogue.OnDialogueEnded -= OnDialogueFinished;
 
     //        _npc.SetApplause();    // финальная анимация
     //        _portal.Enable();             // портал
-    //    }
 
-
-    //}
 }

@@ -17,10 +17,10 @@ namespace DreamVille.Gameplay.Interactables
 
         public override void OnInteract()
         {
-            SwichLight();
+            SwitchLight();
         }
 
-        private void SwichLight()
+        private void SwitchLight()
         {
             _enabled = !_enabled;
             _light.enabled = _enabled;

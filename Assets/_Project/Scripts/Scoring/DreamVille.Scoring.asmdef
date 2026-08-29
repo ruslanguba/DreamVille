@@ -1,0 +1,16 @@
+{
+    "name": "DreamVille.Scoring",
+    "rootNamespace": "DreamVille.Scoring",
+    "references": [
+        "DreamVille.Configs"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

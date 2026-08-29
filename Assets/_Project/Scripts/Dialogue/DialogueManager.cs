@@ -50,7 +50,7 @@ namespace DreamVille.Dialogue
 
         private void OnSentenceShown(Dialogue sentence)
         {
-            _ui.ShowNexSentence(sentence.IsPluh, sentence.Sentence);
+            _ui.ShowNextSentence(sentence.IsPluh, sentence.Sentence);
         }
 
         // TODO: EventSystem должен лежать в сцене, а не создаваться в рантайме.

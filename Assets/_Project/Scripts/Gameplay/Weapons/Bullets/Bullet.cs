@@ -46,7 +46,6 @@ namespace DreamVille.Gameplay.Weapons.Bullets
         private void OnCollisionEnter(Collision collision)
         {
             _hitCount++;
-            Debug.Log("Bullet OnBulletHit");
             Hit?.Invoke(new BulletHitInfo
             {
                 HitPoint = collision.contacts[0].point,

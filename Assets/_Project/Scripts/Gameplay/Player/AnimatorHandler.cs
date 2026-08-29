@@ -15,10 +15,6 @@ namespace DreamVille.Gameplay.Player
         private static readonly int MoveDirHash = Animator.StringToHash("moveDirection");
         private static readonly int AnimSpeedMultiplierHash = Animator.StringToHash("animSpeedMultiplier");
 
-        //public AnimatorHandler(Animator _animator)
-        //{
-        //    _animator = _animator;
-        //}
         public AnimatorHandler(PlayerContext playerContext)
         {
             _playerContext = playerContext;
@@ -31,14 +27,6 @@ namespace DreamVille.Gameplay.Player
         public void PlayAttack() => _playerContext.Animator.SetTrigger(AttackTriggerHash);
         public void SetMoveDirection(int dir) => _playerContext.Animator.SetInteger(MoveDirHash, dir);
         public void SetAnimSpeedMultiplier(float multiplier) => _playerContext.Animator.SetFloat(AnimSpeedMultiplierHash, multiplier);
-
-        //public void SetSpeed(float _speed) => _animator.SetFloat(SpeedHash, Mathf.Abs(_speed));
-        //public void SetMoving(bool moving) => _animator.SetBool(IsMovingHash, moving);
-        //public void SetBackward(bool backward) => _animator.SetBool(IsBackwardHash, backward);
-        //public void SetJump() => _animator.SetTrigger(IsJumpHash);
-        //public void PlayAttack() => _animator.SetTrigger(AttackTriggerHash);
-        //public void SetMoveDirection(int dir) => _animator.SetInteger(MoveDirHash, dir);
-        //public void SetAnimSpeedMultiplier(float multiplier) => _animator.SetFloat(AnimSpeedMultiplierHash, multiplier);
 
     }
 }

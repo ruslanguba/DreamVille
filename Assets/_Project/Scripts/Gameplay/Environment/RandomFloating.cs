@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DreamVille.Gameplay.Environment
 {
-    public class RandomFloatting : MonoBehaviour
+    public class RandomFloating : MonoBehaviour
     {
         [Header("Movement")]
         [SerializeField] private float _radius = 5f;         // Радиус выбора точки

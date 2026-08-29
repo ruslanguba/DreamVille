@@ -1,6 +1,7 @@
 using UnityEngine;
 
 using DreamVille.Configs;
+using DreamVille.Core.Bootstrap;
 using DreamVille.Core.Input;
 using DreamVille.Gameplay.Enemies;
 using DreamVille.Gameplay.Player;
@@ -8,8 +9,9 @@ using DreamVille.Gameplay.Weapons.Bullets;
 using DreamVille.Gameplay.Weapons.Pillow;
 using DreamVille.Progression;
 using DreamVille.UI;
+using DreamVille.Scoring;
 
-namespace DreamVille.Core.Bootstrap
+namespace DreamVille.Legacy
 {
     public class GameplaySceneEntryPoint : MonoBehaviour
     {
@@ -62,7 +64,7 @@ namespace DreamVille.Core.Bootstrap
         private void BindEvents()
         {
             _scoreService.OnScoreAdded += _starProgressService.AddScore;
-            _enemyRegistry.OnAllEnemiesKilled += _levelCompleatFlow.LevelCompleat;
+            _enemyRegistry.OnAllEnemiesKilled += _levelCompleatFlow.LevelComplete;
 
         }
 

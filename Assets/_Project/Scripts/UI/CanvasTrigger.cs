@@ -17,11 +17,8 @@ namespace DreamVille.UI
         {
             if (other.gameObject.TryGetComponent(out InputReader inputReader))
             {
-                //inputReader.enabled = false;
                 _text.SetActive(true);
                 _text.transform.LookAt(other.transform.position);
-                //Time.timeScale = 0;
-                //Cursor.lockState = CursorLockMode.Confined;
             }
         }
         private void OnTriggerExit(Collider other)
