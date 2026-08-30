@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DreamVille.Gameplay.Interactables
+namespace DreamVille.Legacy
 {
     public class PortalActivator: MonoBehaviour
     {

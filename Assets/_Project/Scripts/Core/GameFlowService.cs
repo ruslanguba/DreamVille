@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+
 using DreamVille.Core.SceneManagement;
 
 namespace DreamVille.Core
@@ -5,12 +7,12 @@ namespace DreamVille.Core
     /// <summary>Переходы между сценами: рестарт уровня и выход в меню.</summary>
     public class GameFlowService
     {
-        private readonly SceneTransitionManager _transitions;
+        private readonly SceneLoader _sceneLoader;
         private readonly PauseService _pause;
 
-        public GameFlowService(SceneTransitionManager transitions, PauseService pause)
+        public GameFlowService(SceneLoader sceneLoader, PauseService pause)
         {
-            _transitions = transitions;
+            _sceneLoader = sceneLoader;
             _pause = pause;
         }
 
@@ -18,13 +20,13 @@ namespace DreamVille.Core
         {
             // Время возвращаем до загрузки: иначе новая сцена стартует с timeScale = 0.
             _pause.Resume();
-            _transitions.RestartScene();
+            _sceneLoader.ReloadActiveAsync().Forget();
         }
 
         public void ExitToMenu(string menuSceneName)
         {
             _pause.Resume();
-            _transitions.Transition(new SceneTransitionRequest(menuSceneName));
+            _sceneLoader.LoadAsync(menuSceneName).Forget();
         }
     }
 }

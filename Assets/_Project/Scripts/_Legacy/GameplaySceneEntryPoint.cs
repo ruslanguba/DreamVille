@@ -70,7 +70,7 @@ namespace DreamVille.Legacy
 
         private void SetupEnemyRegistry()
         {
-            _enemyRegistry.Initialize();
+            // Реестр собирает состав сам в Awake — явная инициализация больше не нужна.
             _ui.EnemyCounter.SetEnemiesRemaining(_enemyRegistry.TotalEnemies);
 
             _enemyRegistry.OnEnemyKilled += OnEnemyKilled;

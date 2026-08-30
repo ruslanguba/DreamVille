@@ -2,7 +2,7 @@ using UnityEngine;
 
 using DreamVille.UI;
 
-namespace DreamVille.Core.Bootstrap
+namespace DreamVille.UI
 {
     public class GameUIRoot : MonoBehaviour
     {

@@ -21,8 +21,11 @@ namespace DreamVille.Core.Bootstrap
 
             Container.Bind<ScoreService>().AsSingle();
             Container.Bind<StarProgressService>().AsSingle();
+            Container.Bind<BestScoreService>().AsSingle();
 
-            Container.Bind<LevelCompletionFlow>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<LevelUnlockService>().AsSingle();
+            Container.Bind<LevelActors>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesTo<LevelDirector>().AsSingle();
         }
     }
 }

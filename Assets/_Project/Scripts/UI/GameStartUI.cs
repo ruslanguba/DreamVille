@@ -1,12 +1,16 @@
-using System.Collections;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
-
-using DreamVille.Core.SceneManagement;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace DreamVille.UI
 {
+    /// <summary>
+    /// Вступительная заставка. Только показывает картинки —
+    /// решение о переходе принимает точка входа игры.
+    /// </summary>
     public class GameStartUI : MonoBehaviour
     {
         [Header("Main Images")]
@@ -15,114 +19,105 @@ namespace DreamVille.UI
 
         [Header("Settings")]
         [SerializeField] private float fadeTime = 1.2f;
-        [SerializeField] private float scaleTime = 1.0f;
         [SerializeField] private float appearScale = 1.12f;
         [SerializeField] private float firstScale = 1.08f;
 
-        private int collageIndex = 0;
-        private bool skip = false;
+        [Header("Input")]
+        [SerializeField] private InputActionReference _skipAction;
 
-        [SerializeField] private string _sceneToLoad;
+        private bool _skipRequested;
 
-        void Start()
+        private void OnEnable()
+        {
+            if (_skipAction?.action == null)
+                return;
+
+            _skipAction.action.Enable();
+            _skipAction.action.performed += OnSkipPerformed;
+        }
+
+        private void OnDisable()
+        {
+            if (_skipAction?.action == null)
+                return;
+
+            _skipAction.action.performed -= OnSkipPerformed;
+            _skipAction.action.Disable();
+        }
+
+        private void OnSkipPerformed(InputAction.CallbackContext _) => _skipRequested = true;
+
+        /// <summary>Проигрывает заставку целиком. Завершается, когда показан последний кадр.</summary>
+        public async UniTask PlayAsync(CancellationToken token = default)
         {
             InitImages();
-            StartCoroutine(SequenceRoutine());
+
+            await FadeAndGrowFirstAsync(token);
+
+            foreach (Image image in collageImages)
+            {
+                _skipRequested = false;
+                await ShowCollageImageAsync(image, token);
+            }
         }
 
-        void Update()
+        private void InitImages()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-                skip = true;
-        }
-
-        void InitImages()
-        {
-            Color c1 = firstImage.color;
-            c1.a = 1f;
-            firstImage.color = c1;
-
+            SetAlpha(firstImage, 1f);
             firstImage.transform.localScale = Vector3.one;
 
-            foreach (var img in collageImages)
+            foreach (Image image in collageImages)
             {
-                Color c = img.color;
-                c.a = 0f;
-                img.color = c;
-
-                img.transform.localScale = Vector3.one * appearScale;
+                SetAlpha(image, 0f);
+                image.transform.localScale = Vector3.one * appearScale;
             }
         }
 
-        IEnumerator SequenceRoutine()
+        private async UniTask FadeAndGrowFirstAsync(CancellationToken token)
         {
-            // Первая картинка
-            yield return StartCoroutine(FadeAndGrowFirst());
-
-            // Остальные
-            while (collageIndex < collageImages.Length)
-            {
-                skip = false; // чтобы Space переключал только текущий этап
-
-                yield return StartCoroutine(ShowNextCollageImage(collageImages[collageIndex]));
-
-                collageIndex++;
-            }
-
-            // В конце — грузим сцену
-            SceneManager.LoadScene(_sceneToLoad);
+            await AnimateAsync(
+                progress =>
+                {
+                    SetAlpha(firstImage, Mathf.Lerp(1f, 0.5f, progress));
+                    firstImage.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.one * firstScale, progress);
+                },
+                token);
         }
 
-        IEnumerator FadeAndGrowFirst()
+        private async UniTask ShowCollageImageAsync(Image image, CancellationToken token)
         {
-            float t = 0f;
-
-            Color c = firstImage.color;
-            Vector3 startScale = Vector3.one;
-            Vector3 endScale = Vector3.one * firstScale;
-
-            while (t < fadeTime)
-            {
-                if (skip) break;
-
-                t += Time.deltaTime;
-                float p = t / fadeTime;
-
-                c.a = Mathf.Lerp(1f, 0.5f, p);
-                firstImage.color = c;
-
-                firstImage.transform.localScale = Vector3.Lerp(startScale, endScale, p);
-
-                yield return null;
-            }
-        }
-
-        IEnumerator ShowNextCollageImage(Image img)
-        {
-            float t = 0f;
-            Color c = img.color;
-
             Vector3 startScale = Vector3.one * appearScale;
-            Vector3 endScale = Vector3.one;
 
-            while (t < fadeTime)
+            await AnimateAsync(
+                progress =>
+                {
+                    SetAlpha(image, progress);
+                    image.transform.localScale = Vector3.Lerp(startScale, Vector3.one, progress);
+                },
+                token);
+
+            SetAlpha(image, 1f);
+            image.transform.localScale = Vector3.one;
+        }
+
+        /// <summary>Общий цикл анимации: прерывается по Skip или по отмене.</summary>
+        private async UniTask AnimateAsync(Action<float> apply, CancellationToken token)
+        {
+            float elapsed = 0f;
+
+            while (elapsed < fadeTime && !_skipRequested)
             {
-                if (skip) break;
-
-                t += Time.deltaTime;
-                float p = t / fadeTime;
-
-                c.a = p;
-                img.color = c;
-
-                img.transform.localScale = Vector3.Lerp(startScale, endScale, p);
-
-                yield return null;
+                elapsed += Time.deltaTime;
+                apply(Mathf.Clamp01(elapsed / fadeTime));
+                await UniTask.Yield(PlayerLoopTiming.Update, token);
             }
+        }
 
-            c.a = 1f;
-            img.color = c;
-            img.transform.localScale = endScale;
+        private static void SetAlpha(Image image, float alpha)
+        {
+            Color color = image.color;
+            color.a = alpha;
+            image.color = color;
         }
     }
 }

@@ -4,6 +4,7 @@
     "references": [
         "DreamVille.Bootstrap",
         "DreamVille.Configs",
+        "DreamVille.Dialogue",
         "DreamVille.Gameplay",
         "DreamVille.Input",
         "DreamVille.Progression",

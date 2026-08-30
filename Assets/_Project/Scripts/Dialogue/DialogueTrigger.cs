@@ -28,35 +28,35 @@ namespace DreamVille.Dialogue
         [SerializeField] private AudioClip[] mumbels;
         [SerializeField] private bool deleteOnEnd;
 
+        /// <summary>Разоружённый триггер игнорирует вход игрока. Объект при этом остаётся активным.</summary>
+        public bool IsArmed { get; set; } = true;
+
         private void OnEnable()
         {
-            _actionSender = GetComponentInChildren<PlayerDetectorTrigger>();
-            _actionSender.OnPlayerTriggered += TriggerDialog;
+            // includeInactive обязателен: иначе после выключения зоны триггер теряет сам себя.
+            _actionSender = GetComponentInChildren<PlayerDetectorTrigger>(true);
+
+            if (_actionSender != null)
+                _actionSender.OnPlayerTriggered += TriggerDialog;
         }
 
         private void OnDisable()
         {
-            _actionSender.OnPlayerTriggered -= TriggerDialog;
+            if (_actionSender != null)
+                _actionSender.OnPlayerTriggered -= TriggerDialog;
         }
 
         public void TriggerDialog()
         {
+            if (!IsArmed)
+                return;
+
             OnDialogueStarted?.Invoke();
 
             var selectedLocale = LocalizationSettings.SelectedLocale.Identifier;
 
             var lines = selectedLocale == "en" ? sentenceEn : sentence;
             _dialogue.Begin(lines, DialogueCompleted);
-        }
-
-        public void EnableTrigger()
-        {
-            _actionSender.gameObject.SetActive(true);
-        }
-
-        public void DisableTrigger()
-        {
-            _actionSender.gameObject.SetActive(false);
         }
 
         public void DialogueCompleted()

@@ -11,6 +11,7 @@
         "DreamVille.SceneManagement",
         "DreamVille.Scoring",
         "DreamVille.UI",
+        "UniTask",
         "Zenject"
     ],
     "includePlatforms": [],

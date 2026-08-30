@@ -2,8 +2,10 @@
     "name": "DreamVille.Progression",
     "rootNamespace": "DreamVille.Progression",
     "references": [
+        "DreamVille.Configs",
         "DreamVille.Dialogue",
-        "DreamVille.Gameplay"
+        "DreamVille.Gameplay",
+        "Zenject"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

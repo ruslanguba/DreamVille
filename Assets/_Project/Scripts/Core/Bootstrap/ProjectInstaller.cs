@@ -23,12 +23,7 @@ namespace DreamVille.Core.Bootstrap
                 .AsSingle()
                 .NonLazy();
 
-            Container
-                .Bind<SceneTransitionManager>()
-                .FromNewComponentOnNewGameObject()
-                .WithGameObjectName(nameof(SceneTransitionManager))
-                .AsSingle()
-                .NonLazy();
+            Container.Bind<SceneLoader>().AsSingle();
         }
     }
 }

@@ -16,11 +16,13 @@ namespace DreamVille.Gameplay.Weapons
                 _shootingTimer -= Time.deltaTime;
         }
 
-        public bool CanShoot() => _shootingTimer <= 0;
+        // Выключенное оружие не стреляет: метод можно вызвать и у неактивного объекта.
+        public bool CanShoot() => isActiveAndEnabled && _shootingTimer <= 0;
 
         public abstract void TryShoot();
 
-        public virtual void Activate() { }
-        public virtual void Deactivate() { }
+        public virtual void Activate() => gameObject.SetActive(true);
+
+        public virtual void Deactivate() => gameObject.SetActive(false);
     }
 }

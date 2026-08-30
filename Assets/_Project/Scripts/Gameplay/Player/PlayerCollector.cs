@@ -10,8 +10,9 @@ namespace DreamVille.Gameplay.Player
     {
         private ScoreService _scoreService;
 
+        // Очки настроены не на всех уровнях: там, где нет ProgressionInstaller, сбор просто не начисляет.
         [Inject]
-        public void Construct(ScoreService scoreService)
+        public void Construct([InjectOptional] ScoreService scoreService)
         {
             _scoreService = scoreService;
         }

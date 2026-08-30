@@ -14,21 +14,20 @@ namespace DreamVille.Gameplay.Weapons
             _input = GetComponent<IPlayerInput>();
         }
 
+        // Видимостью оружия управляет подбор (CollectableGun), а не контроллер ввода.
         private void OnEnable()
         {
-            _currentGun?.Activate();
             _input.FirePressed += Fire;
         }
 
         private void OnDisable()
         {
             _input.FirePressed -= Fire;
-            _currentGun?.Deactivate();
         }
 
         private void Fire()
         {
-            if (_currentGun.CanShoot())
+            if (_currentGun != null && _currentGun.CanShoot())
                 _currentGun.TryShoot();
         }
     }

@@ -17,37 +17,42 @@ namespace DreamVille.Gameplay.NPC
 
         private void Start()
         {
-            _npcAnimationHandler.SetIdleAnim();
+            _npcAnimationHandler?.SetIdleAnim();
         }
 
+        // Звук у NPC опционален: часть персонажей стоит без AudioSource.
         private void PlayTalkSound()
         {
-            int rnd = Random.Range(0, _mumbleClips.Length);
-            _audio.PlayOneShot(_mumbleClips[rnd]);
+            if (_audio == null || _mumbleClips == null || _mumbleClips.Length == 0)
+                return;
+
+            _audio.PlayOneShot(_mumbleClips[Random.Range(0, _mumbleClips.Length)]);
         }
 
-        public void SetGreeting()
-        {
-            _npcAnimationHandler.SetGreetingAnim();
-        }
+        public void SetGreeting() => _npcAnimationHandler?.SetGreetingAnim();
 
         public void SetApplause()
         {
+            if (!isActiveAndEnabled)
+                return;
+
             StartCoroutine(StartApplauseAndTalk());
         }
 
         public void SetIdle()
         {
-            _audio.Stop();
+            if (_audio != null)
+                _audio.Stop();
+
             _npcAnimationHandler?.SetIdleAnim();
         }
 
         private IEnumerator StartApplauseAndTalk()
         {
-            _npcAnimationHandler.SetisApplauseAnim();
+            _npcAnimationHandler?.SetisApplauseAnim();
             yield return new WaitForSeconds(3);
             PlayTalkSound();
-            _npcAnimationHandler.SetTalkAnim();
+            _npcAnimationHandler?.SetTalkAnim();
         }
     }
 }

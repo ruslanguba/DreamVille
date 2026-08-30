@@ -6,6 +6,7 @@
         "DreamVille.Gameplay",
         "DreamVille.Input",
         "DreamVille.SceneManagement",
+        "UniTask",
         "Zenject"
     ],
     "includePlatforms": [],

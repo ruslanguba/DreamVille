@@ -15,12 +15,24 @@ namespace DreamVille.Gameplay.Weapons
         private void Awake()
         {
             _input = GetComponent<IPlayerInput>();
+        }
+
+        // Подписка парная с OnDisable: раньше она делалась в Awake и после
+        // первого выключения объекта прицеливание переставало работать.
+        private void OnEnable()
+        {
+            if (_input == null)
+                return;
+
             _input.SecondaryFirePressed += ShowTrajectory;
             _input.SecondaryFireReleased += ClearTrajectory;
         }
 
         private void OnDisable()
         {
+            if (_input == null)
+                return;
+
             _input.SecondaryFirePressed -= ShowTrajectory;
             _input.SecondaryFireReleased -= ClearTrajectory;
         }
@@ -33,12 +45,12 @@ namespace DreamVille.Gameplay.Weapons
         private void ClearTrajectory()
         {
             _isAnimating = false;
-            _rayTrajectory.Clear();
+            _rayTrajectory?.Clear();
         }
 
         private void Update()
         {
-            if(_isAnimating)
+            if (_isAnimating && _rayTrajectory != null && _aimingPivot != null)
             {
                 _rayTrajectory.DrawTrajectory(_aimingPivot.forward);
             }

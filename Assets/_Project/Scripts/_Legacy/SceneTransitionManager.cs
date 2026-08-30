@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
-namespace DreamVille.Core.SceneManagement
+namespace DreamVille.Legacy
 {
     public class SceneTransitionManager : MonoBehaviour
     {

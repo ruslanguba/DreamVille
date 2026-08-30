@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fee23bb4b77333c4aac05c0687496a8b, type: 3}
-  m_Name: lvl1StarsData
+  m_Name: lvl3StarsData
   m_EditorClassIdentifier: 
   levelId: 2
   starThresholds:

@@ -4,60 +4,59 @@ using UnityEngine;
 
 namespace DreamVille.Gameplay.Enemies
 {
+    /// <summary>
+    /// Учёт живых врагов уровня.
+    /// Состав собирается в Awake — то есть заведомо раньше любого Initialize контейнера,
+    /// поэтому подписчики могут сразу читать актуальное состояние и не зависят от порядка.
+    /// </summary>
     public class EnemyRegistry : MonoBehaviour
     {
+        /// <summary>Убит враг. Аргументы: сколько осталось, сколько было столкновений.</summary>
         public event Action<int, int> OnEnemyKilled;
+
+        /// <summary>Врагов на уровне не осталось.</summary>
         public event Action OnAllEnemiesKilled;
 
-        private readonly List<EnemyHealth> _enemies = new();
+        private readonly List<EnemyHealth> _alive = new();
 
-        public int TotalEnemies => _enemies.Count;
-        public int RemainingEnemies => _enemies.Count;
+        /// <summary>Сколько врагов было на старте уровня.</summary>
+        public int TotalEnemies { get; private set; }
 
+        /// <summary>Сколько врагов осталось сейчас.</summary>
+        public int RemainingEnemies => _alive.Count;
 
-        public void Initialize()
+        private void Awake()
         {
-            RegisterAllEnemiesInScene();
-        }    
-
-        private void RegisterAllEnemiesInScene()
-        {
-            var enemies = FindObjectsByType<EnemyHealth>(FindObjectsSortMode.None);
-
-            foreach (var enemy in enemies)
+            // Выключенные объекты тоже считаются: враг может ждать своей волны.
+            foreach (var enemy in FindObjectsByType<EnemyHealth>(FindObjectsInactive.Include, FindObjectsSortMode.None))
             {
-                Register(enemy);
+                _alive.Add(enemy);
+                enemy.OnDeath += OnEnemyDeath;
             }
-        }
 
-        private void Register(EnemyHealth enemy)
-        {
-            _enemies.Add(enemy);
-            enemy.OnDeath += OnEnemyDeath;
+            TotalEnemies = _alive.Count;
         }
 
         private void OnEnemyDeath(EnemyHealth enemy, int collisionsCount)
         {
             enemy.OnDeath -= OnEnemyDeath;
-            _enemies.Remove(enemy);
 
-            OnEnemyKilled?.Invoke(_enemies.Count, collisionsCount);
+            if (!_alive.Remove(enemy))
+                return;
 
-            if (_enemies.Count == 0)
-            {
+            OnEnemyKilled?.Invoke(_alive.Count, collisionsCount);
+
+            if (_alive.Count == 0)
                 OnAllEnemiesKilled?.Invoke();
-            }
         }
 
         private void OnDestroy()
         {
-            foreach (var enemy in _enemies)
-            {
+            foreach (var enemy in _alive)
                 if (enemy != null)
                     enemy.OnDeath -= OnEnemyDeath;
-            }
 
-            _enemies.Clear();
+            _alive.Clear();
         }
     }
 }

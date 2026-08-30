@@ -7,6 +7,8 @@
         "DreamVille.Gameplay",
         "DreamVille.Input",
         "DreamVille.SceneManagement",
+        "UniTask",
+        "Unity.InputSystem",
         "Unity.Localization",
         "Unity.TextMeshPro",
         "UnityEngine.UI",

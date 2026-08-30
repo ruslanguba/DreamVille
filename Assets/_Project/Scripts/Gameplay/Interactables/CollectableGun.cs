@@ -18,7 +18,6 @@ namespace DreamVille.Gameplay.Interactables
             }
 
             pillowGun.Deactivate();
-            pillowGun.enabled = false;
         }
 
         public override void Collect(Transform target)
@@ -29,7 +28,6 @@ namespace DreamVille.Gameplay.Interactables
                 return;
 
             pillowGun.Activate();
-            pillowGun.enabled = true;
         }
     }
 }

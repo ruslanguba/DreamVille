@@ -5,7 +5,7 @@ using DreamVille.Gameplay.Enemies;
 using DreamVille.Gameplay.Interactables;
 using DreamVille.Gameplay.NPC;
 
-namespace DreamVille.Progression
+namespace DreamVille.Legacy
 {
     public class LevelCompletionFlow : MonoBehaviour
     {
@@ -23,7 +23,7 @@ namespace DreamVille.Progression
 
             _trigger.OnDialogueStarted += StartNPCTalking;
             _trigger.OnDialogueEnded += FinalAction;
-            _trigger.DisableTrigger();
+            _trigger.IsArmed = false;
         }
 
         public void StartNPCTalking()
@@ -58,7 +58,7 @@ namespace DreamVille.Progression
             if (_trigger == null)
                 return;
 
-            _trigger.EnableTrigger();
+            _trigger.IsArmed = true;
             _npc.SetGreeting();
         }
     }

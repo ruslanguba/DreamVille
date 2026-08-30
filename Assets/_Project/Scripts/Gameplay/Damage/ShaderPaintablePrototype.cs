@@ -39,8 +39,9 @@ namespace DreamVille.Gameplay.Damage
             _steps = _maxHitPoints;
         }
 
+        // См. PlayerCollector: сервис очков есть не во всех сценах.
         [Inject]
-        public void Construct(ScoreService scoreService)
+        public void Construct([InjectOptional] ScoreService scoreService)
         {
             _scoreService = scoreService;
         }

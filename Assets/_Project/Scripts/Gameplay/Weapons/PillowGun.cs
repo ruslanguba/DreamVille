@@ -18,8 +18,9 @@ namespace DreamVille.Gameplay.Weapons
         private ActorAudio _audio;
 
         // В сценах без боевой обвязки спавнера нет — оружие просто не стреляет.
-        [Inject(Optional = true)]
-        public void Construct(BulletSpawner spawner)
+        // Optional помечает именно аргумент: на самом [Inject]-методе Zenject его не принимает.
+        [Inject]
+        public void Construct([InjectOptional] BulletSpawner spawner)
         {
             _spawner = spawner;
         }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DreamVille.Core.SceneManagement
+namespace DreamVille.Legacy
 {
     public class SceneTransitionRequest
     {

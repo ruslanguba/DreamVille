@@ -10,7 +10,7 @@ namespace DreamVille.Core.Bootstrap
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesTo<GameplayFlow>().AsSingle();
+            Container.BindInterfacesTo<GameplayPresenter>().AsSingle();
         }
     }
 }
