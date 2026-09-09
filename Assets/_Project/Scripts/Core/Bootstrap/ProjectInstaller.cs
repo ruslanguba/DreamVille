@@ -23,6 +23,7 @@ namespace DreamVille.Core.Bootstrap
                 .AsSingle()
                 .NonLazy();
 
+            Container.Bind<ISceneLoadingBackend>().To<UnitySceneLoadingBackend>().AsSingle();
             Container.Bind<SceneLoader>().AsSingle();
         }
     }
