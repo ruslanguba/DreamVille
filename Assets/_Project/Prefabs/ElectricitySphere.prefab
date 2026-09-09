@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 198866534812435342}
   - component: {fileID: 199831446352202148}
   - component: {fileID: 3760700110384798753}
-  - component: {fileID: 5036446370574989920}
   m_Layer: 0
   m_Name: ElectricitySphere
   m_TagString: Enemy
@@ -4934,21 +4933,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5036446370574989920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1306605793903958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4efa8050e7385d24e8ce48bae0e34452, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 3847555914299995048, guid: 79df10228d0b33d46a50c33e4711bbf6, type: 3}
-  _spawn: {fileID: 2719588611503555614}
-  _timeCreate: 3
 --- !u!1 &1740733439356138442
 GameObject:
   m_ObjectHideFlags: 0

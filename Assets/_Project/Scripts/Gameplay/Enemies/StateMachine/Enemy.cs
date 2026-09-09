@@ -77,7 +77,6 @@ namespace DreamVille.Gameplay.Enemies.StateMachine
             eventListener = GetComponentInChildren<AnimationEventListener>();
             rotationHandler = GetComponent<EnemyRotationHandler>();
             actorAudio = GetComponent<ActorAudio>();
-            // Врагов из EnemyCreator контейнер не инжектит — там трансформ ставится вручную.
             if (_player != null)
                 playerTransform = _player.BodyTransform;
 
@@ -104,11 +103,6 @@ namespace DreamVille.Gameplay.Enemies.StateMachine
         private void SubscribeToDeath()
         {
             health.OnDeath += HandleDeath;
-        }
-
-        public void SetPlayerTransform(Transform transform)
-        {
-            playerTransform = transform;
         }
         private void HandleDeath(EnemyHealth enemy, int collisionsCount)
         {
