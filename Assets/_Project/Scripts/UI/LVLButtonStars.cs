@@ -1,5 +1,8 @@
 using UnityEngine.UI;
 using UnityEngine;
+using Zenject;
+
+using DreamVille.Persistence;
 
 namespace DreamVille.UI
 {
@@ -9,8 +12,15 @@ namespace DreamVille.UI
         [SerializeField] private Image[] _stars;
 
         private Button _button;
+        private IProgressRepository _progress;
 
-        void Start()
+        [Inject]
+        private void Construct(IProgressRepository progress)
+        {
+            _progress = progress;
+        }
+
+        private void Start()
         {
             _button = GetComponent<Button>();
 
@@ -20,7 +30,7 @@ namespace DreamVille.UI
 
         public void LoadStars()
         {
-            int stars = PlayerPrefs.GetInt(_levelId + "_Stars", 0);
+            int stars = _progress.GetStars(_levelId);
 
             for (int i = 0; i < _stars.Length; i++)
                 _stars[i].gameObject.SetActive(i < stars);
@@ -28,15 +38,14 @@ namespace DreamVille.UI
 
         private void UpdateButtonState()
         {
-            // Разрешаем первый уровень всегда
+            // Level 1 is always unlocked; every other level opens once it has been completed.
             if (_levelId == "1")
             {
                 _button.interactable = true;
                 return;
             }
 
-            int completed = PlayerPrefs.GetInt(_levelId + "_Completed", 0);
-            _button.interactable = completed == 1;
+            _button.interactable = _progress.IsCompleted(_levelId);
         }
     }
 }

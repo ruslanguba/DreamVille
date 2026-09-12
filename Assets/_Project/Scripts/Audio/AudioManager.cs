@@ -2,8 +2,10 @@ using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine;
+using Zenject;
 
 using DreamVille.Configs;
+using DreamVille.Persistence;
 
 namespace DreamVille.Audio
 {
@@ -13,9 +15,9 @@ namespace DreamVille.Audio
     /// </summary>
     public class AudioManager : MonoBehaviour
     {
-        // The keys double as mixer parameter names and as existing PlayerPrefs keys; keep them verbatim.
-        private const string MusicVolumeKey = "MusicVolume";
-        private const string SfxVolumeKey = "SFXVolume";
+        // Mixer parameter names; they happen to equal the SaveKeys volume keys, kept verbatim.
+        private const string MusicMixerParam = "MusicVolume";
+        private const string SfxMixerParam = "SFXVolume";
 
         [Header("Audio Mixer")]
         [FormerlySerializedAs("audioMixer")]
@@ -35,8 +37,12 @@ namespace DreamVille.Audio
         /// <summary>Current SFX volume in the 0..1 range, kept in sync with the saved value.</summary>
         public float SfxVolume { get; private set; }
 
-        private void Awake()
+        private IAudioSettingsRepository _settings;
+
+        [Inject]
+        private void Construct(IAudioSettingsRepository settings)
         {
+            _settings = settings;
             LoadStartVolumes();
         }
 
@@ -49,9 +55,9 @@ namespace DreamVille.Audio
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
 
-            // Volumes are written to PlayerPrefs on every slider change; flush them once here
+            // Volumes are written to the repository on every slider change; flush them once here
             // instead of hitting the disk on each frame of a drag.
-            PlayerPrefs.Save();
+            _settings.Flush();
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -87,20 +93,20 @@ namespace DreamVille.Audio
             _sfxSource.PlayOneShot(clip);
         }
 
-        /// <summary>Applies the music volume to the mixer and remembers it in PlayerPrefs.</summary>
+        /// <summary>Applies the music volume to the mixer and remembers it for the next flush.</summary>
         public void SetMusicVolume(float value)
         {
-            ApplyVolume(MusicVolumeKey, value);
+            ApplyVolume(MusicMixerParam, value);
             MusicVolume = value;
-            PlayerPrefs.SetFloat(MusicVolumeKey, value);
+            _settings.SetMusicVolume(value);
         }
 
-        /// <summary>Applies the SFX volume to the mixer and remembers it in PlayerPrefs.</summary>
+        /// <summary>Applies the SFX volume to the mixer and remembers it for the next flush.</summary>
         public void SetSFXVolume(float value)
         {
-            ApplyVolume(SfxVolumeKey, value);
+            ApplyVolume(SfxMixerParam, value);
             SfxVolume = value;
-            PlayerPrefs.SetFloat(SfxVolumeKey, value);
+            _settings.SetSfxVolume(value);
         }
 
         private void ApplyVolume(string parameter, float value)
@@ -111,15 +117,11 @@ namespace DreamVille.Audio
 
         private void LoadStartVolumes()
         {
-            float music = PlayerPrefs.HasKey(MusicVolumeKey)
-                ? PlayerPrefs.GetFloat(MusicVolumeKey)
-                : _musicDatabase.StartVolume;
-            float sfx = PlayerPrefs.HasKey(SfxVolumeKey)
-                ? PlayerPrefs.GetFloat(SfxVolumeKey)
-                : _musicDatabase.StartVolume;
+            float music = _settings.TryGetMusicVolume(out float savedMusic) ? savedMusic : _musicDatabase.StartVolume;
+            float sfx = _settings.TryGetSfxVolume(out float savedSfx) ? savedSfx : _musicDatabase.StartVolume;
 
-            ApplyVolume(MusicVolumeKey, music);
-            ApplyVolume(SfxVolumeKey, sfx);
+            ApplyVolume(MusicMixerParam, music);
+            ApplyVolume(SfxMixerParam, sfx);
             MusicVolume = music;
             SfxVolume = sfx;
         }

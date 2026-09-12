@@ -1,5 +1,6 @@
-using UnityEngine;
 using UnityEngine.SceneManagement;
+
+using DreamVille.Persistence;
 
 namespace DreamVille.Scoring
 {
@@ -9,23 +10,19 @@ namespace DreamVille.Scoring
     /// </summary>
     public class BestScoreService : IBestScoreService
     {
-        private const string KeyPrefix = "BestScore_LVL_";
+        private readonly IProgressRepository _progress;
 
-        public float GetBest() => PlayerPrefs.GetFloat(GetKey(), 0f);
-
-        /// <summary>Saves the score if it beats the previous best. Returns true when a new record was set.</summary>
-        public bool TrySave(float score)
+        public BestScoreService(IProgressRepository progress)
         {
-            string key = GetKey();
-
-            if (score <= PlayerPrefs.GetFloat(key, 0f))
-                return false;
-
-            PlayerPrefs.SetFloat(key, score);
-            PlayerPrefs.Save();
-            return true;
+            _progress = progress;
         }
 
-        private static string GetKey() => KeyPrefix + SceneManager.GetActiveScene().buildIndex;
+        public float GetBest() => _progress.GetBestScore(LevelId);
+
+        /// <summary>Saves the score if it beats the previous best. Returns true when a new record was set.</summary>
+        public bool TrySave(float score) => _progress.TrySetBestScore(LevelId, score);
+
+        // Build index until LevelDefinition arrives in batch 2; keeps the key format "BestScore_LVL_{index}".
+        private static string LevelId => SceneManager.GetActiveScene().buildIndex.ToString();
     }
 }

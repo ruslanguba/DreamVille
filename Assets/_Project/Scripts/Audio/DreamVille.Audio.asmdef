@@ -2,7 +2,9 @@
     "name": "DreamVille.Audio",
     "rootNamespace": "DreamVille.Audio",
     "references": [
-        "DreamVille.Configs"
+        "DreamVille.Configs",
+        "DreamVille.Persistence",
+        "Zenject"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

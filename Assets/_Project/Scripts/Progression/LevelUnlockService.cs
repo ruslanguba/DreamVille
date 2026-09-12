@@ -1,24 +1,19 @@
-using UnityEngine;
+using DreamVille.Persistence;
 
 namespace DreamVille.Progression
 {
-    /// <summary>
-    /// Отметка о пройденных уровнях. Ключ совпадает с тем, что читает меню выбора уровня.
-    /// </summary>
+    /// <summary>Completed-level lookup. The key format matches what the level-select menu reads.</summary>
     public class LevelUnlockService
     {
-        private const string KeySuffix = "_Completed";
+        private readonly IProgressRepository _progress;
 
-        public bool IsCompleted(string levelId)
-            => !string.IsNullOrEmpty(levelId) && PlayerPrefs.GetInt(levelId + KeySuffix, 0) == 1;
-
-        public void MarkCompleted(string levelId)
+        public LevelUnlockService(IProgressRepository progress)
         {
-            if (string.IsNullOrEmpty(levelId))
-                return;
-
-            PlayerPrefs.SetInt(levelId + KeySuffix, 1);
-            PlayerPrefs.Save();
+            _progress = progress;
         }
+
+        public bool IsCompleted(string levelId) => _progress.IsCompleted(levelId);
+
+        public void MarkCompleted(string levelId) => _progress.MarkCompleted(levelId);
     }
 }

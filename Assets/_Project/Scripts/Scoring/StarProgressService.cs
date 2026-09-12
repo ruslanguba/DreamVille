@@ -2,37 +2,35 @@ using System;
 using UnityEngine;
 
 using DreamVille.Configs;
+using DreamVille.Persistence;
 
 namespace DreamVille.Scoring
 {
     /// <summary>
     /// Accumulates score for the current run and unlocks stars as thresholds from
     /// <see cref="StarRulesSO"/> are crossed. The best star count ever reached for a
-    /// level is persisted to PlayerPrefs and never regresses on replay.
+    /// level is persisted through <see cref="IProgressRepository"/> and never regresses on replay.
     /// </summary>
     public class StarProgressService : IStarProgressService
     {
-        private const string StarsKeySuffix = "_Stars";
-
         public event Action<int> StarUnlocked;
         public event Action<int, float> StarProgressChanged;
 
         private readonly StarRulesSO _rules;
+        private readonly IProgressRepository _progress;
         private float _totalScore;
         private int _currentStarIndex;
 
         public int UnlockedStars => _currentStarIndex;
 
-        private string SaveKey => _rules.levelId + StarsKeySuffix;
-
-        public StarProgressService(StarRulesSO rules)
+        public StarProgressService(StarRulesSO rules, IProgressRepository progress)
         {
             _rules = rules;
+            _progress = progress;
         }
 
         public void AddScore(float score)
         {
-
             _totalScore += score;
             UpdateCurrentStarProgress();
 
@@ -74,15 +72,9 @@ namespace DreamVille.Scoring
             SaveProgress();
         }
 
-        /// <summary>Persists the star count only when it improves on the previously saved best.</summary>
         private void SaveProgress()
         {
-            int stored = PlayerPrefs.GetInt(SaveKey, 0);
-            if (_currentStarIndex > stored)
-            {
-                PlayerPrefs.SetInt(SaveKey, _currentStarIndex);
-                PlayerPrefs.Save();
-            }
+            _progress.SetStarsIfHigher(_rules.levelId, _currentStarIndex);
         }
     }
 }

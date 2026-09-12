@@ -3,6 +3,7 @@ using NUnit.Framework;
 using UnityEngine;
 
 using DreamVille.Configs;
+using DreamVille.Persistence;
 using DreamVille.Scoring;
 
 namespace DreamVille.Tests.EditMode.Scoring
@@ -12,6 +13,8 @@ namespace DreamVille.Tests.EditMode.Scoring
         private const string LevelId = "__test_stars";
 
         private StarRulesSO _rules;
+        private InMemorySaveStorage _storage;
+        private ProgressRepository _progress;
         private StarProgressService _service;
 
         [SetUp]
@@ -20,13 +23,15 @@ namespace DreamVille.Tests.EditMode.Scoring
             _rules = ScriptableObject.CreateInstance<StarRulesSO>();
             _rules.levelId = LevelId;
             _rules.starThresholds = new[] { 50f, 100f, 150f };
-            _service = new StarProgressService(_rules);
+
+            _storage = new InMemorySaveStorage();
+            _progress = new ProgressRepository(_storage);
+            _service = new StarProgressService(_rules, _progress);
         }
 
         [TearDown]
         public void TearDown()
         {
-            PlayerPrefs.DeleteKey(LevelId + "_Stars");
             Object.DestroyImmediate(_rules);
         }
 
@@ -71,6 +76,14 @@ namespace DreamVille.Tests.EditMode.Scoring
 
             Assert.That(unlocked, Is.EqualTo(new[] { 0, 1, 2 }));
             Assert.That(_service.UnlockedStars, Is.EqualTo(3));
+        }
+
+        [Test]
+        public void UnlockStar_PersistsStarCountThroughRepository()
+        {
+            _service.AddScore(50f);
+
+            Assert.That(_progress.GetStars(LevelId), Is.EqualTo(1));
         }
     }
 }

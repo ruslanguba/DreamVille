@@ -9,6 +9,7 @@
         "DreamVille.Dialogue",
         "DreamVille.Gameplay",
         "DreamVille.Input",
+        "DreamVille.Persistence",
         "DreamVille.Progression",
         "DreamVille.SceneManagement",
         "DreamVille.Scoring",

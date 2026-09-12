@@ -1,0 +1,14 @@
+{
+    "name": "DreamVille.Persistence",
+    "rootNamespace": "DreamVille.Persistence",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

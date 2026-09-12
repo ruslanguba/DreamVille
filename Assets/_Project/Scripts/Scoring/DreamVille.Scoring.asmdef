@@ -2,7 +2,8 @@
     "name": "DreamVille.Scoring",
     "rootNamespace": "DreamVille.Scoring",
     "references": [
-        "DreamVille.Configs"
+        "DreamVille.Configs",
+        "DreamVille.Persistence"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

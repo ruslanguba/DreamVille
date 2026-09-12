@@ -2,6 +2,7 @@ using UnityEngine;
 using Zenject;
 
 using DreamVille.Audio;
+using DreamVille.Persistence;
 using DreamVille.SceneManagement;
 
 namespace DreamVille.Bootstrap
@@ -25,6 +26,10 @@ namespace DreamVille.Bootstrap
 
             Container.Bind<ISceneLoadingBackend>().To<UnitySceneLoadingBackend>().AsSingle();
             Container.BindInterfacesTo<SceneLoader>().AsSingle();
+
+            Container.BindInterfacesTo<PlayerPrefsSaveStorage>().AsSingle();
+            Container.BindInterfacesTo<ProgressRepository>().AsSingle();
+            Container.BindInterfacesTo<AudioSettingsRepository>().AsSingle();
         }
     }
 }
