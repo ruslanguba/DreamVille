@@ -2,7 +2,6 @@
     "name": "DreamVille.Input",
     "rootNamespace": "DreamVille.Input",
     "references": [
-        "DreamVille.Core",
         "Unity.InputSystem"
     ],
     "includePlatforms": [],

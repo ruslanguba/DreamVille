@@ -51,7 +51,7 @@ namespace DreamVille.Tests.EditMode.Scoring
         }
 
         [Test]
-        public void AddScore_ReachingThreshold_RaisesOnStarUnlockedWithStarIndex()
+        public void AddScore_ReachingThreshold_RaisesStarUnlockedWithStarIndex()
         {
             var unlocked = new List<int>();
             _service.StarUnlocked += unlocked.Add;

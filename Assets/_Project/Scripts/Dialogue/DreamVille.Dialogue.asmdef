@@ -2,7 +2,6 @@
     "name": "DreamVille.Dialogue",
     "rootNamespace": "DreamVille.Dialogue",
     "references": [
-        "DreamVille.Configs",
         "DreamVille.Core",
         "Unity.Cinemachine",
         "Unity.InputSystem",

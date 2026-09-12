@@ -15,7 +15,9 @@ namespace DreamVille.Core.Players
         public static bool TryGetPlayer(Collider collider, out IPlayerMarker player)
         {
             player = collider == null ? null : collider.GetComponentInParent<IPlayerMarker>();
-            return player != null;
+
+            // A destroyed component still compares non-null through an interface reference.
+            return player is Component component ? component != null : player != null;
         }
     }
 }

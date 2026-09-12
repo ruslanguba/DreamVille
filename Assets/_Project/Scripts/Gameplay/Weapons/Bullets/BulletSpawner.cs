@@ -13,6 +13,12 @@ namespace DreamVille.Gameplay.Weapons.Bullets
         [SerializeField] private BulletPool _pool;
         [SerializeField] private BulletEventRelay _eventRelay;
 
+        /// <summary>The pool this spawner draws bullets from. Exposed so the installer binds the same instance.</summary>
+        public BulletPool Pool => _pool;
+
+        /// <summary>The relay every spawned bullet reports its hits to.</summary>
+        public BulletEventRelay HitRelay => _eventRelay;
+
         /// <summary>Gets a bullet from the pool, positions it and arms it with <paramref name="bulletConfig"/>.</summary>
         public Bullet SpawnBullet(Vector3 position, Quaternion rotation, BulletConfig bulletConfig)
         {

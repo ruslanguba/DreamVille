@@ -21,7 +21,7 @@ namespace DreamVille.Bootstrap
 
         private readonly CancellationTokenSource _lifetime = new CancellationTokenSource();
 
-        public GameBootstrap(ISceneLoader sceneLoader, string firstScene, [InjectOptional] GameStartUI intro)
+        public GameBootstrap(ISceneLoader sceneLoader, string firstScene, GameStartUI intro)
         {
             _sceneLoader = sceneLoader;
             _firstScene = firstScene;
@@ -43,9 +43,7 @@ namespace DreamVille.Bootstrap
         {
             try
             {
-                if (_intro != null)
-                    await _intro.PlayAsync(token);
-
+                await _intro.PlayAsync(token);
                 await _sceneLoader.LoadAsync(_firstScene, token);
             }
             catch (OperationCanceledException)

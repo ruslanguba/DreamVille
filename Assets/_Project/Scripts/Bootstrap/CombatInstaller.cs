@@ -28,12 +28,12 @@ namespace DreamVille.Bootstrap
 
             Container
                 .Bind<BulletPool>()
-                .FromMethod(ctx => ctx.Container.Resolve<BulletSpawner>().GetComponent<BulletPool>())
+                .FromMethod(ctx => ctx.Container.Resolve<BulletSpawner>().Pool)
                 .AsSingle();
 
             Container
                 .Bind<IBulletHitSource>()
-                .FromMethod(ctx => ctx.Container.Resolve<BulletSpawner>().GetComponent<BulletEventRelay>())
+                .FromMethod(ctx => ctx.Container.Resolve<BulletSpawner>().HitRelay)
                 .AsSingle();
 
             // These live on scene objects: the registry on the LevelProgressSystem
