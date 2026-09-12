@@ -12,6 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e9943c34d71ebe4aa3fe845f72916c3, type: 3}
   m_Name: ScoreRules
   m_EditorClassIdentifier: 
-  scorePerKill: 10
-  useRicochetMultiplier: 1
-  ricochetMultiplier: 1
+  _scorePerKill: 10

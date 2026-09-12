@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fee23bb4b77333c4aac05c0687496a8b, type: 3}
   m_Name: StarRules_Level_03
   m_EditorClassIdentifier: 
-  levelId: 5
-  starThresholds:
+  _thresholds:
   - 50
   - 100
   - 150
