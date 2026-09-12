@@ -4757,22 +4757,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: _levelId
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: _screToFillFirstStar
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: _screToFillThirdStar
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: _screToFillSecondStar
-      value: 50
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6546,10 +6530,6 @@ PrefabInstance:
       propertyPath: _target
       value: 
       objectReference: {fileID: 11400000, guid: a484ebab42fa41042a9e62c894e6f168, type: 2}
-    - target: {fileID: 2594145028634910191, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
-      propertyPath: _sceneToLoad
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
       propertyPath: sentence.Array.size
       value: 1
@@ -6557,6 +6537,14 @@ PrefabInstance:
     - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
       propertyPath: sentenceEn.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _sentencesEn.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _sentencesRu.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
       propertyPath: sentence.Array.data[1].IsPluh
@@ -6590,6 +6578,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _sentencesEn.Array.data[1].IsPluh
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
       propertyPath: sentenceEn.Array.data[0].Sentence
       value: Hi Plukh, did you catch everyone?
       objectReference: {fileID: 0}
@@ -6600,6 +6592,25 @@ PrefabInstance:
     - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
       propertyPath: sentenceEn.Array.data[2].Sentence
       value: Well, then jump into my watch and fly on.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _sentencesEn.Array.data[0].Sentence
+      value: Hi Plukh, did you catch everyone?
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _sentencesEn.Array.data[1].Sentence
+      value: Everyone. Now you can sleep in peace.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _sentencesEn.Array.data[2].Sentence
+      value: Well, then jump into my watch and fly on.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _sentencesRu.Array.data[0].Sentence
+      value: "\u041E\u0442\u043B\u0438\u0447\u043D\u0430\u044F \u0440\u0430\u0431\u043E\u0442\u0430,
+        \u041F\u043B\u044E\u0445! \n\u041F\u043E\u0440\u0430 \u043D\u0430\u0443\u0447\u0438\u0442\u044C\u0441\u044F
+        \u0447\u0435\u043C\u0443-\u0442\u043E \u043D\u043E\u0432\u043E\u043C\u0443.\n\u041F\u0440\u044B\u0433\u0430\u0439
+        \u0432 \u0447\u0430\u0441\u044B!"
       objectReference: {fileID: 0}
     - target: {fileID: 4642010679245938707, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
       propertyPath: m_LocalPosition.x

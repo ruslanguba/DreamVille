@@ -19323,7 +19323,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 11400000, guid: 1f7ab22d85caaac4db3a3b33a5096dd5, type: 2}
-  _sceneToLoad: 
 --- !u!1 &5934688675849514198
 GameObject:
   m_ObjectHideFlags: 0
