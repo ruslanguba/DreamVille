@@ -1,10 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
 using DreamVille.Audio;
@@ -15,21 +12,28 @@ using DreamVille.Tests.EditMode.Fakes;
 namespace DreamVille.Tests.EditMode.Audio
 {
     /// <summary>
-    /// <see cref="AudioService"/>'s reaction to <c>SceneManager.sceneLoaded</c> is exercised
-    /// through its private <c>PlaySceneMusic(string)</c> helper via reflection, because
-    /// constructing a real <see cref="Scene"/> with an arbitrary name requires Play mode.
-    /// <see cref="AudioService.Initialize"/> also plays the music of whatever scene happens to
-    /// be active in the editor while the fixture runs; <see cref="InitializeService"/> keeps
-    /// that side effect from leaking into every test (see its own summary).
+    /// <see cref="AudioService"/> against hand-written doubles: the mixer/sources behind
+    /// <see cref="FakeAudioOutput"/>, an in-memory save and a <see cref="FakeActiveSceneTracker"/>
+    /// the test drives, so no editor scene and no engine event is involved.
     /// </summary>
     public class AudioServiceTests
     {
+        private const string BootScene = "AudioServiceTests_Boot";
+        private const string MenuScene = "AudioServiceTests_Menu";
+        private const string LevelScene = "AudioServiceTests_Level";
+        private const string UnknownScene = "AudioServiceTests_NoSuchScene";
+
+        private static readonly Regex NotInCatalogWarning = new Regex(@"\[AudioService\].*not in the catalog");
+
         private readonly List<UnityEngine.Object> _createdObjects = new List<UnityEngine.Object>();
 
         private FakeAudioOutput _output;
         private InMemorySaveStorage _storage;
         private AudioSettingsRepository _settings;
+        private FakeActiveSceneTracker _scenes;
         private AudioConfig _config;
+        private AudioClip _levelClip;
+        private SceneCatalog _catalog;
         private AudioService _service;
 
         [SetUp]
@@ -38,13 +42,22 @@ namespace DreamVille.Tests.EditMode.Audio
             _output = new FakeAudioOutput();
             _storage = new InMemorySaveStorage();
             _settings = new AudioSettingsRepository(_storage);
+            _scenes = new FakeActiveSceneTracker(BootScene);
             _config = Track(AudioConfig.CreateForTests(0.3f));
+
+            _levelClip = Track(AudioClip.Create("level-music", 1, 1, 8000, false));
+            SceneDefinition boot = Track(SceneDefinition.CreateForTests(BootScene));
+            SceneDefinition menu = Track(SceneDefinition.CreateForTests(MenuScene));
+            LevelDefinition level = Track(LevelDefinition.CreateForTests(LevelScene, "lvl", music: _levelClip));
+            _catalog = Track(SceneCatalog.CreateForTests(boot, menu, level));
+
+            _service = new AudioService(_output, _settings, _scenes, _catalog, _config);
         }
 
         [TearDown]
         public void TearDown()
         {
-            _service?.Dispose();
+            _service.Dispose();
 
             foreach (UnityEngine.Object created in _createdObjects)
                 UnityEngine.Object.DestroyImmediate(created);
@@ -55,9 +68,7 @@ namespace DreamVille.Tests.EditMode.Audio
         [Test]
         public void Initialize_WithoutSavedVolumes_AppliesConfigDefaultToBothChannels()
         {
-            _service = CreateService(CreateCatalogForActiveScene());
-
-            InitializeService();
+            _service.Initialize();
 
             Assert.That(_service.MusicVolume, Is.EqualTo(0.3f));
             Assert.That(_service.SfxVolume, Is.EqualTo(0.3f));
@@ -70,9 +81,8 @@ namespace DreamVille.Tests.EditMode.Audio
         {
             _settings.SetMusicVolume(0.7f);
             _settings.SetSfxVolume(0.9f);
-            _service = CreateService(CreateCatalogForActiveScene());
 
-            InitializeService();
+            _service.Initialize();
 
             Assert.That(_service.MusicVolume, Is.EqualTo(0.7f));
             Assert.That(_service.SfxVolume, Is.EqualTo(0.9f));
@@ -81,10 +91,27 @@ namespace DreamVille.Tests.EditMode.Audio
         }
 
         [Test]
+        public void Initialize_ActiveSceneWithoutMusic_StaysSilent()
+        {
+            _service.Initialize();
+
+            Assert.That(_output.LastMusicClip, Is.Null);
+        }
+
+        [Test]
+        public void Initialize_ActiveSceneIsALevel_PlaysItsMusicWithoutWaitingForALoad()
+        {
+            _scenes.Load(LevelScene);
+
+            _service.Initialize();
+
+            Assert.That(_output.LastMusicClip, Is.SameAs(_levelClip));
+            Assert.That(_output.LastMusicLoop, Is.True);
+        }
+
+        [Test]
         public void SetMusicVolume_AppliesToMixerAndWritesToRepository()
         {
-            _service = CreateService(CreateCatalogForActiveScene());
-
             _service.SetMusicVolume(0.6f);
 
             Assert.That(_output.MusicVolume, Is.EqualTo(0.6f));
@@ -95,7 +122,6 @@ namespace DreamVille.Tests.EditMode.Audio
         [Test]
         public void SetSfxVolume_RaisesSfxVolumeChanged()
         {
-            _service = CreateService(CreateCatalogForActiveScene());
             float? raised = null;
             _service.SfxVolumeChanged += value => raised = value;
 
@@ -107,80 +133,56 @@ namespace DreamVille.Tests.EditMode.Audio
         [Test]
         public void SceneLoaded_KnownLevel_PlaysTheCatalogClip()
         {
-            AudioClip clip = Track(AudioClip.Create("x", 1, 1, 8000, false));
-            LevelDefinition level = Track(LevelDefinition.CreateForTests("AudioServiceTests_KnownLevel", "lvl", music: clip));
-            _service = CreateService(CreateCatalogForActiveScene(level));
-            InitializeService();
+            _service.Initialize();
 
-            InvokePlaySceneMusic(_service, "AudioServiceTests_KnownLevel");
+            _scenes.Load(LevelScene);
 
-            Assert.That(_output.LastMusicClip, Is.SameAs(clip));
+            Assert.That(_output.LastMusicClip, Is.SameAs(_levelClip));
             Assert.That(_output.LastMusicLoop, Is.True);
+        }
+
+        [Test]
+        public void SceneLoaded_SceneWithoutMusic_KeepsCurrentMusic()
+        {
+            _service.Initialize();
+            _scenes.Load(LevelScene);
+
+            _scenes.Load(MenuScene);
+
+            Assert.That(_output.LastMusicClip, Is.SameAs(_levelClip));
         }
 
         [Test]
         public void SceneLoaded_UnknownScene_KeepsCurrentMusicAndWarns()
         {
-            AudioClip clip = Track(AudioClip.Create("x", 1, 1, 8000, false));
-            LevelDefinition level = Track(LevelDefinition.CreateForTests("AudioServiceTests_KnownLevel", "lvl", music: clip));
-            _service = CreateService(CreateCatalogForActiveScene(level));
-            InitializeService();
-            InvokePlaySceneMusic(_service, "AudioServiceTests_KnownLevel");
+            _service.Initialize();
+            _scenes.Load(LevelScene);
 
-            LogAssert.Expect(LogType.Warning, new Regex(".*"));
-            InvokePlaySceneMusic(_service, "AudioServiceTests_NoSuchScene");
+            LogAssert.Expect(LogType.Warning, NotInCatalogWarning);
+            _scenes.Load(UnknownScene);
 
-            Assert.That(_output.LastMusicClip, Is.SameAs(clip));
+            Assert.That(_output.LastMusicClip, Is.SameAs(_levelClip));
         }
 
         [Test]
         public void Dispose_FlushesSettingsOnce()
         {
-            _service = CreateService(CreateCatalogForActiveScene());
-            InitializeService();
+            _service.Initialize();
 
             _service.Dispose();
 
             Assert.That(_storage.SaveCount, Is.EqualTo(1));
         }
 
-        private AudioService CreateService(SceneCatalog catalog) => new AudioService(_output, _settings, catalog, _config);
-
-        /// <summary>
-        /// Calls <see cref="AudioService.Initialize"/>. When the editor's active scene is an
-        /// unsaved, unnamed one (its name is empty), <c>PlaySceneMusic</c> cannot find it in any
-        /// catalog and logs a warning; that side effect is a property of the environment the
-        /// test happens to run in, not of the behaviour under test, so it is consumed here
-        /// instead of leaking into every caller.
-        /// </summary>
-        private void InitializeService()
+        [Test]
+        public void Dispose_StopsListeningToSceneLoads()
         {
-            if (string.IsNullOrEmpty(SceneManager.GetActiveScene().name))
-                LogAssert.Expect(LogType.Warning, new Regex(".*"));
-
             _service.Initialize();
-        }
+            _service.Dispose();
 
-        private SceneCatalog CreateCatalogForActiveScene(params LevelDefinition[] levels)
-        {
-            SceneDefinition activeScene = Track(SceneDefinition.CreateForTests(SceneManager.GetActiveScene().name));
-            SceneDefinition menu = Track(SceneDefinition.CreateForTests("AudioServiceTests_Menu"));
+            _scenes.Load(LevelScene);
 
-            return Track(SceneCatalog.CreateForTests(activeScene, menu, levels));
-        }
-
-        /// <summary>
-        /// Invokes the private helper <c>AudioService.PlaySceneMusic(string)</c>, the seam
-        /// both <c>Initialize</c> and the <c>sceneLoaded</c> handler funnel through.
-        /// </summary>
-        private static void InvokePlaySceneMusic(AudioService service, string sceneName)
-        {
-            MethodInfo method = typeof(AudioService).GetMethod("PlaySceneMusic", BindingFlags.NonPublic | BindingFlags.Instance);
-
-            Assert.That(method, Is.Not.Null,
-                $"{nameof(AudioService)} no longer exposes a private PlaySceneMusic(string) helper; this test's seam has moved.");
-
-            method.Invoke(service, new object[] { sceneName });
+            Assert.That(_output.LastMusicClip, Is.Null);
         }
 
         private T Track<T>(T asset) where T : UnityEngine.Object

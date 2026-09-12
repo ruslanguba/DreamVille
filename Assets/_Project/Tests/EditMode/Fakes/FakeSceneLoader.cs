@@ -8,7 +8,7 @@ using DreamVille.SceneManagement;
 namespace DreamVille.Tests.EditMode.Fakes
 {
     /// <summary>Hand-written double for <see cref="ISceneLoader"/>. Every call completes
-    /// immediately and is recorded, in order, as a string (for example "Load:Main menu 1",
+    /// immediately and is recorded, in order, as a string (for example "Load:MainMenu",
     /// "ReloadActive"). Accepts an external log so a test can interleave its calls with
     /// another fake's, to assert cross-service call order.</summary>
     public sealed class FakeSceneLoader : ISceneLoader

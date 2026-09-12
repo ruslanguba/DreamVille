@@ -38,6 +38,7 @@ namespace DreamVille.Bootstrap
 
             Container.Bind<ISceneLoadingBackend>().To<UnitySceneLoadingBackend>().AsSingle();
             Container.BindInterfacesTo<SceneLoader>().AsSingle();
+            Container.BindInterfacesTo<UnityActiveSceneTracker>().AsSingle();
 
             Container.BindInterfacesTo<PlayerPrefsSaveStorage>().AsSingle();
             Container.BindInterfacesTo<ProgressRepository>().AsSingle();

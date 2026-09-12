@@ -40,6 +40,10 @@ namespace DreamVille.App
             {
                 await transition;
             }
+            catch (OperationCanceledException)
+            {
+                // Cancellation is not a failure; the loader keeps ownership of the native operation anyway.
+            }
             catch (Exception exception)
             {
                 Debug.LogException(exception);

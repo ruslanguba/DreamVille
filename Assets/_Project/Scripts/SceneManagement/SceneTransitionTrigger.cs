@@ -14,7 +14,6 @@ namespace DreamVille.SceneManagement
         [SerializeField] private SceneDefinition _target;
 
         private ISceneLoader _sceneLoader;
-        private bool _isLoading;
 
         [Inject]
         public void Construct(ISceneLoader sceneLoader)
@@ -24,7 +23,8 @@ namespace DreamVille.SceneManagement
 
         private void OnTriggerEnter(Collider other)
         {
-            if (_isLoading || !PlayerDetection.IsPlayer(other))
+            // The player has several colliders; the loader owns the "one transition at a time" rule.
+            if (_sceneLoader.IsLoading || !PlayerDetection.IsPlayer(other))
                 return;
 
             if (_target == null)
@@ -33,7 +33,6 @@ namespace DreamVille.SceneManagement
                 return;
             }
 
-            _isLoading = true;
             LoadTargetAsync().Forget();
         }
 
@@ -49,7 +48,6 @@ namespace DreamVille.SceneManagement
             }
             catch (Exception exception)
             {
-                _isLoading = false;
                 Debug.LogException(exception, this);
             }
         }

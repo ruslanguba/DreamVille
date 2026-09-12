@@ -3,6 +3,7 @@
     "rootNamespace": "DreamVille.Audio",
     "references": [
         "DreamVille.Configs",
+        "DreamVille.Core",
         "DreamVille.Persistence",
         "Zenject"
     ],

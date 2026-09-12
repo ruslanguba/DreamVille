@@ -50,7 +50,12 @@ namespace DreamVille.Tests.EditMode.Composition
             Scene activeScene = EditorSceneManager.GetActiveScene();
             _originalScenePath = activeScene.path;
 
-            Assume.That(!activeScene.isDirty, "A dirty scene is open; save or discard changes before running this fixture.");
+            // Interactively a dirty scene just skips the fixture; on a build machine it is a real failure.
+            const string dirtySceneMessage = "A dirty scene is open; save or discard changes before running this fixture.";
+            if (Application.isBatchMode)
+                Assert.That(activeScene.isDirty, Is.False, dirtySceneMessage);
+            else
+                Assume.That(!activeScene.isDirty, dirtySceneMessage);
         }
 
         [OneTimeTearDown]
@@ -209,7 +214,7 @@ namespace DreamVille.Tests.EditMode.Composition
             string sceneName = EditorSceneManager.GetActiveScene().name;
 
             Assert.That(Catalog.FindBySceneName(sceneName), Is.InstanceOf<LevelDefinition>(),
-                $"Scene '{sceneName}' has no LevelDefinition in the catalog; ProgressionInstaller would log an error at runtime.");
+                $"Scene '{sceneName}' has no LevelDefinition in the catalog; ProgressionInstaller throws when the scene starts.");
         }
 
         [TestCaseSource(nameof(EnabledScenePaths))]

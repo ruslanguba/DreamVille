@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 using DreamVille.Configs;
+using DreamVille.Core.Scenes;
 using DreamVille.Persistence;
 
 namespace DreamVille.Audio
@@ -16,17 +16,20 @@ namespace DreamVille.Audio
     {
         private readonly IAudioOutput _output;
         private readonly IAudioSettingsRepository _settings;
+        private readonly IActiveSceneTracker _scenes;
         private readonly SceneCatalog _catalog;
         private readonly AudioConfig _config;
 
         public AudioService(
             IAudioOutput output,
             IAudioSettingsRepository settings,
+            IActiveSceneTracker scenes,
             SceneCatalog catalog,
             AudioConfig config)
         {
             _output = output;
             _settings = settings;
+            _scenes = scenes;
             _catalog = catalog;
             _config = config;
         }
@@ -43,15 +46,15 @@ namespace DreamVille.Audio
             ApplyMusicVolume(_settings.TryGetMusicVolume(out float music) ? music : _config.DefaultVolume);
             ApplySfxVolume(_settings.TryGetSfxVolume(out float sfx) ? sfx : _config.DefaultVolume);
 
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            _scenes.SceneLoaded += PlaySceneMusic;
 
-            // The scene that was active when the service was created never raises sceneLoaded.
-            PlaySceneMusic(SceneManager.GetActiveScene().name);
+            // The scene that was active when the service was created never raises SceneLoaded.
+            PlaySceneMusic(_scenes.ActiveSceneName);
         }
 
         public void Dispose()
         {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
+            _scenes.SceneLoaded -= PlaySceneMusic;
 
             // The sliders write on every frame of a drag; the disk is touched once, here.
             _settings.Flush();
@@ -74,8 +77,6 @@ namespace DreamVille.Audio
             ApplySfxVolume(normalized);
             _settings.SetSfxVolume(normalized);
         }
-
-        private void OnSceneLoaded(Scene scene, LoadSceneMode mode) => PlaySceneMusic(scene.name);
 
         private void PlaySceneMusic(string sceneName)
         {
