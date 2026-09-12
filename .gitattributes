@@ -1,0 +1,40 @@
+# Unity YAML: keep as text, merge with UnityYAMLMerge when configured
+# (no eol normalization on purpose: avoids a repo-wide line-ending churn commit)
+*.cs        diff=csharp
+*.unity     merge=unityyamlmerge
+*.prefab    merge=unityyamlmerge
+*.asset     merge=unityyamlmerge
+*.meta      merge=unityyamlmerge
+*.controller merge=unityyamlmerge
+*.anim      merge=unityyamlmerge
+*.mat       merge=unityyamlmerge
+*.physicMaterial merge=unityyamlmerge
+*.playable  merge=unityyamlmerge
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.psd binary
+*.tga binary
+*.tif binary
+*.exr binary
+*.hdr binary
+*.fbx binary
+*.FBX binary
+*.obj binary
+*.blend binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.aif binary
+*.ttf binary
+*.otf binary
+*.dll binary
+*.so binary
+*.dylib binary
+*.a binary
+*.bundle binary
+*.unitypackage binary
+*.mp4 binary
+*.mov binary
