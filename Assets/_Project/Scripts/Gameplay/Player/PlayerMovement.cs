@@ -8,7 +8,7 @@ namespace DreamVille.Gameplay.Player
     public class PlayerMovement
     {
         PlayerContext _context;
-        private PlayerSettings _settings;
+        private PlayerConfig _settings;
         private CharacterController _controller;
         private Transform _bodyTransform;
         private Transform _cameraTransform;
@@ -38,8 +38,8 @@ namespace DreamVille.Gameplay.Player
         {
             Vector2 moveInput = _inputReader.Move;
 
-            float targetSpeed = moveInput.sqrMagnitude > 0.0001f ? _settings.walkSpeed : 0f;
-            _currentSpeed = Mathf.MoveTowards(_currentSpeed, targetSpeed, _settings.acceleration * Time.deltaTime);
+            float targetSpeed = moveInput.sqrMagnitude > 0.0001f ? _settings.WalkSpeed : 0f;
+            _currentSpeed = Mathf.MoveTowards(_currentSpeed, targetSpeed, _settings.Acceleration * Time.deltaTime);
 
             Vector3 forward = _cameraTransform.forward;
             Vector3 right = _bodyTransform.right;
@@ -54,7 +54,7 @@ namespace DreamVille.Gameplay.Player
 
             if (moveDir.sqrMagnitude > 0.01f && _currentSpeed > 0.1f)
             {
-                _playerRotationHandler.UpdateRotation(moveDir.normalized, _context.Settings.rotationSpeed);
+                _playerRotationHandler.UpdateRotation(moveDir.normalized, _context.Settings.RotationSpeed);
             }
 
             SetAnimatorParams(moveInput);
@@ -69,7 +69,7 @@ namespace DreamVille.Gameplay.Player
 
         private void SetAnimatorParams(Vector2 moveInput)
         {
-            bool isMoving = moveInput.magnitude > 0.05f; // движение / Idle
+            bool isMoving = moveInput.magnitude > 0.05f; // moving / idle
             int moveDir = 0;
             float multiplier = 1f;
 
@@ -82,28 +82,27 @@ namespace DreamVille.Gameplay.Player
 
                 if (forward)
                 {
-                    if (right) moveDir = 2;   // вперед+вправо
-                    else if (left) moveDir = -2; // вперед+влево
-                    else moveDir = 1;          // только вперед
+                    if (right) moveDir = 2;      // forward + right
+                    else if (left) moveDir = -2; // forward + left
+                    else moveDir = 1;             // forward only
                     multiplier = 1f;
                 }
                 else if (backward)
                 {
-                    if (right) moveDir = -2;    // назад+вправо - воспроизводим влево задом
-                    else if (left) moveDir = 2; // назад+влево - воспроизводим вправо задом
-                    else moveDir = 1;            // только назад
+                    if (right) moveDir = -2;     // backward + right - played back as a left strafe
+                    else if (left) moveDir = 2;  // backward + left - played back as a right strafe
+                    else moveDir = 1;             // backward only
                     multiplier = -1f;
                 }
                 else
                 {
-                    // чисто боковое движение
+                    // pure sideways movement
                     if (right) moveDir = 2;
                     else if (left) moveDir = -2;
                     multiplier = 1f;
                 }
             }
 
-            // --- Передаем параметры в AnimatorHandler ---
             _animator.SetSpeed(_currentSpeed);
             _animator.SetMoving(isMoving);
             _animator.SetMoveDirection(moveDir);

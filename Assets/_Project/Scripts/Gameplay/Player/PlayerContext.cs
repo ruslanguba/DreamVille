@@ -13,7 +13,7 @@ namespace DreamVille.Gameplay.Player
     public class PlayerContext : MonoBehaviour, IPlayerMarker
     {
         public Transform Transform => transform;
-        public PlayerSettings Settings => _settings;
+        public PlayerConfig Settings => _settings;
         public IPlayerInput Input => _inputReader;
         public CharacterController Controller => _controller;
         public Transform CameraPivot1 => _cameraPivot;
@@ -23,7 +23,7 @@ namespace DreamVille.Gameplay.Player
         public Animator Animator => _animator;
         public WeaponController Weapons { get; }
 
-        [SerializeField] private PlayerSettings _settings;
+        [SerializeField] private PlayerConfig _settings;
         [SerializeField] private IPlayerInput _inputReader;
         [SerializeField] private Transform _cameraPivot;
         [SerializeField] private CinemachineCamera _cinemachineCamera;

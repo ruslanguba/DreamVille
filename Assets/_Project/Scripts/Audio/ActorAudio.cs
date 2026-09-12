@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace DreamVille.Audio
 {
-    public class ActorAudio : MonoBehaviour
+    public class ActorAudio : MonoBehaviour, IActorAudio
     {
         private AudioSource audioSource;
         [SerializeField] private AudioClip _deathClip;

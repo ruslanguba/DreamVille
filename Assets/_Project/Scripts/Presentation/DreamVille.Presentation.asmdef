@@ -1,0 +1,20 @@
+{
+    "name": "DreamVille.Presentation",
+    "rootNamespace": "DreamVille.Presentation",
+    "references": [
+        "DreamVille.Core",
+        "UniTask",
+        "Zenject",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

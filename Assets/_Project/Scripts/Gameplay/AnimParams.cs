@@ -7,6 +7,10 @@ namespace DreamVille.Gameplay
     {
         public static readonly int Dead = Animator.StringToHash("dead");
         public static readonly int IsMoving = Animator.StringToHash("isMoving");
+        public static readonly int Speed = Animator.StringToHash("speed");
+        public static readonly int IsJump = Animator.StringToHash("isJump");
+        public static readonly int MoveDirection = Animator.StringToHash("moveDirection");
+        public static readonly int AnimSpeedMultiplier = Animator.StringToHash("animSpeedMultiplier");
 
         /// <summary>Animator state name, used with <see cref="Animator.Play(int, int, float)"/>.</summary>
         public static readonly int WalkState = Animator.StringToHash("Walk");

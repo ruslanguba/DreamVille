@@ -8,7 +8,7 @@ namespace DreamVille.Gameplay.Player
     public class PlayerJump
     {
         private PlayerContext _context;
-        private PlayerSettings _settings;
+        private PlayerConfig _settings;
         private PlayerGravity _gravity;
         private CharacterController _controller;
         private IPlayerInput _inputReader;
@@ -28,9 +28,9 @@ namespace DreamVille.Gameplay.Player
         {
             if (_controller.isGrounded)
             {
-                float jumpVelocity = Mathf.Sqrt(_settings.jumpHeight * -2f * _settings.gravity);
+                float jumpVelocity = Mathf.Sqrt(_settings.JumpHeight * -2f * _settings.Gravity);
                 _gravity.SetYVelocity(jumpVelocity);
-                _animator.SetJump();  // включаем анимацию прыжка
+                _animator.SetJump();
                 _context.Audio.PlayJump();
             }
         }
