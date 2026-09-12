@@ -23,14 +23,15 @@ namespace DreamVille.UI
 
         private IEnumerator Start()
         {
+            // Waits one frame so the sliders finish their own Awake/OnEnable setup
+            // before we overwrite their value and attach listeners.
             yield return new WaitForEndOfFrame();
             musicSlider.onValueChanged.RemoveAllListeners();
             sfxSlider.onValueChanged.RemoveAllListeners();
-            // Загружаем текущие громкости в UI
-            musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.3f);
-            sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 0.3f);
 
-            // Подписываем события
+            musicSlider.value = _audio.MusicVolume;
+            sfxSlider.value = _audio.SfxVolume;
+
             musicSlider.onValueChanged.AddListener(_audio.SetMusicVolume);
             sfxSlider.onValueChanged.AddListener(_audio.SetSFXVolume);
         }
