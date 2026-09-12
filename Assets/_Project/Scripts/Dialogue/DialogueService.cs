@@ -4,8 +4,8 @@ using System.Collections.Generic;
 namespace DreamVille.Dialogue
 {
     /// <summary>
-    /// Состояние диалога: очередь реплик и переходы между ними.
-    /// Не знает ни про UI, ни про ввод, ни про сцену.
+    /// Dialogue state: the sentence queue and the transitions between lines.
+    /// Knows nothing about UI, input or the scene.
     /// </summary>
     public class DialogueService
     {
@@ -17,10 +17,14 @@ namespace DreamVille.Dialogue
 
         public bool IsActive { get; private set; }
 
-        public void Begin(IReadOnlyList<Dialogue> lines, Action onCompleted = null)
+        /// <summary>
+        /// A dialogue that is already running is not interrupted; the new request is ignored
+        /// and false is returned.
+        /// </summary>
+        public bool Begin(IReadOnlyList<Dialogue> lines, Action onCompleted = null)
         {
-            if (lines == null || lines.Count == 0)
-                return;
+            if (IsActive || lines == null || lines.Count == 0)
+                return false;
 
             _sentences.Clear();
             foreach (Dialogue line in lines)
@@ -32,6 +36,8 @@ namespace DreamVille.Dialogue
             ActiveChanged?.Invoke(true);
 
             ShowNext();
+
+            return true;
         }
 
         public void ShowNext()

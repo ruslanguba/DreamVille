@@ -43,22 +43,22 @@ namespace DreamVille.Progression
                 enemy.OnDeath += CalculateSecondQuestProgress;
             }
 
-            _firstDialogue.OnDialogueStarted += SetTalkAnim;
-            _firstDialogue.OnDialogueEnded += OpenFirstDoor;
+            _firstDialogue.DialogueStarted += SetTalkAnim;
+            _firstDialogue.DialogueEnded += OpenFirstDoor;
 
-            _secondDialogue.OnDialogueStarted += SetApplauseAnim;
-            _secondDialogue.OnDialogueEnded += StopAudio;
+            _secondDialogue.DialogueStarted += SetApplauseAnim;
+            _secondDialogue.DialogueEnded += StopAudio;
 
             _secondDialogue.gameObject.SetActive(false);
         }
 
         private void OnDisable()
         {
-            _firstDialogue.OnDialogueStarted -= SetTalkAnim;
-            _firstDialogue.OnDialogueEnded -= OpenFirstDoor;
+            _firstDialogue.DialogueStarted -= SetTalkAnim;
+            _firstDialogue.DialogueEnded -= OpenFirstDoor;
 
-            _secondDialogue.OnDialogueStarted -= SetApplauseAnim;
-            _secondDialogue.OnDialogueEnded -= StopAudio;
+            _secondDialogue.DialogueStarted -= SetApplauseAnim;
+            _secondDialogue.DialogueEnded -= StopAudio;
 
         }
         private void CalculateFirstQuestProgress(EnemyHealth enemy, int collisions)
@@ -115,7 +115,7 @@ namespace DreamVille.Progression
 
         private IEnumerator StartApplauseAndTalk()
         {
-            npcAnimationHandler.SetisApplauseAnim();
+            npcAnimationHandler.SetApplauseAnim();
             yield return new WaitForSeconds(3);
             npcAnimationHandler.SetTalkAnim();
         }

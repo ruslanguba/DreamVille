@@ -21,8 +21,8 @@ namespace DreamVille.Dialogue
             if (_dialogueTrigger == null)
                 return;
 
-            _dialogueTrigger.OnDialogueStarted += SetCameraPriority;
-            _dialogueTrigger.OnDialogueEnded += ResetCameraPriority;
+            _dialogueTrigger.DialogueStarted += SetCameraPriority;
+            _dialogueTrigger.DialogueEnded += ResetCameraPriority;
         }
 
         private void OnDisable()
@@ -30,8 +30,8 @@ namespace DreamVille.Dialogue
             if (_dialogueTrigger == null)
                 return;
 
-            _dialogueTrigger.OnDialogueStarted -= SetCameraPriority;
-            _dialogueTrigger.OnDialogueEnded -= ResetCameraPriority;
+            _dialogueTrigger.DialogueStarted -= SetCameraPriority;
+            _dialogueTrigger.DialogueEnded -= ResetCameraPriority;
         }
         private void SetCameraPriority()
         {

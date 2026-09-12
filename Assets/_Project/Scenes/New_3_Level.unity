@@ -10238,8 +10238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f163e764b02b14f9b728f7ef7f7759, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _npcAnimationHandler: {fileID: 0}
-  _audio: {fileID: 0}
   _mumbleClips: []
 --- !u!1001 &635355287
 PrefabInstance:
@@ -20471,6 +20469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _finalZone: {fileID: 864972663}
+  _finalNpc: {fileID: 634088686}
 --- !u!1001 &1283648836
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26612,11 +26611,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 298de5f70190a164e923b1b0b2e42087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  line: {fileID: 1070929106}
-  origin: {fileID: 810225960}
-  maxBounces: 5
-  maxDistance: 100
-  sphereRadius: 0.25
+  _line: {fileID: 1070929106}
+  _origin: {fileID: 810225960}
+  _maxBounces: 5
+  _maxDistance: 100
+  _sphereRadius: 0.25
+  _useDefaultHitMask: 1
+  _hitMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1001 &1628929126
 PrefabInstance:
   m_ObjectHideFlags: 0

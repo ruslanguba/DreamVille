@@ -1927,6 +1927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _finalZone: {fileID: 1923182516}
+  _finalNpc: {fileID: 1014592236}
 --- !u!1 &398589584 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1201665815340330276, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
@@ -4125,8 +4126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f163e764b02b14f9b728f7ef7f7759, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _npcAnimationHandler: {fileID: 0}
-  _audio: {fileID: 0}
   _mumbleClips: []
 --- !u!1001 &1027171594
 PrefabInstance:

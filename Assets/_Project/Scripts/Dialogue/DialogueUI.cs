@@ -1,30 +1,41 @@
 using TMPro;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using UnityEngine;
 using Zenject;
 
 namespace DreamVille.Dialogue
 {
+    /// <summary>Displays the currently shown dialogue sentence and speaker icon.</summary>
     public class DialogueUI : MonoBehaviour
     {
-        [SerializeField] private Image panel;
+        [FormerlySerializedAs("panel")]
+        [SerializeField] private Image _panel;
 
-        [SerializeField] private Image leftImage;
-        [SerializeField] private Image rightImage;
+        [FormerlySerializedAs("leftImage")]
+        [SerializeField] private Image _leftImage;
+        [FormerlySerializedAs("rightImage")]
+        [SerializeField] private Image _rightImage;
 
-        [SerializeField] private Image leftTextBackground;
-        [SerializeField] private Image rightTextBackground;
+        [FormerlySerializedAs("leftTextBackground")]
+        [SerializeField] private Image _leftTextBackground;
+        [FormerlySerializedAs("rightTextBackground")]
+        [SerializeField] private Image _rightTextBackground;
 
-        [SerializeField] private TextMeshProUGUI leftText;
-        [SerializeField] private TextMeshProUGUI rightText;
+        [FormerlySerializedAs("leftText")]
+        [SerializeField] private TextMeshProUGUI _leftText;
+        [FormerlySerializedAs("rightText")]
+        [SerializeField] private TextMeshProUGUI _rightText;
 
-        private float positionOffset;
-        [SerializeField] private float sizeOffset;
+        [FormerlySerializedAs("sizeOffset")]
+        [SerializeField] private float _sizeOffset;
 
-        private Vector2 originalSize;
+        private float _positionOffset;
 
-        private Vector3 leftOriginalPos;
-        private Vector3 rightOriginalPos;
+        private Vector2 _originalSize;
+
+        private Vector3 _leftOriginalPos;
+        private Vector3 _rightOriginalPos;
 
         private DialogueService _dialogue;
 
@@ -34,78 +45,78 @@ namespace DreamVille.Dialogue
             _dialogue = dialogue;
         }
 
-
         private void Awake()
         {
-            originalSize = leftImage.rectTransform.sizeDelta;
+            _originalSize = _leftImage.rectTransform.sizeDelta;
 
-            leftOriginalPos = leftImage.rectTransform.localPosition;
-            rightOriginalPos = rightImage.rectTransform.localPosition;
+            _leftOriginalPos = _leftImage.rectTransform.localPosition;
+            _rightOriginalPos = _rightImage.rectTransform.localPosition;
 
-            panel.gameObject.SetActive(false);
+            _panel.gameObject.SetActive(false);
         }
 
         public void SetLeftImage(Sprite sprite)
         {
-            leftImage.sprite = sprite;
+            _leftImage.sprite = sprite;
         }
 
         public void ShowNextSentence(bool isPluh, string text)
         {
             if (isPluh)
             {
-                rightText.text = text;
-                leftTextBackground.gameObject.SetActive(false);
-                rightTextBackground.gameObject.SetActive(true);
+                _rightText.text = text;
+                _leftTextBackground.gameObject.SetActive(false);
+                _rightTextBackground.gameObject.SetActive(true);
             }
             else
             {
-                leftText.text = text;
-                leftTextBackground.gameObject.SetActive(true);
-                rightTextBackground.gameObject.SetActive(false);
+                _leftText.text = text;
+                _leftTextBackground.gameObject.SetActive(true);
+                _rightTextBackground.gameObject.SetActive(false);
             }
             ChangeIconsSize(isPluh);
         }
 
         private void ChangeIconsSize(bool isRight)
         {
+            // Pick the selected and the other icon.
+            RectTransform selected = isRight ? _rightImage.rectTransform : _leftImage.rectTransform;
+            RectTransform other = isRight ? _leftImage.rectTransform : _rightImage.rectTransform;
 
-            // Определяем выбранный и другой элементы
-            RectTransform selected = isRight ? rightImage.rectTransform : leftImage.rectTransform;
-            RectTransform other = isRight ? leftImage.rectTransform : rightImage.rectTransform;
+            other.sizeDelta = _originalSize;
+            selected.sizeDelta = _originalSize;
 
-            other.sizeDelta = originalSize;
-            selected.sizeDelta = originalSize;
+            _leftImage.rectTransform.localPosition = _leftOriginalPos;
+            _rightImage.rectTransform.localPosition = _rightOriginalPos;
 
-            leftImage.rectTransform.localPosition = leftOriginalPos;
-            rightImage.rectTransform.localPosition= rightOriginalPos;
-
-            // Восстанавливаем размер и позицию невыбранного
-            other.sizeDelta = originalSize;
-
-            // Увеличиваем выбранный элемент и смещаем его
-            selected.sizeDelta += Vector2.one * sizeOffset;
-            positionOffset = sizeOffset / 2;
+            // Grow the selected icon and offset it.
+            selected.sizeDelta += Vector2.one * _sizeOffset;
+            _positionOffset = _sizeOffset / 2;
             Vector3 newPos = selected.localPosition;
-            newPos.y += positionOffset;
-            newPos.x += isRight ? -positionOffset : positionOffset;
+            newPos.y += _positionOffset;
+            newPos.x += isRight ? -_positionOffset : _positionOffset;
             selected.localPosition = newPos;
         }
 
         public void OnNextButtonClick()
         {
-            _dialogue?.ShowNext();
+            if (_dialogue == null)
+            {
+                Debug.LogError($"[{nameof(DialogueUI)}] DialogueService was not injected; create this prefab through the DI container.", this);
+                return;
+            }
+
+            _dialogue.ShowNext();
         }
 
         public void ShowPanel()
         {
-            panel.gameObject.SetActive(true);
+            _panel.gameObject.SetActive(true);
         }
 
         public void HidePanel()
         {
-            panel.gameObject.SetActive(false);
+            _panel.gameObject.SetActive(false);
         }
-
     }
 }

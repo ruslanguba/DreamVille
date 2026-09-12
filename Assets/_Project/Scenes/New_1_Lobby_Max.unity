@@ -5149,8 +5149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f163e764b02b14f9b728f7ef7f7759, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _npcAnimationHandler: {fileID: 0}
-  _audio: {fileID: 0}
   _mumbleClips: []
 --- !u!114 &209490212
 MonoBehaviour:
@@ -11204,6 +11202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _finalZone: {fileID: 1088994475}
+  _finalNpc: {fileID: 2076395064}
 --- !u!1001 &450459797
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23818,6 +23817,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1224860185}
   m_SourcePrefab: {fileID: 100100000, guid: 7c42b3e06d71bc64f8faa167bb0138d4, type: 3}
+--- !u!114 &1069191530 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3607670399235884844, guid: 7c42b3e06d71bc64f8faa167bb0138d4, type: 3}
+  m_PrefabInstance: {fileID: 1069191529}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224860183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 199fc9b06ddbd6f4f93e82b401a75531, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1069819104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28927,8 +28937,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f163e764b02b14f9b728f7ef7f7759, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _npcAnimationHandler: {fileID: 0}
-  _audio: {fileID: 0}
   _mumbleClips: []
 --- !u!4 &1226996509 stripped
 Transform:
@@ -32923,8 +32931,16 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7966643187028395988, guid: 7c42b3e06d71bc64f8faa167bb0138d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2076395064}
   m_SourcePrefab: {fileID: 100100000, guid: 7c42b3e06d71bc64f8faa167bb0138d4, type: 3}
+--- !u!1 &1391739097 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7966643187028395988, guid: 7c42b3e06d71bc64f8faa167bb0138d4, type: 3}
+  m_PrefabInstance: {fileID: 1391739096}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1393520132
 GameObject:
   m_ObjectHideFlags: 0
@@ -34791,11 +34807,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 298de5f70190a164e923b1b0b2e42087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  line: {fileID: 1479415851}
-  origin: {fileID: 1479415848}
-  maxBounces: 5
-  maxDistance: 100
-  sphereRadius: 0.25
+  _line: {fileID: 1479415851}
+  _origin: {fileID: 1479415848}
+  _maxBounces: 5
+  _maxDistance: 100
+  _sphereRadius: 0.25
+  _useDefaultHitMask: 1
+  _hitMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!114 &1479415860 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7262258380461421158, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
@@ -47326,22 +47346,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.012866071, y: 0.012866075, z: 0.040033944}
   m_Center: {x: -0.0000000013025868, y: -0.0000000011931047, z: 0.020016955}
---- !u!114 &2076395061 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3607670399235884844, guid: 7c42b3e06d71bc64f8faa167bb0138d4, type: 3}
-  m_PrefabInstance: {fileID: 1391739096}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199fc9b06ddbd6f4f93e82b401a75531, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2076395063 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 309058373999330152, guid: 7c42b3e06d71bc64f8faa167bb0138d4, type: 3}
   m_PrefabInstance: {fileID: 1391739096}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2076395064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391739097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31f163e764b02b14f9b728f7ef7f7759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mumbleClips: []
 --- !u!4 &2078506637 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 40638fa897c24bb4990bbb0c60a4ce25, type: 3}
@@ -48012,7 +48034,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 46c0551deedff0f479b48fb4f2ec1b54, type: 3}
   - {fileID: 8300000, guid: 40dcb1cb4df025d4eb0136475cfe59cc, type: 3}
   - {fileID: 8300000, guid: e87efcbafe3f0a64aa41978079f14a6c, type: 3}
-  npcAnimationHandler: {fileID: 2076395061}
+  npcAnimationHandler: {fileID: 1069191530}
   _counter: 0
 --- !u!4 &2119120890
 Transform:

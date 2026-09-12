@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine.Localization.Settings;
+using UnityEngine.Serialization;
 using Zenject;
 using UnityEngine;
 
@@ -8,10 +9,14 @@ using DreamVille.Gameplay.Player;
 
 namespace DreamVille.Dialogue
 {
+    /// <summary>Starts a dialogue when the player enters its trigger zone.</summary>
     public class DialogueTrigger : MonoBehaviour
     {
-        public event Action OnDialogueStarted;
-        public event Action OnDialogueEnded;
+        /// <summary>Raised after the dialogue service accepted this trigger's lines.</summary>
+        public event Action DialogueStarted;
+
+        /// <summary>Raised when the last line of this trigger's dialogue has been dismissed.</summary>
+        public event Action DialogueEnded;
 
         private PlayerDetectorTrigger _actionSender;
         private DialogueService _dialogue;
@@ -22,18 +27,20 @@ namespace DreamVille.Dialogue
             _dialogue = dialogue;
         }
 
-        [SerializeField] private List<Dialogue> sentence;
-        [SerializeField] private List<Dialogue> sentenceEn;
+        [FormerlySerializedAs("sentence")]
+        [SerializeField] private List<Dialogue> _sentencesRu;
+        [FormerlySerializedAs("sentenceEn")]
+        [SerializeField] private List<Dialogue> _sentencesEn;
 
-        [SerializeField] private AudioClip[] mumbels;
-        [SerializeField] private bool deleteOnEnd;
+        [FormerlySerializedAs("deleteOnEnd")]
+        [SerializeField] private bool _deleteOnEnd;
 
-        /// <summary>Разоружённый триггер игнорирует вход игрока. Объект при этом остаётся активным.</summary>
+        /// <summary>A disarmed trigger ignores the player. The object stays active.</summary>
         public bool IsArmed { get; set; } = true;
 
         private void OnEnable()
         {
-            // includeInactive обязателен: иначе после выключения зоны триггер теряет сам себя.
+            // includeInactive is required: otherwise the trigger loses itself once the zone is disabled.
             _actionSender = GetComponentInChildren<PlayerDetectorTrigger>(true);
 
             if (_actionSender != null)
@@ -51,19 +58,32 @@ namespace DreamVille.Dialogue
             if (!IsArmed)
                 return;
 
-            OnDialogueStarted?.Invoke();
-
             var selectedLocale = LocalizationSettings.SelectedLocale.Identifier;
+            var lines = selectedLocale == "en" ? _sentencesEn : _sentencesRu;
 
-            var lines = selectedLocale == "en" ? sentenceEn : sentence;
-            _dialogue.Begin(lines, DialogueCompleted);
+            if (lines == null || lines.Count == 0)
+            {
+                Debug.LogError($"[{nameof(DialogueTrigger)}] '{name}': no dialogue lines for locale '{selectedLocale}'.", this);
+                return;
+            }
+
+            if (_dialogue.IsActive)
+            {
+                Debug.LogWarning($"[{nameof(DialogueTrigger)}] '{name}': a dialogue is already active, ignoring the trigger.", this);
+                return;
+            }
+
+            if (!_dialogue.Begin(lines, DialogueCompleted))
+                return;
+
+            DialogueStarted?.Invoke();
         }
 
         public void DialogueCompleted()
         {
-            OnDialogueEnded?.Invoke();  // Если события нет - ничего не произойдет
+            DialogueEnded?.Invoke();
 
-            if (deleteOnEnd)
+            if (_deleteOnEnd)
             {
                 Destroy(this);
             }

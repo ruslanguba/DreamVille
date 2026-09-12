@@ -1,23 +1,32 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace DreamVille.Dialogue
 {
     /// <summary>
-    /// Презентер диалога: показывает состояние <see cref="DialogueService"/> на экране.
-    /// Логика очереди реплик живёт в сервисе, ввод — в DialogueInputHandler.
+    /// Dialogue presenter: reflects the state of <see cref="DialogueService"/> on screen.
+    /// The sentence queue lives in the service, input in <see cref="DialogueInputHandler"/>.
     /// </summary>
     public class DialogueManager : MonoBehaviour
     {
-        [SerializeField] private DialogueUI dialogueUIPrefab;
+        [FormerlySerializedAs("dialogueUIPrefab")]
+        [SerializeField] private DialogueUI _dialogueUIPrefab;
 
+        private DiContainer _container;
         private DialogueService _dialogue;
         private DialogueUI _ui;
 
+        /// <remarks>
+        /// The container is injected only to instantiate the UI prefab through Zenject so that
+        /// <see cref="DialogueUI"/> receives its own dependencies; it is not used as a locator.
+        /// </remarks>
         [Inject]
-        public void Construct(DialogueService dialogue)
+        public void Construct(DiContainer container, DialogueService dialogue)
         {
+            _container = container;
             _dialogue = dialogue;
         }
 
@@ -25,7 +34,13 @@ namespace DreamVille.Dialogue
         {
             EnsureEventSystem();
 
-            _ui = Instantiate(dialogueUIPrefab);
+            if (_dialogueUIPrefab == null)
+            {
+                Debug.LogError($"[{nameof(DialogueManager)}] '{name}' has no dialogue UI prefab assigned.", this);
+                return;
+            }
+
+            _ui = _container.InstantiatePrefabForComponent<DialogueUI>(_dialogueUIPrefab);
 
             _dialogue.ActiveChanged += OnActiveChanged;
             _dialogue.SentenceShown += OnSentenceShown;
@@ -53,7 +68,10 @@ namespace DreamVille.Dialogue
             _ui.ShowNextSentence(sentence.IsPluh, sentence.Sentence);
         }
 
-        // TODO: EventSystem должен лежать в сцене, а не создаваться в рантайме.
+        /// <summary>
+        /// Fallback for scenes that do not ship their own <see cref="EventSystem"/>.
+        /// Prefer wiring one in the scene explicitly.
+        /// </summary>
         private void EnsureEventSystem()
         {
             if (EventSystem.current != null)
@@ -61,7 +79,7 @@ namespace DreamVille.Dialogue
 
             var go = new GameObject(nameof(EventSystem));
             go.AddComponent<EventSystem>();
-            go.AddComponent<StandaloneInputModule>();
+            go.AddComponent<InputSystemUIInputModule>();
         }
     }
 }

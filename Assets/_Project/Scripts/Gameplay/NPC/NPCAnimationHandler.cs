@@ -53,7 +53,7 @@ namespace DreamVille.Gameplay.NPC
             SetBool("isSwim", _isSwim);
         }
 
-        public void SetisApplauseAnim()
+        public void SetApplauseAnim()
         {
             SetBool("isApplause", true);
             SetBool("isTalk", false);

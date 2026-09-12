@@ -4,7 +4,7 @@ using Zenject;
 
 namespace DreamVille.Dialogue
 {
-    /// <summary>Промотка диалога. Раньше это жил Update с Input.GetKeyDown.</summary>
+    /// <summary>Advances the current dialogue sentence when the configured input action fires.</summary>
     public class DialogueInputHandler : MonoBehaviour
     {
         [SerializeField] private InputActionReference _nextAction;
@@ -21,7 +21,7 @@ namespace DreamVille.Dialogue
         {
             if (_nextAction?.action == null)
             {
-                Debug.LogWarning($"{nameof(DialogueInputHandler)} на '{name}': не назначен {nameof(_nextAction)}.", this);
+                Debug.LogWarning($"[{nameof(DialogueInputHandler)}] '{name}': {nameof(_nextAction)} is not assigned.", this);
                 return;
             }
 

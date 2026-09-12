@@ -6,16 +6,19 @@ using DreamVille.Dialogue;
 namespace DreamVille.Progression
 {
     /// <summary>
-    /// Финальная зона уровня: ведёт себя как один самодостаточный объект —
-    /// озвучивает свой диалог и умеет открыть проход. Про прогресс, NPC и сценарий не знает,
-    /// связи с остальным уровнем создаёт <see cref="LevelDirector"/>.
+    /// The level's final zone: a self-contained object that plays its own dialogue and can
+    /// open the path onward. It knows nothing about progress, NPCs or the wider scenario;
+    /// those links are created by <see cref="LevelDirector"/>.
     /// </summary>
     [RequireComponent(typeof(Animator))]
     public class FinalZone : MonoBehaviour
     {
         private const string OpenTrigger = "start";
 
-        /// <summary>Финальный диалог закончился — можно открывать проход.</summary>
+        /// <summary>The final dialogue started; a nearby NPC can react to it.</summary>
+        public event Action DialogueStarted;
+
+        /// <summary>The final dialogue finished; the path onward can be opened.</summary>
         public event Action DialogueFinished;
 
         [SerializeField] private DialogueTrigger _dialogue;
@@ -25,13 +28,13 @@ namespace DreamVille.Progression
 
         private void Awake()
         {
-            // Связи внутри одного префаба: includeInactive и проверка на null обязательны.
+            // References within a single prefab: includeInactive and a null check are required.
             if (_dialogue == null) _dialogue = GetComponentInChildren<DialogueTrigger>(true);
             if (_animator == null) _animator = GetComponent<Animator>();
             if (_audio == null) _audio = GetComponent<AudioSource>();
 
-            // До победы зона не реагирует на игрока. Объект при этом остаётся активным:
-            // выключенный триггер терял ссылки и всё равно ловил вход.
+            // The zone ignores the player until the level is won. The object stays active:
+            // a disabled trigger lost its references and still caught the player's input.
             SetArmed(false);
         }
 
@@ -40,8 +43,8 @@ namespace DreamVille.Progression
             if (_dialogue == null)
                 return;
 
-            _dialogue.OnDialogueStarted += PlayMumble;
-            _dialogue.OnDialogueEnded += OnDialogueEnded;
+            _dialogue.DialogueStarted += OnDialogueStarted;
+            _dialogue.DialogueEnded += OnDialogueEnded;
         }
 
         private void OnDisable()
@@ -49,14 +52,14 @@ namespace DreamVille.Progression
             if (_dialogue == null)
                 return;
 
-            _dialogue.OnDialogueStarted -= PlayMumble;
-            _dialogue.OnDialogueEnded -= OnDialogueEnded;
+            _dialogue.DialogueStarted -= OnDialogueStarted;
+            _dialogue.DialogueEnded -= OnDialogueEnded;
         }
 
-        /// <summary>Взвести зону: с этого момента вход игрока запускает финальный диалог.</summary>
+        /// <summary>Arms the zone: from this point the player's entry starts the final dialogue.</summary>
         public void Arm() => SetArmed(true);
 
-        /// <summary>Проиграть анимацию открытия прохода.</summary>
+        /// <summary>Plays the portal-opening animation.</summary>
         public void OpenPortal()
         {
             if (_audio != null)
@@ -70,6 +73,12 @@ namespace DreamVille.Progression
         {
             if (_dialogue != null)
                 _dialogue.IsArmed = isArmed;
+        }
+
+        private void OnDialogueStarted()
+        {
+            PlayMumble();
+            DialogueStarted?.Invoke();
         }
 
         private void PlayMumble()
