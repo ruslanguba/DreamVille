@@ -9,7 +9,12 @@
         "DreamVille.Dialogue",
         "DreamVille.Gameplay",
         "DreamVille.SceneManagement",
-        "UniTask"
+        "DreamVille.Core",
+        "DreamVille.App",
+        "DreamVille.Bootstrap",
+        "DreamVille.Input",
+        "UniTask",
+        "Zenject"
     ],
     "includePlatforms": [
         "Editor"
