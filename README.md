@@ -42,7 +42,7 @@ refactor documented below is the author's.
 - **UniTask with cancellation, not coroutines**, in the refactored modules: bullet
   lifetime, pillow recall, NPC reactions and scene loading each own a
   `CancellationToken` tied to the object's lifetime.
-- **105 EditMode tests**, including a scene-composition guard
+- **139 EditMode tests**, including a scene-composition guard
   ([`SceneCompositionTests`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs))
   that opens every build scene and checks its installers and catalog references, so a
   mis-wired scene fails a test run instead of a play session.
@@ -143,6 +143,7 @@ Full decision records: [ADR 0001 — Zenject composition root](Docs/adr/0001-zen
 - [`Assets/_Project/Prefabs/Bootstrap/GameplaySceneContext.prefab`](Assets/_Project/Prefabs/Bootstrap/GameplaySceneContext.prefab) — the one installer set shared by all six gameplay scenes.
 - [`Assets/_Project/Scripts/SceneManagement/SceneLoader.cs`](Assets/_Project/Scripts/SceneManagement/SceneLoader.cs) — UniTask scene loading with a concurrent-transition guard and progress events.
 - [`Assets/_Project/Scripts/Progression/LevelDirector.cs`](Assets/_Project/Scripts/Progression/LevelDirector.cs) — level completion as a plain class: no MonoBehaviour, no `Update` polling.
+- [`Assets/_Project/Scripts/Gameplay/Enemies/States/EnemyStateMachine.cs`](Assets/_Project/Scripts/Gameplay/Enemies/States/EnemyStateMachine.cs) — guarded enemy state machine; [`Enemy.cs`](Assets/_Project/Scripts/Gameplay/Enemies/Enemy.cs) is the thin MonoBehaviour context its seven states see through `IEnemyContext`, and `EnemyConfig` assets hold the archetype tuning.
 - [`Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowThrowHandler.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowThrowHandler.cs) — throw, recall and freeze logic behind the game's core mechanic, driven by UniTask with per-object cancellation.
 - [`Assets/_Project/Scripts/Persistence/ProgressRepository.cs`](Assets/_Project/Scripts/Persistence/ProgressRepository.cs) — the only place stars and completion are read from or written to a save.
 - [`Assets/_Project/Scripts/Audio/AudioService.cs`](Assets/_Project/Scripts/Audio/AudioService.cs) — saved volume plus per-scene music, driven by the scene catalog.
@@ -184,7 +185,7 @@ press Play.
 
 ## Tests
 
-Window → General → Test Runner → EditMode → Run All. 105 tests, all green. PlayMode
+Window → General → Test Runner → EditMode → Run All. 139 tests, all green. PlayMode
 tests and CI are not set up yet.
 
 ## Status and roadmap
@@ -194,12 +195,12 @@ critical gameplay fixes (bullet pool, enemy death, saved volume, dialogue re-ent
 pillow throw/recall); layered, acyclic assemblies with `autoReferenced: false`;
 services bound by interface; persistence behind `ISaveStorage`/repositories; data-driven
 scene and level identity (`SceneCatalog`/`LevelDefinition`); an `IAudioService` behind
-the composition root; 105 EditMode tests; four ADRs.
+the composition root; one enemy state machine driven by `EnemyConfig` assets, with
+pooled projectiles, in place of four separate enemy scripts; 139 EditMode tests; four ADRs.
 
-**Next:** a single enemy state machine with ScriptableObject configs (today each enemy
-kind has its own script); a composed player object instead of the current
-`PlayerContext` hub; UI presenters beyond `GameplayPresenter`; CI with game-ci; a
-playable build.
+**Next:** a composed player object instead of the current `PlayerContext` hub; a single
+interaction channel for interactables; UI presenters beyond `GameplayPresenter`; CI with
+game-ci; a playable build.
 
 ## Documentation
 
