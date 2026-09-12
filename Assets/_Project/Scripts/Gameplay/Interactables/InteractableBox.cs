@@ -70,29 +70,27 @@ namespace DreamVille.Gameplay.Interactables
             yield return new WaitForSeconds(_openDuration);
             float t = 0f;
 
-            while (t < _hideDuration)
+            while (enemy != null && t < _hideDuration)
             {
                 t += Time.deltaTime;
                 float normalized = t / _hideDuration;
 
-                // Движение
                 enemy.transform.position = Vector3.Lerp(startPos, endPos, normalized);
-
-                // Уменьшение масштаба
                 enemy.transform.localScale = Vector3.Lerp(startScale, endScale, normalized);
-                if (enemy == null)
-                    break;
                 yield return null;
             }
             yield return new WaitForSeconds(_closeDuration);
 
-            if (enemy != null)
-            {
+            if (enemy == null)
+                yield break;
+
+            if (!_enemies.Contains(enemy))
                 _enemies.Add(enemy);
-                enemy.OnDestroyed += RemoveEnemy;
-                CloseDoor();
-            }
-            // Финальная фиксация
+
+            enemy.OnDestroyed -= RemoveEnemy;
+            enemy.OnDestroyed += RemoveEnemy;
+            CloseDoor();
+
             enemy.transform.position = endPos;
             enemy.transform.localScale = endScale;
             enemy.gameObject.SetActive(false);

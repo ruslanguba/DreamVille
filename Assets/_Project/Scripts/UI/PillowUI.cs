@@ -6,6 +6,8 @@ namespace DreamVille.UI
 {
     public class PillowUI : MonoBehaviour
     {
+        private const float VisibleAlphaThreshold = 0.9f;
+
         [SerializeField] private Image _iconPrefab;
         [SerializeField] private RectTransform _firstPosition;
         [SerializeField] private RectTransform _pillowsPanel;
@@ -19,6 +21,8 @@ namespace DreamVille.UI
         /// <summary>Creates one icon per pillow slot.</summary>
         public void SpawnIcons(int count)
         {
+            ClearIcons();
+
             Vector3 startPos = _firstPosition.localPosition;
 
             for (int i = 0; i < count; i++)
@@ -54,7 +58,7 @@ namespace DreamVille.UI
             _usedPillows++;
             for (int i = _pillowIcons.Count - 1; i >= 0; i--)
             {
-                if (_pillowIcons[i].color.a > 0.9f)
+                if (_pillowIcons[i].color.a > VisibleAlphaThreshold)
                 {
                     SetAlpha(_pillowIcons[i], _alphaHidden);
                     break;

@@ -11,7 +11,7 @@ namespace DreamVille.Gameplay.Triggers
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.TryGetComponent(out InputReader inputReader))
+            if (other.gameObject.TryGetComponent(out InputReader _))
             {
                 OnTriggerActivated?.Invoke(true, other.transform.position);
             }
@@ -19,7 +19,10 @@ namespace DreamVille.Gameplay.Triggers
 
         private void OnTriggerExit(Collider other)
         {
-            OnTriggerActivated?.Invoke(false, other.transform.position);
+            if (other.gameObject.TryGetComponent(out InputReader _))
+            {
+                OnTriggerActivated?.Invoke(false, other.transform.position);
+            }
         }
     }
 }
