@@ -9743,10 +9743,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 439.307
       objectReference: {fileID: 0}
-    - target: {fileID: 8933406012867485410, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
-      propertyPath: _pillows.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8990396201954471229, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 97.29
@@ -9935,7 +9931,7 @@ PrefabInstance:
     - {fileID: 6484504071117659071, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
     - {fileID: 7147069176118042256, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
     m_RemovedGameObjects:
-    - {fileID: 6200642706012111765, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
+    - {fileID: 0}
     - {fileID: 6233910072876116191, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
     - {fileID: 3306277595017855339, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
     - {fileID: 6621565387384686682, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
@@ -9990,8 +9986,6 @@ PrefabInstance:
     - {fileID: 5619023003302795289, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
     - {fileID: 3606113732826720229, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
     - {fileID: 4168127417716702860, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
-    - {fileID: 6131709370467070903, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
-    - {fileID: 4853248597498021900, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
     - {fileID: 607488009939914823, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
     - {fileID: 6358374424657488406, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
     - {fileID: 8370463723637160062, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}

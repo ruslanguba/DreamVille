@@ -8,8 +8,8 @@ using DreamVille.Gameplay.Weapons.Pillow;
 namespace DreamVille.Core.Bootstrap
 {
     /// <summary>
-    /// Боевые системы. Пул пуль, спавнер и релей событий создаются из префаба,
-    /// поэтому не требуют заранее разложенных по сценам объектов.
+    /// Combat systems. The bullet pool, spawner and event relay are created from a
+    /// prefab, so they do not require objects pre-placed in the scene.
     /// </summary>
     public class CombatInstaller : MonoInstaller
     {
@@ -18,8 +18,8 @@ namespace DreamVille.Core.Bootstrap
 
         public override void InstallBindings()
         {
-            // Один экземпляр префаба на сцену: остальные компоненты берём с него же,
-            // иначе FromComponentInNewPrefab создал бы по копии на каждый биндинг.
+            // One prefab instance per scene: the remaining components are read off it,
+            // otherwise FromComponentInNewPrefab would create a separate copy per binding.
             Container
                 .Bind<BulletSpawner>()
                 .FromComponentInNewPrefab(_gameplaySystemsPrefab)
@@ -36,7 +36,8 @@ namespace DreamVille.Core.Bootstrap
                 .FromMethod(ctx => ctx.Container.Resolve<BulletSpawner>().GetComponent<BulletEventRelay>())
                 .AsSingle();
 
-            // Эти живут на объектах сцены: реестр — на LevelProgressSystem, подушки — на игроке.
+            // These live on scene objects: the registry on the LevelProgressSystem
+            // prefab in Prefabs/Utilities, pillows on the player.
             Container.Bind<EnemyRegistry>().FromComponentInHierarchy().AsSingle();
             Container.Bind<PillowThrowHandler>().FromComponentInHierarchy().AsSingle();
         }
