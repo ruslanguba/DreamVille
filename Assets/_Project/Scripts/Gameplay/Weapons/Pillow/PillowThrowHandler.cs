@@ -1,158 +1,236 @@
-using System.Collections.Generic;
-using System.Collections;
 using System;
+using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 using DreamVille.Core.Input;
-using DreamVille.Gameplay.Trajectory;
 
 namespace DreamVille.Gameplay.Weapons.Pillow
 {
+    /// <summary>
+    /// Throws pillows from a pre-assigned pool and recalls or freezes them mid-flight.
+    /// One key drives throwing and recalling: while a pillow is in flight the key recalls it;
+    /// otherwise it throws the next free pillow, and once every pillow is placed it recalls
+    /// the most recently placed one. Stop freezes the pillow in flight so it becomes a static
+    /// platform; a frozen pillow stays "placed" and is recalled when no free pillow is left.
+    /// </summary>
     public class PillowThrowHandler : MonoBehaviour
     {
+        /// <summary>Raised after a pillow is thrown.</summary>
         public event Action OnThrow;
+
+        /// <summary>Raised after a recalled pillow arrives back at the spawn point.</summary>
         public event Action OnRecall;
+
+        /// <summary>Raised once during initialization with the number of available pillow slots.</summary>
         public event Action<int> OnPillowAdded;
 
+        private const float ArrivalThreshold = 0.1f;
+
         [Header("References")]
-        [SerializeField] private Transform _spawnPoint; // точка броска
+        [SerializeField] private Transform _spawnPoint;
         [SerializeField] private Transform _character;
-        [SerializeField] private List<GameObject> _pillows; // заранее созданные подушки
-        private Stack<GameObject> _thrownPillows = new Stack<GameObject>();
+        [SerializeField] private List<GameObject> _pillows;
 
         [Header("Settings")]
         [SerializeField] private float _throwForce = 10f;
         [SerializeField] private float _recallSpeed = 12f;
+        [SerializeField] private float _recallSnapDistance = 10f;
+
+        private readonly List<PillowSlot> _slots = new();
+        private readonly Stack<PillowSlot> _thrownPillows = new();
 
         private IPlayerInput _input;
+        private bool _isSubscribed;
+        private bool _isRecalling;
+        private Rigidbody _flyingPillow;
 
-        private int _currentIndex = -1; // индекс текущей летящей подушки
-        private Rigidbody _currentRb;
+        private readonly struct PillowSlot
+        {
+            public readonly GameObject GameObject;
+            public readonly Rigidbody Rigidbody;
 
+            public PillowSlot(GameObject gameObject, Rigidbody rigidbody)
+            {
+                GameObject = gameObject;
+                Rigidbody = rigidbody;
+            }
+        }
+
+        /// <summary>Resolves input, prepares the pillow pool and subscribes to input events.</summary>
         public void Initialize()
         {
             _input = GetComponent<IPlayerInput>();
-            foreach (var pillow in _pillows)
-            {
-                pillow.SetActive(false);
-                var rb = pillow.GetComponent<Rigidbody>();
-                pillow.transform.parent = null;
-                if (rb != null)
-                {
-                    rb.isKinematic = true;
-                    rb.linearVelocity = Vector3.zero;
-                    rb.angularVelocity = Vector3.zero;
-                }
-            }
-            _input.Recall += HandleThrowOrStop;
-            _input.Throw += HandleRecall;
 
-            OnPillowAdded?.Invoke(_pillows.Count);
+            for (int i = 0; i < _pillows.Count; i++)
+            {
+                GameObject pillow = _pillows[i];
+                if (pillow == null)
+                {
+                    Debug.LogError($"[{nameof(PillowThrowHandler)}] Pillow slot {i} is not assigned.", this);
+                    continue;
+                }
+
+                var rigidbody = pillow.GetComponent<Rigidbody>();
+                if (rigidbody == null)
+                {
+                    Debug.LogError($"[{nameof(PillowThrowHandler)}] Pillow '{pillow.name}' has no Rigidbody.", pillow);
+                    continue;
+                }
+
+                pillow.transform.parent = null;
+
+                // Velocities must be cleared before the body goes kinematic; Unity 6
+                // logs an error if a kinematic Rigidbody still carries velocity.
+                rigidbody.linearVelocity = Vector3.zero;
+                rigidbody.angularVelocity = Vector3.zero;
+                rigidbody.isKinematic = true;
+
+                pillow.SetActive(false);
+                _slots.Add(new PillowSlot(pillow, rigidbody));
+            }
+
+            Subscribe();
+            OnPillowAdded?.Invoke(_slots.Count);
+        }
+
+        private void OnEnable()
+        {
+            if (_input != null)
+                Subscribe();
         }
 
         private void OnDisable()
         {
-            // Initialize() вызывает GameplaySceneEntryPoint. В сценах без него подписки не создавались.
-            if (_input == null)
-                return;
-
-            _input.Recall -= HandleThrowOrStop;
-            _input.Throw -= HandleRecall;
+            Unsubscribe();
         }
 
-        private void HandleThrowOrStop()
+        private void Subscribe()
         {
-            // если сейчас летит подушка, останавливаем её
-            if (_currentRb != null)
+            if (_isSubscribed || _input == null)
+                return;
+
+            _input.Throw += HandleThrowOrRecall;
+            _input.Stop += HandleStop;
+            _isSubscribed = true;
+        }
+
+        private void Unsubscribe()
+        {
+            if (!_isSubscribed)
+                return;
+
+            _input.Throw -= HandleThrowOrRecall;
+            _input.Stop -= HandleStop;
+            _isSubscribed = false;
+        }
+
+        private void HandleThrowOrRecall()
+        {
+            if (_isRecalling)
+                return;
+
+            // The pillow in flight is always the most recently thrown one, i.e. the top of the stack.
+            if (_flyingPillow != null && _thrownPillows.Count > 0)
             {
-                StopCurrentPillow();
+                Recall(_thrownPillows.Pop());
                 return;
             }
 
-            // иначе ищем следующую доступную подушку
-            GameObject nextPillow = GetNextPillow();
-            if (nextPillow != null)
+            for (int i = 0; i < _slots.Count; i++)
             {
-                ThrowPillow(nextPillow);
-            }
-        }
-
-        private GameObject GetNextPillow()
-        {
-            for (int i = 0; i < _pillows.Count; i++)
-            {
-                int index = (i + _currentIndex + 1) % _pillows.Count;
-                if (!_pillows[index].activeInHierarchy)
+                if (!_slots[i].GameObject.activeInHierarchy)
                 {
-                    _currentIndex = index;
-                    return _pillows[index];
+                    Throw(_slots[i]);
+                    return;
                 }
             }
-            return null; // все подушки в полёте
+
+            // Every pillow is placed as a platform: take back the most recent one.
+            if (_thrownPillows.Count > 0)
+                Recall(_thrownPillows.Pop());
         }
 
-        private void ThrowPillow(GameObject pillow)
+        private void HandleStop()
         {
+            if (_flyingPillow == null)
+                return;
+
+            _flyingPillow.linearVelocity = Vector3.zero;
+            _flyingPillow.angularVelocity = Vector3.zero;
+            _flyingPillow.isKinematic = true;
+            _flyingPillow = null;
+        }
+
+        private void Throw(PillowSlot slot)
+        {
+            Rigidbody rigidbody = slot.Rigidbody;
+            GameObject pillow = slot.GameObject;
+
             pillow.transform.position = _spawnPoint.position;
             pillow.transform.rotation = _character.rotation;
             pillow.SetActive(true);
-            _currentRb = pillow.GetComponent<Rigidbody>();
-            _currentRb.isKinematic = false;
-            _currentRb.linearVelocity = Vector3.zero;
-            _currentRb.angularVelocity = Vector3.zero;
-            _currentRb.AddForce(_character.forward * _throwForce, ForceMode.Impulse);
-            _currentRb.detectCollisions = true;
-            _thrownPillows.Push(pillow); // кладём подушку в стек
+
+            rigidbody.isKinematic = false;
+            rigidbody.detectCollisions = true;
+            rigidbody.linearVelocity = Vector3.zero;
+            rigidbody.angularVelocity = Vector3.zero;
+            rigidbody.AddForce(_character.forward * _throwForce, ForceMode.Impulse);
+
+            _flyingPillow = rigidbody;
+            _thrownPillows.Push(slot);
             OnThrow?.Invoke();
         }
 
-        private void StopCurrentPillow()
+        private void Recall(PillowSlot slot)
         {
-            if (_currentRb == null) return;
+            if (_flyingPillow == slot.Rigidbody)
+                _flyingPillow = null;
 
-            _currentRb.linearVelocity = Vector3.zero;
-            _currentRb.angularVelocity = Vector3.zero;
-            _currentRb.isKinematic = true;
-
-            _currentRb = null;
+            RecallAsync(slot.Rigidbody, this.GetCancellationTokenOnDestroy()).Forget();
         }
 
-        private void HandleRecall()
+        private async UniTaskVoid RecallAsync(Rigidbody pillow, CancellationToken token)
         {
-            if (_thrownPillows.Count == 0) return;
+            _isRecalling = true;
 
-            GameObject pillowToRecall = _thrownPillows.Pop();
-            Rigidbody rb = pillowToRecall.GetComponent<Rigidbody>();
-
-            StartCoroutine(RecallPillow(rb));
-            _currentRb = null;
-        }
-
-        private IEnumerator RecallPillow(Rigidbody pillowRb)
-        {
-            pillowRb.isKinematic = true;
-            pillowRb.detectCollisions = false;
-            float distance = Vector3.Distance(pillowRb.position, _spawnPoint.position);
-
-            if (distance > 10f)
+            try
             {
-                // Получаем направление от подушки к игроку
-                Vector3 dir = (_spawnPoint.position - pillowRb.position).normalized;
+                pillow.linearVelocity = Vector3.zero;
+                pillow.angularVelocity = Vector3.zero;
+                pillow.isKinematic = true;
+                pillow.detectCollisions = false;
 
-                // Новая позиция на расстоянии 10 м от игрока (в сторону подушки)
-                pillowRb.position = _spawnPoint.position - dir * 10f;
+                float distance = Vector3.Distance(pillow.position, _spawnPoint.position);
+                if (distance > _recallSnapDistance)
+                {
+                    Vector3 direction = (_spawnPoint.position - pillow.position).normalized;
+                    pillow.position = _spawnPoint.position - direction * _recallSnapDistance;
+                }
+
+                while (Vector3.Distance(pillow.position, _spawnPoint.position) > ArrivalThreshold)
+                {
+                    pillow.position = Vector3.MoveTowards(pillow.position, _spawnPoint.position, _recallSpeed * Time.deltaTime);
+                    await UniTask.Yield(PlayerLoopTiming.Update, token);
+                }
+
+                pillow.position = _spawnPoint.position;
+                pillow.gameObject.SetActive(false);
+                OnRecall?.Invoke();
             }
-
-            while (Vector3.Distance(pillowRb.position, _spawnPoint.position) > 0.1f)
+            catch (OperationCanceledException)
             {
-                pillowRb.position = Vector3.MoveTowards(pillowRb.position, _spawnPoint.position, _recallSpeed * Time.deltaTime);
-                yield return null;
+                // The object was destroyed while the pillow was returning; nothing to clean up.
             }
-
-            pillowRb.position = _spawnPoint.position;
-            pillowRb.gameObject.SetActive(false);
-            OnRecall?.Invoke();
+            catch (Exception exception)
+            {
+                Debug.LogException(exception, this);
+            }
+            finally
+            {
+                _isRecalling = false;
+            }
         }
     }
-
 }

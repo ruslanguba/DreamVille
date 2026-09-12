@@ -70,7 +70,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Recall",
+                    "name": "Stop",
                     "type": "Button",
                     "id": "95a7643b-baeb-421d-8ca0-f74c23170c5c",
                     "expectedControlType": "",
@@ -235,7 +235,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Recall",
+                    "action": "Stop",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

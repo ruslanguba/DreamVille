@@ -1,6 +1,7 @@
 using System;
 using UnityEngine.InputSystem;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DreamVille.Core.Input
 {
@@ -12,7 +13,8 @@ namespace DreamVille.Core.Input
         [SerializeField] private InputActionReference _jumpAction;
         [SerializeField] private InputActionReference _fireAction;
         [SerializeField] private InputActionReference _secondaryFire;
-        [SerializeField] private InputActionReference _recallAction;
+        [FormerlySerializedAs("_recallAction")]
+        [SerializeField] private InputActionReference _stopAction;
         [SerializeField] private InputActionReference _throwAction;
         [SerializeField] private InputActionReference _interactAction;
         [SerializeField] private InputActionReference _scrollAction;
@@ -28,29 +30,29 @@ namespace DreamVille.Core.Input
         public event Action FireReleased;
         public event Action SecondaryFirePressed;
         public event Action SecondaryFireReleased;
-        public event Action Recall;
+        public event Action Stop;
         public event Action Throw;
         public event Action Interact;
         public event Action<float> Scroll;
 
-        // Разрешённые действия: null, если ссылка не назначена в инспекторе.
+        // Resolved actions: null when the reference is not assigned in the inspector.
         private InputAction _move;
         private InputAction _look;
         private InputAction _jump;
         private InputAction _fire;
         private InputAction _secondary;
-        private InputAction _recall;
+        private InputAction _stop;
         private InputAction _throw;
         private InputAction _interact;
         private InputAction _scroll;
 
-        // Делегаты кэшируются: подписка и отписка должны ссылаться на один и тот же экземпляр.
+        // Delegates are cached: subscribe and unsubscribe must reference the same instance.
         private Action<InputAction.CallbackContext> _onJump;
         private Action<InputAction.CallbackContext> _onFirePerformed;
         private Action<InputAction.CallbackContext> _onFireCanceled;
         private Action<InputAction.CallbackContext> _onSecondaryFirePerformed;
         private Action<InputAction.CallbackContext> _onSecondaryFireCanceled;
-        private Action<InputAction.CallbackContext> _onRecall;
+        private Action<InputAction.CallbackContext> _onStop;
         private Action<InputAction.CallbackContext> _onThrow;
         private Action<InputAction.CallbackContext> _onInteract;
         private Action<InputAction.CallbackContext> _onScroll;
@@ -62,7 +64,7 @@ namespace DreamVille.Core.Input
             _jump = Resolve(_jumpAction, nameof(_jumpAction));
             _fire = Resolve(_fireAction, nameof(_fireAction));
             _secondary = Resolve(_secondaryFire, nameof(_secondaryFire));
-            _recall = Resolve(_recallAction, nameof(_recallAction));
+            _stop = Resolve(_stopAction, nameof(_stopAction));
             _throw = Resolve(_throwAction, nameof(_throwAction));
             _interact = Resolve(_interactAction, nameof(_interactAction));
             _scroll = Resolve(_scrollAction, nameof(_scrollAction));
@@ -72,7 +74,7 @@ namespace DreamVille.Core.Input
             _onFireCanceled = _ => FireReleased?.Invoke();
             _onSecondaryFirePerformed = _ => SecondaryFirePressed?.Invoke();
             _onSecondaryFireCanceled = _ => SecondaryFireReleased?.Invoke();
-            _onRecall = _ => Recall?.Invoke();
+            _onStop = _ => Stop?.Invoke();
             _onThrow = _ => Throw?.Invoke();
             _onInteract = _ => Interact?.Invoke();
             _onScroll = ctx => Scroll?.Invoke(ctx.ReadValue<Vector2>().y);
@@ -82,7 +84,7 @@ namespace DreamVille.Core.Input
         {
             if (reference == null || reference.action == null)
             {
-                Debug.LogWarning($"{nameof(InputReader)} на '{name}': не назначена ссылка {fieldName}.", this);
+                Debug.LogWarning($"[{nameof(InputReader)}] '{name}': input action reference {fieldName} is not assigned.", this);
                 return null;
             }
 
@@ -108,7 +110,7 @@ namespace DreamVille.Core.Input
             _jump?.Enable();
             _fire?.Enable();
             _secondary?.Enable();
-            _recall?.Enable();
+            _stop?.Enable();
             _throw?.Enable();
             _interact?.Enable();
             _scroll?.Enable();
@@ -121,7 +123,7 @@ namespace DreamVille.Core.Input
             _jump?.Disable();
             _fire?.Disable();
             _secondary?.Disable();
-            _recall?.Disable();
+            _stop?.Disable();
             _throw?.Disable();
             _interact?.Disable();
             _scroll?.Disable();
@@ -143,7 +145,7 @@ namespace DreamVille.Core.Input
                 _secondary.canceled += _onSecondaryFireCanceled;
             }
 
-            if (_recall != null) _recall.performed += _onRecall;
+            if (_stop != null) _stop.performed += _onStop;
             if (_throw != null) _throw.performed += _onThrow;
             if (_interact != null) _interact.performed += _onInteract;
             if (_scroll != null) _scroll.performed += _onScroll;
@@ -165,7 +167,7 @@ namespace DreamVille.Core.Input
                 _secondary.canceled -= _onSecondaryFireCanceled;
             }
 
-            if (_recall != null) _recall.performed -= _onRecall;
+            if (_stop != null) _stop.performed -= _onStop;
             if (_throw != null) _throw.performed -= _onThrow;
             if (_interact != null) _interact.performed -= _onInteract;
             if (_scroll != null) _scroll.performed -= _onScroll;

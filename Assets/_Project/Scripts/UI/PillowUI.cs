@@ -16,10 +16,9 @@ namespace DreamVille.UI
         private int _usedPillows;
         private List<Image> _pillowIcons = new List<Image>();
 
-        // Создаём иконки
+        /// <summary>Creates one icon per pillow slot.</summary>
         public void SpawnIcons(int count)
         {
-
             Vector3 startPos = _firstPosition.localPosition;
 
             for (int i = 0; i < count; i++)
@@ -27,22 +26,31 @@ namespace DreamVille.UI
                 Image icon = Instantiate(_iconPrefab, _pillowsPanel);
                 icon.transform.localPosition = startPos + new Vector3(i * _posOffset, 0f, 0f);
                 _alphaVisible = icon.color.a;
-                //SetAlpha(icon, _alphaVisible); // изначально скрыты
 
                 _pillowIcons.Add(icon);
             }
         }
 
-        // Показываем иконку с начала списка
+        /// <summary>Shows the icon for a pillow that was recalled.</summary>
         public void ShowPillow()
         {
-            SetAlpha(_pillowIcons[_pillowIcons.Count - _usedPillows], _alphaVisible);
+            if (_usedPillows <= 0)
+                return;
+
+            int index = _pillowIcons.Count - _usedPillows;
+            if (index < 0 || index >= _pillowIcons.Count)
+                return;
+
+            SetAlpha(_pillowIcons[index], _alphaVisible);
             _usedPillows--;
         }
 
-        // Скрываем иконку с конца списка
+        /// <summary>Hides the icon for a pillow that was thrown.</summary>
         public void HidePillow()
         {
+            if (_usedPillows >= _pillowIcons.Count)
+                return;
+
             _usedPillows++;
             for (int i = _pillowIcons.Count - 1; i >= 0; i--)
             {
