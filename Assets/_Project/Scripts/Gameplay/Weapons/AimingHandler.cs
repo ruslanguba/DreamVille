@@ -1,7 +1,7 @@
 using UnityEngine;
 
 using DreamVille.Core.Input;
-using DreamVille.Gameplay.Trajectory;
+using DreamVille.Gameplay.Weapons.Aiming;
 
 namespace DreamVille.Gameplay.Weapons
 {
@@ -17,8 +17,7 @@ namespace DreamVille.Gameplay.Weapons
             _input = GetComponent<IPlayerInput>();
         }
 
-        // Подписка парная с OnDisable: раньше она делалась в Awake и после
-        // первого выключения объекта прицеливание переставало работать.
+        // Subscribe in OnEnable (mirrored by OnDisable) so aiming survives disable/enable cycles.
         private void OnEnable()
         {
             if (_input == null)
