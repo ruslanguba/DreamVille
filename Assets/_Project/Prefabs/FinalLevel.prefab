@@ -151,16 +151,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e7fa8df4ad90d42b9b3e07295fdc1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sentence:
+  _sentencesRu:
   - IsPluh: 0
     Sentence: "\u041F\u0440\u0438\u0432\u0435\u0442 \u041F\u043B\u044E\u0445."
   - IsPluh: 1
     Sentence: "\u041F\u0440\u0438\u0432\u0435\u0442 \u041D\u0435\u043F\u0438\u0441\u044C"
   - IsPluh: 0
     Sentence: "\u0414\u0443\u0439 \u0432 \u043F\u043E\u0440\u0442\u0430\u043B"
-  sentenceEn: []
-  mumbels: []
-  deleteOnEnd: 1
+  _sentencesEn: []
+  _deleteOnEnd: 1
 --- !u!114 &2516464366815981834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,7 +345,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae1b0ac5f9a52d24dab0f1016f2a9f26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneToLoad: Final Level 1
+  _target: {fileID: 0}
+  _sceneToLoad: 
 --- !u!1 &2254475797985808575
 GameObject:
   m_ObjectHideFlags: 0

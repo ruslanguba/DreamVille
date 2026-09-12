@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fee23bb4b77333c4aac05c0687496a8b, type: 3}
-  m_Name: StarRules_New_3_Level
+  m_Name: StarRules_Lobby_01
   m_EditorClassIdentifier: 
-  levelId: 5
+  levelId: 1
   starThresholds:
   - 50
   - 100

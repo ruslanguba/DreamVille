@@ -9039,7 +9039,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae1b0ac5f9a52d24dab0f1016f2a9f26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneToLoad: New_1_Level
+  _target: {fileID: 11400000, guid: 55bcc162489ae304cb29945f570ebee0, type: 2}
+  _sceneToLoad: 
 --- !u!135 &377121642
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -24674,17 +24675,6 @@ PrefabInstance:
       addedObject: {fileID: 1301226106}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
---- !u!114 &1088994475 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2516464366815981834, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
-  m_PrefabInstance: {fileID: 1088994474}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 353f36843f13fb84e9df4e33de8f0747, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1089060124
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26665,10 +26655,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneContext
       objectReference: {fileID: 0}
-    - target: {fileID: 7033785015691568829, guid: 75a7808c281e5604d8178c4798b3f5d8, type: 3}
-      propertyPath: _starRules
-      value: 
-      objectReference: {fileID: 11400000, guid: d65d0997ebbd51144b96527c009d7faf, type: 2}
     - target: {fileID: 9139366717074961728, guid: 75a7808c281e5604d8178c4798b3f5d8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -26712,30 +26698,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2723250760080877088, guid: 75a7808c281e5604d8178c4798b3f5d8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1194836591}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75a7808c281e5604d8178c4798b3f5d8, type: 3}
---- !u!1 &1194836590 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2723250760080877088, guid: 75a7808c281e5604d8178c4798b3f5d8, type: 3}
-  m_PrefabInstance: {fileID: 1194836589}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1194836591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1194836590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a015fafeb86e1cb47aaa177b6d546359, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _finalZone: {fileID: 1088994475}
-  _finalNpc: {fileID: 2076395064}
 --- !u!1 &1195059050
 GameObject:
   m_ObjectHideFlags: 0

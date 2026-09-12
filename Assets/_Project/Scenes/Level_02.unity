@@ -4717,26 +4717,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelProgressSystem
       objectReference: {fileID: 0}
-    - target: {fileID: 3127267302323658984, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
-      propertyPath: _sceneToLoad
-      value: Lobby 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4398140863521126373, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
-      propertyPath: _levelId
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4398140863521126373, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
-      propertyPath: _screToFillFirstStar
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 4398140863521126373, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
-      propertyPath: _screToFillThirdStar
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 4398140863521126373, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
-      propertyPath: _screToFillSecondStar
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 7969951425661181974, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4776,6 +4756,22 @@ PrefabInstance:
     - target: {fileID: 7969951425661181974, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _levelId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _screToFillFirstStar
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _screToFillThirdStar
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _screToFillSecondStar
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5774,10 +5770,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneContext
       objectReference: {fileID: 0}
-    - target: {fileID: 7033785015691568829, guid: 75a7808c281e5604d8178c4798b3f5d8, type: 3}
-      propertyPath: _starRules
-      value: 
-      objectReference: {fileID: 11400000, guid: 75f66b8f9cd0f35488ebcb0d1f222717, type: 2}
     - target: {fileID: 9139366717074961728, guid: 75a7808c281e5604d8178c4798b3f5d8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5821,30 +5813,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2723250760080877088, guid: 75a7808c281e5604d8178c4798b3f5d8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1672369694}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75a7808c281e5604d8178c4798b3f5d8, type: 3}
---- !u!1 &1672369693 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2723250760080877088, guid: 75a7808c281e5604d8178c4798b3f5d8, type: 3}
-  m_PrefabInstance: {fileID: 1672369692}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1672369694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1672369693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a015fafeb86e1cb47aaa177b6d546359, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _finalZone: {fileID: 1923182516}
-  _finalNpc: {fileID: 1014592236}
 --- !u!95 &1676031493
 Animator:
   serializedVersion: 7
@@ -6573,8 +6543,12 @@ PrefabInstance:
       value: 8.0212965
       objectReference: {fileID: 0}
     - target: {fileID: 2594145028634910191, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _target
+      value: 
+      objectReference: {fileID: 11400000, guid: a484ebab42fa41042a9e62c894e6f168, type: 2}
+    - target: {fileID: 2594145028634910191, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
       propertyPath: _sceneToLoad
-      value: New_2_Lobby_Max
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
       propertyPath: sentence.Array.size
@@ -6681,17 +6655,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4642010679245938707, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
   m_PrefabInstance: {fileID: 1923182514}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1923182516 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2516464366815981834, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
-  m_PrefabInstance: {fileID: 1923182514}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 353f36843f13fb84e9df4e33de8f0747, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1936787168 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5796193964664906594, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}

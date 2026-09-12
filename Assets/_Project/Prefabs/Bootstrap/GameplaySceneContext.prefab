@@ -86,7 +86,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36341b466f9251c46b7b2ebc00ce3d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainMenuScene: Main menu 1
 --- !u!114 &3128144409199112275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,8 +136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe105fefc3ded04bb9365910f9eeab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _catalog: {fileID: 11400000, guid: 9764477bb249d0c4d8959346817789a1, type: 2}
   _scoreRules: {fileID: 11400000, guid: 3f8a94fa75fc4f24797cea2918a3ed0f, type: 2}
-  _starRules: {fileID: 0}
 --- !u!114 &5102766055567916413
 MonoBehaviour:
   m_ObjectHideFlags: 0

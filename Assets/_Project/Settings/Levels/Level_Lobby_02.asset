@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f72fc84961d85648a9e3d790e9afa2f, type: 3}
+  m_Name: Level_Lobby_02
+  m_EditorClassIdentifier: 
+  _sceneName: Lobby_02
+  _displayName: Lobby 2
+  _music: {fileID: 8300000, guid: ade2132c17636504598294e7f1d7244a, type: 3}
+  _sceneAsset: {fileID: 102900000, guid: 4aedd8984ff5f3b40b8b14429bd6a561, type: 3}
+  _levelId: 4
+  _starRules: {fileID: 11400000, guid: 0be502f6d7e9a044ea0d5680a1bcc843, type: 2}
+  _unlockedByDefault: 0

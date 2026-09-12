@@ -8925,10 +8925,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneContext
       objectReference: {fileID: 0}
-    - target: {fileID: 7033785015691568829, guid: 75a7808c281e5604d8178c4798b3f5d8, type: 3}
-      propertyPath: _starRules
-      value: 
-      objectReference: {fileID: 11400000, guid: 0be502f6d7e9a044ea0d5680a1bcc843, type: 2}
     - target: {fileID: 9139366717074961728, guid: 75a7808c281e5604d8178c4798b3f5d8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -19326,7 +19322,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae1b0ac5f9a52d24dab0f1016f2a9f26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneToLoad: New_3_Level
+  _target: {fileID: 11400000, guid: 1f7ab22d85caaac4db3a3b33a5096dd5, type: 2}
+  _sceneToLoad: 
 --- !u!1 &5934688675849514198
 GameObject:
   m_ObjectHideFlags: 0

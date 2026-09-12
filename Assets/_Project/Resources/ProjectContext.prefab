@@ -74,4 +74,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef67030d90963f4b9b4c81df4f083df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioManagerPrefab: {fileID: 5378101928014436673, guid: 1b0b203977d2001468b19820c84ea2d5, type: 3}
+  _sceneCatalog: {fileID: 11400000, guid: 9764477bb249d0c4d8959346817789a1, type: 2}
+  _audioConfig: {fileID: 11400000, guid: 24dcc49c99c10434599a39a0024e14d6, type: 2}
+  _audioPlayerPrefab: {fileID: 5378101928014436673, guid: 1b0b203977d2001468b19820c84ea2d5, type: 3}

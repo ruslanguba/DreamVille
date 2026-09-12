@@ -9,25 +9,25 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/GameStart.unity
     guid: e66afa2fdb7e2f94fb6af993d279ec11
   - enabled: 1
-    path: Assets/_Project/Scenes/Main menu 1.unity
+    path: Assets/_Project/Scenes/MainMenu.unity
     guid: a7c56da2c2d4eaf46a8963fecd9aa6c5
   - enabled: 1
-    path: Assets/_Project/Scenes/New_1_Lobby_Max.unity
+    path: Assets/_Project/Scenes/Lobby_01.unity
     guid: 8f2cb2f93f8f6e149b027c6b88a41b8a
   - enabled: 1
-    path: Assets/_Project/Scenes/New_1_Level.unity
+    path: Assets/_Project/Scenes/Level_01.unity
     guid: 89c29e643da187f469e11229a1bc55a3
   - enabled: 1
-    path: Assets/_Project/Scenes/New_2_Level.unity
+    path: Assets/_Project/Scenes/Level_02.unity
     guid: 89d14b201321f5942825a594d15beb1d
   - enabled: 1
-    path: Assets/_Project/Scenes/New_2_Lobby_Max.unity
+    path: Assets/_Project/Scenes/Lobby_02.unity
     guid: 4aedd8984ff5f3b40b8b14429bd6a561
   - enabled: 1
-    path: Assets/_Project/Scenes/New_3_Level.unity
+    path: Assets/_Project/Scenes/Level_03.unity
     guid: 086eac69691b34f488ff88797956d2df
   - enabled: 1
-    path: Assets/_Project/Scenes/New_4_Level.unity
+    path: Assets/_Project/Scenes/Level_04.unity
     guid: 1334ae18bf2dc804e825dcc258cc7da4
   - enabled: 0
     path: Assets/_Project/Scenes/Max/Level_2_Max.unity
