@@ -969,7 +969,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e3704e11a2c5294d8c9c5c2c4e57518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 8916886967587577651}
   rotationSpeed: 8
 --- !u!114 &279553783653144266
 MonoBehaviour:
@@ -1098,14 +1097,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 6334693379112641026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b27189bb15bfe4f45903d74de92464dc, type: 3}
+  m_Script: {fileID: 11500000, guid: 49d7ca43964549e4aa6b4329cabeea48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
-  _acceleration: 10
-  _stoppingDistannce: 2
-  _animator: {fileID: 546880259793113395}
-  _health: {fileID: 0}
+  _config: {fileID: 11400000, guid: b033908115d14304da01eb071d65b5a0, type: 2}
+  moveSpeed: 5
+  chaseRange: 0
+  attackRange: 0
+  attackCooldown: 0
+  patrolPoints: []
+  attackSpawn: {fileID: 0}
 --- !u!114 &8068560695212955412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1115,14 +1116,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6334693379112641026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27e5f73197371c3458753960cee37a84, type: 3}
+  m_Script: {fileID: 11500000, guid: eaa65c8b5352493408dc8c313da2ea2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 2
+  _maxHealth: 2
   _clip: {fileID: 0}
-  _timeToEnableHit: 1
-  _isCanTakeHit: 0
-  _simpleRunEnemy: {fileID: 4943319331511835042}
 --- !u!1 &6457692050475839496
 GameObject:
   m_ObjectHideFlags: 0

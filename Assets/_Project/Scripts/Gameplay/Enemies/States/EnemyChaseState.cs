@@ -25,10 +25,7 @@ namespace DreamVille.Gameplay.Enemies.States
             }
 
             if (distance > _context.Tuning.ChaseRange)
-            {
                 _machine.ChangeState(EnemyStateId.Patrol);
-                return;
-            }
         }
 
         public override void FixedTick(float fixedDeltaTime)

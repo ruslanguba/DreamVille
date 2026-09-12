@@ -12,7 +12,7 @@ namespace DreamVille.Gameplay.Enemies
     /// Enemy hit-point holder. Delegates bookkeeping to <see cref="Damage.Health"/> so a
     /// second hit or trigger after death cannot re-fire <see cref="OnDeath"/>.
     /// </summary>
-    public class EnemyHealth : MonoBehaviour, IDamageable
+    public sealed class EnemyHealth : MonoBehaviour, IDamageable
     {
         /// <summary>Raised once on death. Arguments: this enemy, the ricochet count of the killing hit.</summary>
         public event Action<EnemyHealth, int> OnDeath;
@@ -21,13 +21,15 @@ namespace DreamVille.Gameplay.Enemies
         [SerializeField] private float _maxHealth = 2f;
         [SerializeField] private AudioClip _clip;
 
-        protected int _collisionsCount;
-
         private IAudioService _audio;
         private Health _hitPoints;
+        private int _collisionsCount;
 
         /// <summary>True once this enemy has died; further damage is ignored.</summary>
         public bool IsDead => _hitPoints.IsDead;
+
+        /// <summary>False while a spawn or flee immunity window is open; damage is ignored then.</summary>
+        public bool IsVulnerable { get; private set; } = true;
 
         [Inject]
         public void Construct(IAudioService audio)
@@ -35,15 +37,14 @@ namespace DreamVille.Gameplay.Enemies
             _audio = audio;
         }
 
-        /// <summary>Subclasses that declare their own Awake must call <c>base.Awake()</c>.</summary>
-        protected virtual void Awake()
+        public void SetVulnerable(bool isVulnerable)
         {
-            _hitPoints = new Health(_maxHealth);
+            IsVulnerable = isVulnerable;
         }
 
-        public virtual void TakeDamage(float damageValue, int collisionsCount)
+        public void TakeDamage(float damageValue, int collisionsCount)
         {
-            if (IsDead)
+            if (IsDead || !IsVulnerable)
                 return;
 
             _collisionsCount = collisionsCount;
@@ -51,7 +52,12 @@ namespace DreamVille.Gameplay.Enemies
                 Die();
         }
 
-        protected virtual void Die()
+        private void Awake()
+        {
+            _hitPoints = new Health(_maxHealth);
+        }
+
+        private void Die()
         {
             if (_clip != null)
                 _audio?.PlaySfx(_clip);

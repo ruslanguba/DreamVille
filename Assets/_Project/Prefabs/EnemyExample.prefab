@@ -401,7 +401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaa65c8b5352493408dc8c313da2ea2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 10
+  _maxHealth: 10
   _clip: {fileID: 8300000, guid: c9071bf4358e6ca41802daf7c9fab3d0, type: 3}
 --- !u!114 &3312061001314859064
 MonoBehaviour:
@@ -415,21 +415,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d7ca43964549e4aa6b4329cabeea48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
+  _config: {fileID: 11400000, guid: 3ddc719498228d940957e7eaf01d9c8f, type: 2}
   moveSpeed: 3
-  acceleration: 6
-  attackRange: 5
-  throwForce: 5
   chaseRange: 7
-  rotationHandler: {fileID: 0}
+  attackRange: 5
   attackCooldown: 2
-  attackPrefab: {fileID: 5595998453768467091, guid: 8567463502b3ae447a02ca3379be78f1, type: 3}
-  attackSpawn: {fileID: 2066396746702385276}
   patrolPoints: []
-  playerTransform: {fileID: 0}
-  animator: {fileID: 0}
-  actorAudio: {fileID: 272754007688124369}
-  eventListener: {fileID: 0}
+  attackSpawn: {fileID: 2066396746702385276}
 --- !u!114 &7867341581838299553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -444,7 +436,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _aliveCollider: {fileID: 3395363510985291132}
   _deadCollider: {fileID: 2088655082918169143}
-  enemyHealth: {fileID: 896022870346021145}
 --- !u!114 &2730273762849173825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,7 +448,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e3704e11a2c5294d8c9c5c2c4e57518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 3549587484239134356}
   rotationSpeed: 8
 --- !u!114 &272754007688124369
 MonoBehaviour:

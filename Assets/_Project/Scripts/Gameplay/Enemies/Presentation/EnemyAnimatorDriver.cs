@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using DreamVille.Gameplay;
-
 namespace DreamVille.Gameplay.Enemies.Presentation
 {
     /// <summary>

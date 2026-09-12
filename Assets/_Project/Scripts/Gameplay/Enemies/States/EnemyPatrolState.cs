@@ -34,10 +34,7 @@ namespace DreamVille.Gameplay.Enemies.States
             }
 
             if (distance < _context.Tuning.AttackRange)
-            {
                 _machine.ChangeState(EnemyStateId.Attack);
-                return;
-            }
         }
 
         public override void FixedTick(float fixedDeltaTime)

@@ -6,10 +6,11 @@ using DreamVille.Gameplay.Enemies;
 
 namespace DreamVille.Gameplay.Interactables
 {
-    public class InteractableBox : InteractableBase
+    /// <summary>Box that hides enemies, releases them when interacted with and swallows them again on their return.</summary>
+    public class InteractableBox : InteractableBase, IEnemyHideout
     {
         [SerializeField] Animator _animator;
-        [SerializeField] private List<SimpleRunEnemy> _enemies;
+        [SerializeField] private List<Enemy> _enemies;
         [SerializeField] private List<Transform> _nextPointsTransform;
 
         [SerializeField] private bool _isRandomNextPoin;
@@ -33,7 +34,7 @@ namespace DreamVille.Gameplay.Interactables
             StartEnemyRun();
         }
 
-        public void ReciveEnemy(SimpleRunEnemy enemy)
+        public void Receive(Enemy enemy)
         {
             StartCoroutine(MoveAndShrink(enemy));
         }
@@ -52,15 +53,16 @@ namespace DreamVille.Gameplay.Interactables
             for (int i = _enemies.Count -1; i >= 0; i--)
             {
                 int rndIndex = Random.Range(0, _nextPointsTransform.Count);
-                _enemies[i].transform.position = transform.position + transform.forward;
-                _enemies[i].SetRunTarget(_nextPointsTransform[rndIndex]);
-                _enemies[i].gameObject.SetActive(true);
-                _enemies[i].transform.localScale = Vector3.one;
-                _enemies.Remove(_enemies[i]);
+                Enemy enemy = _enemies[i];
+                enemy.transform.position = transform.position + transform.forward;
+                enemy.gameObject.SetActive(true);
+                enemy.transform.localScale = Vector3.one;
+                enemy.FleeTo(_nextPointsTransform[rndIndex]);
+                _enemies.RemoveAt(i);
             }
         }
 
-        public IEnumerator MoveAndShrink(SimpleRunEnemy enemy)
+        public IEnumerator MoveAndShrink(Enemy enemy)
         {
             Vector3 startPos = enemy.transform.position;
             Vector3 endPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
@@ -87,8 +89,8 @@ namespace DreamVille.Gameplay.Interactables
             if (!_enemies.Contains(enemy))
                 _enemies.Add(enemy);
 
-            enemy.OnDestroyed -= RemoveEnemy;
-            enemy.OnDestroyed += RemoveEnemy;
+            enemy.Destroyed -= RemoveEnemy;
+            enemy.Destroyed += RemoveEnemy;
             CloseDoor();
 
             enemy.transform.position = endPos;
@@ -96,7 +98,7 @@ namespace DreamVille.Gameplay.Interactables
             enemy.gameObject.SetActive(false);
         }
 
-        private void RemoveEnemy(SimpleRunEnemy enemy)
+        private void RemoveEnemy(Enemy enemy)
         {
             _enemies.Remove(enemy);
         }

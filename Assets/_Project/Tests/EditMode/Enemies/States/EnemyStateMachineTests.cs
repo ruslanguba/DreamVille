@@ -9,10 +9,8 @@ using DreamVille.Tests.EditMode.Fakes;
 namespace DreamVille.Tests.EditMode.Enemies.States
 {
     /// <summary>
-    /// Transition-table guards of the new <see cref="EnemyStateMachine"/> (namespace
-    /// <c>Enemies.States</c>) against hand-written <see cref="RecordingState"/> doubles. Distinct
-    /// from <see cref="DreamVille.Tests.EditMode.Enemies.EnemyStateMachineTests"/>, which still
-    /// covers the old machine in <c>Enemies.StateMachine</c> until batch 2 removes it.
+    /// Transition-table guards of <see cref="EnemyStateMachine"/> against hand-written
+    /// <see cref="RecordingState"/> doubles.
     /// </summary>
     public class EnemyStateMachineTests
     {

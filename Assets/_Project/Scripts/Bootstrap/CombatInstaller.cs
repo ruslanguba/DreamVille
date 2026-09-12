@@ -2,19 +2,21 @@ using UnityEngine;
 using Zenject;
 
 using DreamVille.Gameplay.Enemies;
+using DreamVille.Gameplay.Enemies.Combat;
 using DreamVille.Gameplay.Weapons.Bullets;
 using DreamVille.Gameplay.Weapons.Pillow;
 
 namespace DreamVille.Bootstrap
 {
     /// <summary>
-    /// Combat systems. The bullet pool, spawner and event relay are created from a
-    /// prefab, so they do not require objects pre-placed in the scene.
+    /// Combat systems. The bullet pool, spawner, event relay and enemy projectile pool are
+    /// created from prefabs, so they do not require objects pre-placed in the scene.
     /// </summary>
     public class CombatInstaller : MonoInstaller
     {
         [Header("Prefabs")]
         [SerializeField] private BulletSpawner _gameplaySystemsPrefab;
+        [SerializeField] private EnemyProjectile _enemyProjectilePrefab;
 
         public override void InstallBindings()
         {
@@ -35,6 +37,12 @@ namespace DreamVille.Bootstrap
                 .Bind<IBulletHitSource>()
                 .FromMethod(ctx => ctx.Container.Resolve<BulletSpawner>().HitRelay)
                 .AsSingle();
+
+            Container
+                .BindMemoryPool<EnemyProjectile, EnemyProjectile.Pool>()
+                .WithInitialSize(8)
+                .FromComponentInNewPrefab(_enemyProjectilePrefab)
+                .UnderTransformGroup("EnemyProjectiles");
 
             // These live on scene objects: the registry on the LevelProgressSystem
             // prefab in Prefabs/Utilities, pillows on the player.

@@ -77,8 +77,13 @@ namespace DreamVille.Tests.EditMode.Enemies
 
             Assert.That(_context.Attack.ThrownDirections.Count, Is.EqualTo(1));
 
+            // 0.5 s of cooldown is left; leaving and re-entering the state must not reset it.
             _machine.ChangeState(EnemyStateId.Chase);
             _machine.ChangeState(EnemyStateId.Attack);
+            _machine.Tick(0.1f);
+
+            Assert.That(_context.Attack.ThrownDirections.Count, Is.EqualTo(1), "re-entering Attack reset the cooldown");
+
             _machine.Tick(0.5f);
 
             Assert.That(_context.Attack.ThrownDirections.Count, Is.EqualTo(2));

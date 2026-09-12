@@ -1,0 +1,62 @@
+using UnityEngine;
+
+namespace DreamVille.Gameplay.Enemies
+{
+    /// <summary>
+    /// Turns an enemy towards its own velocity while enabled, and towards a world point on demand.
+    /// Disabling the component suspends the automatic facing without blocking the explicit calls.
+    /// </summary>
+    [RequireComponent(typeof(Rigidbody))]
+    public sealed class EnemyRotationHandler : MonoBehaviour
+    {
+        private const float MinSqrSpeed = 0.01f;
+        private const float MinSqrDirection = 0.0001f;
+
+        // Legacy name frozen by spec 03 §3.2: 36 prefab instances override this path.
+        [SerializeField] private float rotationSpeed = 8f;
+
+        private Rigidbody _body;
+
+        private void Awake()
+        {
+            _body = GetComponent<Rigidbody>();
+        }
+
+        private void Update()
+        {
+            Vector3 velocity = _body.linearVelocity;
+            if (velocity.sqrMagnitude < MinSqrSpeed)
+                return;
+
+            RotateTowards(Flatten(velocity));
+        }
+
+        /// <summary>Slerps facing towards a world point at the configured rotation speed.</summary>
+        public void FaceTowards(Vector3 worldPoint) => RotateTowards(Flatten(worldPoint - transform.position));
+
+        /// <summary>Snaps facing towards a world point in a single frame.</summary>
+        public void SnapTo(Vector3 worldPoint)
+        {
+            Vector3 direction = Flatten(worldPoint - transform.position);
+            if (direction.sqrMagnitude < MinSqrDirection)
+                return;
+
+            transform.rotation = Quaternion.LookRotation(direction);
+        }
+
+        private void RotateTowards(Vector3 direction)
+        {
+            if (direction.sqrMagnitude < MinSqrDirection)
+                return;
+
+            Quaternion target = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target, rotationSpeed * Time.deltaTime);
+        }
+
+        private static Vector3 Flatten(Vector3 direction)
+        {
+            direction.y = 0f;
+            return direction;
+        }
+    }
+}
