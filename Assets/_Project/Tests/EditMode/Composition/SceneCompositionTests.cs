@@ -179,6 +179,7 @@ namespace DreamVille.Tests.EditMode.Composition
 
             AssertPrefabFieldAssigned(FindSingle<UiInstaller>(), "_uiPrefab");
             AssertPrefabFieldAssigned(FindSingle<CombatInstaller>(), "_gameplaySystemsPrefab");
+            AssertPrefabFieldAssigned(FindSingle<CombatInstaller>(), "_enemyProjectilePrefab");
             AssertPrefabFieldAssigned(FindSingle<ProgressionInstaller>(), "_catalog");
             AssertPrefabFieldAssigned(FindSingle<ProgressionInstaller>(), "_scoreRules");
         }
