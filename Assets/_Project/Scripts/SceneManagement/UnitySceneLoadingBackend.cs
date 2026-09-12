@@ -7,13 +7,10 @@ namespace DreamVille.SceneManagement
 {
     public sealed class UnitySceneLoadingBackend : ISceneLoadingBackend
     {
-        public int ActiveSceneBuildIndex => SceneManager.GetActiveScene().buildIndex;
+        public string ActiveSceneName => SceneManager.GetActiveScene().name;
 
         public UniTask LoadAsync(string sceneName, Action<float> progress)
             => AwaitOperation(SceneManager.LoadSceneAsync(sceneName), progress);
-
-        public UniTask LoadAsync(int buildIndex, Action<float> progress)
-            => AwaitOperation(SceneManager.LoadSceneAsync(buildIndex), progress);
 
         private static UniTask AwaitOperation(AsyncOperation operation, Action<float> progress)
         {

@@ -34,12 +34,6 @@ namespace DreamVille.Tests.EditMode.Fakes
             return UniTask.CompletedTask;
         }
 
-        public UniTask LoadAsync(int buildIndex, CancellationToken token = default)
-        {
-            _calls.Add($"Load:{buildIndex}");
-            return UniTask.CompletedTask;
-        }
-
         public UniTask ReloadActiveAsync(CancellationToken token = default)
         {
             _calls.Add("ReloadActive");

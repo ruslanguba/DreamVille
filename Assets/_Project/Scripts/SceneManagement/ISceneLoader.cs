@@ -17,8 +17,6 @@ namespace DreamVille.SceneManagement
 
         UniTask LoadAsync(string sceneName, CancellationToken token = default);
 
-        UniTask LoadAsync(int buildIndex, CancellationToken token = default);
-
         UniTask ReloadActiveAsync(CancellationToken token = default);
     }
 }

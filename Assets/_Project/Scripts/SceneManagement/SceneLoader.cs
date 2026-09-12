@@ -29,16 +29,8 @@ namespace DreamVille.SceneManagement
             return RunAsync(() => _backend.LoadAsync(sceneName, ReportProgress), token);
         }
 
-        public UniTask LoadAsync(int buildIndex, CancellationToken token = default)
-        {
-            if (buildIndex < 0)
-                throw new ArgumentOutOfRangeException(nameof(buildIndex));
-
-            return RunAsync(() => _backend.LoadAsync(buildIndex, ReportProgress), token);
-        }
-
         public UniTask ReloadActiveAsync(CancellationToken token = default)
-            => LoadAsync(_backend.ActiveSceneBuildIndex, token);
+            => LoadAsync(_backend.ActiveSceneName, token);
 
         private async UniTask RunAsync(Func<UniTask> start, CancellationToken token)
         {

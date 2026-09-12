@@ -9,8 +9,8 @@ namespace DreamVille.SceneManagement
     /// </summary>
     public interface ISceneLoadingBackend
     {
-        int ActiveSceneBuildIndex { get; }
+        /// <summary>Name of the scene that is currently active, used to reload it by name.</summary>
+        string ActiveSceneName { get; }
         UniTask LoadAsync(string sceneName, Action<float> progress);
-        UniTask LoadAsync(int buildIndex, Action<float> progress);
     }
 }
