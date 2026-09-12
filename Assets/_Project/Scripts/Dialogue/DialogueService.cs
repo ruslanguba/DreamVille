@@ -51,7 +51,10 @@ namespace DreamVille.Dialogue
                 return;
             }
 
-            SentenceShown?.Invoke(_sentences.Dequeue());
+            // Dequeue outside the null-conditional call: the queue must advance even when
+            // nobody listens, otherwise the dialogue could never end.
+            Dialogue next = _sentences.Dequeue();
+            SentenceShown?.Invoke(next);
         }
 
         private void End()
