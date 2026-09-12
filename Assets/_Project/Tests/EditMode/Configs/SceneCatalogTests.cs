@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using NUnit.Framework;
+using UnityEditor;
 using UnityEngine;
 
 using DreamVille.Configs;
@@ -8,11 +10,15 @@ using DreamVille.Configs;
 namespace DreamVille.Tests.EditMode.Configs
 {
     /// <summary>
-    /// Lookup rules of a hand-built catalog. The tests over the shipped
-    /// Settings/Levels/SceneCatalog.asset live in the composition fixture.
+    /// Lookup rules of a hand-built catalog, plus a guard over the shipped
+    /// Settings/Levels/SceneCatalog.asset: a scene rename that forgets the catalog (or a
+    /// catalog entry that outlives a deleted scene) becomes a red test here instead of a
+    /// runtime crash at a portal.
     /// </summary>
     public class SceneCatalogTests
     {
+        private const string RealCatalogAssetPath = "Assets/_Project/Settings/Levels/SceneCatalog.asset";
+
         private readonly List<Object> _created = new List<Object>();
 
         private SceneCatalog _catalog;
@@ -70,6 +76,71 @@ namespace DreamVille.Tests.EditMode.Configs
 
             Assert.That(levels.Select(level => level.LevelId).Distinct().Count(), Is.EqualTo(levels.Count));
         }
+
+        [Test]
+        public void LevelIds_OnTheRealCatalog_AreUniqueAndNonEmpty()
+        {
+            IReadOnlyList<LevelDefinition> levels = LoadRealCatalog().Levels;
+
+            foreach (LevelDefinition level in levels)
+                Assert.That(level.LevelId, Is.Not.Null.And.Not.Empty, $"{level.SceneName} has no level id.");
+
+            Assert.That(levels.Select(level => level.LevelId).Distinct().Count(), Is.EqualTo(levels.Count));
+        }
+
+        [Test]
+        public void EverySceneName_IsAnEnabledSceneInBuildSettings()
+        {
+            SceneCatalog catalog = LoadRealCatalog();
+            List<string> enabledSceneNames = EnabledBuildSceneNames().ToList();
+
+            var catalogSceneNames = new List<string>
+            {
+                catalog.BootstrapScene.SceneName,
+                catalog.MainMenuScene.SceneName
+            };
+            catalogSceneNames.AddRange(catalog.Levels.Select(level => level.SceneName));
+
+            foreach (string sceneName in catalogSceneNames)
+            {
+                Assert.That(enabledSceneNames, Does.Contain(sceneName),
+                    $"Catalog references scene '{sceneName}', which is not an enabled scene in Build Settings.");
+            }
+        }
+
+        [Test]
+        public void EveryEnabledGameplayScene_HasACatalogEntry()
+        {
+            SceneCatalog catalog = LoadRealCatalog();
+            var knownSceneNames = new HashSet<string>
+            {
+                catalog.BootstrapScene.SceneName,
+                catalog.MainMenuScene.SceneName
+            };
+
+            foreach (LevelDefinition level in catalog.Levels)
+                knownSceneNames.Add(level.SceneName);
+
+            foreach (string sceneName in EnabledBuildSceneNames())
+            {
+                Assert.That(knownSceneNames, Does.Contain(sceneName),
+                    $"Enabled scene '{sceneName}' is not the bootstrap, the menu or a Levels entry of the catalog.");
+            }
+        }
+
+        private static SceneCatalog LoadRealCatalog()
+        {
+            var catalog = AssetDatabase.LoadAssetAtPath<SceneCatalog>(RealCatalogAssetPath);
+
+            Assert.That(catalog, Is.Not.Null, $"{RealCatalogAssetPath} is missing.");
+
+            return catalog;
+        }
+
+        private static IEnumerable<string> EnabledBuildSceneNames()
+            => EditorBuildSettings.scenes
+                .Where(scene => scene.enabled)
+                .Select(scene => Path.GetFileNameWithoutExtension(scene.path));
 
         private T Track<T>(T asset) where T : Object
         {

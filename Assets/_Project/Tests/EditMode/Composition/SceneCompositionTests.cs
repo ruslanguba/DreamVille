@@ -10,21 +10,29 @@ using UnityEngine.SceneManagement;
 using Zenject;
 
 using DreamVille.Bootstrap;
+using DreamVille.Configs;
 using DreamVille.Dialogue;
 using DreamVille.Gameplay.Enemies;
 using DreamVille.Gameplay.Player;
 using DreamVille.Gameplay.Weapons.Pillow;
 using DreamVille.Input;
+using DreamVille.SceneManagement;
+using DreamVille.UI;
 
 namespace DreamVille.Tests.EditMode.Composition
 {
     /// <summary>
-    /// Guards spec 01 §3.7/§3.8: opens every enabled build scene and checks its
+    /// Guards spec 01 §3.7/§3.8 and spec 02 §3.2: opens every enabled build scene and checks its
     /// composition root instead of trusting a GUID scan of the scene file, because
-    /// installers reach into nested prefabs (conventions §9, roadmap step 3.7).
+    /// installers reach into nested prefabs (conventions §9, roadmap step 3.7). Scene roles and
+    /// level identity come from the shipped SceneCatalog asset, never from a scene name literal.
     /// </summary>
     public class SceneCompositionTests
     {
+        private const string CatalogAssetPath = "Assets/_Project/Settings/Levels/SceneCatalog.asset";
+
+        private static readonly SceneCatalog Catalog = AssetDatabase.LoadAssetAtPath<SceneCatalog>(CatalogAssetPath);
+
         private enum SceneRole
         {
             Bootstrap,
@@ -37,6 +45,8 @@ namespace DreamVille.Tests.EditMode.Composition
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            Assume.That(Catalog, Is.Not.Null, $"{CatalogAssetPath} is missing.");
+
             Scene activeScene = EditorSceneManager.GetActiveScene();
             _originalScenePath = activeScene.path;
 
@@ -58,14 +68,15 @@ namespace DreamVille.Tests.EditMode.Composition
         private static IEnumerable<string> GameplayScenePaths()
             => EnabledScenePaths().Where(path => Classify(path) == SceneRole.Gameplay);
 
-        /// <remarks>Classified by file name until spec 02 introduces SceneCatalog.</remarks>
         private static SceneRole Classify(string scenePath)
         {
             string sceneName = Path.GetFileNameWithoutExtension(scenePath);
-            if (sceneName == "GameStart")
+
+            if (sceneName == Catalog.BootstrapScene.SceneName)
                 return SceneRole.Bootstrap;
-            if (sceneName == "Main menu 1")
+            if (sceneName == Catalog.MainMenuScene.SceneName)
                 return SceneRole.Menu;
+
             return SceneRole.Gameplay;
         }
 
@@ -153,7 +164,7 @@ namespace DreamVille.Tests.EditMode.Composition
             Assert.That(FindAll<GameInput>(), Is.Not.Empty, "GameInput is missing.");
 
             if (!HasLevelActors())
-                TestContext.WriteLine($"{scenePath}: no LevelActors (optional; legitimately absent from New_2_Lobby_Max).");
+                TestContext.WriteLine($"{scenePath}: no LevelActors (optional; legitimately absent from Lobby_02).");
         }
 
         [TestCaseSource(nameof(GameplayScenePaths))]
@@ -189,6 +200,48 @@ namespace DreamVille.Tests.EditMode.Composition
             Type[] installerTypes = InstalledInstallerTypes(sceneContext);
 
             Assert.That(installerTypes, Is.EqualTo(new[] { typeof(MainMenuInstaller) }));
+        }
+
+        [TestCaseSource(nameof(GameplayScenePaths))]
+        public void GameplayScene_ProgressionInstallerResolvesItsLevel(string scenePath)
+        {
+            OpenScene(scenePath);
+            string sceneName = EditorSceneManager.GetActiveScene().name;
+
+            Assert.That(Catalog.FindBySceneName(sceneName), Is.InstanceOf<LevelDefinition>(),
+                $"Scene '{sceneName}' has no LevelDefinition in the catalog; ProgressionInstaller would log an error at runtime.");
+        }
+
+        [TestCaseSource(nameof(EnabledScenePaths))]
+        public void EverySceneTransitionTrigger_HasATarget(string scenePath)
+        {
+            OpenScene(scenePath);
+
+            foreach (SceneTransitionTrigger trigger in FindAll<SceneTransitionTrigger>())
+                AssertPrefabFieldAssigned(trigger, "_target");
+        }
+
+        [Test]
+        public void MenuScene_LevelButtonsReferenceCatalogLevels()
+        {
+            string menuScenePath = EnabledScenePaths().Single(path => Classify(path) == SceneRole.Menu);
+            OpenScene(menuScenePath);
+
+            LevelSelectButton[] buttons = FindAll<LevelSelectButton>();
+            Assert.That(buttons, Is.Not.Empty, "The menu scene has no LevelSelectButton components.");
+
+            foreach (LevelSelectButton button in buttons)
+            {
+                var serializedButton = new SerializedObject(button);
+                SerializedProperty levelField = serializedButton.FindProperty("_level");
+                SerializedProperty buttonField = serializedButton.FindProperty("_button");
+
+                Assert.That(buttonField.objectReferenceValue, Is.Not.Null, $"{button.name} has no _button assigned.");
+
+                var level = levelField.objectReferenceValue as LevelDefinition;
+                Assert.That(level, Is.Not.Null, $"{button.name} has no _level assigned.");
+                Assert.That(Catalog.Levels, Does.Contain(level), $"{button.name}'s level '{level.SceneName}' is not in the SceneCatalog.");
+            }
         }
     }
 }
