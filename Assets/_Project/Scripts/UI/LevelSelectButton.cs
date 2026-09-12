@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,6 +51,22 @@ namespace DreamVille.UI
             _button.interactable = _level.UnlockedByDefault || _progress.IsCompleted(_level.LevelId);
         }
 
-        private void OnClicked() => _sceneLoader.LoadAsync(_level.SceneName).Forget();
+        private void OnClicked() => LoadLevelAsync().Forget();
+
+        private async UniTaskVoid LoadLevelAsync()
+        {
+            try
+            {
+                await _sceneLoader.LoadAsync(_level.SceneName, this.GetCancellationTokenOnDestroy());
+            }
+            catch (OperationCanceledException)
+            {
+                // The menu is destroyed by the very load it requested; nothing to report.
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception, this);
+            }
+        }
     }
 }

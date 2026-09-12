@@ -25,8 +25,8 @@ namespace DreamVille.Bootstrap
 
         public override void InstallBindings()
         {
-            Container.BindInstance(_sceneCatalog).AsSingle();
-            Container.BindInstance(_audioConfig).AsSingle();
+            Container.BindInstance(_sceneCatalog);
+            Container.BindInstance(_audioConfig);
 
             Container
                 .BindInterfacesTo<AudioPlayer>()

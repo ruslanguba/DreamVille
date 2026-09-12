@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
@@ -13,6 +14,7 @@ namespace DreamVille.SceneManagement
         [SerializeField] private SceneDefinition _target;
 
         private ISceneLoader _sceneLoader;
+        private bool _isLoading;
 
         [Inject]
         public void Construct(ISceneLoader sceneLoader)
@@ -22,7 +24,7 @@ namespace DreamVille.SceneManagement
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!PlayerDetection.IsPlayer(other))
+            if (_isLoading || !PlayerDetection.IsPlayer(other))
                 return;
 
             if (_target == null)
@@ -31,7 +33,25 @@ namespace DreamVille.SceneManagement
                 return;
             }
 
-            _sceneLoader.LoadAsync(_target.SceneName).Forget();
+            _isLoading = true;
+            LoadTargetAsync().Forget();
+        }
+
+        private async UniTaskVoid LoadTargetAsync()
+        {
+            try
+            {
+                await _sceneLoader.LoadAsync(_target.SceneName, this.GetCancellationTokenOnDestroy());
+            }
+            catch (OperationCanceledException)
+            {
+                // The trigger is destroyed together with the scene it lives in; nothing to report.
+            }
+            catch (Exception exception)
+            {
+                _isLoading = false;
+                Debug.LogException(exception, this);
+            }
         }
     }
 }

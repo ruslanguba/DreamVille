@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -16,13 +17,12 @@ namespace DreamVille.Bootstrap
 
         public override void InstallBindings()
         {
-            var level = _catalog.FindBySceneName(gameObject.scene.name) as LevelDefinition;
+            string sceneName = gameObject.scene.name;
 
-            if (level == null)
-            {
-                Debug.LogError($"[{nameof(ProgressionInstaller)}] Scene '{gameObject.scene.name}' has no LevelDefinition in the catalog.", this);
-                return;
-            }
+            // Fail fast: a gameplay scene missing from the catalog is a content error, and a half-installed
+            // scene would only surface it later as unrelated resolve failures.
+            if (_catalog.FindBySceneName(sceneName) is not LevelDefinition level)
+                throw new InvalidOperationException($"[{nameof(ProgressionInstaller)}] Scene '{sceneName}' has no LevelDefinition in the catalog.");
 
             Container.BindInstance(level).AsSingle();
             Container.BindInstance(level.StarRules).AsSingle();

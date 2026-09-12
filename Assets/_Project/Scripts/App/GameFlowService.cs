@@ -1,4 +1,6 @@
+using System;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 using DreamVille.Configs;
 using DreamVille.SceneManagement;
@@ -23,13 +25,25 @@ namespace DreamVille.App
         {
             // Time must be restored before the load starts, otherwise the new scene begins with timeScale = 0.
             _pause.Resume();
-            _sceneLoader.ReloadActiveAsync().Forget();
+            RunTransitionAsync(_sceneLoader.ReloadActiveAsync()).Forget();
         }
 
         public void ExitToMenu()
         {
             _pause.Resume();
-            _sceneLoader.LoadAsync(_catalog.MainMenuScene.SceneName).Forget();
+            RunTransitionAsync(_sceneLoader.LoadAsync(_catalog.MainMenuScene.SceneName)).Forget();
+        }
+
+        private static async UniTaskVoid RunTransitionAsync(UniTask transition)
+        {
+            try
+            {
+                await transition;
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception);
+            }
         }
     }
 }

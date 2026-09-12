@@ -10,7 +10,10 @@ namespace DreamVille.Audio
     /// </summary>
     public sealed class AudioPlayer : MonoBehaviour, IAudioOutput
     {
-        /// <summary>Silence in the mixer's decibel scale is minus infinity; clamp just above it.</summary>
+        /// <summary>
+        /// Floor for the linear-to-decibel conversion: log10(0) is minus infinity, and 0.001 maps
+        /// to -60 dB, which is silence for the mixer's purposes.
+        /// </summary>
         private const float MinNormalizedVolume = 0.001f;
 
         [Header("Audio Mixer")]
