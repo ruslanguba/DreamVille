@@ -19,7 +19,7 @@ namespace DreamVille.Bootstrap
 
         public override void InstallBindings()
         {
-            Container.Bind<PlayerContext>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesAndSelfTo<PlayerContext>().FromComponentInHierarchy().AsSingle();
             Container.BindInterfacesTo<PlayerInputSwitch>().FromComponentInHierarchy().AsSingle();
             Container.Bind<GameInput>().FromComponentInHierarchy().AsSingle();
 

@@ -21,7 +21,7 @@ namespace DreamVille.Bootstrap
             // One prefab instance per scene: the remaining components are read off it,
             // otherwise FromComponentInNewPrefab would create a separate copy per binding.
             Container
-                .Bind<BulletSpawner>()
+                .BindInterfacesAndSelfTo<BulletSpawner>()
                 .FromComponentInNewPrefab(_gameplaySystemsPrefab)
                 .AsSingle()
                 .NonLazy();
@@ -32,14 +32,14 @@ namespace DreamVille.Bootstrap
                 .AsSingle();
 
             Container
-                .Bind<BulletEventRelay>()
+                .Bind<IBulletHitSource>()
                 .FromMethod(ctx => ctx.Container.Resolve<BulletSpawner>().GetComponent<BulletEventRelay>())
                 .AsSingle();
 
             // These live on scene objects: the registry on the LevelProgressSystem
             // prefab in Prefabs/Utilities, pillows on the player.
-            Container.Bind<EnemyRegistry>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<PillowThrowHandler>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesTo<EnemyRegistry>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesTo<PillowThrowHandler>().FromComponentInHierarchy().AsSingle();
         }
     }
 }

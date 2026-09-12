@@ -35,12 +35,12 @@ namespace DreamVille.Tests.EditMode.Scoring
         }
 
         [Test]
-        public void AddScore_RaisesOnScoreAddedWithDeltaAndOnTotalScoreChangedWithRunningTotal()
+        public void AddScore_RaisesScoreAddedWithDeltaAndTotalScoreChangedWithRunningTotal()
         {
             float? addedDelta = null;
             float? totalAfterChange = null;
-            _service.OnScoreAdded += delta => addedDelta = delta;
-            _service.OnTotalScoreChanged += total => totalAfterChange = total;
+            _service.ScoreAdded += delta => addedDelta = delta;
+            _service.TotalScoreChanged += total => totalAfterChange = total;
 
             _service.AddScore(15f);
 
@@ -52,7 +52,7 @@ namespace DreamVille.Tests.EditMode.Scoring
         public void HandleEnemyKilled_CalledTwice_AccumulatesTotalScore()
         {
             var totals = new List<float>();
-            _service.OnTotalScoreChanged += totals.Add;
+            _service.TotalScoreChanged += totals.Add;
 
             _service.HandleEnemyKilled(1);
             _service.HandleEnemyKilled(2);

@@ -15,16 +15,13 @@ namespace DreamVille.Gameplay.Weapons.Pillow
     /// the most recently placed one. Stop freezes the pillow in flight so it becomes a static
     /// platform; a frozen pillow stays "placed" and is recalled when no free pillow is left.
     /// </summary>
-    public class PillowThrowHandler : MonoBehaviour
+    public class PillowThrowHandler : MonoBehaviour, IPillowThrower
     {
-        /// <summary>Raised after a pillow is thrown.</summary>
-        public event Action OnThrow;
+        public event Action Thrown;
 
-        /// <summary>Raised after a recalled pillow arrives back at the spawn point.</summary>
-        public event Action OnRecall;
+        public event Action Recalled;
 
-        /// <summary>Raised once during initialization with the number of available pillow slots.</summary>
-        public event Action<int> OnPillowAdded;
+        public event Action<int> PillowCountChanged;
 
         private const float ArrivalThreshold = 0.1f;
 
@@ -92,7 +89,7 @@ namespace DreamVille.Gameplay.Weapons.Pillow
             }
 
             Subscribe();
-            OnPillowAdded?.Invoke(_slots.Count);
+            PillowCountChanged?.Invoke(_slots.Count);
         }
 
         private void OnEnable()
@@ -180,7 +177,7 @@ namespace DreamVille.Gameplay.Weapons.Pillow
 
             _flyingPillow = rigidbody;
             _thrownPillows.Push(slot);
-            OnThrow?.Invoke();
+            Thrown?.Invoke();
         }
 
         private void Recall(PillowSlot slot)
@@ -217,7 +214,7 @@ namespace DreamVille.Gameplay.Weapons.Pillow
 
                 pillow.position = _spawnPoint.position;
                 pillow.gameObject.SetActive(false);
-                OnRecall?.Invoke();
+                Recalled?.Invoke();
             }
             catch (OperationCanceledException)
             {

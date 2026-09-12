@@ -10,12 +10,12 @@ namespace DreamVille.Scoring
     /// <see cref="StarRulesSO"/> are crossed. The best star count ever reached for a
     /// level is persisted to PlayerPrefs and never regresses on replay.
     /// </summary>
-    public class StarProgressService
+    public class StarProgressService : IStarProgressService
     {
         private const string StarsKeySuffix = "_Stars";
 
-        public event Action<int> OnStarUnlocked;
-        public event Action<int, float> OnStarProgressChanged;
+        public event Action<int> StarUnlocked;
+        public event Action<int, float> StarProgressChanged;
 
         private readonly StarRulesSO _rules;
         private float _totalScore;
@@ -56,7 +56,7 @@ namespace DreamVille.Scoring
             float progress =
                 Mathf.Clamp01((_totalScore - prevThreshold) /
                               (nextThreshold - prevThreshold));
-            OnStarProgressChanged?.Invoke(_currentStarIndex, progress);
+            StarProgressChanged?.Invoke(_currentStarIndex, progress);
         }
 
         private bool CanUnlockNextStar()
@@ -69,7 +69,7 @@ namespace DreamVille.Scoring
 
         private void UnlockStar()
         {
-            OnStarUnlocked?.Invoke(_currentStarIndex);
+            StarUnlocked?.Invoke(_currentStarIndex);
             _currentStarIndex++;
             SaveProgress();
         }

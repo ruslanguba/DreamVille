@@ -8,7 +8,7 @@ namespace DreamVille.Gameplay.Weapons.Bullets
     /// Collapses the <see cref="Bullet.Hit"/> event of every bullet spawned this scene into
     /// a single <see cref="BulletHit"/> event for UI consumers.
     /// </summary>
-    public class BulletEventRelay : MonoBehaviour
+    public class BulletEventRelay : MonoBehaviour, IBulletHitSource
     {
         /// <summary>Raised whenever any registered bullet reports a collision.</summary>
         public event Action<BulletHitInfo> BulletHit;

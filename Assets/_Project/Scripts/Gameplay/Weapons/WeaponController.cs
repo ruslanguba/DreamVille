@@ -4,9 +4,12 @@ using DreamVille.Input;
 
 namespace DreamVille.Gameplay.Weapons
 {
-    public class WeaponController: MonoBehaviour
+    public class WeaponController : MonoBehaviour
     {
         [SerializeField] private GunBase _currentGun;
+
+        private IWeapon Weapon => _currentGun;
+
         private IPlayerInput _input;
 
         private void Awake()
@@ -14,7 +17,7 @@ namespace DreamVille.Gameplay.Weapons
             _input = GetComponent<IPlayerInput>();
         }
 
-        // Видимостью оружия управляет подбор (CollectableGun), а не контроллер ввода.
+        // Gun visibility is controlled by the pickup (CollectableGun), not by the input controller.
         private void OnEnable()
         {
             _input.FirePressed += Fire;
@@ -27,8 +30,10 @@ namespace DreamVille.Gameplay.Weapons
 
         private void Fire()
         {
-            if (_currentGun != null && _currentGun.CanShoot())
-                _currentGun.TryShoot();
+            // Compares the serialized Component reference, not the interface, so a destroyed
+            // gun is caught by Unity's overridden null check instead of producing a fake non-null.
+            if (_currentGun != null && Weapon.CanShoot())
+                Weapon.TryShoot();
         }
     }
 }

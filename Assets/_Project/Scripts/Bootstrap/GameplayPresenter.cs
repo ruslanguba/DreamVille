@@ -16,29 +16,29 @@ namespace DreamVille.Bootstrap
     /// </summary>
     public class GameplayPresenter : IInitializable, IDisposable
     {
-        private readonly ScoreService _scoreService;
-        private readonly StarProgressService _starProgressService;
-        private readonly BestScoreService _bestScore;
+        private readonly IScoreService _scoreService;
+        private readonly IStarProgressService _starProgressService;
+        private readonly IBestScoreService _bestScore;
         private readonly GameUIRoot _ui;
-        private readonly BulletEventRelay _bulletRelay;
-        private readonly PillowThrowHandler _pillowHandler;
-        private readonly EnemyRegistry _enemyRegistry;
+        private readonly IBulletHitSource _bulletHitSource;
+        private readonly IPillowThrower _pillowThrower;
+        private readonly IEnemyRegistry _enemyRegistry;
 
         public GameplayPresenter(
-            ScoreService scoreService,
-            StarProgressService starProgressService,
-            BestScoreService bestScore,
+            IScoreService scoreService,
+            IStarProgressService starProgressService,
+            IBestScoreService bestScore,
             GameUIRoot ui,
-            BulletEventRelay bulletRelay,
-            PillowThrowHandler pillowHandler,
-            EnemyRegistry enemyRegistry)
+            IBulletHitSource bulletHitSource,
+            IPillowThrower pillowThrower,
+            IEnemyRegistry enemyRegistry)
         {
             _scoreService = scoreService;
             _starProgressService = starProgressService;
             _bestScore = bestScore;
             _ui = ui;
-            _bulletRelay = bulletRelay;
-            _pillowHandler = pillowHandler;
+            _bulletHitSource = bulletHitSource;
+            _pillowThrower = pillowThrower;
             _enemyRegistry = enemyRegistry;
         }
 
@@ -47,15 +47,15 @@ namespace DreamVille.Bootstrap
             SubscribeUi();
             SubscribeServices();
 
-            _pillowHandler.Initialize();
+            _pillowThrower.Initialize();
 
             _ui.EnemyCounter.SetEnemiesRemaining(_enemyRegistry.TotalEnemies);
-            _enemyRegistry.OnEnemyKilled += OnEnemyKilled;
+            _enemyRegistry.EnemyKilled += OnEnemyKilled;
         }
 
         public void Dispose()
         {
-            _enemyRegistry.OnEnemyKilled -= OnEnemyKilled;
+            _enemyRegistry.EnemyKilled -= OnEnemyKilled;
 
             UnsubscribeServices();
             UnsubscribeUi();
@@ -63,44 +63,44 @@ namespace DreamVille.Bootstrap
 
         private void SubscribeUi()
         {
-            _scoreService.OnScoreAdded += _ui.ScorePopup.ShowScore;
-            _starProgressService.OnStarProgressChanged += _ui.StarsUI.SetStarProgress;
-            _starProgressService.OnStarUnlocked += _ui.StarsUI.UnlockStar;
+            _scoreService.ScoreAdded += _ui.ScorePopup.ShowScore;
+            _starProgressService.StarProgressChanged += _ui.StarsUI.SetStarProgress;
+            _starProgressService.StarUnlocked += _ui.StarsUI.UnlockStar;
 
-            _pillowHandler.OnPillowAdded += _ui.PillowUI.SpawnIcons;
-            _pillowHandler.OnThrow += _ui.PillowUI.HidePillow;
-            _pillowHandler.OnRecall += _ui.PillowUI.ShowPillow;
+            _pillowThrower.PillowCountChanged += _ui.PillowUI.SpawnIcons;
+            _pillowThrower.Thrown += _ui.PillowUI.HidePillow;
+            _pillowThrower.Recalled += _ui.PillowUI.ShowPillow;
 
-            _bulletRelay.BulletHit += _ui.RicochetUI.OnBulletHit;
+            _bulletHitSource.BulletHit += _ui.RicochetUI.OnBulletHit;
         }
 
         private void UnsubscribeUi()
         {
-            _scoreService.OnScoreAdded -= _ui.ScorePopup.ShowScore;
-            _starProgressService.OnStarProgressChanged -= _ui.StarsUI.SetStarProgress;
-            _starProgressService.OnStarUnlocked -= _ui.StarsUI.UnlockStar;
+            _scoreService.ScoreAdded -= _ui.ScorePopup.ShowScore;
+            _starProgressService.StarProgressChanged -= _ui.StarsUI.SetStarProgress;
+            _starProgressService.StarUnlocked -= _ui.StarsUI.UnlockStar;
 
-            _pillowHandler.OnPillowAdded -= _ui.PillowUI.SpawnIcons;
-            _pillowHandler.OnThrow -= _ui.PillowUI.HidePillow;
-            _pillowHandler.OnRecall -= _ui.PillowUI.ShowPillow;
+            _pillowThrower.PillowCountChanged -= _ui.PillowUI.SpawnIcons;
+            _pillowThrower.Thrown -= _ui.PillowUI.HidePillow;
+            _pillowThrower.Recalled -= _ui.PillowUI.ShowPillow;
 
-            _bulletRelay.BulletHit -= _ui.RicochetUI.OnBulletHit;
+            _bulletHitSource.BulletHit -= _ui.RicochetUI.OnBulletHit;
         }
 
         private void SubscribeServices()
         {
-            _scoreService.OnScoreAdded += _starProgressService.AddScore;
-            _enemyRegistry.OnAllEnemiesKilled += SaveBestScore;
+            _scoreService.ScoreAdded += _starProgressService.AddScore;
+            _enemyRegistry.AllEnemiesKilled += OnAllEnemiesKilled;
         }
 
         private void UnsubscribeServices()
         {
-            _scoreService.OnScoreAdded -= _starProgressService.AddScore;
-            _enemyRegistry.OnAllEnemiesKilled -= SaveBestScore;
+            _scoreService.ScoreAdded -= _starProgressService.AddScore;
+            _enemyRegistry.AllEnemiesKilled -= OnAllEnemiesKilled;
         }
 
-        // Per-level score record.
-        private void SaveBestScore()
+        /// <summary>Records the level's best score once every enemy is cleared.</summary>
+        private void OnAllEnemiesKilled()
         {
             _bestScore.TrySave(_scoreService.TotalScore);
         }

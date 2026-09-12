@@ -5,29 +5,25 @@ using UnityEngine;
 namespace DreamVille.Gameplay.Enemies
 {
     /// <summary>
-    /// Учёт живых врагов уровня.
-    /// Состав собирается в Awake — то есть заведомо раньше любого Initialize контейнера,
-    /// поэтому подписчики могут сразу читать актуальное состояние и не зависят от порядка.
+    /// Tracks the enemies alive in the current level.
+    /// The roster is collected in Awake, i.e. strictly before any container Initialize runs,
+    /// so subscribers can read up-to-date state right away regardless of composition order.
     /// </summary>
-    public class EnemyRegistry : MonoBehaviour
+    public class EnemyRegistry : MonoBehaviour, IEnemyRegistry
     {
-        /// <summary>Убит враг. Аргументы: сколько осталось, сколько было столкновений.</summary>
-        public event Action<int, int> OnEnemyKilled;
+        public event Action<int, int> EnemyKilled;
 
-        /// <summary>Врагов на уровне не осталось.</summary>
-        public event Action OnAllEnemiesKilled;
+        public event Action AllEnemiesKilled;
 
         private readonly List<EnemyHealth> _alive = new();
 
-        /// <summary>Сколько врагов было на старте уровня.</summary>
         public int TotalEnemies { get; private set; }
 
-        /// <summary>Сколько врагов осталось сейчас.</summary>
         public int RemainingEnemies => _alive.Count;
 
         private void Awake()
         {
-            // Выключенные объекты тоже считаются: враг может ждать своей волны.
+            // Inactive objects count too: an enemy may be waiting for its wave.
             foreach (var enemy in FindObjectsByType<EnemyHealth>(FindObjectsInactive.Include, FindObjectsSortMode.None))
             {
                 _alive.Add(enemy);
@@ -44,10 +40,10 @@ namespace DreamVille.Gameplay.Enemies
             if (!_alive.Remove(enemy))
                 return;
 
-            OnEnemyKilled?.Invoke(_alive.Count, collisionsCount);
+            EnemyKilled?.Invoke(_alive.Count, collisionsCount);
 
             if (_alive.Count == 0)
-                OnAllEnemiesKilled?.Invoke();
+                AllEnemiesKilled?.Invoke();
         }
 
         private void OnDestroy()

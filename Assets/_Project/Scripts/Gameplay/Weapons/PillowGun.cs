@@ -13,14 +13,11 @@ namespace DreamVille.Gameplay.Weapons
         [SerializeField] private BulletConfig _config;
         [SerializeField] private Transform _character;
 
-        // Сценный сервис: приходит из контейнера, а не из инспектора.
-        private BulletSpawner _spawner;
+        private IBulletSpawner _spawner;
         private ActorAudio _audio;
 
-        // В сценах без боевой обвязки спавнера нет — оружие просто не стреляет.
-        // Optional помечает именно аргумент: на самом [Inject]-методе Zenject его не принимает.
         [Inject]
-        public void Construct([InjectOptional] BulletSpawner spawner)
+        public void Construct(IBulletSpawner spawner)
         {
             _spawner = spawner;
         }
@@ -34,15 +31,9 @@ namespace DreamVille.Gameplay.Weapons
         {
             if (!CanShoot() || _spawn == null || _character == null) return;
 
-            if (_spawner == null)
-            {
-                Debug.LogWarning($"{nameof(PillowGun)} на '{name}': нет {nameof(BulletSpawner)} — в сцене отсутствует SceneContext.", this);
-                return;
-            }
-
             if (_config == null)
             {
-                Debug.LogWarning($"{nameof(PillowGun)} на '{name}': не назначен {nameof(_config)}.", this);
+                Debug.LogWarning($"[{nameof(PillowGun)}] {nameof(_config)} is not assigned.", this);
                 return;
             }
 

@@ -5,10 +5,10 @@ using DreamVille.Configs;
 
 namespace DreamVille.Scoring
 {
-    public class ScoreService
+    public class ScoreService : IScoreService
     {
-        public event Action<float> OnScoreAdded;
-        public event Action<float> OnTotalScoreChanged;
+        public event Action<float> ScoreAdded;
+        public event Action<float> TotalScoreChanged;
 
         private readonly ScoreRulesSO _rules;
         private float _totalScore;
@@ -35,8 +35,8 @@ namespace DreamVille.Scoring
         public void AddScore(float score)
         {
             _totalScore += score;
-            OnScoreAdded?.Invoke(score);
-            OnTotalScoreChanged?.Invoke(_totalScore);
+            ScoreAdded?.Invoke(score);
+            TotalScoreChanged?.Invoke(_totalScore);
         }
     }
 }

@@ -36,8 +36,8 @@ namespace DreamVille.Tests.EditMode.Scoring
             var unlocked = new List<int>();
             int progressStarIndex = -1;
             float progressValue = -1f;
-            _service.OnStarUnlocked += unlocked.Add;
-            _service.OnStarProgressChanged += (index, value) =>
+            _service.StarUnlocked += unlocked.Add;
+            _service.StarProgressChanged += (index, value) =>
             {
                 progressStarIndex = index;
                 progressValue = value;
@@ -54,7 +54,7 @@ namespace DreamVille.Tests.EditMode.Scoring
         public void AddScore_ReachingThreshold_RaisesOnStarUnlockedWithStarIndex()
         {
             var unlocked = new List<int>();
-            _service.OnStarUnlocked += unlocked.Add;
+            _service.StarUnlocked += unlocked.Add;
 
             _service.AddScore(50f);
 
@@ -65,7 +65,7 @@ namespace DreamVille.Tests.EditMode.Scoring
         public void AddScore_OneBigScore_UnlocksSeveralStarsInOrder()
         {
             var unlocked = new List<int>();
-            _service.OnStarUnlocked += unlocked.Add;
+            _service.StarUnlocked += unlocked.Add;
 
             _service.AddScore(200f);
 

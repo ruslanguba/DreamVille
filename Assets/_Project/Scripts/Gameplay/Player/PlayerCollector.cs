@@ -8,11 +8,10 @@ namespace DreamVille.Gameplay.Player
 {
     public class PlayerCollector : MonoBehaviour
     {
-        private ScoreService _scoreService;
+        private IScoreService _scoreService;
 
-        // Очки настроены не на всех уровнях: там, где нет ProgressionInstaller, сбор просто не начисляет.
         [Inject]
-        public void Construct([InjectOptional] ScoreService scoreService)
+        public void Construct(IScoreService scoreService)
         {
             _scoreService = scoreService;
         }
@@ -23,13 +22,6 @@ namespace DreamVille.Gameplay.Player
                 return;
 
             collectable.Collect(transform);
-
-            if (_scoreService == null)
-            {
-                Debug.LogWarning($"{nameof(PlayerCollector)} на '{name}': нет {nameof(ScoreService)} — в сцене отсутствует SceneContext.", this);
-                return;
-            }
-
             _scoreService.AddScore(collectable.ScoreToAdd);
         }
     }

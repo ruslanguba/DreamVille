@@ -18,7 +18,7 @@ namespace DreamVille.Gameplay.Damage
         [SerializeField] private float _maxHitPoints = 5;
         private float _currentStep = 0;
 
-        private ScoreService _scoreService;
+        private IScoreService _scoreService;
         private void Awake()
         {
             foreach (var renderer in _renderer)
@@ -35,13 +35,12 @@ namespace DreamVille.Gameplay.Damage
             {
                 _collider = GetComponentInChildren<Collider>();
             }
-            // Если ты хочешь, чтобы количество шагов зависело от хитпоинтов:
+
             _steps = _maxHitPoints;
         }
 
-        // См. PlayerCollector: сервис очков есть не во всех сценах.
         [Inject]
-        public void Construct([InjectOptional] ScoreService scoreService)
+        public void Construct(IScoreService scoreService)
         {
             _scoreService = scoreService;
         }
@@ -59,7 +58,7 @@ namespace DreamVille.Gameplay.Damage
             _currentStep++;
             if (_currentStep <= _steps)
             {
-                _scoreService?.AddScore(10);
+                _scoreService.AddScore(10);
             }
             float t = _currentStep / _steps;
             foreach (var renderer in _renderer)

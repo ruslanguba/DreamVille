@@ -8,7 +8,7 @@ namespace DreamVille.Gameplay.Weapons.Bullets
     /// Facade over <see cref="BulletPool"/> and <see cref="BulletEventRelay"/>: fetches a
     /// bullet, places and initializes it, and registers it for hit relaying.
     /// </summary>
-    public class BulletSpawner : MonoBehaviour
+    public class BulletSpawner : MonoBehaviour, IBulletSpawner
     {
         [SerializeField] private BulletPool _pool;
         [SerializeField] private BulletEventRelay _eventRelay;

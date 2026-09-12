@@ -16,14 +16,14 @@ namespace DreamVille.Progression
     /// </summary>
     public class LevelDirector : IInitializable, IDisposable
     {
-        private readonly EnemyRegistry _enemies;
+        private readonly IEnemyRegistry _enemies;
         private readonly LevelUnlockService _unlocks;
         private readonly LevelActors _actors;
         private readonly StarRulesSO _rules;
         private readonly CancellationTokenSource _lifetime = new CancellationTokenSource();
 
         public LevelDirector(
-            EnemyRegistry enemies,
+            IEnemyRegistry enemies,
             LevelUnlockService unlocks,
             StarRulesSO rules,
             [InjectOptional] LevelActors actors)
@@ -39,7 +39,7 @@ namespace DreamVille.Progression
 
         public void Initialize()
         {
-            _enemies.OnAllEnemiesKilled += OnAllEnemiesKilled;
+            _enemies.AllEnemiesKilled += OnAllEnemiesKilled;
 
             // A hub without a final zone has no completion scenario to run.
             if (FinalZone == null)
@@ -58,7 +58,7 @@ namespace DreamVille.Progression
             _lifetime.Cancel();
             _lifetime.Dispose();
 
-            _enemies.OnAllEnemiesKilled -= OnAllEnemiesKilled;
+            _enemies.AllEnemiesKilled -= OnAllEnemiesKilled;
 
             if (FinalZone == null)
                 return;

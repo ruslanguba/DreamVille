@@ -19,9 +19,9 @@ namespace DreamVille.Bootstrap
             Container.BindInstance(_scoreRules).AsSingle();
             Container.BindInstance(_starRules).AsSingle();
 
-            Container.Bind<ScoreService>().AsSingle();
-            Container.Bind<StarProgressService>().AsSingle();
-            Container.Bind<BestScoreService>().AsSingle();
+            Container.BindInterfacesTo<ScoreService>().AsSingle();
+            Container.BindInterfacesTo<StarProgressService>().AsSingle();
+            Container.BindInterfacesTo<BestScoreService>().AsSingle();
 
             Container.Bind<LevelUnlockService>().AsSingle();
             Container.Bind<LevelActors>().FromComponentInHierarchy().AsSingle();
