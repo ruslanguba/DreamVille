@@ -42,7 +42,7 @@ refactor documented below is the author's.
 - **UniTask with cancellation, not coroutines**, in the refactored modules: bullet
   lifetime, pillow recall, NPC reactions and scene loading each own a
   `CancellationToken` tied to the object's lifetime.
-- **101 EditMode tests**, including a scene-composition guard
+- **105 EditMode tests**, including a scene-composition guard
   ([`SceneCompositionTests`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs))
   that opens every build scene and checks its installers and catalog references, so a
   mis-wired scene fails a test run instead of a play session.
@@ -80,6 +80,7 @@ graph LR
     end
 
     Audio --> Configs
+    Audio --> Core
     Audio --> Persistence
     Scoring --> Configs
     Scoring --> Persistence
@@ -183,7 +184,7 @@ press Play.
 
 ## Tests
 
-Window → General → Test Runner → EditMode → Run All. 101 tests, all green. PlayMode
+Window → General → Test Runner → EditMode → Run All. 105 tests, all green. PlayMode
 tests and CI are not set up yet.
 
 ## Status and roadmap
@@ -193,7 +194,7 @@ critical gameplay fixes (bullet pool, enemy death, saved volume, dialogue re-ent
 pillow throw/recall); layered, acyclic assemblies with `autoReferenced: false`;
 services bound by interface; persistence behind `ISaveStorage`/repositories; data-driven
 scene and level identity (`SceneCatalog`/`LevelDefinition`); an `IAudioService` behind
-the composition root; 101 EditMode tests; four ADRs.
+the composition root; 105 EditMode tests; four ADRs.
 
 **Next:** a single enemy state machine with ScriptableObject configs (today each enemy
 kind has its own script); a composed player object instead of the current

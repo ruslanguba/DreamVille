@@ -71,11 +71,11 @@ graph LR
     Bootstrap --> UI
 ```
 
-`Configs`, `Core`, `Persistence` and `Input` are roots with an empty `references` array; nothing below them is needed yet.
+`Configs`, `Core` and `Persistence` reference no other DreamVille assembly; `Input` adds only `Unity.InputSystem`. Nothing below them is needed yet.
 
 Supporting rules, all verified in the current tree:
 
-- `DreamVille.Core` is three interfaces and one static helper — [`IPlayerMarker`](../../Assets/_Project/Scripts/Core/Players/IPlayerMarker.cs), [`IPlayerControlSwitch`](../../Assets/_Project/Scripts/Core/Players/IPlayerControlSwitch.cs), [`IPlayerZone`](../../Assets/_Project/Scripts/Core/Players/IPlayerZone.cs), [`PlayerDetection`](../../Assets/_Project/Scripts/Core/Players/PlayerDetection.cs) — and nothing else.
+- `DreamVille.Core` is a handful of interfaces and one static helper — [`IActiveSceneTracker`](../../Assets/_Project/Scripts/Core/Scenes/IActiveSceneTracker.cs) (the active-scene seam `Audio` listens to instead of `SceneManager`), [`IPlayerMarker`](../../Assets/_Project/Scripts/Core/Players/IPlayerMarker.cs), [`IPlayerControlSwitch`](../../Assets/_Project/Scripts/Core/Players/IPlayerControlSwitch.cs), [`IPlayerZone`](../../Assets/_Project/Scripts/Core/Players/IPlayerZone.cs), [`PlayerDetection`](../../Assets/_Project/Scripts/Core/Players/PlayerDetection.cs) — and nothing else.
 - Interfaces live in the module that owns the concept, not in `Core`: `IScoreService`/`IStarProgressService`/`IBestScoreService` in `Scoring`, `ISceneLoader` in `SceneManagement`, `IDialogueService`/`IDialogueState` in `Dialogue`, `IAudioService`/`IAudioSettings`/`IAudioOutput` in `Audio`, `IEnemyRegistry`/`IBulletSpawner`/`IBulletHitSource`/`IPillowThrower`/`IWeapon` in `Gameplay`, `ICursorService`/`IPauseService`/`IGameFlowService`/`IInGameMenu` in `App`. `Core` only holds a contract when the *consumer* sits below the *implementer* in the graph — the player-detection seams are the one case where that happens today (implemented by `PlayerContext`, `PlayerInputSwitch`, `PlayerDetectorTrigger` in `Gameplay`; consumed by `SceneManagement`, `Dialogue` and `UI`, all of which sit below or beside `Gameplay`).
 - `autoReferenced` is `false` on every DreamVille assembly except `DreamVille.Bootstrap`; a script placed outside an asmdef folder cannot silently see the whole project.
 - Namespace equals assembly name for every module (`rootNamespace` matches the asmdef `name`); the one nested case, `DreamVille.Core.Players`, is a folder inside `Core`, not a separate assembly.

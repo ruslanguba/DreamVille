@@ -36,7 +36,7 @@ flowchart LR
 
 ## Consequences
 
-- `grep -rn PlayerPrefs Assets/_Project/Scripts` returns exactly one file, `PlayerPrefsSaveStorage.cs` — the shortest possible proof that the save format is centralised.
+- `grep -rn PlayerPrefs Assets/_Project/Scripts` finds one implementation file, `PlayerPrefsSaveStorage.cs`, plus its binding line in `ProjectInstaller.cs` — the shortest possible proof that the save format is centralised.
 - A JSON or cloud save backend is a second `ISaveStorage` implementation and one binding change; nothing above the interface needs to know.
 - The `BestScore_LVL_{buildIndex}` records that already exist on a developer machine become unreachable once the key format switches to level id — accepted, because the key had no reader before this change, so no feature actually regresses.
 - Repositories fail loudly (`Debug.LogError`) rather than silently on a missing level id; a caller that forgets to pass one sees it in the console immediately instead of losing a save quietly.
