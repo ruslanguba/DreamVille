@@ -3,13 +3,16 @@ using UnityEngine;
 
 using DreamVille.Audio;
 using DreamVille.Configs;
-using DreamVille.Core.Input;
+using DreamVille.Core.Players;
 using DreamVille.Gameplay.Weapons;
+using DreamVille.Input;
 
 namespace DreamVille.Gameplay.Player
 {
-    public class PlayerContext : MonoBehaviour
+    /// <summary>Hub of the player's components and the player marker for non-gameplay code.</summary>
+    public class PlayerContext : MonoBehaviour, IPlayerMarker
     {
+        public Transform Transform => transform;
         public PlayerSettings Settings => _settings;
         public IPlayerInput Input => _inputReader;
         public CharacterController Controller => _controller;

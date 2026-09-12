@@ -9,10 +9,10 @@ namespace DreamVille.Dialogue
     {
         [SerializeField] private InputActionReference _nextAction;
 
-        private DialogueService _dialogue;
+        private IDialogueService _dialogue;
 
         [Inject]
-        public void Construct(DialogueService dialogue)
+        public void Construct(IDialogueService dialogue)
         {
             _dialogue = dialogue;
         }

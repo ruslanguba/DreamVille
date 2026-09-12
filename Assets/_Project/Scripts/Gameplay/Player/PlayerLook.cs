@@ -2,7 +2,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 
 using DreamVille.Configs;
-using DreamVille.Core.Input;
+using DreamVille.Input;
 
 namespace DreamVille.Gameplay.Player
 {

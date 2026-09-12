@@ -4,6 +4,7 @@
     "references": [
         "DreamVille.Audio",
         "DreamVille.Configs",
+        "DreamVille.Core",
         "DreamVille.Input",
         "DreamVille.Scoring",
         "UniTask",
@@ -19,7 +20,7 @@
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

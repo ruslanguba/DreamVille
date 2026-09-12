@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
 
-using DreamVille.Gameplay.Player;
+using DreamVille.Core.Players;
 
 namespace DreamVille.UI
 {
@@ -42,7 +42,7 @@ namespace DreamVille.UI
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.TryGetComponent(out PlayerContext playerContext))
+            if (PlayerDetection.IsPlayer(other))
             {
                 if (fadeRoutine != null)
                 {

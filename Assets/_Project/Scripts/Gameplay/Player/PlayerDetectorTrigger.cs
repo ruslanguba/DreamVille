@@ -1,19 +1,19 @@
 using System;
 using UnityEngine;
 
+using DreamVille.Core.Players;
+
 namespace DreamVille.Gameplay.Player
 {
-    public class PlayerDetectorTrigger : MonoBehaviour
+    /// <summary>Reports the player entering this trigger volume.</summary>
+    public class PlayerDetectorTrigger : MonoBehaviour, IPlayerZone
     {
-        public event Action OnPlayerTriggered;
+        public event Action PlayerEntered;
 
         private void OnTriggerEnter(Collider other)
         {
-            if(other.gameObject.TryGetComponent(out PlayerContext player))
-            {
-                OnPlayerTriggered?.Invoke();
-            }
+            if (PlayerDetection.IsPlayer(other))
+                PlayerEntered?.Invoke();
         }
-
     }
 }

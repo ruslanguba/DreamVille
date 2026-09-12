@@ -7,7 +7,7 @@ namespace DreamVille.Dialogue
     /// Dialogue state: the sentence queue and the transitions between lines.
     /// Knows nothing about UI, input or the scene.
     /// </summary>
-    public class DialogueService
+    public class DialogueService : IDialogueService
     {
         public event Action<bool> ActiveChanged;
         public event Action<Dialogue> SentenceShown;
@@ -17,10 +17,6 @@ namespace DreamVille.Dialogue
 
         public bool IsActive { get; private set; }
 
-        /// <summary>
-        /// A dialogue that is already running is not interrupted; the new request is ignored
-        /// and false is returned.
-        /// </summary>
         public bool Begin(IReadOnlyList<Dialogue> lines, Action onCompleted = null)
         {
             if (IsActive || lines == null || lines.Count == 0)

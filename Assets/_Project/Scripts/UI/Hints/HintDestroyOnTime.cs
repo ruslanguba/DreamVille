@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 
-using DreamVille.Gameplay.Player;
+using DreamVille.Core.Players;
 
 namespace DreamVille.UI.Hints
 {
@@ -41,7 +41,7 @@ namespace DreamVille.UI.Hints
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.TryGetComponent(out PlayerContext playerContext))
+            if (PlayerDetection.IsPlayer(other))
             {
                 if (fadeRoutine != null)
                 {

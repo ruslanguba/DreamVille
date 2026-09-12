@@ -1,0 +1,28 @@
+{
+    "name": "DreamVille.Bootstrap",
+    "rootNamespace": "DreamVille.Bootstrap",
+    "references": [
+        "DreamVille.App",
+        "DreamVille.Audio",
+        "DreamVille.Configs",
+        "DreamVille.Core",
+        "DreamVille.Dialogue",
+        "DreamVille.Gameplay",
+        "DreamVille.Input",
+        "DreamVille.Progression",
+        "DreamVille.SceneManagement",
+        "DreamVille.Scoring",
+        "DreamVille.UI",
+        "UniTask",
+        "Zenject"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

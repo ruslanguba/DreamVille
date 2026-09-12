@@ -37,10 +37,10 @@ namespace DreamVille.Dialogue
         private Vector3 _leftOriginalPos;
         private Vector3 _rightOriginalPos;
 
-        private DialogueService _dialogue;
+        private IDialogueService _dialogue;
 
         [Inject]
-        public void Construct(DialogueService dialogue)
+        public void Construct(IDialogueService dialogue)
         {
             _dialogue = dialogue;
         }
@@ -102,7 +102,7 @@ namespace DreamVille.Dialogue
         {
             if (_dialogue == null)
             {
-                Debug.LogError($"[{nameof(DialogueUI)}] DialogueService was not injected; create this prefab through the DI container.", this);
+                Debug.LogError($"[{nameof(DialogueUI)}] {nameof(IDialogueService)} was not injected; create this prefab through the DI container.", this);
                 return;
             }
 

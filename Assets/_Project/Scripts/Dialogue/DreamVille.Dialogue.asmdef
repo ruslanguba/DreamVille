@@ -2,7 +2,8 @@
     "name": "DreamVille.Dialogue",
     "rootNamespace": "DreamVille.Dialogue",
     "references": [
-        "DreamVille.Gameplay",
+        "DreamVille.Configs",
+        "DreamVille.Core",
         "Unity.Cinemachine",
         "Unity.InputSystem",
         "Unity.Localization",
@@ -15,7 +16,7 @@
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

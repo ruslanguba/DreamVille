@@ -7,7 +7,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-using DreamVille.Core.SceneManagement;
+using DreamVille.SceneManagement;
 using DreamVille.Tests.EditMode.Fakes;
 
 namespace DreamVille.Tests.EditMode.SceneManagement

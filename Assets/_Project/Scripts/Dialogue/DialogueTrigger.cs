@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 using Zenject;
 using UnityEngine;
 
-using DreamVille.Gameplay.Player;
+using DreamVille.Core.Players;
 
 namespace DreamVille.Dialogue
 {
@@ -18,11 +18,11 @@ namespace DreamVille.Dialogue
         /// <summary>Raised when the last line of this trigger's dialogue has been dismissed.</summary>
         public event Action DialogueEnded;
 
-        private PlayerDetectorTrigger _actionSender;
-        private DialogueService _dialogue;
+        private IPlayerZone _playerZone;
+        private IDialogueService _dialogue;
 
         [Inject]
-        public void Construct(DialogueService dialogue)
+        public void Construct(IDialogueService dialogue)
         {
             _dialogue = dialogue;
         }
@@ -41,16 +41,16 @@ namespace DreamVille.Dialogue
         private void OnEnable()
         {
             // includeInactive is required: otherwise the trigger loses itself once the zone is disabled.
-            _actionSender = GetComponentInChildren<PlayerDetectorTrigger>(true);
+            _playerZone = GetComponentInChildren<IPlayerZone>(true);
 
-            if (_actionSender != null)
-                _actionSender.OnPlayerTriggered += TriggerDialog;
+            if (_playerZone != null)
+                _playerZone.PlayerEntered += TriggerDialog;
         }
 
         private void OnDisable()
         {
-            if (_actionSender != null)
-                _actionSender.OnPlayerTriggered -= TriggerDialog;
+            if (_playerZone != null)
+                _playerZone.PlayerEntered -= TriggerDialog;
         }
 
         public void TriggerDialog()

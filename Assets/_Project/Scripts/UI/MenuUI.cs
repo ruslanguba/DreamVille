@@ -2,7 +2,7 @@ using UnityEngine.EventSystems;
 using UnityEngine;
 using Zenject;
 
-using DreamVille.Core;
+using DreamVille.App;
 
 namespace DreamVille.UI
 {
@@ -16,23 +16,21 @@ namespace DreamVille.UI
 
         [SerializeField] GameObject _comics;
 
-        private InGameMenuController _menu;
+        private IInGameMenu _menu;
 
-        // В главном меню игрового контроллера нет — там меню статично.
         [Inject]
-        public void Construct([InjectOptional] InGameMenuController menu)
+        public void Construct(IInGameMenu menu)
         {
             _menu = menu;
         }
 
+        // Subscribing in Start, not OnEnable: Zenject injects scene objects after their Awake/OnEnable.
         private void Start()
         {
-            if (_menu != null)
-            {
-                _menu.MenuClosed += CloseMenu;
-                _menu.ComicsOpened += OpenCommics;
-                _menu.MenuOpened += OpenMenu;
-            }
+            _menu.MenuClosed += CloseMenu;
+            _menu.ComicsOpened += OpenCommics;
+            _menu.MenuOpened += OpenMenu;
+
             _menuParent.SetActive(false);
             _mainMenuPanel.SetActive(false);
             _settingsPanel.SetActive(false);
@@ -40,7 +38,7 @@ namespace DreamVille.UI
             _exitPanel.SetActive(false);
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             if (_menu == null)
                 return;
@@ -50,13 +48,13 @@ namespace DreamVille.UI
             _menu.MenuOpened -= OpenMenu;
         }
 
-        // Кнопки паузы вызывают эти методы: цель внутри того же префаба,
-        // поэтому ссылка сохраняется и не требует настройки в каждой сцене.
-        public void ContinueGame() => _menu?.ContinueGame();
+        // Pause buttons call these methods: the target lives inside the same prefab,
+        // so the reference survives and needs no per-scene wiring.
+        public void ContinueGame() => _menu.ContinueGame();
 
-        public void RestartLevel() => _menu?.RestartLevel();
+        public void RestartLevel() => _menu.RestartLevel();
 
-        public void ExitToMenu() => _menu?.ExitToMenu();
+        public void ExitToMenu() => _menu.ExitToMenu();
 
         private void OpenMenu()
         {

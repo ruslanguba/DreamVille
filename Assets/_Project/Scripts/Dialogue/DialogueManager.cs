@@ -7,7 +7,7 @@ using Zenject;
 namespace DreamVille.Dialogue
 {
     /// <summary>
-    /// Dialogue presenter: reflects the state of <see cref="DialogueService"/> on screen.
+    /// Dialogue presenter: reflects the state of <see cref="IDialogueService"/> on screen.
     /// The sentence queue lives in the service, input in <see cref="DialogueInputHandler"/>.
     /// </summary>
     public class DialogueManager : MonoBehaviour
@@ -16,7 +16,7 @@ namespace DreamVille.Dialogue
         [SerializeField] private DialogueUI _dialogueUIPrefab;
 
         private DiContainer _container;
-        private DialogueService _dialogue;
+        private IDialogueService _dialogue;
         private DialogueUI _ui;
 
         /// <remarks>
@@ -24,7 +24,7 @@ namespace DreamVille.Dialogue
         /// <see cref="DialogueUI"/> receives its own dependencies; it is not used as a locator.
         /// </remarks>
         [Inject]
-        public void Construct(DiContainer container, DialogueService dialogue)
+        public void Construct(DiContainer container, IDialogueService dialogue)
         {
             _container = container;
             _dialogue = dialogue;

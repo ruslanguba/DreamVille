@@ -4,7 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-using DreamVille.Core.Input;
+using DreamVille.Input;
 
 namespace DreamVille.Gameplay.Weapons.Pillow
 {

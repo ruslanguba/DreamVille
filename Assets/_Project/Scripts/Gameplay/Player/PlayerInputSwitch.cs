@@ -1,15 +1,13 @@
 using Unity.Cinemachine;
 using UnityEngine;
 
-using DreamVille.Core.Input;
+using DreamVille.Core.Players;
+using DreamVille.Input;
 
 namespace DreamVille.Gameplay.Player
 {
-    /// <summary>
-    /// Включает и выключает управление игроком: чтение ввода и вращение камеры.
-    /// Единственная обязанность — раньше делил класс с провайдером трансформа.
-    /// </summary>
-    public class PlayerInputSwitch : MonoBehaviour
+    /// <summary>Turns player input reading and camera rotation on and off.</summary>
+    public class PlayerInputSwitch : MonoBehaviour, IPlayerControlSwitch
     {
         private InputReader _input;
         private CinemachineInputAxisController _axisController;
@@ -20,9 +18,9 @@ namespace DreamVille.Gameplay.Player
             _axisController = GetComponentInChildren<CinemachineInputAxisController>(true);
         }
 
-        public void EnableInput() => SetEnabled(true);
+        public void EnableControl() => SetEnabled(true);
 
-        public void DisableInput() => SetEnabled(false);
+        public void DisableControl() => SetEnabled(false);
 
         private void SetEnabled(bool value)
         {

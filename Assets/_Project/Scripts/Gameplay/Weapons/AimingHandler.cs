@@ -1,6 +1,6 @@
 using UnityEngine;
 
-using DreamVille.Core.Input;
+using DreamVille.Input;
 using DreamVille.Gameplay.Weapons.Aiming;
 
 namespace DreamVille.Gameplay.Weapons

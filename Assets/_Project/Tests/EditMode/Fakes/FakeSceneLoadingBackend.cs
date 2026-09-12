@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using DreamVille.Core.SceneManagement;
+using DreamVille.SceneManagement;
 
 namespace DreamVille.Tests.EditMode.Fakes
 {

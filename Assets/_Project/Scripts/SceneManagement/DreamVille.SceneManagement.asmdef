@@ -1,0 +1,19 @@
+{
+    "name": "DreamVille.SceneManagement",
+    "rootNamespace": "DreamVille.SceneManagement",
+    "references": [
+        "DreamVille.Configs",
+        "DreamVille.Core",
+        "UniTask",
+        "Zenject"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
