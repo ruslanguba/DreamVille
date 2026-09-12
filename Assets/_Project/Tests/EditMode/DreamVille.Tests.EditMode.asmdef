@@ -1,0 +1,29 @@
+{
+    "name": "DreamVille.Tests.EditMode",
+    "rootNamespace": "DreamVille.Tests.EditMode",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "DreamVille.Configs",
+        "DreamVille.Scoring",
+        "DreamVille.Dialogue",
+        "DreamVille.Gameplay",
+        "DreamVille.SceneManagement",
+        "UniTask"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
