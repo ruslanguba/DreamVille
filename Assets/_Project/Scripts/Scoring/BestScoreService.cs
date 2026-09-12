@@ -1,28 +1,23 @@
-using UnityEngine.SceneManagement;
-
+using DreamVille.Configs;
 using DreamVille.Persistence;
 
 namespace DreamVille.Scoring
 {
-    /// <summary>
-    /// Best score record for a level. The key format matches the original ScoreSaveHandler,
-    /// so previously saved player scores are not lost.
-    /// </summary>
+    /// <summary>Best score record for one level, keyed by the level's save-file id.</summary>
     public class BestScoreService : IBestScoreService
     {
+        private readonly string _levelId;
         private readonly IProgressRepository _progress;
 
-        public BestScoreService(IProgressRepository progress)
+        public BestScoreService(LevelDefinition level, IProgressRepository progress)
         {
+            _levelId = level.LevelId;
             _progress = progress;
         }
 
-        public float GetBest() => _progress.GetBestScore(LevelId);
+        public float GetBest() => _progress.GetBestScore(_levelId);
 
         /// <summary>Saves the score if it beats the previous best. Returns true when a new record was set.</summary>
-        public bool TrySave(float score) => _progress.TrySetBestScore(LevelId, score);
-
-        // Build index until LevelDefinition arrives in batch 2; keeps the key format "BestScore_LVL_{index}".
-        private static string LevelId => SceneManager.GetActiveScene().buildIndex.ToString();
+        public bool TrySave(float score) => _progress.TrySetBestScore(_levelId, score);
     }
 }

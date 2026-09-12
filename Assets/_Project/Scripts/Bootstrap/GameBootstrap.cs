@@ -1,30 +1,30 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 using Zenject;
 
+using DreamVille.Configs;
 using DreamVille.SceneManagement;
 using DreamVille.UI;
 
 namespace DreamVille.Bootstrap
 {
     /// <summary>
-    /// Game entry point: plays the intro and then loads the first scene.
+    /// Game entry point: plays the intro and then loads the menu scene named by the catalog.
     /// The only place that knows the startup order.
     /// </summary>
     public class GameBootstrap : IInitializable, IDisposable
     {
         private readonly ISceneLoader _sceneLoader;
         private readonly GameStartUI _intro;
-        private readonly string _firstScene;
+        private readonly SceneCatalog _catalog;
 
         private readonly CancellationTokenSource _lifetime = new CancellationTokenSource();
 
-        public GameBootstrap(ISceneLoader sceneLoader, string firstScene, GameStartUI intro)
+        public GameBootstrap(ISceneLoader sceneLoader, SceneCatalog catalog, GameStartUI intro)
         {
             _sceneLoader = sceneLoader;
-            _firstScene = firstScene;
+            _catalog = catalog;
             _intro = intro;
         }
 
@@ -44,7 +44,7 @@ namespace DreamVille.Bootstrap
             try
             {
                 await _intro.PlayAsync(token);
-                await _sceneLoader.LoadAsync(_firstScene, token);
+                await _sceneLoader.LoadAsync(_catalog.MainMenuScene.SceneName, token);
             }
             catch (OperationCanceledException)
             {

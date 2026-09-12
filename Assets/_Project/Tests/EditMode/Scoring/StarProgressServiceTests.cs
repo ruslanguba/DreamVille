@@ -12,7 +12,8 @@ namespace DreamVille.Tests.EditMode.Scoring
     {
         private const string LevelId = "__test_stars";
 
-        private StarRulesSO _rules;
+        private StarRules _rules;
+        private LevelDefinition _level;
         private InMemorySaveStorage _storage;
         private ProgressRepository _progress;
         private StarProgressService _service;
@@ -20,18 +21,18 @@ namespace DreamVille.Tests.EditMode.Scoring
         [SetUp]
         public void SetUp()
         {
-            _rules = ScriptableObject.CreateInstance<StarRulesSO>();
-            _rules.levelId = LevelId;
-            _rules.starThresholds = new[] { 50f, 100f, 150f };
+            _rules = StarRules.CreateForTests(50f, 100f, 150f);
+            _level = LevelDefinition.CreateForTests("__test_scene", LevelId, _rules);
 
             _storage = new InMemorySaveStorage();
             _progress = new ProgressRepository(_storage);
-            _service = new StarProgressService(_rules, _progress);
+            _service = new StarProgressService(_level, _progress);
         }
 
         [TearDown]
         public void TearDown()
         {
+            Object.DestroyImmediate(_level);
             Object.DestroyImmediate(_rules);
         }
 

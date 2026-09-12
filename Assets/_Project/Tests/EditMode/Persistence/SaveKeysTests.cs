@@ -1,5 +1,6 @@
 using NUnit.Framework;
 
+using DreamVille.Audio;
 using DreamVille.Persistence;
 
 namespace DreamVille.Tests.EditMode.Persistence
@@ -31,10 +32,10 @@ namespace DreamVille.Tests.EditMode.Persistence
         }
 
         [Test]
-        public void VolumeKeys_MatchTheirFixedNames()
+        public void VolumeKeys_MatchMixerParameterNames()
         {
-            Assert.That(SaveKeys.MusicVolume, Is.EqualTo("MusicVolume"));
-            Assert.That(SaveKeys.SfxVolume, Is.EqualTo("SFXVolume"));
+            Assert.That(SaveKeys.MusicVolume, Is.EqualTo(MixerParams.Music));
+            Assert.That(SaveKeys.SfxVolume, Is.EqualTo(MixerParams.Sfx));
         }
     }
 }

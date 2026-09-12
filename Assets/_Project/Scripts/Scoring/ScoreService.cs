@@ -10,12 +10,12 @@ namespace DreamVille.Scoring
         public event Action<float> ScoreAdded;
         public event Action<float> TotalScoreChanged;
 
-        private readonly ScoreRulesSO _rules;
+        private readonly ScoreRules _rules;
         private float _totalScore;
 
         public float TotalScore => _totalScore;
 
-        public ScoreService(ScoreRulesSO rules)
+        public ScoreService(ScoreRules rules)
         {
             _rules = rules;
         }
@@ -28,7 +28,7 @@ namespace DreamVille.Scoring
 
         private float CalculateScore(int ricochets)
         {
-            float score = _rules.scorePerKill * ricochets;
+            float score = _rules.ScorePerKill * ricochets;
             return score;
         }
 

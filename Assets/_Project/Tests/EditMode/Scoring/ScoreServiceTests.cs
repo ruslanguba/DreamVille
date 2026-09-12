@@ -9,14 +9,13 @@ namespace DreamVille.Tests.EditMode.Scoring
 {
     public class ScoreServiceTests
     {
-        private ScoreRulesSO _rules;
+        private ScoreRules _rules;
         private ScoreService _service;
 
         [SetUp]
         public void SetUp()
         {
-            _rules = ScriptableObject.CreateInstance<ScoreRulesSO>();
-            _rules.scorePerKill = 10f;
+            _rules = ScoreRules.CreateForTests(10f);
             _service = new ScoreService(_rules);
         }
 

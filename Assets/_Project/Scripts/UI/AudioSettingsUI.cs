@@ -1,39 +1,46 @@
-using System.Collections;
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Zenject;
 
 using DreamVille.Audio;
 
 namespace DreamVille.UI
 {
+    /// <summary>Options screen sliders bound to the persisted audio settings.</summary>
     public class AudioSettingsUI : MonoBehaviour
     {
         [Header("Sliders")]
-        [SerializeField] private Slider musicSlider;
-        [SerializeField] private Slider sfxSlider;
+        [FormerlySerializedAs("musicSlider")]
+        [SerializeField] private Slider _musicSlider;
+        [FormerlySerializedAs("sfxSlider")]
+        [SerializeField] private Slider _sfxSlider;
 
-        private AudioManager _audio;
+        private IAudioSettings _settings;
 
         [Inject]
-        public void Construct(AudioManager audio)
+        public void Construct(IAudioSettings settings)
         {
-            _audio = audio;
+            _settings = settings;
         }
 
-        private IEnumerator Start()
+        private void OnEnable()
         {
-            // Waits one frame so the sliders finish their own Awake/OnEnable setup
-            // before we overwrite their value and attach listeners.
-            yield return new WaitForEndOfFrame();
-            musicSlider.onValueChanged.RemoveAllListeners();
-            sfxSlider.onValueChanged.RemoveAllListeners();
+            _musicSlider.SetValueWithoutNotify(_settings.MusicVolume);
+            _sfxSlider.SetValueWithoutNotify(_settings.SfxVolume);
 
-            musicSlider.value = _audio.MusicVolume;
-            sfxSlider.value = _audio.SfxVolume;
-
-            musicSlider.onValueChanged.AddListener(_audio.SetMusicVolume);
-            sfxSlider.onValueChanged.AddListener(_audio.SetSFXVolume);
+            _musicSlider.onValueChanged.AddListener(OnMusicSliderChanged);
+            _sfxSlider.onValueChanged.AddListener(OnSfxSliderChanged);
         }
+
+        private void OnDisable()
+        {
+            _musicSlider.onValueChanged.RemoveListener(OnMusicSliderChanged);
+            _sfxSlider.onValueChanged.RemoveListener(OnSfxSliderChanged);
+        }
+
+        private void OnMusicSliderChanged(float value) => _settings.SetMusicVolume(value);
+
+        private void OnSfxSliderChanged(float value) => _settings.SetSfxVolume(value);
     }
 }

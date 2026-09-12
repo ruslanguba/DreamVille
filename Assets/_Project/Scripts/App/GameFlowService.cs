@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 
+using DreamVille.Configs;
 using DreamVille.SceneManagement;
 
 namespace DreamVille.App
@@ -9,13 +10,13 @@ namespace DreamVille.App
     {
         private readonly ISceneLoader _sceneLoader;
         private readonly IPauseService _pause;
-        private readonly string _mainMenuScene;
+        private readonly SceneCatalog _catalog;
 
-        public GameFlowService(ISceneLoader sceneLoader, IPauseService pause, string mainMenuScene)
+        public GameFlowService(ISceneLoader sceneLoader, IPauseService pause, SceneCatalog catalog)
         {
             _sceneLoader = sceneLoader;
             _pause = pause;
-            _mainMenuScene = mainMenuScene;
+            _catalog = catalog;
         }
 
         public void RestartLevel()
@@ -28,7 +29,7 @@ namespace DreamVille.App
         public void ExitToMenu()
         {
             _pause.Resume();
-            _sceneLoader.LoadAsync(_mainMenuScene).Forget();
+            _sceneLoader.LoadAsync(_catalog.MainMenuScene.SceneName).Forget();
         }
     }
 }

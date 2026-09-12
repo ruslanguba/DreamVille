@@ -1,4 +1,3 @@
-using UnityEngine;
 using Zenject;
 
 using DreamVille.App;
@@ -14,9 +13,6 @@ namespace DreamVille.Bootstrap
     /// </summary>
     public class SceneServicesInstaller : MonoInstaller
     {
-        /// <remarks>Replaced by a lookup in SceneCatalog once the catalog exists.</remarks>
-        [SerializeField] private string _mainMenuScene = "Main menu 1";
-
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<PlayerContext>().FromComponentInHierarchy().AsSingle();
@@ -28,7 +24,7 @@ namespace DreamVille.Bootstrap
 
             Container.BindInterfacesTo<CursorService>().AsSingle();
             Container.BindInterfacesTo<PauseService>().AsSingle();
-            Container.BindInterfacesTo<GameFlowService>().AsSingle().WithArguments(_mainMenuScene);
+            Container.BindInterfacesTo<GameFlowService>().AsSingle();
             Container.BindInterfacesTo<InGameMenuController>().AsSingle().NonLazy();
         }
     }

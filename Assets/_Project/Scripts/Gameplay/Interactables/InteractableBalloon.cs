@@ -10,10 +10,10 @@ namespace DreamVille.Gameplay.Interactables
     {
         [SerializeField] private AudioClip _clip;
         private PropsMover _propsMover;
-        private AudioManager _audio;
+        private IAudioService _audio;
 
         [Inject]
-        public void Construct(AudioManager audio)
+        public void Construct(IAudioService audio)
         {
             _audio = audio;
         }
@@ -24,7 +24,7 @@ namespace DreamVille.Gameplay.Interactables
         }
         public override void OnInteract()
         {
-            _audio?.PlaySFX(_clip);
+            _audio?.PlaySfx(_clip);
             _propsMover.GetHit();
         }
     }

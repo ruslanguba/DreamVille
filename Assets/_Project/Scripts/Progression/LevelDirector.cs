@@ -6,6 +6,7 @@ using Zenject;
 using DreamVille.Configs;
 using DreamVille.Gameplay.Enemies;
 using DreamVille.Gameplay.NPC;
+using DreamVille.Persistence;
 
 namespace DreamVille.Progression
 {
@@ -17,20 +18,20 @@ namespace DreamVille.Progression
     public class LevelDirector : IInitializable, IDisposable
     {
         private readonly IEnemyRegistry _enemies;
-        private readonly LevelUnlockService _unlocks;
+        private readonly LevelDefinition _level;
+        private readonly IProgressRepository _progress;
         private readonly LevelActors _actors;
-        private readonly StarRulesSO _rules;
         private readonly CancellationTokenSource _lifetime = new CancellationTokenSource();
 
         public LevelDirector(
             IEnemyRegistry enemies,
-            LevelUnlockService unlocks,
-            StarRulesSO rules,
+            LevelDefinition level,
+            IProgressRepository progress,
             [InjectOptional] LevelActors actors)
         {
             _enemies = enemies;
-            _unlocks = unlocks;
-            _rules = rules;
+            _level = level;
+            _progress = progress;
             _actors = actors;
         }
 
@@ -87,7 +88,7 @@ namespace DreamVille.Progression
 
         private void OnAllEnemiesKilled()
         {
-            _unlocks.MarkCompleted(_rules.levelId);
+            _progress.MarkCompleted(_level.LevelId);
 
             if (FinalZone != null)
                 FinalZone.Arm();

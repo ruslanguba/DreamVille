@@ -23,14 +23,14 @@ namespace DreamVille.Gameplay.Enemies
 
         protected int _collisionsCount;
 
-        private AudioManager _audio;
+        private IAudioService _audio;
         private Health _hitPoints;
 
         /// <summary>True once this enemy has died; further damage is ignored.</summary>
         public bool IsDead => _hitPoints.IsDead;
 
         [Inject]
-        public void Construct(AudioManager audio)
+        public void Construct(IAudioService audio)
         {
             _audio = audio;
         }
@@ -54,7 +54,7 @@ namespace DreamVille.Gameplay.Enemies
         protected virtual void Die()
         {
             if (_clip != null)
-                _audio?.PlaySFX(_clip);
+                _audio?.PlaySfx(_clip);
 
             OnDeath?.Invoke(this, _collisionsCount);
         }
