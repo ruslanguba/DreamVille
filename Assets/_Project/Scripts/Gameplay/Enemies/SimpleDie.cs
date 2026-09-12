@@ -1,34 +1,41 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 using DreamVille.Gameplay.Enemies.StateMachine;
 
 namespace DreamVille.Gameplay.Enemies
 {
+    /// <summary>
+    /// Enemy variant with a brief post-spawn hit immunity window and a ragdoll-ish death.
+    /// </summary>
     public class SimpleDie : EnemyHealth
     {
         private Rigidbody _rigidbody;
         private Animator _animator;
         [SerializeField] private float _timeToEnableHit = 0.5f;
         private float _timer;
-        [SerializeField] private bool _isCanTakeHit;
+        [FormerlySerializedAs("_isCanTakeHit")]
+        [SerializeField] private bool _canTakeHit;
         [SerializeField] private SimpleRunEnemy _simpleRunEnemy;
         public bool IsAlive { get; private set; }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            IsAlive = true;
+        }
 
         private void OnEnable()
         {
             _rigidbody = GetComponent<Rigidbody>();
             _animator = GetComponentInChildren<Animator>();
             _timer = _timeToEnableHit;
-            _isCanTakeHit = false;
+            _canTakeHit = false;
         }
-        private void Start()
-        {
-            _simpleRunEnemy.GetComponent<SimpleRunEnemy>();
-            IsAlive = true;
-        }
+
         public override void TakeDamage(float damageValue, int collisions)
         {
-            if (_isCanTakeHit)
+            if (_canTakeHit)
             {
                 base.TakeDamage(damageValue, collisions);
             }
@@ -41,19 +48,23 @@ namespace DreamVille.Gameplay.Enemies
                 _timer -= Time.deltaTime;
                 if (_timer <= 0)
                 {
-                    _isCanTakeHit = true;
+                    _canTakeHit = true;
                 }
             }
         }
 
-        public void SetImmortal(bool isImmortal)
+        /// <summary>Sets whether this enemy can currently take damage and resets the immunity timer.</summary>
+        public void SetVulnerable(bool isVulnerable)
         {
-            _isCanTakeHit = isImmortal;
+            _canTakeHit = isVulnerable;
             _timer = _timeToEnableHit;
         }
 
         protected override void Die()
         {
+            if (!IsAlive)
+                return;
+
             IsAlive = false;
             GetComponent<EnemyRotationHandler>().enabled = false;
             _simpleRunEnemy.StopMoving();

@@ -88,7 +88,7 @@ namespace DreamVille.Gameplay.Enemies
         {
             if (_health.IsAlive)
             {
-                _health.SetImmortal(true);
+                _health.SetVulnerable(true);
                 _isMoving = false;
                 _animator.SetBool("isMoving", _isMoving);
                 if (_target.TryGetComponent(out InteractableBox interactableBox))
