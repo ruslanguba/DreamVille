@@ -1,71 +1,87 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DreamVille.Gameplay.NPC
 {
+    /// <summary>Drives an NPC's bool animator parameters for talk/greeting/applause/swim/idle states.</summary>
     public class NPCAnimationHandler : MonoBehaviour
     {
         private Animator _animator;
-        [SerializeField] bool _isTalk;
-        [SerializeField] bool _isGreeting;
-        [SerializeField] bool _isApplause;
-        [SerializeField] bool _isSwim;
-        [SerializeField] bool _isIdle;
+        [SerializeField] private bool _isTalk;
+        [SerializeField] private bool _isGreeting;
+        [SerializeField] private bool _isApplause;
+        [SerializeField] private bool _isSwim;
+        [SerializeField] private bool _isIdle;
+
+        private HashSet<string> _boolParameters;
 
         private void Awake()
         {
             _animator = GetComponentInChildren<Animator>();
+            _boolParameters = new HashSet<string>();
+
+            if (_animator == null)
+            {
+                Debug.LogError($"[{nameof(NPCAnimationHandler)}] '{name}' has no Animator in its children.", this);
+                return;
+            }
+
+            foreach (AnimatorControllerParameter parameter in _animator.parameters)
+            {
+                if (parameter.type == AnimatorControllerParameterType.Bool)
+                    _boolParameters.Add(parameter.name);
+            }
         }
+
         private void Start()
         {
-
             SetStartAnim();
         }
 
         public void SetIdleAnim()
         {
-            _animator.SetBool("isTalk", false);
-            _animator.SetBool("isGreeting", false);
-            _animator.SetBool("isApplause", false);
-        }
-        public void SetStartAnim()
-        {
-            _animator.SetBool("isTalk", _isTalk);
-            _animator.SetBool("isGreeting", _isGreeting);
-            _animator.SetBool("isApplause", _isApplause);
-            SetBoolIfExists("isSwim", _isSwim);
+            SetBool("isTalk", false);
+            SetBool("isGreeting", false);
+            SetBool("isApplause", false);
         }
 
-        // isSwim объявлен не во всех контроллерах NPC, поэтому проверяем наличие параметра.
-        private void SetBoolIfExists(string parameterName, bool value)
+        public void SetStartAnim()
         {
-            foreach (AnimatorControllerParameter parameter in _animator.parameters)
-            {
-                if (parameter.type == AnimatorControllerParameterType.Bool && parameter.name == parameterName)
-                {
-                    _animator.SetBool(parameterName, value);
-                    return;
-                }
-            }
+            SetBool("isTalk", _isTalk);
+            SetBool("isGreeting", _isGreeting);
+            SetBool("isApplause", _isApplause);
+            SetBool("isSwim", _isSwim);
         }
+
         public void SetisApplauseAnim()
         {
-            _animator.SetBool("isApplause", true);
-            _animator.SetBool("isTalk", false);
-            _animator.SetBool("isGreeting", false);
+            SetBool("isApplause", true);
+            SetBool("isTalk", false);
+            SetBool("isGreeting", false);
         }
 
         public void SetGreetingAnim()
         {
-            _animator.SetBool("isGreeting", true);
-            _animator.SetBool("isTalk", false);
-            _animator.SetBool("isApplause", false);
+            SetBool("isGreeting", true);
+            SetBool("isTalk", false);
+            SetBool("isApplause", false);
         }
 
         public void SetTalkAnim()
         {
-            _animator.SetBool("isTalk", true);
-            _animator.SetBool("isGreeting", false);
-            _animator.SetBool("isApplause", false);
+            SetBool("isTalk", true);
+            SetBool("isGreeting", false);
+            SetBool("isApplause", false);
+        }
+
+        // Not every NPC animator controller declares the same set of parameters
+        // (e.g. isSwim), so unknown parameter names are silently ignored.
+        private void SetBool(string name, bool value)
+        {
+            if (_animator == null || !_boolParameters.Contains(name))
+                return;
+
+            _animator.SetBool(name, value);
         }
     }
 }
