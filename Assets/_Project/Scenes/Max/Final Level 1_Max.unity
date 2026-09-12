@@ -1359,6 +1359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _finalZone: {fileID: 1923182516}
+  _finalNpc: {fileID: 0}
 --- !u!1001 &429134502
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3047,8 +3048,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f163e764b02b14f9b728f7ef7f7759, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _npcAnimationHandler: {fileID: 0}
-  _audio: {fileID: 0}
   _mumbleClips: []
 --- !u!1001 &1027171594
 PrefabInstance:
@@ -4680,6 +4679,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _sentencesEn.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
       propertyPath: sentence.Array.data[0].Sentence
       value: "\u041F\u0440\u0438\u0432\u0435\u0442 \u041F\u043B\u044E\u0445, \u0432\u0441\u0435\u0445
         \u043F\u043E\u0439\u043C\u0430\u043B ?"
@@ -4704,6 +4707,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _sentencesEn.Array.data[1].IsPluh
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
       propertyPath: sentenceEn.Array.data[0].Sentence
       value: Hi Plukh, did you catch everyone?
       objectReference: {fileID: 0}
@@ -4714,6 +4721,34 @@ PrefabInstance:
     - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
       propertyPath: sentenceEn.Array.data[2].Sentence
       value: Well, then jump into my watch and fly on.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _sentencesEn.Array.data[0].Sentence
+      value: Hi Plukh, did you catch everyone?
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _sentencesEn.Array.data[1].Sentence
+      value: Everyone. Now you can sleep in peace.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _sentencesEn.Array.data[2].Sentence
+      value: Well, then jump into my watch and fly on.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _sentencesRu.Array.data[0].Sentence
+      value: "\u041F\u0440\u0438\u0432\u0435\u0442 \u041F\u043B\u044E\u0445, \u0432\u0441\u0435\u0445
+        \u043F\u043E\u0439\u043C\u0430\u043B ?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _sentencesRu.Array.data[1].Sentence
+      value: "\u0412\u0441\u0435\u0445. \u0422\u0435\u043F\u0435\u0440\u044C \u043C\u043E\u0436\u043D\u043E
+        \u0441\u043F\u0430\u0442\u044C \u0441\u043F\u043E\u043A\u043E\u0439\u043D\u043E."
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _sentencesRu.Array.data[2].Sentence
+      value: "\u041D\u0443 \u0442\u043E\u0433\u0434\u0430 \u043F\u0440\u044B\u0433\u0430\u0439
+        \u0432 \u043C\u043E\u0438 \u0447\u0430\u0441\u044B \u0438 \u043F\u043E\u043B\u0435\u0442\u0435\u043B\u0438
+        \u0434\u0430\u043B\u044C\u0448\u0435."
       objectReference: {fileID: 0}
     - target: {fileID: 4642010679245938707, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7219,10 +7254,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 439.307
       objectReference: {fileID: 0}
-    - target: {fileID: 8933406012867485410, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
-      propertyPath: _pillows.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8990396201954471229, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 97.29
@@ -7365,7 +7396,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
-    - {fileID: 6200642706012111765, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
+    - {fileID: 0}
     - {fileID: 6233910072876116191, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
     - {fileID: 3306277595017855339, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
     - {fileID: 6621565387384686682, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
@@ -7420,8 +7451,6 @@ PrefabInstance:
     - {fileID: 5619023003302795289, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
     - {fileID: 3606113732826720229, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
     - {fileID: 4168127417716702860, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
-    - {fileID: 6131709370467070903, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
-    - {fileID: 4853248597498021900, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
     - {fileID: 607488009939914823, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
     - {fileID: 6358374424657488406, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
     - {fileID: 8370463723637160062, guid: 4e84d8563f79ed44ba13cff5533494b0, type: 3}
