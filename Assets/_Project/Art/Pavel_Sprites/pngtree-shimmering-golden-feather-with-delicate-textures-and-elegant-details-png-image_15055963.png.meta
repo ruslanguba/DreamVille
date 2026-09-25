@@ -1,7 +1,10 @@
 fileFormatVersion: 2
 guid: ad0416ae7cd18f042a7d847567fb9ed7
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -7075712144331094917
+    second: pngtree-shimmering-golden-feather-with-delicate-textures-and-elegant-details-png-image_15055963_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -95,7 +98,29 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: pngtree-shimmering-golden-feather-with-delicate-textures-and-elegant-details-png-image_15055963_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 360
+        height: 360
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b744a302b450ecd90800000000000000
+      internalID: -7075712144331094917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
