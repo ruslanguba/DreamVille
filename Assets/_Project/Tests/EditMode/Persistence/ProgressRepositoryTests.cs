@@ -87,6 +87,26 @@ namespace DreamVille.Tests.EditMode.Persistence
         }
 
         [Test]
+        public void GetUnlockedPillows_WhenAbsent_ReturnsZero()
+        {
+            int unlocked = _repository.GetUnlockedPillows();
+
+            Assert.That(unlocked, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void SetUnlockedPillowsIfHigher_StoresHigherIgnoresLowerAndFlushes()
+        {
+            bool higherWritten = _repository.SetUnlockedPillowsIfHigher(2);
+            bool lowerWritten = _repository.SetUnlockedPillowsIfHigher(1);
+
+            Assert.That(higherWritten, Is.True);
+            Assert.That(lowerWritten, Is.False);
+            Assert.That(_repository.GetUnlockedPillows(), Is.EqualTo(2));
+            Assert.That(_storage.SaveCount, Is.EqualTo(1));
+        }
+
+        [Test]
         public void Write_WithEmptyLevelId_DoesNotTouchStorage()
         {
             LogAssert.Expect(LogType.Error, new Regex(".*"));

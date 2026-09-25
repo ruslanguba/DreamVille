@@ -32,6 +32,12 @@ namespace DreamVille.Tests.EditMode.Persistence
         }
 
         [Test]
+        public void UnlockedPillows_KeyIsFrozen()
+        {
+            Assert.That(SaveKeys.UnlockedPillows, Is.EqualTo("UnlockedPillows"));
+        }
+
+        [Test]
         public void VolumeKeys_MatchMixerParameterNames()
         {
             Assert.That(SaveKeys.MusicVolume, Is.EqualTo(MixerParams.Music));

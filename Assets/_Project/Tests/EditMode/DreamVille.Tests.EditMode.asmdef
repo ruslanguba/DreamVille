@@ -16,6 +16,7 @@
         "DreamVille.Bootstrap",
         "DreamVille.Input",
         "DreamVille.Persistence",
+        "DreamVille.Progression",
         "DreamVille.UI",
         "UniTask",
         "Zenject",

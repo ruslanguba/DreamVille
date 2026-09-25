@@ -81,5 +81,17 @@ namespace DreamVille.Persistence
             _storage.Save();
             return true;
         }
+
+        public int GetUnlockedPillows() => _storage.GetInt(SaveKeys.UnlockedPillows, 0);
+
+        public bool SetUnlockedPillowsIfHigher(int count)
+        {
+            if (count <= GetUnlockedPillows())
+                return false;
+
+            _storage.SetInt(SaveKeys.UnlockedPillows, count);
+            _storage.Save();
+            return true;
+        }
     }
 }

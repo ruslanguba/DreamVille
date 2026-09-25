@@ -10,6 +10,9 @@ namespace DreamVille.Persistence
         public const string MusicVolume = "MusicVolume";
         public const string SfxVolume = "SFXVolume";
 
+        /// <summary>Pillows the player has unlocked. Global: unlocks carry across levels.</summary>
+        public const string UnlockedPillows = "UnlockedPillows";
+
         private const string StarsSuffix = "_Stars";
         private const string CompletedSuffix = "_Completed";
         private const string BestScorePrefix = "BestScore_LVL_";
