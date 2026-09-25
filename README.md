@@ -49,7 +49,7 @@ refactor documented below is the author's.
 - **UniTask with cancellation, not coroutines**, in the refactored modules: bullet
   lifetime, pillow recall, NPC reactions and scene loading each own a
   `CancellationToken` tied to the object's lifetime.
-- **189 EditMode tests**, including a scene-composition guard
+- **273 EditMode tests**, including a scene-composition guard
   ([`SceneCompositionTests`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs))
   that opens every build scene and checks its installers and catalog references, and
   prefab tests that pin the player's composition, so a mis-wired scene fails a test run
@@ -155,7 +155,8 @@ Full decision records: [ADR 0001 — Zenject composition root](Docs/adr/0001-zen
 - [`Assets/_Project/Scripts/Progression/LevelDirector.cs`](Assets/_Project/Scripts/Progression/LevelDirector.cs) — level completion as a plain class: no MonoBehaviour, no `Update` polling.
 - [`Assets/_Project/Scripts/Gameplay/Enemies/States/EnemyStateMachine.cs`](Assets/_Project/Scripts/Gameplay/Enemies/States/EnemyStateMachine.cs) — guarded enemy state machine; [`Enemy.cs`](Assets/_Project/Scripts/Gameplay/Enemies/Enemy.cs) is the thin MonoBehaviour context its seven states see through `IEnemyContext`, and `EnemyConfig` assets hold the archetype tuning.
 - [`Assets/_Project/Scripts/Gameplay/Player/PlayerInstaller.cs`](Assets/_Project/Scripts/Gameplay/Player/PlayerInstaller.cs) — the player prefab's own composition root (`GameObjectContext`); [`PlayerMotor.cs`](Assets/_Project/Scripts/Gameplay/Player/PlayerMotor.cs) shows the fixed per-frame order.
-- [`Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowThrowHandler.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowThrowHandler.cs) — throw, recall and freeze logic behind the game's core mechanic, driven by UniTask with per-object cancellation.
+- [`Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowRack.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowRack.cs) — the throw / recall / freeze rules of the core mechanic as a plain, unit-tested class; [`PillowLauncher.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowLauncher.cs) is the thin MonoBehaviour shell with a cancellable UniTask recall loop, and [`PillowInventory.cs`](Assets/_Project/Scripts/Progression/Pillows/PillowInventory.cs) decides how many pillows a level allows.
+- [`Assets/_Project/Scripts/Gameplay/Weapons/Aiming/BouncePath.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Aiming/BouncePath.cs) — the ricochet preview as pure math behind an `ISphereCaster` seam; the gun and the preview read one `ShotRay`, so the line ends exactly where the bullet dies.
 - [`Assets/_Project/Scripts/Persistence/ProgressRepository.cs`](Assets/_Project/Scripts/Persistence/ProgressRepository.cs) — the only place stars and completion are read from or written to a save.
 - [`Assets/_Project/Scripts/Audio/AudioService.cs`](Assets/_Project/Scripts/Audio/AudioService.cs) — saved volume plus per-scene music, driven by the scene catalog.
 - [`Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs) — opens every build scene and asserts its composition against the catalog.
@@ -196,7 +197,7 @@ press Play.
 
 ## Tests
 
-Window → General → Test Runner → EditMode → Run All. 189 tests, all green. PlayMode
+Window → General → Test Runner → EditMode → Run All. 273 tests, all green. PlayMode
 tests and CI are not set up yet.
 
 ## Status and roadmap
@@ -209,10 +210,13 @@ scene and level identity (`SceneCatalog`/`LevelDefinition`); an `IAudioService` 
 the composition root; one enemy state machine driven by `EnemyConfig` assets, with
 pooled projectiles, in place of four separate enemy scripts; a player composed through
 a `GameObjectContext` with its damage vignette split into a `Presentation` assembly;
-189 EditMode tests; four ADRs.
+273 EditMode tests; four ADRs.
 
-**Next:** weapon cooldowns and pillow settings behind `IWeapon`; a single
-interaction channel for interactables; UI presenters beyond `GameplayPresenter`; CI with
+Weapons: one `IWeapon`/`IAimSource` with a timestamp cooldown, a ricochet preview that
+matches the bullet, pillow rules in a plain `PillowRack`, and pillow unlocks persisted
+per save and capped per level.
+
+**Next:** a single interaction channel for interactables; UI presenters beyond `GameplayPresenter`; CI with
 game-ci; a playable build.
 
 ## Documentation

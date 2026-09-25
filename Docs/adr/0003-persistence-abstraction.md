@@ -23,6 +23,7 @@ flowchart LR
     STAR["StarProgressService (Scoring)"] --> IPR
     BEST["BestScoreService (Scoring)"] --> IPR
     DIR["LevelDirector (Progression)"] --> IPR
+    PIL["PillowInventory (Progression)"] --> IPR
     AUDIO["AudioService (Audio)"] --> IAR[IAudioSettingsRepository]
     IPR --> PR[ProgressRepository]
     IAR --> AR[AudioSettingsRepository]
@@ -32,7 +33,9 @@ flowchart LR
     ISS -.tests.-> MEM[InMemorySaveStorage]
 ```
 
-[`SaveKeysTests`](../../Assets/_Project/Tests/EditMode/Persistence/SaveKeysTests.cs) locks the four key formats down — these assertions are never supposed to change, because changing one silently wipes real players' saves.
+[`SaveKeysTests`](../../Assets/_Project/Tests/EditMode/Persistence/SaveKeysTests.cs) locks the key formats down — these assertions are never supposed to change, because changing one silently wipes real players' saves.
+
+**Addendum (2026-09-25): pillow unlocks.** A fifth frozen key, `SaveKeys.UnlockedPillows = "UnlockedPillows"`, is global rather than per level: pillows unlocked in `Lobby_02` carry into every later level. It lives on `IProgressRepository` (`GetUnlockedPillows`/`SetUnlockedPillowsIfHigher`, write-only-when-higher like stars) instead of a new repository, keeping one progress seam. The domain model, [`PillowInventory`](../../Assets/_Project/Scripts/Progression/Pillows/PillowInventory.cs) in `Progression`, applies the per-level cap (`LevelDefinition.MaxPillows`) and seeds a save that predates the key once, from the highest cap among completed levels.
 
 ## Consequences
 
