@@ -96,6 +96,45 @@ namespace DreamVille.Tests.EditMode.Weapons
         }
 
         [Test]
+        public void StepReturn_PartialStep_MovesAndReturnsFalse()
+        {
+            _slot.TryThrow(Launch, Impulse);
+            _body.Position = new Vector3(0f, 0f, 5f);
+            _slot.TryBeginReturn(ReturnPoint, snapDistance: 10f);
+
+            bool arrived = _slot.StepReturn(ReturnPoint, maxDistanceDelta: 1.2f, arrivalThreshold: 0.1f);
+
+            Assert.That(arrived, Is.False);
+            Assert.That(_slot.State, Is.EqualTo(PillowState.Returning));
+            Assert.That(_body.LastCall, Is.EqualTo(nameof(IPillowBody.MoveTo)));
+            Assert.That(_body.Position, Is.EqualTo(new Vector3(0f, 0f, 3.8f)));
+        }
+
+        [Test]
+        public void TryBeginReturn_WithinSnapRadius_KeepsStartPosition()
+        {
+            _slot.TryThrow(Launch, Impulse);
+            _body.Position = new Vector3(0f, 0f, 5f);
+
+            bool started = _slot.TryBeginReturn(ReturnPoint, snapDistance: 10f);
+
+            Assert.That(started, Is.True);
+            Assert.That(_body.ReturnStart, Is.EqualTo(new Vector3(0f, 0f, 5f)));
+        }
+
+        [Test]
+        public void TryBeginReturn_FromPlaced_StartsReturning()
+        {
+            _slot.TryThrow(Launch, Impulse);
+            _slot.TryFreeze();
+
+            bool started = _slot.TryBeginReturn(ReturnPoint, snapDistance: 10f);
+
+            Assert.That(started, Is.True);
+            Assert.That(_slot.State, Is.EqualTo(PillowState.Returning));
+        }
+
+        [Test]
         public void CompleteReturn_FromReturning_StowsImmediately()
         {
             _slot.TryThrow(Launch, Impulse);

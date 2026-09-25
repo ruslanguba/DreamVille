@@ -162,6 +162,32 @@ namespace DreamVille.Tests.EditMode.Progression
         }
 
         [Test]
+        public void NewInstance_KeyAbsentAndOnlyLevel03Completed_SeedsTwo()
+        {
+            _progress.MarkCompleted(_pillowLevel.LevelId);
+
+            var inventory = new PillowInventory(_progress, _lobby, _catalog);
+
+            Assert.That(inventory.Available, Is.EqualTo(2));
+            Assert.That(_progress.GetUnlockedPillows(), Is.EqualTo(2));
+        }
+
+        [Test]
+        public void NewInstance_KeyAbsent_SeedsHighestCapAmongCompletedLevels()
+        {
+            LevelDefinition capOne = Track(LevelDefinition.CreateForTests("PillowInventoryTests_CapOne", "10", maxPillows: 1));
+            LevelDefinition capTwo = Track(LevelDefinition.CreateForTests("PillowInventoryTests_CapTwo", "11", maxPillows: 2));
+            SceneCatalog catalog = Track(SceneCatalog.CreateForTests(null, null, capOne, capTwo));
+            _progress.MarkCompleted(capOne.LevelId);
+            _progress.MarkCompleted(capTwo.LevelId);
+
+            var inventory = new PillowInventory(_progress, capTwo, catalog);
+
+            Assert.That(inventory.Available, Is.EqualTo(2));
+            Assert.That(_progress.GetUnlockedPillows(), Is.EqualTo(2));
+        }
+
+        [Test]
         public void NewInstance_KeyPresent_DoesNotReseed()
         {
             _progress.SetUnlockedPillowsIfHigher(1);

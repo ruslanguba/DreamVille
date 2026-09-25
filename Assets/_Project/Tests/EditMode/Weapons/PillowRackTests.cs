@@ -169,5 +169,55 @@ namespace DreamVille.Tests.EditMode.Weapons
             Assert.That(_rack.InHand, Is.EqualTo(2));
             Assert.That(_first.LastCall, Is.EqualTo(nameof(IPillowBody.Stow)));
         }
+
+        [Test]
+        public void StepReturn_UntilArrival_ClearsReturningAndRestoresInHand()
+        {
+            _rack.SetAvailable(2);
+            _rack.ThrowOrRecall(Launch, ReturnPoint);
+            _first.Position = new Vector3(0f, 0f, 0.05f);
+            _rack.ThrowOrRecall(Launch, ReturnPoint);
+
+            bool stillReturning = _rack.StepReturn(ReturnPoint, deltaTime: 1f);
+
+            Assert.That(stillReturning, Is.True);
+            Assert.That(_rack.IsReturning, Is.False);
+            Assert.That(_rack.InHand, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void StepReturn_NothingReturning_ReturnsTrue()
+        {
+            bool result = _rack.StepReturn(ReturnPoint, deltaTime: 1f);
+
+            Assert.That(result, Is.True);
+        }
+
+        [Test]
+        public void StepReturn_PartialStep_MovesByRecallSpeedTimesDeltaTime()
+        {
+            _rack.SetAvailable(2);
+            _rack.ThrowOrRecall(Launch, ReturnPoint);
+            _first.Position = new Vector3(0f, 0f, 5f);
+            _rack.ThrowOrRecall(Launch, ReturnPoint);
+
+            bool stillReturning = _rack.StepReturn(ReturnPoint, deltaTime: 0.1f);
+
+            Assert.That(stillReturning, Is.False);
+            Assert.That(_first.LastCall, Is.EqualTo(nameof(IPillowBody.MoveTo)));
+            Assert.That(_first.Position, Is.EqualTo(new Vector3(0f, 0f, 3.8f)));
+        }
+
+        [Test]
+        public void Constructor_DestroyedUnityBody_Throws()
+        {
+            var go = new GameObject("DestroyedPillowBody");
+            var body = go.AddComponent<FakePillowBodyBehaviour>();
+            Object.DestroyImmediate(body);
+
+            Assert.Throws<System.ArgumentException>(() => new PillowRack(new IPillowBody[] { body }, _config));
+
+            Object.DestroyImmediate(go);
+        }
     }
 }

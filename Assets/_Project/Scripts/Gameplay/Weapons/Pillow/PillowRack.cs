@@ -38,7 +38,8 @@ namespace DreamVille.Gameplay.Weapons.Pillow
 
             for (int i = 0; i < bodies.Count; i++)
             {
-                if (bodies[i] == null)
+                // A destroyed or unassigned component is fake-null: the interface reference alone does not see it.
+                if (bodies[i] == null || (bodies[i] is UnityEngine.Object unityObject && unityObject == null))
                     throw new ArgumentException($"Pillow body {i} is missing.", nameof(bodies));
 
                 _slots[i] = new PillowSlot(bodies[i]);

@@ -29,7 +29,7 @@ namespace DreamVille.Configs
         /// <summary>Seconds the bullet flies before it returns to the pool.</summary>
         public float LifeTime => _lifeTime;
 
-        /// <summary>Contacts the bullet survives; it returns to the pool on the last one.</summary>
+        /// <summary>Contacts before the bullet returns to the pool (it dies on this one).</summary>
         public int MaxCollisionCount => _maxCollisionCount;
 
         /// <summary>Radius of the bullet's sphere collider; the aim preview sweeps the same sphere.</summary>

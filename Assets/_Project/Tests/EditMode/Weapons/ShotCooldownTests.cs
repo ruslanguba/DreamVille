@@ -44,5 +44,11 @@ namespace DreamVille.Tests.EditMode.Weapons
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => new ShotCooldown(-0.1f));
         }
+
+        [Test]
+        public void Constructor_NaNInterval_Throws()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new ShotCooldown(float.NaN));
+        }
     }
 }

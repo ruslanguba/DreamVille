@@ -10,10 +10,10 @@ namespace DreamVille.Gameplay.Weapons
     {
         private float _nextShotTime;
 
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="interval"/> is negative.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="interval"/> is negative or NaN.</exception>
         public ShotCooldown(float interval)
         {
-            if (interval < 0f)
+            if (!(interval >= 0f))
                 throw new ArgumentOutOfRangeException(nameof(interval), interval, "The shot interval cannot be negative.");
 
             Interval = interval;

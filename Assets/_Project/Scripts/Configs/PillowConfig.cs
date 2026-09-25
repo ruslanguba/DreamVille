@@ -31,20 +31,33 @@ namespace DreamVille.Configs
         public float ArrivalThreshold => _arrivalThreshold;
 
         /// <summary>
-        /// False with a reason when a value would stall the recall loop (speed or threshold not positive).
-        /// <c>[Min]</c> only guards the Inspector; this guards everything else.
+        /// False with a reason when a value would stall the recall loop (speed or threshold not positive, or NaN)
+        /// or misplace a pillow (negative impulse or snap distance). <c>[Min]</c> only guards the Inspector.
         /// </summary>
         public bool IsValid(out string error)
         {
-            if (_recallSpeed <= 0f)
+            // Written as !(x > 0) so NaN fails too.
+            if (!(_recallSpeed > 0f))
             {
                 error = $"{nameof(RecallSpeed)} must be positive, but is {_recallSpeed}.";
                 return false;
             }
 
-            if (_arrivalThreshold <= 0f)
+            if (!(_arrivalThreshold > 0f))
             {
                 error = $"{nameof(ArrivalThreshold)} must be positive, but is {_arrivalThreshold}.";
+                return false;
+            }
+
+            if (!(_recallSnapDistance >= 0f))
+            {
+                error = $"{nameof(RecallSnapDistance)} cannot be negative, but is {_recallSnapDistance}.";
+                return false;
+            }
+
+            if (!(_throwImpulse >= 0f))
+            {
+                error = $"{nameof(ThrowImpulse)} cannot be negative, but is {_throwImpulse}.";
                 return false;
             }
 
