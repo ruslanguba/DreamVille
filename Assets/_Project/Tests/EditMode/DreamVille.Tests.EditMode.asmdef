@@ -18,7 +18,8 @@
         "DreamVille.Persistence",
         "DreamVille.UI",
         "UniTask",
-        "Zenject"
+        "Zenject",
+        "Unity.Cinemachine"
     ],
     "includePlatforms": [
         "Editor"

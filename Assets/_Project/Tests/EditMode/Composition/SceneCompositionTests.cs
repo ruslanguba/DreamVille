@@ -14,6 +14,7 @@ using DreamVille.Configs;
 using DreamVille.Dialogue;
 using DreamVille.Gameplay.Enemies;
 using DreamVille.Gameplay.Player;
+using DreamVille.Gameplay.Player.Ground;
 using DreamVille.Gameplay.Weapons.Pillow;
 using DreamVille.Input;
 using DreamVille.SceneManagement;
@@ -206,6 +207,15 @@ namespace DreamVille.Tests.EditMode.Composition
             Type[] installerTypes = InstalledInstallerTypes(sceneContext);
 
             Assert.That(installerTypes, Is.EqualTo(new[] { typeof(MainMenuInstaller) }));
+        }
+
+        [TestCaseSource(nameof(GameplayScenePaths))]
+        public void GameplayScene_PlayerHasExactlyOneGroundSensor(string scenePath)
+        {
+            OpenScene(scenePath);
+
+            Assert.That(FindAll<GroundSurfaceSensor>(), Has.Length.EqualTo(1),
+                $"{scenePath} must have exactly one GroundSurfaceSensor on the player (spec 04 §2.2 stray-component drift).");
         }
 
         [TestCaseSource(nameof(GameplayScenePaths))]
