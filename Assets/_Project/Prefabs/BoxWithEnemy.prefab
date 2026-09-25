@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 65646641684438921}
   - component: {fileID: 136164124677008042}
   - component: {fileID: 282673093135627853}
+  - component: {fileID: 623426174862758473}
   m_Layer: 0
-  m_Name: 'BoxWithEnemy '
+  m_Name: BoxWithEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,6 +75,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.55, y: 3.4, z: 1.15}
   m_Center: {x: 0, y: 1.66, z: 0}
+--- !u!114 &623426174862758473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6688255778090841118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &7831222116871503518
 PrefabInstance:
   m_ObjectHideFlags: 0

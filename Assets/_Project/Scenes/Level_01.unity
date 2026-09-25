@@ -1189,6 +1189,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1973320611}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1973320614}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1973320613}
   m_SourcePrefab: {fileID: 100100000, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
 --- !u!1001 &183373640
 PrefabInstance:
@@ -2017,6 +2023,18 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: af5e2dbe78c17c34ba764dd7e4a41d1a, type: 3}
   m_PrefabInstance: {fileID: 1889531833}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &333617980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333617972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &334991651
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2696,6 +2714,18 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 896b791ed28824044b3970a07f599be2, type: 3}
   m_PrefabInstance: {fileID: 1135363183}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &483362006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483361998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &506092788
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5701,6 +5731,18 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4cb859ca910baed44b3ae6a1b8c385c1, type: 3}
   m_PrefabInstance: {fileID: 1869197065}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1038169100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1038169092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1 &1066053428 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 896b791ed28824044b3970a07f599be2, type: 3}
@@ -6061,6 +6103,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 896b791ed28824044b3970a07f599be2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 483362004}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 896b791ed28824044b3970a07f599be2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 483362006}
   m_SourcePrefab: {fileID: 100100000, guid: 896b791ed28824044b3970a07f599be2, type: 3}
 --- !u!1001 &1138208292
 PrefabInstance:
@@ -9694,6 +9739,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4cb859ca910baed44b3ae6a1b8c385c1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1038169098}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4cb859ca910baed44b3ae6a1b8c385c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1038169100}
   m_SourcePrefab: {fileID: 100100000, guid: 4cb859ca910baed44b3ae6a1b8c385c1, type: 3}
 --- !u!1 &1874504383
 GameObject:
@@ -9817,6 +9865,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: af5e2dbe78c17c34ba764dd7e4a41d1a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 333617978}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: af5e2dbe78c17c34ba764dd7e4a41d1a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 333617980}
   m_SourcePrefab: {fileID: 100100000, guid: af5e2dbe78c17c34ba764dd7e4a41d1a, type: 3}
 --- !u!1 &1899460160 stripped
 GameObject:
@@ -10137,6 +10188,31 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5308210633308118684, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
+--- !u!114 &1973320613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973320609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c2fd5dcfdd221844bb2ac895cdb6108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Effects.FloatAwayEffect
+  _mover: {fileID: 951801512}
+--- !u!114 &1973320614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973320609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1 &1974687991 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}

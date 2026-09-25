@@ -4464,6 +4464,8 @@ GameObject:
   - component: {fileID: 150999968}
   - component: {fileID: 150999970}
   - component: {fileID: 150999971}
+  - component: {fileID: 150999973}
+  - component: {fileID: 150999972}
   m_Layer: 0
   m_Name: Lamp (13)
   m_TagString: Untagged
@@ -4646,6 +4648,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &150999972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150999966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fdf5d19432c5f48b4cfffee730bc88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Effects.PlayAudioSourceEffect
+  _source: {fileID: 150999971}
+--- !u!114 &150999973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150999966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1 &159791258
 GameObject:
   m_ObjectHideFlags: 0
@@ -8855,6 +8882,8 @@ GameObject:
   - component: {fileID: 374967786}
   - component: {fileID: 374967788}
   - component: {fileID: 374967789}
+  - component: {fileID: 374967791}
+  - component: {fileID: 374967790}
   m_Layer: 0
   m_Name: Lamp (8)
   m_TagString: Untagged
@@ -9037,6 +9066,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &374967790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374967784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fdf5d19432c5f48b4cfffee730bc88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Effects.PlayAudioSourceEffect
+  _source: {fileID: 374967789}
+--- !u!114 &374967791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374967784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1 &377121639
 GameObject:
   m_ObjectHideFlags: 0
@@ -11850,6 +11904,8 @@ GameObject:
   - component: {fileID: 491224221}
   - component: {fileID: 491224223}
   - component: {fileID: 491224224}
+  - component: {fileID: 491224226}
+  - component: {fileID: 491224225}
   m_Layer: 0
   m_Name: Lamp (3)
   m_TagString: Untagged
@@ -12032,6 +12088,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &491224225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491224219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fdf5d19432c5f48b4cfffee730bc88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Effects.PlayAudioSourceEffect
+  _source: {fileID: 491224224}
+--- !u!114 &491224226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491224219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &498737473
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19937,6 +20018,8 @@ GameObject:
   - component: {fileID: 876898213}
   - component: {fileID: 876898215}
   - component: {fileID: 876898216}
+  - component: {fileID: 876898218}
+  - component: {fileID: 876898217}
   m_Layer: 0
   m_Name: Lamp (1)
   m_TagString: Untagged
@@ -20119,6 +20202,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &876898217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876898211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fdf5d19432c5f48b4cfffee730bc88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Effects.PlayAudioSourceEffect
+  _source: {fileID: 876898216}
+--- !u!114 &876898218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876898211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &879641684
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30048,6 +30156,8 @@ GameObject:
   - component: {fileID: 1295277288}
   - component: {fileID: 1295277290}
   - component: {fileID: 1295277291}
+  - component: {fileID: 1295277293}
+  - component: {fileID: 1295277292}
   m_Layer: 0
   m_Name: Lamp (10)
   m_TagString: Untagged
@@ -30230,6 +30340,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1295277292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295277286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fdf5d19432c5f48b4cfffee730bc88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Effects.PlayAudioSourceEffect
+  _source: {fileID: 1295277291}
+--- !u!114 &1295277293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295277286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1 &1297650519
 GameObject:
   m_ObjectHideFlags: 0
@@ -31034,6 +31169,8 @@ GameObject:
   - component: {fileID: 1330314188}
   - component: {fileID: 1330314190}
   - component: {fileID: 1330314191}
+  - component: {fileID: 1330314193}
+  - component: {fileID: 1330314192}
   m_Layer: 0
   m_Name: Lamp (12)
   m_TagString: Untagged
@@ -31216,6 +31353,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1330314192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330314186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fdf5d19432c5f48b4cfffee730bc88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Effects.PlayAudioSourceEffect
+  _source: {fileID: 1330314191}
+--- !u!114 &1330314193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330314186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1332714733
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34467,6 +34629,8 @@ GameObject:
   - component: {fileID: 1476554189}
   - component: {fileID: 1476554191}
   - component: {fileID: 1476554192}
+  - component: {fileID: 1476554194}
+  - component: {fileID: 1476554193}
   m_Layer: 0
   m_Name: Lamp (5)
   m_TagString: Untagged
@@ -34649,6 +34813,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1476554193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476554187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fdf5d19432c5f48b4cfffee730bc88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Effects.PlayAudioSourceEffect
+  _source: {fileID: 1476554192}
+--- !u!114 &1476554194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476554187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1 &1478008159
 GameObject:
   m_ObjectHideFlags: 0
@@ -36347,6 +36536,8 @@ GameObject:
   - component: {fileID: 1541251735}
   - component: {fileID: 1541251737}
   - component: {fileID: 1541251738}
+  - component: {fileID: 1541251740}
+  - component: {fileID: 1541251739}
   m_Layer: 0
   m_Name: Lamp (2)
   m_TagString: Untagged
@@ -36529,6 +36720,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1541251739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541251733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fdf5d19432c5f48b4cfffee730bc88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Effects.PlayAudioSourceEffect
+  _source: {fileID: 1541251738}
+--- !u!114 &1541251740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541251733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1542103030
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37657,6 +37873,8 @@ GameObject:
   - component: {fileID: 1590457883}
   - component: {fileID: 1590457885}
   - component: {fileID: 1590457886}
+  - component: {fileID: 1590457888}
+  - component: {fileID: 1590457887}
   m_Layer: 0
   m_Name: Lamp (4)
   m_TagString: Untagged
@@ -37839,6 +38057,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1590457887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590457881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fdf5d19432c5f48b4cfffee730bc88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Effects.PlayAudioSourceEffect
+  _source: {fileID: 1590457886}
+--- !u!114 &1590457888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590457881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1592752482
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39326,6 +39569,8 @@ GameObject:
   - component: {fileID: 1723133493}
   - component: {fileID: 1723133495}
   - component: {fileID: 1723133496}
+  - component: {fileID: 1723133498}
+  - component: {fileID: 1723133497}
   m_Layer: 0
   m_Name: Lamp (7)
   m_TagString: Untagged
@@ -39508,6 +39753,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1723133497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723133491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fdf5d19432c5f48b4cfffee730bc88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Effects.PlayAudioSourceEffect
+  _source: {fileID: 1723133496}
+--- !u!114 &1723133498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723133491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1726659044
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40542,6 +40812,8 @@ GameObject:
   - component: {fileID: 1812454672}
   - component: {fileID: 1812454674}
   - component: {fileID: 1812454675}
+  - component: {fileID: 1812454677}
+  - component: {fileID: 1812454676}
   m_Layer: 0
   m_Name: Lamp (6)
   m_TagString: Untagged
@@ -40724,6 +40996,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1812454676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812454670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fdf5d19432c5f48b4cfffee730bc88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Effects.PlayAudioSourceEffect
+  _source: {fileID: 1812454675}
+--- !u!114 &1812454677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812454670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1 &1813915753 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5bad9a3d5cb03874a96116000aee22a3, type: 3}
@@ -42734,6 +43031,8 @@ GameObject:
   - component: {fileID: 1870837993}
   - component: {fileID: 1870837995}
   - component: {fileID: 1870837996}
+  - component: {fileID: 1870837998}
+  - component: {fileID: 1870837997}
   m_Layer: 0
   m_Name: Lamp (9)
   m_TagString: Untagged
@@ -42916,6 +43215,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1870837997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870837991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fdf5d19432c5f48b4cfffee730bc88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Effects.PlayAudioSourceEffect
+  _source: {fileID: 1870837996}
+--- !u!114 &1870837998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870837991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1872140276
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45242,6 +45566,8 @@ GameObject:
   - component: {fileID: 1944222736}
   - component: {fileID: 1944222738}
   - component: {fileID: 1944222739}
+  - component: {fileID: 1944222741}
+  - component: {fileID: 1944222740}
   m_Layer: 0
   m_Name: Lamp (11)
   m_TagString: Untagged
@@ -45424,6 +45750,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1944222740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944222734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fdf5d19432c5f48b4cfffee730bc88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Effects.PlayAudioSourceEffect
+  _source: {fileID: 1944222739}
+--- !u!114 &1944222741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944222734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1 &1952038278 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f635041cdfe3664890a0d3ab3ae8a19, type: 3}
@@ -47224,6 +47575,8 @@ GameObject:
   - component: {fileID: 2053319032}
   - component: {fileID: 2053319034}
   - component: {fileID: 2053319035}
+  - component: {fileID: 2053319037}
+  - component: {fileID: 2053319036}
   m_Layer: 0
   m_Name: Lamp (14)
   m_TagString: Untagged
@@ -47406,6 +47759,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2053319036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053319030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fdf5d19432c5f48b4cfffee730bc88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Effects.PlayAudioSourceEffect
+  _source: {fileID: 2053319035}
+--- !u!114 &2053319037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053319030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1 &2058534005
 GameObject:
   m_ObjectHideFlags: 0

@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 708650560361076744}
   - component: {fileID: 2719904765020713502}
   m_Layer: 0
-  m_Name: InterractableBaloon
+  m_Name: Balloon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -429,6 +429,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6486329616281851052}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 529192413269702444}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6341961960282992318}
   m_SourcePrefab: {fileID: 100100000, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
 --- !u!1 &410331087785505724 stripped
 GameObject:
@@ -470,6 +476,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _clip: {fileID: 0}
+--- !u!114 &529192413269702444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410331087785505724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
+--- !u!114 &6341961960282992318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410331087785505724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c2fd5dcfdd221844bb2ac895cdb6108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Effects.FloatAwayEffect
+  _mover: {fileID: 2719904765020713502}
 --- !u!4 &1079202960236439814 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}

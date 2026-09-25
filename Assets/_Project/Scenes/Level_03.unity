@@ -2954,6 +2954,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 254565679}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 254565680}
   m_SourcePrefab: {fileID: 100100000, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
 --- !u!4 &254565672 stripped
 Transform:
@@ -3025,6 +3028,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566614, y: 2.372854, z: 0.13759917}
   m_Center: {x: 0.000007637642, y: 1.1808195, z: 0.0000021222208}
+--- !u!114 &254565680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254565673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &255064813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3740,6 +3755,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 269240848}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 269240849}
   m_SourcePrefab: {fileID: 100100000, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
 --- !u!4 &269240841 stripped
 Transform:
@@ -3811,6 +3829,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.556663, y: 2.3728552, z: 0.14671052}
   m_Center: {x: -0.0000021346552, y: 1.1864314, z: -0.0000020295872}
+--- !u!114 &269240849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269240842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1 &269822329 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 963f97b569f42964ea11679b4a929faa, type: 3}
@@ -4277,6 +4307,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 303311871}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 303311872}
   m_SourcePrefab: {fileID: 100100000, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
 --- !u!4 &303311864 stripped
 Transform:
@@ -4348,6 +4381,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566629, y: 2.3728547, z: 0.14671038}
   m_Center: {x: -0.00000058038984, y: 1.186431, z: 0.000000052342955}
+--- !u!114 &303311872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303311865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &303707520
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5149,6 +5194,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 337697283}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 337697284}
   m_SourcePrefab: {fileID: 100100000, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
 --- !u!4 &337697276 stripped
 Transform:
@@ -5220,6 +5268,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566629, y: 2.372856, z: 0.14671065}
   m_Center: {x: -0.000007379864, y: 1.1864278, z: -0.00000006699122}
+--- !u!114 &337697284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337697277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &338157659
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9373,6 +9433,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1876418456}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1876418457}
   m_SourcePrefab: {fileID: 100100000, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
 --- !u!1 &586669963 stripped
 GameObject:
@@ -10746,6 +10809,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 659503713}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 659503714}
   m_SourcePrefab: {fileID: 100100000, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
 --- !u!4 &659503706 stripped
 Transform:
@@ -10817,6 +10883,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566633, y: 2.372855, z: 0.14671046}
   m_Center: {x: -0.0000025760091, y: 1.1864254, z: -0.000000033842852}
+--- !u!114 &659503714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659503707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &661514784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13859,6 +13937,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 873890558}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 873890559}
   m_SourcePrefab: {fileID: 100100000, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
 --- !u!4 &873890551 stripped
 Transform:
@@ -13930,6 +14011,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566611, y: 2.372854, z: 0.13759875}
   m_Center: {x: 0.0000020739558, y: 1.1808158, z: -0.0000075684834}
+--- !u!114 &873890559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873890552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!198 &873970529 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 768634248833732684, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
@@ -14717,6 +14810,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 940478520}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 940478521}
   m_SourcePrefab: {fileID: 100100000, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
 --- !u!4 &940478513 stripped
 Transform:
@@ -14788,6 +14884,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.556664, y: 2.3728552, z: 0.14671127}
   m_Center: {x: -0.0000036712415, y: 1.1864276, z: -0.0000005178094}
+--- !u!114 &940478521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940478514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1 &943323592
 GameObject:
   m_ObjectHideFlags: 0
@@ -15836,6 +15944,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1071029701}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1071029702}
   m_SourcePrefab: {fileID: 100100000, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
 --- !u!1001 &1024149701
 PrefabInstance:
@@ -16572,6 +16683,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566622, y: 2.3728554, z: 0.1375992}
   m_Center: {x: -0.0000022703653, y: 1.1808202, z: -0.0000002646074}
+--- !u!114 &1071029702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071029694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1072340549
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17109,6 +17232,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1114196407}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1114196408}
   m_SourcePrefab: {fileID: 100100000, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
 --- !u!4 &1114196400 stripped
 Transform:
@@ -17180,6 +17306,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566627, y: 2.3728542, z: 0.13759929}
   m_Center: {x: 0.000003389218, y: 1.1808273, z: -0.000007898401}
+--- !u!114 &1114196408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114196401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1126295354
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17341,6 +17479,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1131398122}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1131398123}
   m_SourcePrefab: {fileID: 100100000, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
 --- !u!4 &1131398115 stripped
 Transform:
@@ -17412,6 +17553,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566632, y: 2.3728545, z: 0.14671044}
   m_Center: {x: 0.000007666776, y: 1.1864271, z: 0.000002387911}
+--- !u!114 &1131398123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131398116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1 &1131596730 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 963f97b569f42964ea11679b4a929faa, type: 3}
@@ -17605,6 +17758,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1141453617}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1141453618}
   m_SourcePrefab: {fileID: 100100000, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
 --- !u!4 &1141453610 stripped
 Transform:
@@ -17676,6 +17832,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566626, y: 2.3728547, z: 0.14671023}
   m_Center: {x: -0.0000034878205, y: 1.1864253, z: 0.0000018757156}
+--- !u!114 &1141453618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141453611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1 &1155203419 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: da30060b6611ac148acfe460db5cee6a, type: 3}
@@ -18252,6 +18420,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1167178767}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1167178768}
   m_SourcePrefab: {fileID: 100100000, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
 --- !u!4 &1167178760 stripped
 Transform:
@@ -18323,6 +18494,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566629, y: 2.3728554, z: 0.14671049}
   m_Center: {x: -0.0000014193995, y: 1.1864238, z: -0.0000008173555}
+--- !u!114 &1167178768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167178761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1168825886
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19777,6 +19960,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1262734873}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1262734874}
   m_SourcePrefab: {fileID: 100100000, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
 --- !u!4 &1262734866 stripped
 Transform:
@@ -19848,6 +20034,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566618, y: 2.3728542, z: 0.13759896}
   m_Center: {x: 0.000007901575, y: 1.1808207, z: -0.00000003146584}
+--- !u!114 &1262734874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262734867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1268590996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20736,6 +20934,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1302558630}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1302558631}
   m_SourcePrefab: {fileID: 100100000, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
 --- !u!4 &1302558623 stripped
 Transform:
@@ -20807,6 +21008,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566633, y: 2.372855, z: 0.14671052}
   m_Center: {x: 0.00000043516152, y: 1.1864235, z: -0.00000013328804}
+--- !u!114 &1302558631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302558624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1313810338
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20888,6 +21101,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1313810346}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1313810347}
   m_SourcePrefab: {fileID: 100100000, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
 --- !u!4 &1313810339 stripped
 Transform:
@@ -20959,6 +21175,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566617, y: 2.3728545, z: 0.13759895}
   m_Center: {x: 0.000004475737, y: 1.1808237, z: -0.0000001249424}
+--- !u!114 &1313810347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313810340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1313956515
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21392,6 +21620,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1345827251}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1345827252}
   m_SourcePrefab: {fileID: 100100000, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
 --- !u!4 &1345827244 stripped
 Transform:
@@ -21463,6 +21694,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566626, y: 2.3728547, z: 0.14671041}
   m_Center: {x: -0.00000088093526, y: 1.1864274, z: 0.00000009654077}
+--- !u!114 &1345827252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345827245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1346409973
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22662,6 +22905,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1424395869}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1424395870}
   m_SourcePrefab: {fileID: 100100000, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
 --- !u!4 &1424395862 stripped
 Transform:
@@ -22733,6 +22979,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566617, y: 2.3728545, z: 0.13759871}
   m_Center: {x: 0.00000013856426, y: 1.180818, z: 0.0000009222084}
+--- !u!114 &1424395870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424395863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1 &1424818624 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ca793f37d1cdc8844b3e98039983cb95, type: 3}
@@ -23028,6 +23286,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1440232927}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1440232928}
   m_SourcePrefab: {fileID: 100100000, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
 --- !u!4 &1440232920 stripped
 Transform:
@@ -23099,6 +23360,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566622, y: 2.3728554, z: 0.1375992}
   m_Center: {x: 0.0000034516806, y: 1.1808202, z: -0.0000002646074}
+--- !u!114 &1440232928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440232921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1440340425
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23180,6 +23453,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1440340433}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1440340434}
   m_SourcePrefab: {fileID: 100100000, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
 --- !u!4 &1440340426 stripped
 Transform:
@@ -23251,6 +23527,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566609, y: 2.3728542, z: 0.13759877}
   m_Center: {x: 0.0000020739558, y: 1.1808197, z: 0.00000767271}
+--- !u!114 &1440340434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440340427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!114 &1440472733 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4943319331511835042, guid: cf4f0b275a4a850439b3298ee08f6126, type: 3}
@@ -23709,6 +23997,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1476343341}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1476343342}
   m_SourcePrefab: {fileID: 100100000, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
 --- !u!4 &1476343334 stripped
 Transform:
@@ -23780,6 +24071,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.556663, y: 2.3728552, z: 0.1467106}
   m_Center: {x: 0.0000020066066, y: 1.1864276, z: 0.000003584174}
+--- !u!114 &1476343342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476343335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1484203153
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24201,6 +24504,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1505638795}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1505638796}
   m_SourcePrefab: {fileID: 100100000, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
 --- !u!4 &1505638788 stripped
 Transform:
@@ -24272,6 +24578,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.556663, y: 2.3728547, z: 0.14671034}
   m_Center: {x: 0.0000023071518, y: 1.186431, z: 0.00000005234295}
+--- !u!114 &1505638796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505638789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1512949041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24353,6 +24671,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1512949049}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1512949050}
   m_SourcePrefab: {fileID: 100100000, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
 --- !u!4 &1512949042 stripped
 Transform:
@@ -24424,6 +24745,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566621, y: 2.372856, z: 0.13759881}
   m_Center: {x: 0.0000020915516, y: 1.1808205, z: 0.000001950664}
+--- !u!114 &1512949050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512949043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1 &1516132635 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 963f97b569f42964ea11679b4a929faa, type: 3}
@@ -26031,6 +26364,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1614442431}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1614442432}
   m_SourcePrefab: {fileID: 100100000, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
 --- !u!4 &1614442424 stripped
 Transform:
@@ -26102,6 +26438,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566611, y: 2.3728545, z: 0.13759896}
   m_Center: {x: -0.0000017935282, y: 1.1808151, z: 0.000000118096565}
+--- !u!114 &1614442432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614442425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1 &1617796040 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 963f97b569f42964ea11679b4a929faa, type: 3}
@@ -27073,6 +27421,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1665350613}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1665350614}
   m_SourcePrefab: {fileID: 100100000, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
 --- !u!4 &1665350606 stripped
 Transform:
@@ -27144,6 +27495,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566614, y: 2.3728542, z: 0.1375994}
   m_Center: {x: -0.0000064484066, y: 1.1808195, z: -0.0000072297685}
+--- !u!114 &1665350614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665350607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1666151846
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27225,6 +27588,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1666151854}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1666151855}
   m_SourcePrefab: {fileID: 100100000, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
 --- !u!4 &1666151847 stripped
 Transform:
@@ -27296,6 +27662,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566617, y: 2.372854, z: 0.13759872}
   m_Center: {x: 0.00000034256303, y: 1.1808195, z: 0.000000100501}
+--- !u!114 &1666151855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666151848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1669179149
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30014,6 +30392,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566633, y: 2.372855, z: 0.14671046}
   m_Center: {x: 0.00000040422302, y: 1.1864235, z: 0.000007595552}
+--- !u!114 &1876418457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876418449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1877764367
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31406,6 +31796,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1984742057}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1984742058}
   m_SourcePrefab: {fileID: 100100000, guid: db984b58e7c436c4e918cc01c06cac99, type: 3}
 --- !u!4 &1984742050 stripped
 Transform:
@@ -31477,6 +31870,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566626, y: 2.3728557, z: 0.13759944}
   m_Center: {x: -0.0000012854596, y: 1.1808203, z: -0.00000028220296}
+--- !u!114 &1984742058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984742051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &1991894017
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32584,6 +32989,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2068919969}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2068919970}
   m_SourcePrefab: {fileID: 100100000, guid: 6e9674217a1a59943a3612ea63c14bf6, type: 3}
 --- !u!4 &2068919962 stripped
 Transform:
@@ -32655,6 +33063,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5566638, y: 2.3728552, z: 0.14671037}
   m_Center: {x: 0.0000012873057, y: 1.1864197, z: -0.000000053731902}
+--- !u!114 &2068919970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068919963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987b6f96ec6ab8e4684b5ce05568db4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Interactables.Interactable
 --- !u!1001 &2069527616
 PrefabInstance:
   m_ObjectHideFlags: 0
