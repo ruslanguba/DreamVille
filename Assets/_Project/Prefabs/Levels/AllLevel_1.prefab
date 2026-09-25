@@ -10368,10 +10368,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6361901262951257810, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
-      propertyPath: _trajectory
-      value: 
-      objectReference: {fileID: 5023262200812205415}
-    - target: {fileID: 6361901262951257810, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
       propertyPath: _bulletSpeed
       value: 25
       objectReference: {fileID: 0}
@@ -10464,37 +10460,8 @@ PrefabInstance:
     - {fileID: 3994646952276786308, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
     - {fileID: 108536551410600990, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6809727490614996737, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5023262200812205415}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
---- !u!1 &1598311379168939088 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6809727490614996737, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
-  m_PrefabInstance: {fileID: 5237497978973184849}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5023262200812205415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1598311379168939088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 298de5f70190a164e923b1b0b2e42087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _line: {fileID: 8877848572175565171}
-  _origin: {fileID: 8446969349992409185}
-  _maxBounces: 5
-  _maxDistance: 100
-  _sphereRadius: 0.25
-  _useDefaultHitMask: 1
-  _hitMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &2705954743900004211 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7863899753236708386, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
@@ -10527,11 +10494,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49a49a4e2198fa24b904a4236573ad9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &8446969349992409185 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4438013171343362864, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
-  m_PrefabInstance: {fileID: 5237497978973184849}
-  m_PrefabAsset: {fileID: 0}
 --- !u!120 &8877848572175565171 stripped
 LineRenderer:
   m_CorrespondingSourceObject: {fileID: 3718601740686074402, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}

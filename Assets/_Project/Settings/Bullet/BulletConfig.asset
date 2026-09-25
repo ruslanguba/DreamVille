@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d195b9cb0428548a9193737f936a6d, type: 3}
   m_Name: BulletConfig
   m_EditorClassIdentifier: 
-  Damage: 10
-  Speed: 15
-  LifeTime: 8
-  MaxCollisionCount: 6
-  HitEffect: {fileID: 7813441055630180147, guid: c0ecf252a1fbbd44bb95a237e9ed4969, type: 3}
-  CollisionSound: {fileID: 0}
+  _damage: 10
+  _speed: 15
+  _lifeTime: 8
+  _maxCollisionCount: 6
+  _collisionRadius: 0.25

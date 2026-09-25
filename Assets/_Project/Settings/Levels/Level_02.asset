@@ -19,3 +19,4 @@ MonoBehaviour:
   _levelId: 3
   _starRules: {fileID: 11400000, guid: 75f66b8f9cd0f35488ebcb0d1f222717, type: 2}
   _unlockedByDefault: 0
+  _maxPillows: 0
