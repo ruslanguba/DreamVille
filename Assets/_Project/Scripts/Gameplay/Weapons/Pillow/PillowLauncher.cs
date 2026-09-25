@@ -11,7 +11,8 @@ namespace DreamVille.Gameplay.Weapons.Pillow
 {
     /// <summary>
     /// Scene-facing pillow component on the player root: owns the scene references, the input subscription and
-    /// the recall loop. The throw and recall rules live in <see cref="PillowRack"/>.
+    /// the recall loop. The throw and recall rules live in <see cref="PillowRack"/>; how many pillows the player may use
+    /// comes from <see cref="IPillowInventory"/> and can grow mid-level.
     /// </summary>
     public sealed class PillowLauncher : MonoBehaviour, IPillowThrower
     {
@@ -24,6 +25,7 @@ namespace DreamVille.Gameplay.Weapons.Pillow
 
         private IPlayerInput _input;
         private Transform _body;
+        private IPillowInventory _inventory;
         private PillowRack _rack;
         private CancellationTokenSource _returnCts;
 
@@ -37,10 +39,11 @@ namespace DreamVille.Gameplay.Weapons.Pillow
         public int InHand => _rack?.InHand ?? 0;
 
         [Inject]
-        public void Construct(IPlayerInput input, Transform body)
+        public void Construct(IPlayerInput input, Transform body, IPillowInventory inventory)
         {
             _input = input;
             _body = body;
+            _inventory = inventory;
         }
 
         private void Awake()
@@ -53,7 +56,7 @@ namespace DreamVille.Gameplay.Weapons.Pillow
             }
 
             _rack = new PillowRack(_pillows, _config);
-            _rack.SetAvailable(_rack.Capacity);
+            _rack.SetAvailable(_inventory.Available);
         }
 
         private void OnEnable()
@@ -63,13 +66,35 @@ namespace DreamVille.Gameplay.Weapons.Pillow
 
             _input.Throw += OnThrow;
             _input.Stop += OnStop;
+            _inventory.AvailableChanged += OnAvailableChanged;
+
+            // Catch up with an unlock that happened while this component was disabled.
+            ApplyAvailable(_inventory.Available);
         }
 
         private void OnDisable()
         {
+            if (_rack == null)
+                return;
+
             _input.Throw -= OnThrow;
             _input.Stop -= OnStop;
+            _inventory.AvailableChanged -= OnAvailableChanged;
             CancelReturn();
+        }
+
+        private void OnAvailableChanged(int available)
+        {
+            ApplyAvailable(available);
+        }
+
+        private void ApplyAvailable(int available)
+        {
+            int before = _rack.Available;
+            _rack.SetAvailable(available);
+
+            if (_rack.Available != before)
+                Changed?.Invoke();
         }
 
         private void OnThrow()

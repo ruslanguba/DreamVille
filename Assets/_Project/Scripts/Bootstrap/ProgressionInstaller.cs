@@ -4,11 +4,12 @@ using Zenject;
 
 using DreamVille.Configs;
 using DreamVille.Progression;
+using DreamVille.Progression.Pillows;
 using DreamVille.Scoring;
 
 namespace DreamVille.Bootstrap
 {
-    /// <summary>Score, stars and level completion. The level itself comes from the catalog.</summary>
+    /// <summary>Score, stars, level completion and pillow unlocks. The level itself comes from the catalog.</summary>
     public class ProgressionInstaller : MonoInstaller
     {
         [Header("Configs")]
@@ -31,6 +32,9 @@ namespace DreamVille.Bootstrap
             Container.BindInterfacesTo<ScoreService>().AsSingle();
             Container.BindInterfacesTo<StarProgressService>().AsSingle();
             Container.BindInterfacesTo<BestScoreService>().AsSingle();
+
+            // Scene-scoped: availability is capped by this scene's LevelDefinition; the unlock count itself is persisted.
+            Container.BindInterfacesTo<PillowInventory>().AsSingle();
 
             Container.Bind<LevelActors>().FromComponentInHierarchy().AsSingle();
             Container.BindInterfacesTo<LevelDirector>().AsSingle();
