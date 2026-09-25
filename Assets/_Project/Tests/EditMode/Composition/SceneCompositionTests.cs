@@ -15,6 +15,7 @@ using DreamVille.Dialogue;
 using DreamVille.Gameplay.Enemies;
 using DreamVille.Gameplay.Player;
 using DreamVille.Gameplay.Player.Ground;
+using DreamVille.Gameplay.Weapons.Aiming;
 using DreamVille.Gameplay.Weapons.Pillow;
 using DreamVille.Input;
 using DreamVille.SceneManagement;
@@ -216,6 +217,30 @@ namespace DreamVille.Tests.EditMode.Composition
 
             Assert.That(FindAll<GroundSurfaceSensor>(), Has.Length.EqualTo(1),
                 $"{scenePath} must have exactly one GroundSurfaceSensor on the player (spec 04 §2.2 stray-component drift).");
+        }
+
+        [TestCaseSource(nameof(GameplayScenePaths))]
+        public void GameplayScene_PlayerHasExactlyOneAimPreview(string scenePath)
+        {
+            OpenScene(scenePath);
+
+            Assert.That(FindAll<AimPreview>(), Has.Length.EqualTo(1),
+                $"{scenePath} must have exactly one AimPreview (spec 05 §2.2 duplicate BounceRayTrajectory drift).");
+        }
+
+        [TestCaseSource(nameof(GameplayScenePaths))]
+        public void GameplayScene_NoInstanceOverridesPillowList(string scenePath)
+        {
+            OpenScene(scenePath);
+            PillowLauncher launcher = FindSingle<PillowLauncher>();
+
+            GameObject instanceRoot = PrefabUtility.GetOutermostPrefabInstanceRoot(launcher.gameObject);
+            Assert.That(instanceRoot, Is.Not.Null, $"{scenePath}'s PillowLauncher is not part of a prefab instance.");
+
+            PropertyModification[] modifications = PrefabUtility.GetPropertyModifications(instanceRoot) ?? Array.Empty<PropertyModification>();
+
+            Assert.That(modifications.Any(m => m.propertyPath.StartsWith("_pillows")), Is.False,
+                $"{scenePath}'s player instance overrides PillowLauncher._pillows; pillow availability must come from IPillowInventory data, not per-scene overrides.");
         }
 
         [TestCaseSource(nameof(GameplayScenePaths))]
