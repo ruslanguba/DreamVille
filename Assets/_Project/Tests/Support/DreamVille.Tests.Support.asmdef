@@ -1,0 +1,19 @@
+{
+    "name": "DreamVille.Tests.Support",
+    "rootNamespace": "DreamVille.Tests.Support",
+    "references": [
+        "DreamVille.Configs",
+        "DreamVille.Gameplay"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

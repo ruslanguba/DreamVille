@@ -4,6 +4,7 @@ using UnityEngine;
 using DreamVille.Configs;
 using DreamVille.Gameplay.Weapons.Pillow;
 using DreamVille.Tests.EditMode.Fakes;
+using DreamVille.Tests.Support;
 
 namespace DreamVille.Tests.EditMode.Weapons
 {
@@ -213,6 +214,7 @@ namespace DreamVille.Tests.EditMode.Weapons
         {
             var go = new GameObject("DestroyedPillowBody");
             var body = go.AddComponent<FakePillowBodyBehaviour>();
+            Assert.That(body, Is.Not.Null, "component must be added before it can be destroyed");
             Object.DestroyImmediate(body);
 
             Assert.Throws<System.ArgumentException>(() => new PillowRack(new IPillowBody[] { body }, _config));

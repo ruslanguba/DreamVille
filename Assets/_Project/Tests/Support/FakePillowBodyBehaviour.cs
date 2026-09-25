@@ -2,7 +2,7 @@ using UnityEngine;
 
 using DreamVille.Gameplay.Weapons.Pillow;
 
-namespace DreamVille.Tests.EditMode.Fakes
+namespace DreamVille.Tests.Support
 {
     /// <summary>
     /// Test-only <see cref="MonoBehaviour"/> implementing <see cref="IPillowBody"/>, used to reproduce the

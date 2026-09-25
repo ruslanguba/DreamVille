@@ -18,6 +18,7 @@
         "DreamVille.Persistence",
         "DreamVille.Progression",
         "DreamVille.UI",
+        "DreamVille.Tests.Support",
         "UniTask",
         "Zenject",
         "Unity.Cinemachine"
