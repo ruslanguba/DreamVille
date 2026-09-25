@@ -1,29 +1,33 @@
 using UnityEngine;
+using Zenject;
 
-using DreamVille.Gameplay.Player;
+using DreamVille.Gameplay.Player.Animation;
 
 namespace DreamVille.Gameplay.Interactables
 {
     /// <summary>Swaps the active player skin animator among a fixed set of variants.</summary>
-    [RequireComponent(typeof(PlayerContext))]
     public class SkinHandler : MonoBehaviour
     {
         [SerializeField] private Animator[] _skins;
 
-        private PlayerContext _playerContext;
+        private IPlayerAnimator _playerAnimator;
         private int _skinIndex;
+
+        [Inject]
+        private void Construct(IPlayerAnimator playerAnimator)
+        {
+            _playerAnimator = playerAnimator;
+        }
 
         private void Awake()
         {
-            _playerContext = GetComponent<PlayerContext>();
-
             if (_skins == null || _skins.Length == 0)
             {
                 Debug.LogError($"[{nameof(SkinHandler)}] No skins assigned.", this);
                 return;
             }
 
-            _playerContext.SetAnimator(_skins[_skinIndex]);
+            _playerAnimator.SetAnimator(_skins[_skinIndex]);
         }
 
         private void ChangeSkin()
@@ -33,7 +37,7 @@ namespace DreamVille.Gameplay.Interactables
                 skin.gameObject.SetActive(false);
             }
             _skins[_skinIndex].gameObject.SetActive(true);
-            _playerContext.SetAnimator(_skins[_skinIndex]);
+            _playerAnimator.SetAnimator(_skins[_skinIndex]);
         }
 
         public void SetSkin(int skinIndex)

@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 using DreamVille.Input;
 
@@ -12,9 +13,10 @@ namespace DreamVille.Gameplay.Weapons
 
         private IPlayerInput _input;
 
-        private void Awake()
+        [Inject]
+        private void Construct(IPlayerInput input)
         {
-            _input = GetComponent<IPlayerInput>();
+            _input = input;
         }
 
         // Gun visibility is controlled by the pickup (CollectableGun), not by the input controller.

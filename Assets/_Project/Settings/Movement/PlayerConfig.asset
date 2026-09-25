@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b0eab7d8fd7f5b4692ae7c18a9c3a79, type: 3}
-  m_Name: PlayerSettings
+  m_Name: PlayerConfig
   m_EditorClassIdentifier: 
-  walkSpeed: 6
-  acceleration: 20
-  airSpeedMultiplier: 4
-  rotationSpeed: 12
-  jumpHeight: 5
-  gravity: -20
-  lookSensitivity: 0.05
-  aimSensitivity: 0.02
-  minPitch: -80
-  maxPitch: 80
-  lookSmoothTime: 0.05
+  _walkSpeed: 6
+  _acceleration: 20
+  _rotationSpeed: 12
+  _jumpHeight: 5
+  _gravity: -20
+  _groundedStickSpeed: -2
+  _knockbackDecay: 10
+  _knockbackStopSpeed: 0.1
+  _maxHits: 3
+  _hitRecoveryDelay: 5
+  _safePositionInterval: 0.3
+  _respawnHeightOffset: 1

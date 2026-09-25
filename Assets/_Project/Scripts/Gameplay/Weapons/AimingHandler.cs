@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 using DreamVille.Input;
 using DreamVille.Gameplay.Weapons.Aiming;
@@ -12,26 +13,21 @@ namespace DreamVille.Gameplay.Weapons
         private bool _isAnimating = false;
         private IPlayerInput _input;
 
-        private void Awake()
+        [Inject]
+        private void Construct(IPlayerInput input)
         {
-            _input = GetComponent<IPlayerInput>();
+            _input = input;
         }
 
         // Subscribe in OnEnable (mirrored by OnDisable) so aiming survives disable/enable cycles.
         private void OnEnable()
         {
-            if (_input == null)
-                return;
-
             _input.SecondaryFirePressed += ShowTrajectory;
             _input.SecondaryFireReleased += ClearTrajectory;
         }
 
         private void OnDisable()
         {
-            if (_input == null)
-                return;
-
             _input.SecondaryFirePressed -= ShowTrajectory;
             _input.SecondaryFireReleased -= ClearTrajectory;
         }

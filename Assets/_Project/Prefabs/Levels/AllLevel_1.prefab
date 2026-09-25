@@ -1247,6 +1247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 263603158334308728}
   - component: {fileID: 4151816709079532979}
+  - component: {fileID: 5221736465793375259}
   m_Layer: 0
   m_Name: Global Volume
   m_TagString: Untagged
@@ -1286,6 +1287,21 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 10fc4df2da32a41aaa32d77bc913491c, type: 2}
+--- !u!114 &5221736465793375259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4859260668343443660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74381892b9864f044b4599c330065011, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Presentation::DreamVille.Presentation.Damage.DamageVignetteView
+  _hitFadeDuration: 2
+  _recoveryFadeDuration: 5
+  _firstHitIntensity: 0.6
 --- !u!1 &5281633782424077182
 GameObject:
   m_ObjectHideFlags: 0
@@ -1946,6 +1962,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1967,9 +1985,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &4665718053246138198
 BoxCollider:
@@ -10193,6 +10213,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3412302369794539948, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
       propertyPath: m_AngularDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3412302369794539948, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
+      propertyPath: m_LinearDamping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3412302369794539948, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
+      propertyPath: m_AngularDamping
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3566730913152842349, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}

@@ -6,44 +6,32 @@ using DreamVille.Input;
 
 namespace DreamVille.Gameplay.Player
 {
-    public class PlayerLook
+    /// <summary>While aiming, turns the body's yaw toward the camera's so the character faces where the player aims.</summary>
+    public sealed class PlayerLook
     {
-        private PlayerContext _context;
-        private PlayerConfig _settings;
-        private Transform _bodyTransform;
-        private CinemachineOrbitalFollow _orbitalFollow;
-        private CinemachineCamera _cineCam;
-        private IPlayerInput _inputReader;
+        private readonly PlayerConfig _config;
+        private readonly IPlayerInput _input;
+        private readonly Transform _body;
+        private readonly CinemachineCamera _camera;
 
-        public PlayerLook(PlayerContext context, CinemachineCamera cineCam, CinemachineOrbitalFollow orbitalFollow)
+        public PlayerLook(PlayerConfig config, IPlayerInput input, Transform body, CinemachineCamera camera)
         {
-            _context = context;
-            _settings = _context.Settings;
-            _bodyTransform = _context.BodyTransform;
-            _inputReader = _context.Input;
-
-            _cineCam = cineCam;
-            _orbitalFollow = orbitalFollow;
+            _config = config;
+            _input = input;
+            _body = body;
+            _camera = camera;
         }
 
-        public void UpdateLook()
+        public void Tick(float deltaTime)
         {
-            if (_inputReader.IsAimHeld)
-                AimMode();
-        }
+            if (!_input.IsAimHeld)
+                return;
 
-        private void AimMode()
-        {
-            float cameraYaw = _cineCam.State.RawOrientation.eulerAngles.y;
-            float currentYaw = _bodyTransform.eulerAngles.y;
+            float cameraYaw = _camera.State.RawOrientation.eulerAngles.y;
+            float bodyYaw = _body.eulerAngles.y;
+            float newYaw = Mathf.LerpAngle(bodyYaw, cameraYaw, _config.RotationSpeed * deltaTime);
 
-            float newYaw = Mathf.LerpAngle(
-                currentYaw,
-                cameraYaw,
-                _settings.RotationSpeed * Time.deltaTime
-            );
-
-            _bodyTransform.rotation = Quaternion.Euler(0f, newYaw, 0f);
+            _body.rotation = Quaternion.Euler(0f, newYaw, 0f);
         }
     }
 }

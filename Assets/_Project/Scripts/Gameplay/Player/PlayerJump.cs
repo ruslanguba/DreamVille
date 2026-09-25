@@ -1,38 +1,70 @@
-using UnityEngine;
+using System;
 
+using UnityEngine;
+using Zenject;
+
+using DreamVille.Audio;
 using DreamVille.Configs;
+using DreamVille.Gameplay.Player.Animation;
+using DreamVille.Gameplay.Player.Ground;
 using DreamVille.Input;
 
 namespace DreamVille.Gameplay.Player
 {
-    public class PlayerJump
+    /// <summary>Turns the jump input into a vertical launch when the player is grounded.</summary>
+    public sealed class PlayerJump : IInitializable, IDisposable
     {
-        private PlayerContext _context;
-        private PlayerConfig _settings;
-        private PlayerGravity _gravity;
-        private CharacterController _controller;
-        private IPlayerInput _inputReader;
-        private AnimatorHandler _animator;
+        private readonly PlayerConfig _config;
+        private readonly IPlayerInput _input;
+        private readonly IGroundSensor _ground;
+        private readonly PlayerGravity _gravity;
+        private readonly IPlayerAnimator _animator;
+        private readonly IActorAudio _audio;
 
-        public PlayerJump(PlayerContext context, PlayerGravity gravity)
+        public PlayerJump(
+            PlayerConfig config,
+            IPlayerInput input,
+            IGroundSensor ground,
+            PlayerGravity gravity,
+            IPlayerAnimator animator,
+            IActorAudio audio)
         {
-            _context = context;
-            _settings = _context.Settings;
-            _controller = _context.Controller;
+            _config = config;
+            _input = input;
+            _ground = ground;
             _gravity = gravity;
-            _inputReader = _context.Input;
-            _animator = _context.AnimatorHandler;
+            _animator = animator;
+            _audio = audio;
         }
 
-        public void Jump()
+        public void Initialize()
         {
-            if (_controller.isGrounded)
-            {
-                float jumpVelocity = Mathf.Sqrt(_settings.JumpHeight * -2f * _settings.Gravity);
-                _gravity.SetYVelocity(jumpVelocity);
-                _animator.SetJump();
-                _context.Audio.PlayJump();
-            }
+            _input.Jump += OnJump;
+        }
+
+        public void Dispose()
+        {
+            _input.Jump -= OnJump;
+        }
+
+        /// <summary>Launches the player if grounded; returns false and changes nothing while airborne.</summary>
+        public bool TryJump()
+        {
+            if (!_ground.IsGrounded)
+                return false;
+
+            _gravity.Launch(JumpSpeed(_config.JumpHeight, _config.Gravity));
+            _animator.TriggerJump();
+            _audio.PlayJump();
+            return true;
+        }
+
+        /// <summary>Initial upward speed that reaches <paramref name="jumpHeight"/> under <paramref name="gravity"/> (negative).</summary>
+        public static float JumpSpeed(float jumpHeight, float gravity) => Mathf.Sqrt(jumpHeight * -2f * gravity);
+
+        private void OnJump()
+        {
+            TryJump();
         }
     }
 }

@@ -1,7 +1,9 @@
 using Zenject;
 
 using DreamVille.App;
+using DreamVille.Core.Players;
 using DreamVille.Dialogue;
+using DreamVille.Gameplay.Damage;
 using DreamVille.Gameplay.Player;
 using DreamVille.Input;
 
@@ -15,8 +17,10 @@ namespace DreamVille.Bootstrap
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<PlayerContext>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesTo<PlayerCharacter>().FromComponentInHierarchy().AsSingle();
             Container.BindInterfacesTo<PlayerInputSwitch>().FromComponentInHierarchy().AsSingle();
+            // Lazy: only a DamageVignetteView resolves it, and only scenes with a Volume have one.
+            Container.Bind<IPlayerDamageState>().To<PlayerDamageReceiver>().FromComponentInHierarchy().AsSingle();
             Container.Bind<GameInput>().FromComponentInHierarchy().AsSingle();
 
             Container.BindInterfacesTo<DialogueService>().AsSingle();

@@ -1,137 +1,48 @@
-using System.Collections;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.Rendering;
-using UnityEngine;
+using System;
 
-using DreamVille.Gameplay.Player;
+using UnityEngine;
+using Zenject;
+
+using DreamVille.Core.Players;
 
 namespace DreamVille.Gameplay.Damage
 {
-    public class PlayerDamageReceiver : MonoBehaviour
+    /// <summary>
+    /// The player's hit facade to the scene: registers hits on <see cref="PlayerHealth"/>, pushes the body through
+    /// <see cref="PlayerKnockback"/> and exposes the hit state to presentation as <see cref="IPlayerDamageState"/>.
+    /// A component because scene-level bindings and trigger callbacks can only find components.
+    /// </summary>
+    public sealed class PlayerDamageReceiver : MonoBehaviour, IHitReceiver, IPlayerDamageState
     {
-        private PlayerKnockbackHandler knockbackHandler;
+        private PlayerHealth _health;
+        private PlayerKnockback _knockback;
 
-        [Header("Volume & Vignette")]
-        [SerializeField] private Volume _globalVolume;
-        [SerializeField] private float smoothChangeDuration = 0.5f;
-        [SerializeField] private float smoothRestoreDuration = 2f;
-        [SerializeField] private float firstHitIntensity  = 0.6f;
-
-        [Header("Damage Settings")]
-        [SerializeField] private int _maxHits = 5;     // кол-во попаданий до полного эффекта
-        [SerializeField] private int _minHits = 0;
-        [SerializeField] private float restoreDelay = 5f;
-
-        private int hits;
-        private Vignette vignetteSettings;
-        private Coroutine vignetteCoroutine;
-        private float restoreTimer;
-
-        private void Start()
+        [Inject]
+        private void Construct(PlayerHealth health, PlayerKnockback knockback)
         {
-            if (_globalVolume == null)
-            {
-                Debug.LogWarning("Global Volume missing");
-                enabled = false;
-                return;
-            }
-
-            if (!_globalVolume.profile.TryGet(out vignetteSettings))
-            {
-                Debug.LogWarning("Vignette missing");
-                enabled = false;
-                return;
-            }
-            knockbackHandler = GetComponent<PlayerKnockbackHandler>();
-
-            vignetteSettings.active = true;
-            vignetteSettings.intensity.overrideState = true;
-            vignetteSettings.smoothness.overrideState = true;
-
-            hits = _minHits;
-            vignetteSettings.intensity.value = 0f;
-
-            // Fix first-frame evaluation
-            vignetteSettings.intensity.value = 0.0001f;
-            vignetteSettings.intensity.value = 0f;
-
-            restoreTimer = restoreDelay;
+            _health = health;
+            _knockback = knockback;
         }
 
-        private void Update()
+        public int Hits => _health.Hits;
+        public int MaxHits => _health.MaxHits;
+
+        public event Action<int> HitsChanged
         {
-            // Автовосстановление после таймера
-            if (hits > _minHits)
-            {
-                restoreTimer -= Time.deltaTime;
-                if (restoreTimer <= 0f)
-                {
-                    restoreTimer = restoreDelay;
-                    hits = _minHits;
-                    ChangeVignetteSmoothly(0f, smoothRestoreDuration);
-                }
-            }
+            add => _health.HitsChanged += value;
+            remove => _health.HitsChanged -= value;
         }
 
-        public void TakeDamage(Vector3 hitDirection, float force)
+        public event Action Recovered
         {
-            if (vignetteSettings == null) return;
-
-            hits = Mathf.Min(hits + 1, _maxHits);
-
-            // Вычисляем интенсивность с учетом правил
-            float targetIntensity = CalculateIntensity(hits, _maxHits);
-
-            ChangeVignetteSmoothly(targetIntensity, smoothChangeDuration);
-
-            if (knockbackHandler != null)
-                knockbackHandler.AddKnockback(hitDirection, force);
-
-            restoreTimer = restoreDelay;
+            add => _health.Recovered += value;
+            remove => _health.Recovered -= value;
         }
 
-        private float CalculateIntensity(int current, int max)
+        public void ReceiveHit(Vector3 direction, float force)
         {
-            if (current <= 1)
-                return firstHitIntensity;
-
-            if (max <= 1)
-                return 1f;
-
-            int steps = max - 1;
-            int stepIndex = current - 1;
-
-            float start = firstHitIntensity;
-            float end = 1f;
-
-            float t = Mathf.Clamp01((float)stepIndex / steps);
-
-            return Mathf.Lerp(start, end, t);
-        }
-
-        private void ChangeVignetteSmoothly(float targetValue, float duration)
-        {
-            if (vignetteCoroutine != null)
-                StopCoroutine(vignetteCoroutine);
-
-            vignetteCoroutine = StartCoroutine(SmoothlyChangeVignette(targetValue, duration));
-        }
-
-        private IEnumerator SmoothlyChangeVignette(float targetValue, float duration)
-        {
-            if (vignetteSettings == null) yield break;
-
-            float startValue = vignetteSettings.intensity.value;
-            float elapsed = 0f;
-
-            while (elapsed < duration)
-            {
-                elapsed += Time.deltaTime;
-                vignetteSettings.intensity.value = Mathf.Lerp(startValue, targetValue, elapsed / duration);
-                yield return null;
-            }
-
-            vignetteSettings.intensity.value = targetValue;
+            _health.RegisterHit();
+            _knockback.Apply(direction, force);
         }
     }
 }

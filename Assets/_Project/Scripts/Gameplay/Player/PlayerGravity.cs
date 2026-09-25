@@ -1,48 +1,41 @@
 using UnityEngine;
 
 using DreamVille.Configs;
+using DreamVille.Gameplay.Player.Ground;
 
 namespace DreamVille.Gameplay.Player
 {
-    public class PlayerGravity
+    /// <summary>Vertical velocity of the player: gravity while airborne, a small downward stick while grounded.</summary>
+    public sealed class PlayerGravity
     {
-        PlayerContext _context;
-        private PlayerConfig _settings;
-        private CharacterController _controller;
+        private readonly PlayerConfig _config;
+        private readonly IGroundSensor _ground;
         private Vector3 _velocity;
-        private bool _isMovingUp;
+
+        public PlayerGravity(PlayerConfig config, IGroundSensor ground)
+        {
+            _config = config;
+            _ground = ground;
+        }
 
         public Vector3 VerticalVelocity => _velocity;
 
-        public PlayerGravity(PlayerContext context)
+        /// <summary>
+        /// Snaps a falling grounded body to <see cref="PlayerConfig.GroundedStickSpeed"/> so the controller stays grounded,
+        /// then integrates gravity.
+        /// </summary>
+        public void Tick(float deltaTime)
         {
-            _context = context;
-            _settings = _context.Settings;
-            _controller = _context.Controller;
+            if (_ground.IsGrounded && _velocity.y < 0f)
+                _velocity.y = _config.GroundedStickSpeed;
+
+            _velocity.y += _config.Gravity * deltaTime;
         }
 
-        public void UpdateGravity()
+        /// <summary>Overrides the vertical speed, e.g. at the start of a jump.</summary>
+        public void Launch(float upwardSpeed)
         {
-            if (_isMovingUp) 
-                return;
-            if (_controller.isGrounded && _velocity.y < 0f)
-                _velocity.y = -2f;
-
-            _velocity.y += _settings.Gravity * Time.deltaTime;
-        }
-        public void SetMoveUpwords(bool isMovigUp)
-        {
-            _isMovingUp = isMovigUp;
-        }
-
-        public void SetYVelocity(float value)
-        {
-            _velocity.y = value;
-        }
-
-        public float GetYVelocity()
-        {
-            return _velocity.y;
+            _velocity.y = upwardSpeed;
         }
     }
 }

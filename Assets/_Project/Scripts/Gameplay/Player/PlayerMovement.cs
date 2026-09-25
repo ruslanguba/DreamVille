@@ -1,118 +1,85 @@
 using UnityEngine;
 
+using DreamVille.Audio;
 using DreamVille.Configs;
+using DreamVille.Gameplay.Player.Animation;
+using DreamVille.Gameplay.Player.Ground;
 using DreamVille.Input;
 
 namespace DreamVille.Gameplay.Player
 {
-    public class PlayerMovement
+    /// <summary>
+    /// Camera-relative walking: accelerates toward the walk speed, turns the body away from the camera while moving,
+    /// and feeds locomotion to the animator and footsteps to the audio.
+    /// </summary>
+    public sealed class PlayerMovement
     {
-        PlayerContext _context;
-        private PlayerConfig _settings;
-        private CharacterController _controller;
-        private Transform _bodyTransform;
-        private Transform _cameraTransform;
-        private IPlayerInput _inputReader;
-        private AnimatorHandler _animator;
-        private PlayerRotationHandler _playerRotationHandler;
+        private const float MoveInputThreshold = 0.0001f;
+        private const float MinFacingSqrMagnitude = 0.01f;
+        private const float MinTurningSpeed = 0.1f;
+
+        private readonly PlayerConfig _config;
+        private readonly IPlayerInput _input;
+        private readonly Transform _body;
+        private readonly Transform _camera;
+        private readonly IGroundSensor _ground;
+        private readonly IPlayerAnimator _animator;
+        private readonly IActorAudio _audio;
 
         private Vector3 _horizontalVelocity;
         private float _currentSpeed;
-        private float _speedMultiplier = 1;
+
+        public PlayerMovement(
+            PlayerConfig config,
+            IPlayerInput input,
+            Transform body,
+            Camera camera,
+            IGroundSensor ground,
+            IPlayerAnimator animator,
+            IActorAudio audio)
+        {
+            _config = config;
+            _input = input;
+            _body = body;
+            _camera = camera.transform;
+            _ground = ground;
+            _animator = animator;
+            _audio = audio;
+        }
 
         public Vector3 HorizontalVelocity => _horizontalVelocity;
 
-        public PlayerMovement(PlayerContext context, Camera camera, PlayerRotationHandler rotationHandler)
+        public void Tick(float deltaTime)
         {
-            _context = context;
-            _settings = _context.Settings;
-            _controller = _context.Controller;
-            _bodyTransform = _context.BodyTransform;
-            _cameraTransform = camera.transform;
-            _inputReader = _context.Input;
-            _animator = _context.AnimatorHandler;
-            _playerRotationHandler = rotationHandler;
+            Vector2 moveInput = _input.Move;
+
+            float targetSpeed = moveInput.sqrMagnitude > MoveInputThreshold ? _config.WalkSpeed : 0f;
+            _currentSpeed = Mathf.MoveTowards(_currentSpeed, targetSpeed, _config.Acceleration * deltaTime);
+
+            // Forward follows the camera, right follows the body: strafing stays relative to where the character faces.
+            Vector3 forward = Flatten(_camera.forward);
+            Vector3 right = Flatten(_body.right);
+
+            Vector3 facing = Flatten(_body.position - _camera.position);
+            if (facing.sqrMagnitude > MinFacingSqrMagnitude && _currentSpeed > MinTurningSpeed)
+                TurnToward(facing, deltaTime);
+
+            _animator.SetLocomotion(_currentSpeed, LocomotionMapper.Map(moveInput));
+            _audio.TickFootsteps(_currentSpeed > 0f && _ground.IsGrounded);
+
+            _horizontalVelocity = (forward * moveInput.y + right * moveInput.x).normalized * _currentSpeed;
         }
 
-        public void UpdateMovement()
+        private void TurnToward(Vector3 direction, float deltaTime)
         {
-            Vector2 moveInput = _inputReader.Move;
-
-            float targetSpeed = moveInput.sqrMagnitude > 0.0001f ? _settings.WalkSpeed : 0f;
-            _currentSpeed = Mathf.MoveTowards(_currentSpeed, targetSpeed, _settings.Acceleration * Time.deltaTime);
-
-            Vector3 forward = _cameraTransform.forward;
-            Vector3 right = _bodyTransform.right;
-            forward.y = 0f;
-            right.y = 0f;
-            forward.Normalize();
-            right.Normalize();
-
-            Vector3 camToPlayer = _bodyTransform.position - _cameraTransform.position;
-            camToPlayer.y = 0f;
-            Vector3 moveDir = camToPlayer.normalized;
-
-            if (moveDir.sqrMagnitude > 0.01f && _currentSpeed > 0.1f)
-            {
-                _playerRotationHandler.UpdateRotation(moveDir.normalized, _context.Settings.RotationSpeed);
-            }
-
-            SetAnimatorParams(moveInput);
-            PlayFootstepsSound(_currentSpeed > 0);
-            _horizontalVelocity = (forward * moveInput.y + right * moveInput.x).normalized * _currentSpeed * _speedMultiplier;
+            Quaternion target = Quaternion.LookRotation(direction);
+            _body.rotation = Quaternion.Slerp(_body.rotation, target, _config.RotationSpeed * deltaTime);
         }
 
-        public void ApplyMovement(Vector3 verticalVelocity)
+        private static Vector3 Flatten(Vector3 vector)
         {
-            _controller.Move((_horizontalVelocity + verticalVelocity) * Time.deltaTime);
-        }
-
-        private void SetAnimatorParams(Vector2 moveInput)
-        {
-            bool isMoving = moveInput.magnitude > 0.05f; // moving / idle
-            int moveDir = 0;
-            float multiplier = 1f;
-
-            if (isMoving)
-            {
-                bool forward = moveInput.y > 0.05f;
-                bool backward = moveInput.y < -0.05f;
-                bool right = moveInput.x > 0.05f;
-                bool left = moveInput.x < -0.05f;
-
-                if (forward)
-                {
-                    if (right) moveDir = 2;      // forward + right
-                    else if (left) moveDir = -2; // forward + left
-                    else moveDir = 1;             // forward only
-                    multiplier = 1f;
-                }
-                else if (backward)
-                {
-                    if (right) moveDir = -2;     // backward + right - played back as a left strafe
-                    else if (left) moveDir = 2;  // backward + left - played back as a right strafe
-                    else moveDir = 1;             // backward only
-                    multiplier = -1f;
-                }
-                else
-                {
-                    // pure sideways movement
-                    if (right) moveDir = 2;
-                    else if (left) moveDir = -2;
-                    multiplier = 1f;
-                }
-            }
-
-            _animator.SetSpeed(_currentSpeed);
-            _animator.SetMoving(isMoving);
-            _animator.SetMoveDirection(moveDir);
-            _animator.SetAnimSpeedMultiplier(multiplier);
-        }
-
-        private void PlayFootstepsSound(bool isMoving)
-        {
-            bool isFoottSoundPlay = isMoving && _context.Controller.isGrounded;
-            _context.Audio.TickFootsteps(isFoottSoundPlay);
+            vector.y = 0f;
+            return vector.normalized;
         }
     }
 }

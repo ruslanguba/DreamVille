@@ -1,32 +1,29 @@
 using UnityEngine;
 
-using DreamVille.Gameplay.Player;
+using DreamVille.Core.Players;
 
 namespace DreamVille.Gameplay.NPC
 {
     public class NPC_Canvas : MonoBehaviour
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
         [SerializeField] private GameObject Canvas;
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.GetComponent<PlayerContext>() != null)
-            { 
-                Canvas.SetActive(true); 
-            }
-        }
 
         private void Start()
         {
             Canvas.SetActive(false);
         }
+
+        // Checks the collider's own GameObject only, so the player's child trigger spheres do not toggle the canvas.
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent<IPlayerMarker>(out _))
+                Canvas.SetActive(true);
+        }
+
         private void OnTriggerExit(Collider other)
         {
-
-            if (other.gameObject.GetComponent<PlayerContext>() != null)
-            {
+            if (other.TryGetComponent<IPlayerMarker>(out _))
                 Canvas.SetActive(false);
-            }
         }
     }
 }

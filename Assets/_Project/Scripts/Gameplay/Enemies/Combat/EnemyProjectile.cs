@@ -43,11 +43,11 @@ namespace DreamVille.Gameplay.Enemies.Combat
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!_isInFlight || !other.TryGetComponent(out PlayerDamageReceiver player))
+            if (!_isInFlight || !other.TryGetComponent(out IHitReceiver receiver))
                 return;
 
             Vector3 knockDirection = (other.transform.position - transform.position).normalized;
-            player.TakeDamage(knockDirection, _knockbackForce);
+            receiver.ReceiveHit(knockDirection, _knockbackForce);
             Despawn();
         }
 

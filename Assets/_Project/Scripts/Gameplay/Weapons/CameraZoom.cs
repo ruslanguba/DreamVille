@@ -1,5 +1,6 @@
 using Unity.Cinemachine;
 using UnityEngine;
+using Zenject;
 
 using DreamVille.Input;
 
@@ -12,19 +13,24 @@ namespace DreamVille.Gameplay.Weapons
         [SerializeField] private float _zoomSensitivity;
         [SerializeField] private float _currentZoom;
         [SerializeField] private CinemachineOrbitalFollow _orbitalFollow;
-        [SerializeField] private IPlayerInput _inputReader;
 
+        private IPlayerInput _input;
+
+        [Inject]
+        private void Construct(IPlayerInput input)
+        {
+            _input = input;
+        }
 
         private void OnEnable()
         {
-            _orbitalFollow.GetComponentInChildren<CinemachineOrbitalFollow>();
-            _inputReader = GetComponent<IPlayerInput>();
-            _inputReader.Scroll += Zoom;
+            _input.Scroll += Zoom;
             _currentZoom = _orbitalFollow.Radius;
         }
+
         private void OnDisable()
         {
-            _inputReader.Scroll -= Zoom;
+            _input.Scroll -= Zoom;
         }
 
         public void Zoom(float zoom)

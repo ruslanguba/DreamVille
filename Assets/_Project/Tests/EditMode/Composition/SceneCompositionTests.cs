@@ -161,7 +161,7 @@ namespace DreamVille.Tests.EditMode.Composition
         {
             OpenScene(scenePath);
 
-            Assert.That(FindAll<PlayerContext>(), Is.Not.Empty, "PlayerContext is missing.");
+            Assert.That(FindAll<PlayerCharacter>(), Is.Not.Empty, "PlayerCharacter is missing.");
             Assert.That(FindAll<PlayerInputSwitch>(), Is.Not.Empty, "PlayerInputSwitch is missing.");
             Assert.That(FindAll<PillowThrowHandler>(), Is.Not.Empty, "PillowThrowHandler is missing.");
             Assert.That(FindAll<EnemyRegistry>(), Is.Not.Empty, "EnemyRegistry is missing.");

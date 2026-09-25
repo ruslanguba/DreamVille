@@ -1,5 +1,6 @@
 using Unity.Cinemachine;
 using UnityEngine;
+using Zenject;
 
 using DreamVille.Core.Players;
 using DreamVille.Input;
@@ -7,15 +8,16 @@ using DreamVille.Input;
 namespace DreamVille.Gameplay.Player
 {
     /// <summary>Turns player input reading and camera rotation on and off.</summary>
-    public class PlayerInputSwitch : MonoBehaviour, IPlayerControlSwitch
+    public sealed class PlayerInputSwitch : MonoBehaviour, IPlayerControlSwitch
     {
         private InputReader _input;
         private CinemachineInputAxisController _axisController;
 
-        private void Awake()
+        [Inject]
+        private void Construct(InputReader input, CinemachineInputAxisController axisController)
         {
-            _input = GetComponent<InputReader>();
-            _axisController = GetComponentInChildren<CinemachineInputAxisController>(true);
+            _input = input;
+            _axisController = axisController;
         }
 
         public void EnableControl() => SetEnabled(true);
@@ -24,11 +26,8 @@ namespace DreamVille.Gameplay.Player
 
         private void SetEnabled(bool value)
         {
-            if (_input != null)
-                _input.enabled = value;
-
-            if (_axisController != null)
-                _axisController.enabled = value;
+            _input.enabled = value;
+            _axisController.enabled = value;
         }
     }
 }

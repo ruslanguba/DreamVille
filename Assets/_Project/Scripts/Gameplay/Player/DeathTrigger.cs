@@ -8,9 +8,9 @@ namespace DreamVille.Gameplay.Player
     {
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out PlayerSafePosition playerSafePosition))
+            if (other.TryGetComponent(out PlayerRespawn respawn))
             {
-                playerSafePosition.ReturnPlayerToPlatform();
+                respawn.ReturnToSafePosition();
             }
 
             if (other.TryGetComponent(out EnemyHealth health))
