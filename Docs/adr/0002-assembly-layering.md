@@ -9,7 +9,7 @@ Before this step the assembly graph pointed both ways: `DreamVille.Core` held `P
 
 ## Decision
 
-Layer the thirteen script assemblies so every reference points from a feature toward the infrastructure it needs, never back. The graph below is read directly off the current `.asmdef` files under [`Assets/_Project/Scripts`](../../Assets/_Project/Scripts) — DreamVille-to-DreamVille edges only; every assembly also references whatever Unity/Zenject/UniTask packages it needs.
+Layer the fourteen script assemblies so every reference points from a feature toward the infrastructure it needs, never back. The graph below is read directly off the current `.asmdef` files under [`Assets/_Project/Scripts`](../../Assets/_Project/Scripts) — DreamVille-to-DreamVille edges only; every assembly also references whatever Unity/Zenject/UniTask packages it needs.
 
 ```mermaid
 graph LR
@@ -25,6 +25,7 @@ graph LR
     Progression[DreamVille.Progression]
     App[DreamVille.App]
     UI[DreamVille.UI]
+    Presentation[DreamVille.Presentation]
     Bootstrap[DreamVille.Bootstrap]
 
     Audio --> Configs
@@ -57,6 +58,7 @@ graph LR
     UI --> Input
     UI --> Persistence
     UI --> SceneManagement
+    Presentation --> Core
     Bootstrap --> App
     Bootstrap --> Audio
     Bootstrap --> Configs
@@ -76,13 +78,14 @@ graph LR
 Supporting rules, all verified in the current tree:
 
 - `DreamVille.Core` is a handful of interfaces and one static helper — [`IActiveSceneTracker`](../../Assets/_Project/Scripts/Core/Scenes/IActiveSceneTracker.cs) (the active-scene seam `Audio` listens to instead of `SceneManager`), [`IPlayerMarker`](../../Assets/_Project/Scripts/Core/Players/IPlayerMarker.cs), [`IPlayerControlSwitch`](../../Assets/_Project/Scripts/Core/Players/IPlayerControlSwitch.cs), [`IPlayerZone`](../../Assets/_Project/Scripts/Core/Players/IPlayerZone.cs), [`PlayerDetection`](../../Assets/_Project/Scripts/Core/Players/PlayerDetection.cs) — and nothing else.
-- Interfaces live in the module that owns the concept, not in `Core`: `IScoreService`/`IStarProgressService`/`IBestScoreService` in `Scoring`, `ISceneLoader` in `SceneManagement`, `IDialogueService`/`IDialogueState` in `Dialogue`, `IAudioService`/`IAudioSettings`/`IAudioOutput` in `Audio`, `IEnemyRegistry`/`IBulletSpawner`/`IBulletHitSource`/`IPillowThrower`/`IWeapon` in `Gameplay`, `ICursorService`/`IPauseService`/`IGameFlowService`/`IInGameMenu` in `App`. `Core` only holds a contract when the *consumer* sits below the *implementer* in the graph — the player-detection seams are the one case where that happens today (implemented by `PlayerContext`, `PlayerInputSwitch`, `PlayerDetectorTrigger` in `Gameplay`; consumed by `SceneManagement`, `Dialogue` and `UI`, all of which sit below or beside `Gameplay`).
+- Interfaces live in the module that owns the concept, not in `Core`: `IScoreService`/`IStarProgressService`/`IBestScoreService` in `Scoring`, `ISceneLoader` in `SceneManagement`, `IDialogueService`/`IDialogueState` in `Dialogue`, `IAudioService`/`IAudioSettings`/`IAudioOutput` in `Audio`, `IEnemyRegistry`/`IBulletSpawner`/`IBulletHitSource`/`IPillowThrower`/`IWeapon` in `Gameplay`, `ICursorService`/`IPauseService`/`IGameFlowService`/`IInGameMenu` in `App`. `Core` only holds a contract when the *consumer* sits below the *implementer* in the graph — the player-detection seams are the one case where that happens today (implemented by `PlayerCharacter`, `PlayerInputSwitch`, `PlayerDetectorTrigger` in `Gameplay`; consumed by `SceneManagement`, `Dialogue` and `UI`, all of which sit below or beside `Gameplay`).
 - `autoReferenced` is `false` on every DreamVille assembly except `DreamVille.Bootstrap`; a script placed outside an asmdef folder cannot silently see the whole project.
 - Namespace equals assembly name for every module (`rootNamespace` matches the asmdef `name`); the one nested case, `DreamVille.Core.Players`, is a folder inside `Core`, not a separate assembly.
 - The graph is leaner than first drafted, by design: a planned `Input → Core` edge and a planned `Dialogue → Configs` edge were both dropped in a review pass because neither module's code used anything from the other assembly — the edge was pure risk with no payoff. A planned `UI → Scoring` edge was dropped the same way: `GameplayPresenter` (in `Bootstrap`) is the only place that reads `IScoreService`, and it forwards plain floats and events into UI view components, so `UI` never needs the interface itself.
 
 ## Consequences
 
+- `DreamVille.Presentation` (added with the player composition, 2026-09-25) is the only assembly that references the render pipeline: the damage vignette listens to `IPlayerDamageState` from `Core`, so `Gameplay` no longer links URP. Nothing references `Presentation`; its component sits on the scene's `Global Volume` and is injected by the scene context.
 - The compiler enforces the layering; a future `Gameplay` change that reaches for `DreamVille.UI` fails to compile instead of surfacing as a code-review comment.
 - `DreamVille.Progression` references `DreamVille.Gameplay` and `DreamVille.Dialogue` for their public events and interfaces (`IEnemyRegistry`, `INpcReactions`) — allowed because a feature-to-feature edge for interfaces only does not create a layering cycle, and `Progression` sits one layer above both.
 - The real graph outgrew the one drafted in `.claude/refactor/specs/01-assembly-layering-and-di.md` in a few places (`Progression` needs neither `Core` nor `Scoring` directly; `UI` needs neither `Scoring` nor `Dialogue` directly) — this ADR documents the graph as it compiles today, not the original proposal.
