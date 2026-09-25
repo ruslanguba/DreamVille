@@ -4,7 +4,6 @@ using Zenject;
 using DreamVille.Gameplay.Enemies;
 using DreamVille.Gameplay.Enemies.Combat;
 using DreamVille.Gameplay.Weapons.Bullets;
-using DreamVille.Gameplay.Weapons.Pillow;
 
 namespace DreamVille.Bootstrap
 {
@@ -44,10 +43,8 @@ namespace DreamVille.Bootstrap
                 .FromComponentInNewPrefab(_enemyProjectilePrefab)
                 .UnderTransformGroup("EnemyProjectiles");
 
-            // These live on scene objects: the registry on the LevelProgressSystem
-            // prefab in Prefabs/Utilities, pillows on the player.
+            // Lives on the LevelProgressSystem prefab in Prefabs/Utilities.
             Container.BindInterfacesTo<EnemyRegistry>().FromComponentInHierarchy().AsSingle();
-            Container.BindInterfacesTo<PillowThrowHandler>().FromComponentInHierarchy().AsSingle();
         }
     }
 }

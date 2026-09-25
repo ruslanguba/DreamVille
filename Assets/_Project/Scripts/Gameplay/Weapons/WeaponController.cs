@@ -1,41 +1,33 @@
-using UnityEngine;
+using System;
 using Zenject;
 
 using DreamVille.Input;
 
 namespace DreamVille.Gameplay.Weapons
 {
-    public class WeaponController : MonoBehaviour
+    /// <summary>Maps the fire input to the equipped weapon. Plain class: it only needs input and a weapon.</summary>
+    public sealed class WeaponController : IInitializable, IDisposable
     {
-        [SerializeField] private GunBase _currentGun;
+        private readonly IPlayerInput _input;
+        private readonly IWeapon _weapon;
 
-        private IWeapon Weapon => _currentGun;
-
-        private IPlayerInput _input;
-
-        [Inject]
-        private void Construct(IPlayerInput input)
+        public WeaponController(IPlayerInput input, IWeapon weapon)
         {
-            _input = input;
+            _input = input ?? throw new ArgumentNullException(nameof(input));
+            _weapon = weapon ?? throw new ArgumentNullException(nameof(weapon));
         }
 
-        // Gun visibility is controlled by the pickup (CollectableGun), not by the input controller.
-        private void OnEnable()
+        public void Initialize()
         {
-            _input.FirePressed += Fire;
+            _input.FirePressed += OnFirePressed;
         }
 
-        private void OnDisable()
+        public void Dispose()
         {
-            _input.FirePressed -= Fire;
+            _input.FirePressed -= OnFirePressed;
         }
 
-        private void Fire()
-        {
-            // Compares the serialized Component reference, not the interface, so a destroyed
-            // gun is caught by Unity's overridden null check instead of producing a fake non-null.
-            if (_currentGun != null && Weapon.CanShoot())
-                Weapon.TryShoot();
-        }
+        // The single readiness check lives in TryShoot.
+        private void OnFirePressed() => _weapon.TryShoot();
     }
 }

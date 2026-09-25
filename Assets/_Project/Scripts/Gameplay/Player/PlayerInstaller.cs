@@ -9,6 +9,8 @@ using DreamVille.Configs;
 using DreamVille.Gameplay.Damage;
 using DreamVille.Gameplay.Player.Animation;
 using DreamVille.Gameplay.Player.Ground;
+using DreamVille.Gameplay.Weapons;
+using DreamVille.Gameplay.Weapons.Aiming;
 using DreamVille.Input;
 
 namespace DreamVille.Gameplay.Player
@@ -31,6 +33,7 @@ namespace DreamVille.Gameplay.Player
 
             BindPrefabComponents();
             BindPlayerSystems();
+            BindWeapons();
         }
 
         private void BindPrefabComponents()
@@ -65,6 +68,14 @@ namespace DreamVille.Gameplay.Player
             Container.BindInterfacesAndSelfTo<PlayerJump>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerHealth>().AsSingle();
             Container.BindInterfacesTo<PlayerMotor>().AsSingle();
+        }
+
+        private void BindWeapons()
+        {
+            // includeInactive: the Lobby_01 gun pickup keeps the gun deactivated until it is collected.
+            Container.BindInterfacesAndSelfTo<PillowGun>().FromComponentInHierarchy(includeInactive: true).AsSingle();
+            Container.BindInterfacesAndSelfTo<WeaponController>().AsSingle();
+            Container.Bind<ISphereCaster>().To<PhysicsSphereCaster>().AsSingle();
         }
     }
 }

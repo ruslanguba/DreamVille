@@ -164,7 +164,7 @@ namespace DreamVille.Tests.EditMode.Composition
 
             Assert.That(FindAll<PlayerCharacter>(), Is.Not.Empty, "PlayerCharacter is missing.");
             Assert.That(FindAll<PlayerInputSwitch>(), Is.Not.Empty, "PlayerInputSwitch is missing.");
-            Assert.That(FindAll<PillowThrowHandler>(), Is.Not.Empty, "PillowThrowHandler is missing.");
+            Assert.That(FindAll<PillowLauncher>(), Is.Not.Empty, "PillowLauncher is missing.");
             Assert.That(FindAll<EnemyRegistry>(), Is.Not.Empty, "EnemyRegistry is missing.");
             Assert.That(FindAll<DialogueManager>(), Is.Not.Empty, "DialogueManager is missing.");
             Assert.That(FindAll<GameInput>(), Is.Not.Empty, "GameInput is missing.");

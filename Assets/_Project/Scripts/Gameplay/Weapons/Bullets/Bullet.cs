@@ -11,7 +11,7 @@ namespace DreamVille.Gameplay.Weapons.Bullets
     /// Pooled projectile. Flies until it either exhausts <see cref="BulletConfig.MaxCollisionCount"/>
     /// collisions or its lifetime expires, then returns itself to the owning <see cref="BulletPool"/>.
     /// </summary>
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody), typeof(SphereCollider))]
     public class Bullet : MonoBehaviour
     {
         /// <summary>Raised on every collision while the bullet is in flight.</summary>
@@ -22,6 +22,7 @@ namespace DreamVille.Gameplay.Weapons.Bullets
 
         private BulletPool _pool;
         private Rigidbody _rb;
+        private SphereCollider _collider;
         private int _hitCount;
         private BulletConfig _config;
         private bool _isInFlight;
@@ -30,6 +31,7 @@ namespace DreamVille.Gameplay.Weapons.Bullets
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
+            _collider = GetComponent<SphereCollider>();
         }
 
         private void OnDisable()
@@ -50,10 +52,14 @@ namespace DreamVille.Gameplay.Weapons.Bullets
             _pool = pool;
         }
 
-        /// <summary>Prepares a freshly pooled bullet for a new shot. The lifetime starts in <see cref="Launch"/>.</summary>
+        /// <summary>
+        /// Prepares a freshly pooled bullet for a new shot. The collider takes the config's radius, the one the aim
+        /// preview sweeps. The lifetime starts in <see cref="Launch"/>.
+        /// </summary>
         public void Init(BulletConfig config)
         {
             _config = config;
+            _collider.radius = config.CollisionRadius;
             _hitCount = 0;
             _isInFlight = true;
         }

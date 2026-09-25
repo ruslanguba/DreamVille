@@ -47,7 +47,8 @@ namespace DreamVille.Bootstrap
             SubscribeUi();
             SubscribeServices();
 
-            _pillowThrower.Initialize();
+            // The player's pillows are set up in Awake, before any kernel initializes: pull their state now.
+            ShowPillows();
 
             _ui.EnemyCounter.SetEnemiesRemaining(_enemyRegistry.TotalEnemies);
             _enemyRegistry.EnemyKilled += OnEnemyKilled;
@@ -67,9 +68,7 @@ namespace DreamVille.Bootstrap
             _starProgressService.StarProgressChanged += _ui.StarsUI.SetStarProgress;
             _starProgressService.StarUnlocked += _ui.StarsUI.UnlockStar;
 
-            _pillowThrower.PillowCountChanged += _ui.PillowUI.SpawnIcons;
-            _pillowThrower.Thrown += _ui.PillowUI.HidePillow;
-            _pillowThrower.Recalled += _ui.PillowUI.ShowPillow;
+            _pillowThrower.Changed += ShowPillows;
 
             _bulletHitSource.BulletHit += _ui.RicochetUI.OnBulletHit;
         }
@@ -80,9 +79,7 @@ namespace DreamVille.Bootstrap
             _starProgressService.StarProgressChanged -= _ui.StarsUI.SetStarProgress;
             _starProgressService.StarUnlocked -= _ui.StarsUI.UnlockStar;
 
-            _pillowThrower.PillowCountChanged -= _ui.PillowUI.SpawnIcons;
-            _pillowThrower.Thrown -= _ui.PillowUI.HidePillow;
-            _pillowThrower.Recalled -= _ui.PillowUI.ShowPillow;
+            _pillowThrower.Changed -= ShowPillows;
 
             _bulletHitSource.BulletHit -= _ui.RicochetUI.OnBulletHit;
         }
@@ -103,6 +100,11 @@ namespace DreamVille.Bootstrap
         private void OnAllEnemiesKilled()
         {
             _bestScore.TrySave(_scoreService.TotalScore);
+        }
+
+        private void ShowPillows()
+        {
+            _ui.PillowUI.Show(_pillowThrower.Available, _pillowThrower.InHand);
         }
 
         private void OnEnemyKilled(int remainingEnemies, int collisionsCount)

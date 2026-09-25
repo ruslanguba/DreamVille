@@ -2,19 +2,16 @@ using System;
 
 namespace DreamVille.Gameplay.Weapons.Pillow
 {
-    /// <summary>Throws and recalls the player's pillow platforms.</summary>
+    /// <summary>What the HUD and the level see of the player's pillows: state to pull, not deltas to count.</summary>
     public interface IPillowThrower
     {
-        /// <summary>Raised after a pillow is thrown.</summary>
-        event Action Thrown;
+        /// <summary>Pillows the player may use in this level.</summary>
+        int Available { get; }
 
-        /// <summary>Raised after a recalled pillow arrives back at the spawn point.</summary>
-        event Action Recalled;
+        /// <summary>Available pillows currently in hand, ready to be thrown.</summary>
+        int InHand { get; }
 
-        /// <summary>Raised once during initialization with the number of available pillow slots.</summary>
-        event Action<int> PillowCountChanged;
-
-        /// <summary>Called by the presenter until phase 4.4 moves pillow setup into the player prefab.</summary>
-        void Initialize();
+        /// <summary>Raised whenever <see cref="Available"/> or <see cref="InHand"/> changed (throw, arrival, unlock).</summary>
+        event Action Changed;
     }
 }
