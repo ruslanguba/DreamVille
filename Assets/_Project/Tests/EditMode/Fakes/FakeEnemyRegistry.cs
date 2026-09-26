@@ -13,6 +13,13 @@ namespace DreamVille.Tests.EditMode.Fakes
         public int TotalEnemies { get; set; }
         public int RemainingEnemies { get; set; }
 
+        /// <summary>Raises one kill with <paramref name="remaining"/> enemies left and the killing hit's ricochet count.</summary>
+        public void RaiseEnemyKilled(int remaining, int ricochets)
+        {
+            RemainingEnemies = remaining;
+            EnemyKilled?.Invoke(remaining, ricochets);
+        }
+
         public void RaiseAllEnemiesKilled()
         {
             RemainingEnemies = 0;

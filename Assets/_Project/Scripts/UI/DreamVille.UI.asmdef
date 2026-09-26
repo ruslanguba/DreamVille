@@ -10,6 +10,7 @@
         "DreamVille.Input",
         "DreamVille.Persistence",
         "DreamVille.SceneManagement",
+        "DreamVille.Scoring",
         "UniTask",
         "Unity.InputSystem",
         "Unity.Localization",

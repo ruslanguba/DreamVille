@@ -32,15 +32,25 @@ namespace DreamVille.Scoring
             _progress = progress;
         }
 
+        /// <summary>
+        /// Adds <paramref name="score"/>, raises progress for the current star and unlocks every star
+        /// whose threshold is now reached. When a star unlocks, progress is raised again for the new
+        /// current star, so a score that crosses a threshold shows its overflow on the next meter at once.
+        /// </summary>
         public void AddScore(float score)
         {
             _totalScore += score;
             UpdateCurrentStarProgress();
 
+            bool unlockedAny = false;
             while (CanUnlockNextStar())
             {
                 UnlockStar();
+                unlockedAny = true;
             }
+
+            if (unlockedAny)
+                UpdateCurrentStarProgress();
         }
 
         private void UpdateCurrentStarProgress()

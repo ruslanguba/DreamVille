@@ -80,6 +80,31 @@ namespace DreamVille.Tests.EditMode.Scoring
         }
 
         [Test]
+        public void AddScore_CrossingThresholdWithOverflow_RaisesProgressForNextStar()
+        {
+            _service.AddScore(40f);
+            var progress = new List<(int Index, float Value)>();
+            _service.StarProgressChanged += (index, value) => progress.Add((index, value));
+
+            _service.AddScore(20f);
+
+            Assert.That(progress[progress.Count - 1].Index, Is.EqualTo(1));
+            Assert.That(progress[progress.Count - 1].Value, Is.EqualTo(0.2f).Within(1e-5f));
+        }
+
+        [Test]
+        public void AddScore_CrossingLastThreshold_RaisesNoProgressBeyondLastStar()
+        {
+            var progressIndices = new List<int>();
+            _service.StarProgressChanged += (index, _) => progressIndices.Add(index);
+
+            _service.AddScore(160f);
+
+            Assert.That(progressIndices, Has.None.GreaterThanOrEqualTo(3));
+            Assert.That(_service.UnlockedStars, Is.EqualTo(3));
+        }
+
+        [Test]
         public void UnlockStar_PersistsStarCountThroughRepository()
         {
             _service.AddScore(50f);
