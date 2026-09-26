@@ -56,7 +56,7 @@ refactor documented below is the author's.
 - **UniTask with cancellation, not coroutines**, in the refactored modules: bullet
   lifetime, pillow recall, NPC reactions and scene loading each own a
   `CancellationToken` tied to the object's lifetime.
-- **318 EditMode tests**, including a scene-composition guard
+- **357 EditMode tests**, including a scene-composition guard
   ([`SceneCompositionTests`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs))
   that opens every build scene and checks its installers and catalog references, and
   prefab tests that pin the player's composition, so a mis-wired scene fails a test run
@@ -207,7 +207,7 @@ press Play.
 
 ## Tests
 
-Window → General → Test Runner → EditMode → Run All. 318 tests (317 pass, 1
+Window → General → Test Runner → EditMode → Run All. 357 tests (355 pass, 2
 intentionally skipped). PlayMode tests and CI are not set up yet.
 
 ## Status and roadmap
@@ -225,10 +225,11 @@ that matches the bullet, pillow rules in a plain `PillowRack`, and pillow unlock
 persisted per save and capped per level; a single interaction channel
 (`IInteractable.OnInteract(in InteractionContext)`) replacing eleven hand-rolled
 "something happens when it is hit or touched" classes with two hosts (`Interactable`,
-`Pickup`) and a small vocabulary of sibling `IInteractionEffect` components; 318
-EditMode tests; five ADRs.
+`Pickup`) and a small vocabulary of sibling `IInteractionEffect` components; the lobby
+scenario as a `LobbyDirector` over composable `KillGroupObjective`s and `Door`s, with
+every level's cast (`LevelActors`) required at composition; 357 EditMode tests; five ADRs.
 
-**Next:** lobby objectives (roadmap 4.7); coroutines to UniTask, including
+**Next:** coroutines to UniTask, including
 `EnemyHideout`'s door tween (roadmap 4.8); UI presenters beyond `GameplayPresenter`
 (phase 5); CI with game-ci; a playable build.
 
