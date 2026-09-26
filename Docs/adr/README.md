@@ -9,3 +9,4 @@ This folder records the decisions that shape DreamVille's codebase: the composit
 | [0003](0003-persistence-abstraction.md) | Persistence abstraction | Accepted | 2026-09-12 |
 | [0004](0004-scene-catalog-and-async.md) | Scene catalog and UniTask for gameplay async | Accepted | 2026-09-12 |
 | [0005](0005-interaction-effects-as-components.md) | Interaction effects as sibling components | Accepted | 2026-09-26 |
+| [0006](0006-unitask-lifetimes.md) | UniTask lifetimes for coroutines: one-shot vs enable-bound | Accepted | 2026-09-26 |

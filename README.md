@@ -53,10 +53,20 @@ refactor documented below is the author's.
   `Interactable` + `ToggleLightEffect` + `PlayAudioSourceEffect` — visible on
   [`InteractableLamp.prefab`](Assets/_Project/Prefabs/InteractableLamp.prefab). See
   [ADR 0005](Docs/adr/0005-interaction-effects-as-components.md).
-- **UniTask with cancellation, not coroutines**, in the refactored modules: bullet
-  lifetime, pillow recall, NPC reactions and scene loading each own a
-  `CancellationToken` tied to the object's lifetime.
-- **357 EditMode tests**, including a scene-composition guard
+- **UniTask with cancellation, not coroutines, anywhere in Gameplay.** Bullet lifetime,
+  pillow recall, scene loading, the NPC queue, ambient dialogue, NPC shooters, floating
+  props and the enemy hideout's door tween all wait through
+  [`GameTime`](Assets/_Project/Scripts/Core/Async/GameTime.cs) on scaled time. Two
+  lifetime models cover every case: one-shot sequences die with their object
+  (`GetCancellationTokenOnDestroy`), endless ambient loops start in `Start`, stop in
+  `OnDisable` and restart in `OnEnable`.
+  [`CoroutineGuardTests`](Assets/_Project/Tests/EditMode/Architecture/CoroutineGuardTests.cs)
+  pins a six-file UI allow-list that may only shrink. `NPCAnimationHandler.SetState`
+  became the single owner of an NPC's pose (one enum instead of five bools), and a
+  content fix to `PluhNPC.controller` removed an animation-switching bug (mood changes
+  no longer detour through Idle). See [ADR 0006](Docs/adr/0006-unitask-lifetimes.md).
+- **403 EditMode tests** (401 pass, 2 intentionally skipped), including a
+  scene-composition guard
   ([`SceneCompositionTests`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs))
   that opens every build scene and checks its installers and catalog references, and
   prefab tests that pin the player's composition, so a mis-wired scene fails a test run
@@ -153,7 +163,8 @@ Full decision records: [ADR 0001 — Zenject composition root](Docs/adr/0001-zen
 [ADR 0002 — assembly layering](Docs/adr/0002-assembly-layering.md),
 [ADR 0003 — persistence abstraction](Docs/adr/0003-persistence-abstraction.md),
 [ADR 0004 — scene catalog and UniTask for gameplay async](Docs/adr/0004-scene-catalog-and-async.md),
-[ADR 0005 — interaction effects as sibling components](Docs/adr/0005-interaction-effects-as-components.md).
+[ADR 0005 — interaction effects as sibling components](Docs/adr/0005-interaction-effects-as-components.md),
+[ADR 0006 — UniTask lifetimes for coroutines](Docs/adr/0006-unitask-lifetimes.md).
 
 ## Where to look first
 
@@ -207,7 +218,7 @@ press Play.
 
 ## Tests
 
-Window → General → Test Runner → EditMode → Run All. 357 tests (355 pass, 2
+Window → General → Test Runner → EditMode → Run All. 403 tests (401 pass, 2
 intentionally skipped). PlayMode tests and CI are not set up yet.
 
 ## Status and roadmap
@@ -227,11 +238,15 @@ persisted per save and capped per level; a single interaction channel
 "something happens when it is hit or touched" classes with two hosts (`Interactable`,
 `Pickup`) and a small vocabulary of sibling `IInteractionEffect` components; the lobby
 scenario as a `LobbyDirector` over composable `KillGroupObjective`s and `Door`s, with
-every level's cast (`LevelActors`) required at composition; 357 EditMode tests; five ADRs.
+every level's cast (`LevelActors`) required at composition; coroutines replaced by
+UniTask everywhere in Gameplay (NPC queue, ambient dialogue, NPC shooters, floating
+props, the enemy hideout's door tween) behind two lifetime models — one-shot on the
+destroy token, endless loops bound to `OnEnable`/`OnDisable` — plus the `PluhNPC`
+animation-switching fix; 403 EditMode tests; six ADRs.
 
-**Next:** coroutines to UniTask, including
-`EnemyHideout`'s door tween (roadmap 4.8); UI presenters beyond `GameplayPresenter`
-(phase 5); CI with game-ci; a playable build.
+**Next:** phase 5 — UI presenters (HUD MVP, menus, data-driven dialogues, and the
+remaining UI coroutines `CoroutineGuardTests` still allows); then CI with game-ci and a
+playable build.
 
 ## Documentation
 
