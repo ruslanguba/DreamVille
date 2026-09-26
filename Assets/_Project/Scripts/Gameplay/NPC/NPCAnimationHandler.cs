@@ -7,6 +7,10 @@ namespace DreamVille.Gameplay.NPC
     public class NPCAnimationHandler : MonoBehaviour
     {
         private Animator _animator;
+
+        [SerializeField, Tooltip("Mood the NPC shows from its first frame, unless a reaction was requested before Start.")]
+        private NpcState _startState;
+
         [SerializeField] private bool _isTalk;
         [SerializeField] private bool _isGreeting;
         [SerializeField] private bool _isApplause;
@@ -14,6 +18,9 @@ namespace DreamVille.Gameplay.NPC
         [SerializeField] private bool _isIdle;
 
         private HashSet<string> _boolParameters;
+
+        /// <summary>Authored start mood; read by content tests.</summary>
+        public NpcState StartState => _startState;
 
         private void Awake()
         {

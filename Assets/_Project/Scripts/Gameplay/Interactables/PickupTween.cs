@@ -1,3 +1,4 @@
+using DreamVille.Core.Async;
 using UnityEngine;
 
 namespace DreamVille.Gameplay.Interactables
@@ -8,14 +9,8 @@ namespace DreamVille.Gameplay.Interactables
         /// <summary>Scale multiplier reached at the end of the grow phase and held at the start of the flight.</summary>
         public const float GrowFactor = 1.3f;
 
-        /// <summary>elapsed / duration clamped to [0, 1]; a non-positive duration is complete at once.</summary>
-        public static float Progress(float elapsed, float duration)
-        {
-            if (duration <= 0f)
-                return 1f;
-
-            return Mathf.Clamp01(elapsed / duration);
-        }
+        /// <inheritdoc cref="Tween.Progress"/>
+        public static float Progress(float elapsed, float duration) => Tween.Progress(elapsed, duration);
 
         /// <summary>Scale multiplier while growing: 1 → <see cref="GrowFactor"/>.</summary>
         public static float GrowScale(float progress) => Mathf.Lerp(1f, GrowFactor, progress);
