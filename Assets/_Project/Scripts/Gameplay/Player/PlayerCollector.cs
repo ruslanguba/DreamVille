@@ -1,28 +1,16 @@
 using UnityEngine;
-using Zenject;
 
 using DreamVille.Gameplay.Interactables;
-using DreamVille.Scoring;
 
 namespace DreamVille.Gameplay.Player
 {
-    public class PlayerCollector : MonoBehaviour
+    /// <summary>The player's touch sender: every <see cref="IInteractable"/> its trigger overlaps receives a touch interaction.</summary>
+    public sealed class PlayerCollector : MonoBehaviour
     {
-        private IScoreService _scoreService;
-
-        [Inject]
-        public void Construct(IScoreService scoreService)
-        {
-            _scoreService = scoreService;
-        }
-
         private void OnTriggerEnter(Collider other)
         {
-            if (!other.TryGetComponent(out Collectable collectable))
-                return;
-
-            collectable.Collect(transform);
-            _scoreService.AddScore(collectable.ScoreToAdd);
+            if (other.TryGetComponent(out IInteractable target))
+                target.OnInteract(InteractionContext.Touch(transform));
         }
     }
 }

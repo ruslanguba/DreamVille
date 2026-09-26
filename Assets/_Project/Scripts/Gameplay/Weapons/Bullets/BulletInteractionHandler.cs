@@ -4,7 +4,8 @@ using DreamVille.Gameplay.Interactables;
 
 namespace DreamVille.Gameplay.Weapons.Bullets
 {
-    public class BulletInteractionHandler : MonoBehaviour
+    /// <summary>The shot sender: the <see cref="IInteractable"/> a bullet hits receives a shot interaction.</summary>
+    public sealed class BulletInteractionHandler : MonoBehaviour
     {
         private Bullet _bullet;
 
@@ -25,8 +26,8 @@ namespace DreamVille.Gameplay.Weapons.Bullets
 
         private void OnHit(BulletHitInfo info)
         {
-            if (info.Target.TryGetComponent(out IInteractable interactable))
-                interactable.OnInteract();
+            if (info.Target.TryGetComponent(out IInteractable target))
+                target.OnInteract(InteractionContext.Shot(transform));
         }
     }
 }

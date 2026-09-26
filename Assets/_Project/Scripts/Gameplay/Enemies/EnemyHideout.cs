@@ -1,35 +1,46 @@
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-using DreamVille.Gameplay.Enemies;
+using DreamVille.Gameplay.Interactables;
 
-namespace DreamVille.Gameplay.Interactables
+namespace DreamVille.Gameplay.Enemies
 {
-    /// <summary>Box that hides enemies, releases them when interacted with and swallows them again on their return.</summary>
-    public class InteractableBox : InteractableBase, IEnemyHideout
+    /// <summary>
+    /// A box or fridge that hides enemies: an interaction opens it and sends every hidden enemy fleeing to a random
+    /// point; an enemy that comes back is swallowed again.
+    /// </summary>
+    public sealed class EnemyHideout : MonoBehaviour, IInteractionEffect, IEnemyHideout
     {
-        [SerializeField] Animator _animator;
+        // Frozen names: prefab-instance overrides in Level_03, Level_04 and Max/* address these fields by property path.
         [SerializeField] private List<Enemy> _enemies;
         [SerializeField] private List<Transform> _nextPointsTransform;
 
-        [SerializeField] private bool _isRandomNextPoin;
         [SerializeField] private float _hideDuration;
         [SerializeField] private float _openDuration;
         [SerializeField] private float _closeDuration;
 
-        private void Start()
+        private Animator _animator;
+
+        private void Awake()
         {
             _animator = GetComponentInChildren<Animator>();
-            foreach (var enemy in _enemies)
+            if (_animator == null)
+                Debug.LogError($"[{nameof(EnemyHideout)}] No Animator on this object or its children.", this);
+        }
+
+        private void Start()
+        {
+            foreach (Enemy enemy in _enemies)
             {
                 enemy.transform.position = transform.position;
                 enemy.gameObject.SetActive(false);
             }
+
             CloseDoor();
         }
 
-        public override void OnInteract()
+        public void Apply(in InteractionContext context)
         {
             StartEnemyRun();
         }
@@ -39,36 +50,36 @@ namespace DreamVille.Gameplay.Interactables
             StartCoroutine(MoveAndShrink(enemy));
         }
 
-
-        public void CloseDoor()
+        private void CloseDoor()
         {
-            _animator.SetBool("isOpen", false);
-            if(_enemies.Count > 0)
-                _animator.SetBool("isEnemy", true);
+            _animator.SetBool(AnimParams.IsOpen, false);
+            if (_enemies.Count > 0)
+                _animator.SetBool(AnimParams.IsEnemy, true);
         }
 
         private void StartEnemyRun()
         {
-            _animator.SetTrigger("isOpen");
-            for (int i = _enemies.Count -1; i >= 0; i--)
+            // The closet and fridge controllers declare isOpen as a Bool; the trigger call is kept as it always was.
+            _animator.SetTrigger(AnimParams.IsOpen);
+            for (int i = _enemies.Count - 1; i >= 0; i--)
             {
-                int rndIndex = Random.Range(0, _nextPointsTransform.Count);
+                int pointIndex = Random.Range(0, _nextPointsTransform.Count);
                 Enemy enemy = _enemies[i];
                 enemy.transform.position = transform.position + transform.forward;
                 enemy.gameObject.SetActive(true);
                 enemy.transform.localScale = Vector3.one;
-                enemy.FleeTo(_nextPointsTransform[rndIndex]);
+                enemy.FleeTo(_nextPointsTransform[pointIndex]);
                 _enemies.RemoveAt(i);
             }
         }
 
-        public IEnumerator MoveAndShrink(Enemy enemy)
+        private IEnumerator MoveAndShrink(Enemy enemy)
         {
             Vector3 startPos = enemy.transform.position;
             Vector3 endPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
             Vector3 startScale = enemy.transform.localScale;
             Vector3 endScale = Vector3.one * 0.01f;
-            _animator.SetBool("isOpen", true);
+            _animator.SetBool(AnimParams.IsOpen, true);
             yield return new WaitForSeconds(_openDuration);
             float t = 0f;
 

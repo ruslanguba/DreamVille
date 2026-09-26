@@ -4502,6 +4502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25dbd1efe4057b4794342b874f89da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _light: {fileID: 746672056}
 --- !u!64 &150999969
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -8920,6 +8921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25dbd1efe4057b4794342b874f89da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _light: {fileID: 478881992}
 --- !u!64 &374967787
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11942,6 +11944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25dbd1efe4057b4794342b874f89da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _light: {fileID: 2049366038}
 --- !u!64 &491224222
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -20056,6 +20059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25dbd1efe4057b4794342b874f89da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _light: {fileID: 1061268131}
 --- !u!64 &876898214
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -25061,6 +25065,17 @@ PrefabInstance:
       addedObject: {fileID: 1301226106}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+--- !u!114 &1088994475 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2516464366815981834, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+  m_PrefabInstance: {fileID: 1088994474}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 353f36843f13fb84e9df4e33de8f0747, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1089060124
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27101,8 +27116,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2723250760080877088, guid: 75a7808c281e5604d8178c4798b3f5d8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1194836591}
   m_SourcePrefab: {fileID: 100100000, guid: 75a7808c281e5604d8178c4798b3f5d8, type: 3}
+--- !u!1 &1194836590 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2723250760080877088, guid: 75a7808c281e5604d8178c4798b3f5d8, type: 3}
+  m_PrefabInstance: {fileID: 1194836589}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1194836591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194836590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a015fafeb86e1cb47aaa177b6d546359, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Progression::DreamVille.Progression.LevelActors
+  _finalZone: {fileID: 1088994475}
+  _finalNpc: {fileID: 2076395064}
 --- !u!1 &1195059050
 GameObject:
   m_ObjectHideFlags: 0
@@ -30194,6 +30231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25dbd1efe4057b4794342b874f89da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _light: {fileID: 257992460}
 --- !u!64 &1295277289
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -31207,6 +31245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25dbd1efe4057b4794342b874f89da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _light: {fileID: 2063010864}
 --- !u!64 &1330314189
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -34667,6 +34706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25dbd1efe4057b4794342b874f89da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _light: {fileID: 2043877369}
 --- !u!64 &1476554190
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -36574,6 +36614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25dbd1efe4057b4794342b874f89da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _light: {fileID: 1747441398}
 --- !u!64 &1541251736
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -37911,6 +37952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25dbd1efe4057b4794342b874f89da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _light: {fileID: 803325808}
 --- !u!64 &1590457884
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -39607,6 +39649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25dbd1efe4057b4794342b874f89da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _light: {fileID: 912990441}
 --- !u!64 &1723133494
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -40850,6 +40893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25dbd1efe4057b4794342b874f89da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _light: {fileID: 697245006}
 --- !u!64 &1812454673
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -43069,6 +43113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25dbd1efe4057b4794342b874f89da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _light: {fileID: 2036677969}
 --- !u!64 &1870837994
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -44715,12 +44760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffc51c02485ddfb4496e6f09914098ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scoreToAdd: 0
-  _upScaleTime: 0.3
-  _hideScaleTime: 0.5
-  _targetPoint: {fileID: 0}
-  _collider: {fileID: 0}
-  pillowGun: {fileID: 1479415860}
+  _weapon: {fileID: 1479415860}
 --- !u!4 &1895493418 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1823723804428164345, guid: 7cdbb0494de07d243a06b6e8b058445d, type: 3}
@@ -45604,6 +45644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25dbd1efe4057b4794342b874f89da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _light: {fileID: 1429764387}
 --- !u!64 &1944222737
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -47546,8 +47587,11 @@ PrefabInstance:
       propertyPath: m_IsKinematic
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7829918020308766116, guid: 7cdbb0494de07d243a06b6e8b058445d, type: 3}
+    - target: {fileID: 7829918020308766116, guid: 7cdbb0494de07d243a06b6e8b058445d, type: 3}
+      propertyPath: _scoreToAdd
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4443367052795959382, guid: 7cdbb0494de07d243a06b6e8b058445d, type: 3}
     m_AddedGameObjects:
@@ -47613,6 +47657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25dbd1efe4057b4794342b874f89da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _light: {fileID: 1212131051}
 --- !u!64 &2053319033
 MeshCollider:
   m_ObjectHideFlags: 0
