@@ -2054,6 +2054,10 @@ PrefabInstance:
       propertyPath: _isGreeting
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3607670399235884844, guid: 7c42b3e06d71bc64f8faa167bb0138d4, type: 3}
+      propertyPath: _startState
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7966643187028395988, guid: 7c42b3e06d71bc64f8faa167bb0138d4, type: 3}
       propertyPath: m_Name
       value: PluchNpc
@@ -2499,6 +2503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199fc9b06ddbd6f4f93e82b401a75531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startState: 2
   _isTalk: 0
   _isGreeting: 1
   _isApplause: 0
@@ -6497,6 +6502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199fc9b06ddbd6f4f93e82b401a75531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startState: 0
   _isTalk: 0
   _isGreeting: 0
   _isApplause: 0

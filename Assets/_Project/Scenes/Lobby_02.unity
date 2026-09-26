@@ -6573,6 +6573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199fc9b06ddbd6f4f93e82b401a75531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startState: 1
   _isTalk: 1
   _isGreeting: 0
   _isApplause: 0
@@ -12334,6 +12335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199fc9b06ddbd6f4f93e82b401a75531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startState: 1
   _isTalk: 1
   _isGreeting: 0
   _isApplause: 0
@@ -17764,6 +17766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199fc9b06ddbd6f4f93e82b401a75531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startState: 1
   _isTalk: 1
   _isGreeting: 0
   _isApplause: 0
