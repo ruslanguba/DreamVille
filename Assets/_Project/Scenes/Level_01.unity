@@ -272,9 +272,9 @@ MonoBehaviour:
   _radius: 20
   _minSpeed: 2
   _maxSpeed: 4
-  minY: -50
-  maxY: 50
-  stopTime: 1
+  _minY: -50
+  _maxY: 50
+  _stopTime: 1
 --- !u!4 &58583298 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
@@ -758,9 +758,9 @@ MonoBehaviour:
   _radius: 20
   _minSpeed: 2
   _maxSpeed: 4
-  minY: -50
-  maxY: 50
-  stopTime: 1
+  _minY: -50
+  _maxY: 50
+  _stopTime: 1
 --- !u!4 &146165617 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
@@ -2651,9 +2651,9 @@ MonoBehaviour:
   _radius: 20
   _minSpeed: 2
   _maxSpeed: 4
-  minY: -50
-  maxY: 50
-  stopTime: 1
+  _minY: -50
+  _maxY: 50
+  _stopTime: 1
 --- !u!4 &465152213 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
@@ -2860,9 +2860,9 @@ MonoBehaviour:
   _radius: 20
   _minSpeed: 2
   _maxSpeed: 4
-  minY: -50
-  maxY: 50
-  stopTime: 1
+  _minY: -50
+  _maxY: 50
+  _stopTime: 1
 --- !u!4 &506257815 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
@@ -3194,9 +3194,9 @@ MonoBehaviour:
   _radius: 20
   _minSpeed: 2
   _maxSpeed: 4
-  minY: -50
-  maxY: 50
-  stopTime: 1
+  _minY: -50
+  _maxY: 50
+  _stopTime: 1
 --- !u!4 &530306431 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
@@ -4596,24 +4596,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
   m_PrefabInstance: {fileID: 1711759857}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &859670355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 859670351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cf7635d1f12dfa478a01fd252fd6c16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _radius: 5
-  _minSpeed: 2
-  _maxSpeed: 4
-  minY: -50
-  maxY: 50
-  stopTime: 2
 --- !u!114 &859670356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4629,9 +4611,9 @@ MonoBehaviour:
   _radius: 20
   _minSpeed: 2
   _maxSpeed: 4
-  minY: -50
-  maxY: 50
-  stopTime: 1
+  _minY: -50
+  _maxY: 50
+  _stopTime: 1
 --- !u!4 &859670357 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
@@ -5987,9 +5969,9 @@ MonoBehaviour:
   _radius: 20
   _minSpeed: 2
   _maxSpeed: 4
-  minY: -50
-  maxY: 50
-  stopTime: 1
+  _minY: -50
+  _maxY: 50
+  _stopTime: 1
 --- !u!4 &1106510113 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
@@ -6075,9 +6057,9 @@ MonoBehaviour:
   _radius: 20
   _minSpeed: 2
   _maxSpeed: 4
-  minY: -50
-  maxY: 50
-  stopTime: 1
+  _minY: -50
+  _maxY: 50
+  _stopTime: 1
 --- !u!4 &1135190777 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
@@ -6622,9 +6604,9 @@ MonoBehaviour:
   _radius: 20
   _minSpeed: 2
   _maxSpeed: 4
-  minY: -50
-  maxY: 50
-  stopTime: 1
+  _minY: -50
+  _maxY: 50
+  _stopTime: 1
 --- !u!4 &1228016553 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
@@ -7312,9 +7294,9 @@ MonoBehaviour:
   _radius: 20
   _minSpeed: 2
   _maxSpeed: 4
-  minY: -50
-  maxY: 50
-  stopTime: 1
+  _minY: -50
+  _maxY: 50
+  _stopTime: 1
 --- !u!4 &1329898503 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
@@ -7506,9 +7488,9 @@ MonoBehaviour:
   _radius: 20
   _minSpeed: 2
   _maxSpeed: 4
-  minY: -50
-  maxY: 50
-  stopTime: 1
+  _minY: -50
+  _maxY: 50
+  _stopTime: 1
 --- !u!4 &1363337555 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
@@ -9184,9 +9166,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
       insertIndex: -1
       addedObject: {fileID: 859670356}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 859670355}
   m_SourcePrefab: {fileID: 100100000, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
 --- !u!1001 &1722227574
 PrefabInstance:
@@ -9666,11 +9645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startState: 2
-  _isTalk: 0
-  _isGreeting: 1
-  _isApplause: 0
   _isSwim: 0
-  _isIdle: 0
 --- !u!1 &1859898645
 GameObject:
   m_ObjectHideFlags: 0
@@ -9929,9 +9904,9 @@ MonoBehaviour:
   _radius: 20
   _minSpeed: 2
   _maxSpeed: 4
-  minY: -50
-  maxY: 50
-  stopTime: 1
+  _minY: -50
+  _maxY: 50
+  _stopTime: 1
 --- !u!4 &1899460165 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
@@ -10273,9 +10248,9 @@ MonoBehaviour:
   _radius: 20
   _minSpeed: 2
   _maxSpeed: 4
-  minY: -50
-  maxY: 50
-  stopTime: 1
+  _minY: -50
+  _maxY: 50
+  _stopTime: 1
 --- !u!4 &1974687996 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}
@@ -10494,9 +10469,9 @@ MonoBehaviour:
   _radius: 20
   _minSpeed: 2
   _maxSpeed: 4
-  minY: -50
-  maxY: 50
-  stopTime: 1
+  _minY: -50
+  _maxY: 50
+  _stopTime: 1
 --- !u!4 &2049222239 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e7e7369adc6e9d4fac9eb193179b6ea, type: 3}

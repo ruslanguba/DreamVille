@@ -1,24 +1,36 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
+using DreamVille.Core.Async;
 using DreamVille.Gameplay.Interactables;
 
 namespace DreamVille.Gameplay.Enemies
 {
     /// <summary>
     /// A box or fridge that hides enemies: an interaction opens it and sends every hidden enemy fleeing to a random
-    /// point; an enemy that comes back is swallowed again.
+    /// point; an enemy that comes back is swallowed again: the door opens, the enemy shrinks into the box, the door
+    /// closes. All three phases run in scaled game time, so pause freezes them.
     /// </summary>
     public sealed class EnemyHideout : MonoBehaviour, IInteractionEffect, IEnemyHideout
     {
+        private const float HiddenScale = 0.01f;
+
         // Frozen names: prefab-instance overrides in Level_03, Level_04 and Max/* address these fields by property path.
         [SerializeField] private List<Enemy> _enemies;
         [SerializeField] private List<Transform> _nextPointsTransform;
 
-        [SerializeField] private float _hideDuration;
-        [SerializeField] private float _openDuration;
-        [SerializeField] private float _closeDuration;
+        [SerializeField, Min(0f), Tooltip("Seconds of game time the enemy takes to shrink into the hideout.")]
+        private float _hideDuration;
+
+        [SerializeField, Min(0f), Tooltip("Seconds of game time between the door opening and the shrink.")]
+        private float _openDuration;
+
+        [SerializeField, Min(0f), Tooltip("Seconds of game time between the shrink and the door closing.")]
+        private float _closeDuration;
 
         private Animator _animator;
 
@@ -47,7 +59,11 @@ namespace DreamVille.Gameplay.Enemies
 
         public void Receive(Enemy enemy)
         {
-            StartCoroutine(MoveAndShrink(enemy));
+            if (enemy == null)
+                return;
+
+            // One absorption per arriving enemy; concurrent absorptions share the door, as they always did.
+            AbsorbAsync(enemy, this.GetCancellationTokenOnDestroy()).Forget();
         }
 
         private void CloseDoor()
@@ -73,30 +89,46 @@ namespace DreamVille.Gameplay.Enemies
             }
         }
 
-        private IEnumerator MoveAndShrink(Enemy enemy)
+        private async UniTaskVoid AbsorbAsync(Enemy enemy, CancellationToken hideoutToken)
         {
-            Vector3 startPos = enemy.transform.position;
-            Vector3 endPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-            Vector3 startScale = enemy.transform.localScale;
-            Vector3 endScale = Vector3.one * 0.01f;
-            _animator.SetBool(AnimParams.IsOpen, true);
-            yield return new WaitForSeconds(_openDuration);
-            float t = 0f;
+            // The absorption ends when either the hideout or the enemy is destroyed.
+            using CancellationTokenSource lifetime =
+                CancellationTokenSource.CreateLinkedTokenSource(hideoutToken, enemy.GetCancellationTokenOnDestroy());
+            CancellationToken token = lifetime.Token;
 
-            while (enemy != null && t < _hideDuration)
+            try
             {
-                t += Time.deltaTime;
-                float normalized = t / _hideDuration;
+                Transform body = enemy.transform;
+                Vector3 startPosition = body.position;
+                Vector3 endPosition = transform.position + Vector3.up;
+                Vector3 startScale = body.localScale;
+                Vector3 endScale = Vector3.one * HiddenScale;
 
-                enemy.transform.position = Vector3.Lerp(startPos, endPos, normalized);
-                enemy.transform.localScale = Vector3.Lerp(startScale, endScale, normalized);
-                yield return null;
+                _animator.SetBool(AnimParams.IsOpen, true);
+                await GameTime.DelayAsync(_openDuration, token);
+
+                await Tween.RunAsync(_hideDuration, progress =>
+                {
+                    body.position = Vector3.Lerp(startPosition, endPosition, progress);
+                    body.localScale = Vector3.Lerp(startScale, endScale, progress);
+                }, token);
+
+                await GameTime.DelayAsync(_closeDuration, token);
+
+                Stow(enemy, endPosition, endScale);
             }
-            yield return new WaitForSeconds(_closeDuration);
+            catch (OperationCanceledException)
+            {
+                // Hideout or enemy destroyed mid-way: nothing is stowed and the door stays as it is.
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception, this);
+            }
+        }
 
-            if (enemy == null)
-                yield break;
-
+        private void Stow(Enemy enemy, Vector3 position, Vector3 scale)
+        {
             if (!_enemies.Contains(enemy))
                 _enemies.Add(enemy);
 
@@ -104,8 +136,9 @@ namespace DreamVille.Gameplay.Enemies
             enemy.Destroyed += RemoveEnemy;
             CloseDoor();
 
-            enemy.transform.position = endPos;
-            enemy.transform.localScale = endScale;
+            Transform body = enemy.transform;
+            body.position = position;
+            body.localScale = scale;
             enemy.gameObject.SetActive(false);
         }
 

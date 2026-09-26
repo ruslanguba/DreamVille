@@ -1,57 +1,93 @@
-using System.Collections;
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
+
+using DreamVille.Core.Async;
 
 namespace DreamVille.Gameplay.Environment
 {
-    public class RandomFloating : MonoBehaviour
+    /// <summary>
+    /// Ambient drift for floating props (balloons): flies to a random point within a radius at a random speed,
+    /// rests, picks the next point. Height stays within the authored limits. Runs while the component is enabled,
+    /// in scaled game time, so pause freezes it.
+    /// </summary>
+    public sealed class RandomFloating : MonoBehaviour
     {
+        private const float ArriveDistance = 0.1f;
+
         [Header("Movement")]
-        [SerializeField] private float _radius = 5f;
+        [SerializeField, Tooltip("Maximum distance of the next target from the current position, m.")]
+        private float _radius = 5f;
+
         [SerializeField] private float _minSpeed = 2f;
         [SerializeField] private float _maxSpeed = 4f;
 
         [Header("Height Limit")]
-        [SerializeField] private float minY = -50f;
-        [SerializeField] private float maxY = 50f;
+        [SerializeField, FormerlySerializedAs("minY")] private float _minY = -50f;
+        [SerializeField, FormerlySerializedAs("maxY")] private float _maxY = 50f;
 
         [Header("Pause")]
-        [SerializeField] private float stopTime = 2f;
+        [SerializeField, FormerlySerializedAs("stopTime"), Min(0f)]
+        [Tooltip("Seconds of game time the prop rests at each target.")]
+        private float _stopTime = 2f;
 
-        private Vector3 targetPoint;
         private float _speed;
+        private CancellationTokenSource _loopCts;
+        private bool _started;
 
         private void Start()
         {
             _speed = Random.Range(_minSpeed, _maxSpeed);
-            PickNewPoint();
-            StartCoroutine(MoveLoop());
+            _started = true;
+            StartLoop();
         }
 
-        private IEnumerator MoveLoop()
+        private void OnEnable()
         {
-            while (true)
+            if (_started)
+                StartLoop();
+        }
+
+        private void OnDisable()
+        {
+            Cancellation.CancelAndDispose(ref _loopCts);
+        }
+
+        private void StartLoop()
+        {
+            Cancellation.CancelAndDispose(ref _loopCts);
+            _loopCts = new CancellationTokenSource();
+            RunAsync(_loopCts.Token).Forget();
+        }
+
+        private async UniTaskVoid RunAsync(CancellationToken token)
+        {
+            try
             {
-                while (Vector3.Distance(transform.position, targetPoint) > 0.1f)
+                while (true)
                 {
-                    transform.position = Vector3.MoveTowards(
-                        transform.position,
-                        targetPoint,
-                        _speed * Time.deltaTime);
+                    Vector3 target = FloatingPath.PickTarget(transform.position, Random.insideUnitSphere * _radius, _minY, _maxY);
 
-                    yield return null;
+                    while (Vector3.Distance(transform.position, target) > ArriveDistance)
+                    {
+                        transform.position = Vector3.MoveTowards(transform.position, target, _speed * Time.deltaTime);
+                        await GameTime.NextFrameAsync(token);
+                    }
+
+                    await GameTime.DelayAsync(_stopTime, token);
                 }
-
-                yield return new WaitForSeconds(stopTime);
-
-                PickNewPoint();
             }
-        }
-
-        private void PickNewPoint()
-        {
-            Vector3 randomOffset = Random.insideUnitSphere * _radius;
-            targetPoint = transform.position + randomOffset;
-            targetPoint.y = Mathf.Clamp(targetPoint.y, minY, maxY);
+            catch (OperationCanceledException)
+            {
+                // Disabled or destroyed; the loop restarts on the next OnEnable.
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception, this);
+            }
         }
     }
 }
