@@ -46,10 +46,17 @@ refactor documented below is the author's.
 - **Data-driven scene identity.** `SceneCatalog` and `LevelDefinition` assets are the
   only place a scene name or level id is spelled out — no build indices, no scene-name
   string literals in code. See [ADR 0004](Docs/adr/0004-scene-catalog-and-async.md).
+- **One interaction channel, composable effects.** A bullet hit and a player touch both
+  become an `InteractionContext` handed to `IInteractable.OnInteract`; two thin hosts
+  (`Interactable` for repeatable shots, `Pickup` for a one-time touch with score and
+  tween) apply whatever `IInteractionEffect` components sit next to them. A lamp is
+  `Interactable` + `ToggleLightEffect` + `PlayAudioSourceEffect` — visible on
+  [`InteractableLamp.prefab`](Assets/_Project/Prefabs/InteractableLamp.prefab). See
+  [ADR 0005](Docs/adr/0005-interaction-effects-as-components.md).
 - **UniTask with cancellation, not coroutines**, in the refactored modules: bullet
   lifetime, pillow recall, NPC reactions and scene loading each own a
   `CancellationToken` tied to the object's lifetime.
-- **273 EditMode tests**, including a scene-composition guard
+- **318 EditMode tests**, including a scene-composition guard
   ([`SceneCompositionTests`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs))
   that opens every build scene and checks its installers and catalog references, and
   prefab tests that pin the player's composition, so a mis-wired scene fails a test run
@@ -145,7 +152,8 @@ resolves a `LevelDefinition` and asks `ISceneLoader` to load it by scene name.
 Full decision records: [ADR 0001 — Zenject composition root](Docs/adr/0001-zenject-composition-root.md),
 [ADR 0002 — assembly layering](Docs/adr/0002-assembly-layering.md),
 [ADR 0003 — persistence abstraction](Docs/adr/0003-persistence-abstraction.md),
-[ADR 0004 — scene catalog and UniTask for gameplay async](Docs/adr/0004-scene-catalog-and-async.md).
+[ADR 0004 — scene catalog and UniTask for gameplay async](Docs/adr/0004-scene-catalog-and-async.md),
+[ADR 0005 — interaction effects as sibling components](Docs/adr/0005-interaction-effects-as-components.md).
 
 ## Where to look first
 
@@ -157,6 +165,8 @@ Full decision records: [ADR 0001 — Zenject composition root](Docs/adr/0001-zen
 - [`Assets/_Project/Scripts/Gameplay/Player/PlayerInstaller.cs`](Assets/_Project/Scripts/Gameplay/Player/PlayerInstaller.cs) — the player prefab's own composition root (`GameObjectContext`); [`PlayerMotor.cs`](Assets/_Project/Scripts/Gameplay/Player/PlayerMotor.cs) shows the fixed per-frame order.
 - [`Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowRack.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowRack.cs) — the throw / recall / freeze rules of the core mechanic as a plain, unit-tested class; [`PillowLauncher.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowLauncher.cs) is the thin MonoBehaviour shell with a cancellable UniTask recall loop, and [`PillowInventory.cs`](Assets/_Project/Scripts/Progression/Pillows/PillowInventory.cs) decides how many pillows a level allows.
 - [`Assets/_Project/Scripts/Gameplay/Weapons/Aiming/BouncePath.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Aiming/BouncePath.cs) — the ricochet preview as pure math behind an `ISphereCaster` seam; the gun and the preview read one `ShotRay`, so the line ends exactly where the bullet dies.
+- [`Assets/_Project/Scripts/Gameplay/Interactables/Interactable.cs`](Assets/_Project/Scripts/Gameplay/Interactables/Interactable.cs) — the shot-reacting host of the interaction channel; a shot and a touch both arrive as one `InteractionContext`.
+- [`Assets/_Project/Scripts/Gameplay/Interactables/EffectChain.cs`](Assets/_Project/Scripts/Gameplay/Interactables/EffectChain.cs) — the plain class that turns sibling `IInteractionEffect` components into one ordered, fault-isolated call.
 - [`Assets/_Project/Scripts/Persistence/ProgressRepository.cs`](Assets/_Project/Scripts/Persistence/ProgressRepository.cs) — the only place stars and completion are read from or written to a save.
 - [`Assets/_Project/Scripts/Audio/AudioService.cs`](Assets/_Project/Scripts/Audio/AudioService.cs) — saved volume plus per-scene music, driven by the scene catalog.
 - [`Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs) — opens every build scene and asserts its composition against the catalog.
@@ -197,8 +207,8 @@ press Play.
 
 ## Tests
 
-Window → General → Test Runner → EditMode → Run All. 273 tests, all green. PlayMode
-tests and CI are not set up yet.
+Window → General → Test Runner → EditMode → Run All. 318 tests (317 pass, 1
+intentionally skipped). PlayMode tests and CI are not set up yet.
 
 ## Status and roadmap
 
@@ -210,14 +220,17 @@ scene and level identity (`SceneCatalog`/`LevelDefinition`); an `IAudioService` 
 the composition root; one enemy state machine driven by `EnemyConfig` assets, with
 pooled projectiles, in place of four separate enemy scripts; a player composed through
 a `GameObjectContext` with its damage vignette split into a `Presentation` assembly;
-273 EditMode tests; four ADRs.
+weapons behind one `IWeapon`/`IAimSource` with a timestamp cooldown, a ricochet preview
+that matches the bullet, pillow rules in a plain `PillowRack`, and pillow unlocks
+persisted per save and capped per level; a single interaction channel
+(`IInteractable.OnInteract(in InteractionContext)`) replacing eleven hand-rolled
+"something happens when it is hit or touched" classes with two hosts (`Interactable`,
+`Pickup`) and a small vocabulary of sibling `IInteractionEffect` components; 318
+EditMode tests; five ADRs.
 
-Weapons: one `IWeapon`/`IAimSource` with a timestamp cooldown, a ricochet preview that
-matches the bullet, pillow rules in a plain `PillowRack`, and pillow unlocks persisted
-per save and capped per level.
-
-**Next:** a single interaction channel for interactables; UI presenters beyond `GameplayPresenter`; CI with
-game-ci; a playable build.
+**Next:** lobby objectives (roadmap 4.7); coroutines to UniTask, including
+`EnemyHideout`'s door tween (roadmap 4.8); UI presenters beyond `GameplayPresenter`
+(phase 5); CI with game-ci; a playable build.
 
 ## Documentation
 
