@@ -1,47 +1,80 @@
-using System.Collections;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
+
+using DreamVille.Core.Async;
 
 namespace DreamVille.Gameplay.NPC
 {
-    public class NPCMover : MonoBehaviour
+    /// <summary>A queue member's body: jumps out of the front slot and walks to a new slot.</summary>
+    [RequireComponent(typeof(Rigidbody))]
+    public sealed class NPCMover : MonoBehaviour
     {
-        public Rigidbody rb;
-        public Animator animator;
+        [SerializeField, FormerlySerializedAs("jumpForce")]
+        [Tooltip("Upward velocity change of a jump, m/s.")]
+        private float _jumpForce = 5f;
 
-        public float jumpForce = 5f;
-        public float forwardForce = 2f;
+        [SerializeField, FormerlySerializedAs("forwardForce")]
+        [Tooltip("Forward velocity change of a jump, m/s.")]
+        private float _forwardForce = 2f;
+
+        private Rigidbody _body;
+        private Animator _animator;
+        private CancellationTokenSource _moveCts;
 
         private void Awake()
         {
-            rb = GetComponent<Rigidbody>();
-            animator = GetComponent<Animator>();
-        }
+            _body = GetComponent<Rigidbody>();
+            _animator = GetComponent<Animator>();
 
-        public void MoveTovards(Vector3 target, float time)
-        {
-            StartCoroutine(SmoothMove(target, time));
-        }
-        private IEnumerator SmoothMove(Vector3 target, float time)
-        {
-            Vector3 start = transform.position;
-            animator.SetBool("isMoving", true);
-            float t = 0;
-
-            while (t < time)
+            if (_animator == null)
             {
-                t += Time.deltaTime / time;
-                transform.position = Vector3.Lerp(start, target, t);
-                yield return null;
+                Debug.LogError($"[{nameof(NPCMover)}] '{name}' has no Animator.", this);
+                enabled = false;
             }
-            animator.SetBool("isMoving", false);
         }
 
+        private void OnDestroy()
+        {
+            Cancellation.CancelAndDispose(ref _moveCts);
+        }
+
+        /// <summary>
+        /// Lerps to <paramref name="target"/> over <paramref name="duration"/> seconds of game time with the run flag on.
+        /// A newer move supersedes this one; cancellation (token, newer move, destroy) throws OperationCanceledException
+        /// and leaves the NPC where it stopped.
+        /// </summary>
+        public async UniTask MoveToAsync(Vector3 target, float duration, CancellationToken token)
+        {
+            Cancellation.CancelAndDispose(ref _moveCts);
+            CancellationTokenSource move = CancellationTokenSource.CreateLinkedTokenSource(token, this.GetCancellationTokenOnDestroy());
+            _moveCts = move;
+
+            try
+            {
+                Vector3 start = transform.position;
+                _animator.SetBool(AnimParams.IsMoving, true);
+
+                await Tween.RunAsync(duration, progress => transform.position = Vector3.Lerp(start, target, progress), move.Token);
+
+                _animator.SetBool(AnimParams.IsMoving, false);
+            }
+            finally
+            {
+                // A superseding move has already disposed this source and replaced the field.
+                if (_moveCts == move)
+                    Cancellation.CancelAndDispose(ref _moveCts);
+            }
+        }
+
+        /// <summary>Plays the jump and throws the body up and forward; the body stops being kinematic.</summary>
         public void JumpForward()
         {
-            animator.SetTrigger("jump");
+            _animator.SetTrigger(AnimParams.Jump);
 
-            rb.isKinematic = false;
-            rb.AddForce(transform.up * jumpForce + transform.forward * forwardForce, ForceMode.VelocityChange);
+            _body.isKinematic = false;
+            _body.AddForce(transform.up * _jumpForce + transform.forward * _forwardForce, ForceMode.VelocityChange);
         }
     }
 }

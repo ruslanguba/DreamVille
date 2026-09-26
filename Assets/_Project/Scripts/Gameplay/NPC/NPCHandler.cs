@@ -1,92 +1,43 @@
-using System.Collections;
 using UnityEngine;
-
-using DreamVille.Gameplay.Triggers;
 
 namespace DreamVille.Gameplay.NPC
 {
-    public class NPCHandler : MonoBehaviour
+    /// <summary>
+    /// One speaker of an ambient two-NPC dialogue: shows the talk animation and the speech bubble together.
+    /// Driven by <see cref="NPCDialogueHandler"/>.
+    /// </summary>
+    public sealed class NPCHandler : MonoBehaviour
     {
         [SerializeField] private GameObject _dialogCanvas;
-        [SerializeField] private float _rotationSpeed = 90;
-        private HintActivatorTrigger _dialogActivatorTrigger;
+
         private Animator _animator;
 
-        private Coroutine _lookCoroutine;
-        private bool _isTurning;
-        [SerializeField] private bool _isTalking;
+        /// <summary>Whether this speaker currently has the word.</summary>
+        public bool IsTalking { get; private set; }
 
         private void Awake()
         {
             _animator = GetComponentInChildren<Animator>();
-            _dialogCanvas.SetActive(false);
-        }
+            if (_animator == null)
+                Debug.LogError($"[{nameof(NPCHandler)}] '{name}' has no Animator in its children.", this);
 
-        private void OnEnable()
-        {
-            if (GetComponentInChildren<HintActivatorTrigger>() != null)
-            {
-                _dialogActivatorTrigger = GetComponentInChildren<HintActivatorTrigger>();
-                _dialogActivatorTrigger.OnTriggerActivated += SwitchHint;
-            }
-        }
-
-        private void OnDisable()
-        {
-            if (_dialogActivatorTrigger != null)
-                _dialogActivatorTrigger.OnTriggerActivated -= SwitchHint;
-        }
-
-        private void SwitchHint(bool isShowing, Vector3 direction)
-        {
-            if (_lookCoroutine != null)
-                StopCoroutine(_lookCoroutine);
-            _lookCoroutine = StartCoroutine(SmoothLookAt(direction));
-            _dialogCanvas.SetActive(isShowing);
-            SwitchTalking();
+            if (_dialogCanvas == null)
+                Debug.LogError($"[{nameof(NPCHandler)}] '{name}' has no speech bubble assigned.", this);
+            else
+                _dialogCanvas.SetActive(false);
         }
 
         public void SetTalking(bool isTalking)
         {
-            _isTalking = isTalking;
-            _animator.SetBool("isTalk", isTalking);
-            _dialogCanvas.SetActive(isTalking);
+            IsTalking = isTalking;
+
+            if (_animator != null)
+                _animator.SetBool(AnimParams.IsTalk, isTalking);
+
+            if (_dialogCanvas != null)
+                _dialogCanvas.SetActive(isTalking);
         }
-        public void SwitchTalking()
-        {
-            _isTalking = !_isTalking;
-            SetTalking(_isTalking);
-        }
 
-        private IEnumerator SmoothLookAt(Vector3 targetPos)
-        {
-            _isTurning = true;
-            Vector3 direction = targetPos - transform.position;
-            direction.y = 0;
-            if (direction.sqrMagnitude < 0.01f)
-            {
-                _isTurning = false;
-                yield break;
-            }
-
-            Quaternion targetRot = Quaternion.LookRotation(direction);
-
-            while (_isTurning)
-            {
-                transform.rotation = Quaternion.RotateTowards(
-                    transform.rotation,
-                    targetRot,
-                    _rotationSpeed * Time.deltaTime
-                );
-
-                // Поворот закончен
-                if (Quaternion.Angle(transform.rotation, targetRot) < 0.5f)
-                {
-                    _isTurning = false;
-                    break;
-                }
-                yield return null;
-            }
-        }
+        public void SwitchTalking() => SetTalking(!IsTalking);
     }
 }

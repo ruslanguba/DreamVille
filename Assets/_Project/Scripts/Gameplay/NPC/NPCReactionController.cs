@@ -4,12 +4,14 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+using DreamVille.Core.Async;
+
 namespace DreamVille.Gameplay.NPC
 {
     /// <summary>
     /// Drives an NPC's greeting/applause/talk/idle reactions to level events.
     /// The authored start pose belongs to <see cref="NPCAnimationHandler"/>; this component
-    /// only changes state when a reaction is requested.
+    /// only changes state when a reaction is requested, and every new reaction supersedes a pending applause.
     /// </summary>
     [RequireComponent(typeof(NPCAnimationHandler))]
     public class NPCReactionController : MonoBehaviour, INpcReactions
@@ -35,16 +37,20 @@ namespace DreamVille.Gameplay.NPC
             CancelApplause();
         }
 
-        public void SetGreeting() => _npcAnimationHandler.SetGreetingAnim();
+        public void SetGreeting()
+        {
+            CancelApplause();
+            _npcAnimationHandler.SetState(NpcState.Greeting);
+        }
 
         public void SetTalk()
         {
             CancelApplause();
             PlayTalkSound();
-            _npcAnimationHandler.SetTalkAnim();
+            _npcAnimationHandler.SetState(NpcState.Talk);
         }
 
-        /// <summary>Mumbles and applauds at once, then falls into talking after <see cref="ApplauseDuration"/> seconds.</summary>
+        /// <summary>Mumbles and applauds at once, then falls into talking after <see cref="ApplauseDuration"/> seconds of game time.</summary>
         public void SetApplause()
         {
             if (!isActiveAndEnabled)
@@ -63,28 +69,20 @@ namespace DreamVille.Gameplay.NPC
             if (_audio != null)
                 _audio.Stop();
 
-            _npcAnimationHandler.SetIdleAnim();
+            _npcAnimationHandler.SetState(NpcState.Idle);
         }
 
-        private void CancelApplause()
-        {
-            if (_applauseCts == null)
-                return;
-
-            _applauseCts.Cancel();
-            _applauseCts.Dispose();
-            _applauseCts = null;
-        }
+        private void CancelApplause() => Cancellation.CancelAndDispose(ref _applauseCts);
 
         private async UniTaskVoid ApplauseThenTalkAsync(CancellationToken token)
         {
             try
             {
                 PlayTalkSound();
-                _npcAnimationHandler.SetApplauseAnim();
-                await UniTask.Delay(TimeSpan.FromSeconds(ApplauseDuration), cancellationToken: token);
+                _npcAnimationHandler.SetState(NpcState.Applause);
+                await GameTime.DelayAsync(ApplauseDuration, token);
 
-                _npcAnimationHandler.SetTalkAnim();
+                _npcAnimationHandler.SetState(NpcState.Talk);
             }
             catch (OperationCanceledException)
             {

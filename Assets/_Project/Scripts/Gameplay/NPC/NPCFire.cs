@@ -1,48 +1,118 @@
-using System.Collections;
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
+using DreamVille.Core.Async;
 
 namespace DreamVille.Gameplay.NPC
 {
-    public class NPCFire : MonoBehaviour
+    /// <summary>
+    /// Ambient shooter: one reused visual bullet is launched at a random point around the target, lives for a
+    /// while and hides, then the cycle repeats. Runs while the component is enabled; deals no damage.
+    /// </summary>
+    public sealed class NPCFire : MonoBehaviour
     {
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private Transform _spawn;
         [SerializeField] private Transform _target;
         [SerializeField] private float _bulletSpeed = 2;
-        [SerializeField] private float _shootingRate = 3;
-        [SerializeField] private float _bulletLifeTime =2;
+
+        [SerializeField, Min(0f), Tooltip("Seconds of game time before each shot.")]
+        private float _shootingRate = 3;
+
+        [SerializeField, Min(0f), Tooltip("Seconds of game time a bullet stays visible.")]
+        private float _bulletLifeTime = 2;
+
         private GameObject _bullet;
-        private Rigidbody _rb;
+        private Rigidbody _bulletBody;
+        private CancellationTokenSource _loopCts;
+        private bool _started;
+
+        private void Awake()
+        {
+            if (_bulletPrefab == null || _spawn == null || _target == null)
+            {
+                Debug.LogError($"[{nameof(NPCFire)}] '{name}' needs a bullet prefab, a spawn point and a target.", this);
+                enabled = false;
+            }
+        }
 
         private void Start()
         {
             _bullet = Instantiate(_bulletPrefab, _spawn.position, _spawn.rotation);
-            _rb = _bullet.GetComponent<Rigidbody>();
-            _bullet.transform.parent = null;
+            _bulletBody = _bullet.GetComponent<Rigidbody>();
             _bullet.SetActive(false);
 
-            StartCoroutine(ShootingRoutine());
-        }
-        IEnumerator ShootingRoutine()
-        {
-            while (true)
+            if (_bulletBody == null)
             {
-                yield return new WaitForSeconds(_shootingRate);
-                _rb.linearVelocity = Vector3.zero;
-                _bullet.transform.position = _spawn.transform.position;
-                _bullet.SetActive(true);
-                _rb.AddForce(GetRandomDirection() * _bulletSpeed, ForceMode.Impulse);
-                yield return new WaitForSeconds(_bulletLifeTime);
-                _bullet.SetActive(false);
+                Debug.LogError($"[{nameof(NPCFire)}] Bullet prefab '{_bulletPrefab.name}' has no Rigidbody.", this);
+                enabled = false;
+                return;
             }
+
+            _started = true;
+            StartLoop();
+        }
+
+        private void OnEnable()
+        {
+            if (_started)
+                StartLoop();
+        }
+
+        private void OnDisable()
+        {
+            Cancellation.CancelAndDispose(ref _loopCts);
+
+            // The bullet is a scene root and may already be unloaded when the scene closes.
+            if (_bullet != null)
+                _bullet.SetActive(false);
+        }
+
+        private void StartLoop()
+        {
+            Cancellation.CancelAndDispose(ref _loopCts);
+            _loopCts = new CancellationTokenSource();
+            RunAsync(_loopCts.Token).Forget();
+        }
+
+        private async UniTaskVoid RunAsync(CancellationToken token)
+        {
+            try
+            {
+                while (true)
+                {
+                    await GameTime.DelayAsync(_shootingRate, token);
+                    Launch();
+
+                    await GameTime.DelayAsync(_bulletLifeTime, token);
+                    _bullet.SetActive(false);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // Disabled or destroyed; the loop restarts on the next OnEnable.
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception, this);
+            }
+        }
+
+        private void Launch()
+        {
+            _bulletBody.linearVelocity = Vector3.zero;
+            _bullet.transform.position = _spawn.position;
+            _bullet.SetActive(true);
+            _bulletBody.AddForce(GetRandomDirection() * _bulletSpeed, ForceMode.Impulse);
         }
 
         private Vector3 GetRandomDirection()
         {
-            Vector3 randomInside = Random.insideUnitSphere;
-            Vector3 rndTarget = _target.transform.position + randomInside;
-            Vector3 rndDirection = rndTarget - _spawn.transform.position;
-            return rndDirection;
+            Vector3 randomTarget = _target.position + Random.insideUnitSphere;
+            return randomTarget - _spawn.position;
         }
     }
 }

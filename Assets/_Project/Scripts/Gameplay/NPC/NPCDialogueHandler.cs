@@ -1,31 +1,100 @@
-using System.Collections;
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
+
+using DreamVille.Core.Async;
 
 namespace DreamVille.Gameplay.NPC
 {
-    public class NPCDialogueHandler : MonoBehaviour
+    /// <summary>
+    /// Ambient dialogue: the first speaker starts talking, then after every switch interval (game time)
+    /// each speaker flips between talking and listening. Runs while the component is enabled.
+    /// </summary>
+    public sealed class NPCDialogueHandler : MonoBehaviour
     {
-        [SerializeField] private float _timer;
-        [SerializeField] private NPCHandler[] _handler;
+        [SerializeField, Min(0f), FormerlySerializedAs("_timer")]
+        [Tooltip("Seconds of game time between two turns.")]
+        private float _switchInterval = 5f;
+
+        [SerializeField, FormerlySerializedAs("_handler")]
+        private NPCHandler[] _speakers;
+
+        private CancellationTokenSource _loopCts;
+        private bool _started;
+
+        private void Awake()
+        {
+            if (!HasValidSpeakers())
+            {
+                Debug.LogError($"[{nameof(NPCDialogueHandler)}] '{name}' needs at least one speaker and no empty slots.", this);
+                enabled = false;
+            }
+        }
 
         private void Start()
         {
-            _handler[0].SetTalking(true);
-            _handler[1].SetTalking(false);
+            for (int i = 0; i < _speakers.Length; i++)
+                _speakers[i].SetTalking(i == 0);
 
-            StartCoroutine(DialogueRutine());
+            _started = true;
+            StartLoop();
         }
 
-        IEnumerator DialogueRutine()
+        private void OnEnable()
         {
-            while (true)
+            // The first run starts in Start, after every speaker has run Awake.
+            if (_started)
+                StartLoop();
+        }
+
+        private void OnDisable()
+        {
+            Cancellation.CancelAndDispose(ref _loopCts);
+        }
+
+        private void StartLoop()
+        {
+            Cancellation.CancelAndDispose(ref _loopCts);
+            _loopCts = new CancellationTokenSource();
+            RunAsync(_loopCts.Token).Forget();
+        }
+
+        private async UniTaskVoid RunAsync(CancellationToken token)
+        {
+            try
             {
-                yield return new WaitForSeconds(_timer);
-                for (int i = 0; i < _handler.Length; i++)
+                while (true)
                 {
-                    _handler[i].SwitchTalking();
+                    await GameTime.DelayAsync(_switchInterval, token);
+
+                    foreach (NPCHandler speaker in _speakers)
+                        speaker.SwitchTalking();
                 }
             }
+            catch (OperationCanceledException)
+            {
+                // Disabled or destroyed; the loop restarts on the next OnEnable.
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception, this);
+            }
+        }
+
+        private bool HasValidSpeakers()
+        {
+            if (_speakers == null || _speakers.Length == 0)
+                return false;
+
+            foreach (NPCHandler speaker in _speakers)
+            {
+                if (speaker == null)
+                    return false;
+            }
+
+            return true;
         }
     }
 }

@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64bbae96d13553d4d9da081496bb7808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timer: 5
-  _handler:
+  _switchInterval: 5
+  _speakers:
   - {fileID: 4122661261495821028}
   - {fileID: 5595787581096679045}
 --- !u!82 &5799030811932684160
@@ -243,8 +243,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dialogCanvas: {fileID: 510588482365792108}
-  _rotationSpeed: 90
-  _isTalking: 0
 --- !u!4 &7074519433168988382 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3713420564973187889, guid: 1c09bef4a09c4aa468c52ee554f10cb3, type: 3}

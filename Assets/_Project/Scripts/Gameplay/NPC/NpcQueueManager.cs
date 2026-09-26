@@ -1,72 +1,127 @@
+using System;
 using System.Collections.Generic;
-using System.Collections;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
+
+using DreamVille.Core.Async;
 
 namespace DreamVille.Gameplay.NPC
 {
-    public class NpcQueueManager : MonoBehaviour
+    /// <summary>
+    /// An ambient queue of NPCs: the front one jumps out, lands at the back slot, and everybody walks one slot forward.
+    /// The slots are the members' positions when the scene loads. Runs while the component is enabled.
+    /// </summary>
+    public sealed class NpcQueueManager : MonoBehaviour
     {
-        [SerializeField] private List<NPCMover> jumpers; // только персонажи
-        [SerializeField] private float moveDuration = 1f;
-        [SerializeField] private float delayBetweenJumps = 1.5f;
+        [SerializeField, FormerlySerializedAs("jumpers")]
+        [Tooltip("Queue members, front first.")]
+        private List<NPCMover> _jumpers;
 
-        private List<Vector3> queuePositions = new List<Vector3>();
-        NPCMover _first;
+        [SerializeField, Min(0f), FormerlySerializedAs("moveDuration")]
+        [Tooltip("Seconds of game time everybody walks to the next slot.")]
+        private float _moveDuration = 1f;
+
+        [SerializeField, Min(0f), FormerlySerializedAs("delayBetweenJumps")]
+        [Tooltip("Seconds of game time between the jump and the walk.")]
+        private float _delayBetweenJumps = 1.5f;
+
+        private Vector3[] _slots;
+        private RotatingQueue<NPCMover> _queue;
+        private UniTask[] _moves;
+        private CancellationTokenSource _loopCts;
+        private bool _started;
+
+        private void Awake()
+        {
+            if (!HasValidJumpers())
+            {
+                Debug.LogError($"[{nameof(NpcQueueManager)}] '{name}' needs at least one jumper and no empty slots.", this);
+                enabled = false;
+                return;
+            }
+
+            _slots = new Vector3[_jumpers.Count];
+            for (int i = 0; i < _slots.Length; i++)
+                _slots[i] = _jumpers[i].transform.position;
+
+            _queue = new RotatingQueue<NPCMover>(_jumpers);
+            _moves = new UniTask[_queue.Count];
+        }
+
         private void Start()
         {
-            // Сохраняем стартовые позиции всех персонажей
-            foreach (var j in jumpers)
-                queuePositions.Add(j.transform.position);
-
-            StartCoroutine(RunQueueLoop());
+            // Not in OnEnable: the first step jumps at once, and movers on other objects must have run Awake.
+            _started = true;
+            StartLoop();
         }
 
-        private IEnumerator RunQueueLoop()
+        private void OnEnable()
         {
-            while (true)
+            if (_started)
+                StartLoop();
+        }
+
+        private void OnDisable()
+        {
+            Cancellation.CancelAndDispose(ref _loopCts);
+        }
+
+        private void StartLoop()
+        {
+            Cancellation.CancelAndDispose(ref _loopCts);
+            _loopCts = new CancellationTokenSource();
+            RunAsync(_loopCts.Token).Forget();
+        }
+
+        private async UniTaskVoid RunAsync(CancellationToken token)
+        {
+            try
             {
-                // 1. Первый прыгает
-                _first = jumpers[0];
-                TriggerJump();
-
-                // 2. Ждём
-                yield return new WaitForSeconds(delayBetweenJumps);
-
-                // 3. Двигаем всех на позицию вперёд
-                for (int i = 0; i < jumpers.Count; i++)
+                while (true)
                 {
-                    Vector3 targetPos = queuePositions[i];
-                    jumpers[i].MoveTovards(targetPos, moveDuration);
+                    NPCMover jumper = _queue.Front;
+                    jumper.JumpForward();
+                    await GameTime.DelayAsync(_delayBetweenJumps, token);
+
+                    // Re-queue first, then move everybody, the re-queued jumper included: its "move" holds it
+                    // at the back slot while its no longer kinematic body settles.
+                    _queue.RotateFrontToBack();
+                    jumper.transform.position = _slots[_slots.Length - 1];
+                    await MoveEveryoneToSlotsAsync(token);
                 }
-                yield return new WaitForSeconds(moveDuration);
             }
-        }
-
-        private IEnumerator SmoothMove(Transform obj, Vector3 target, float time)
-        {
-            Vector3 start = obj.position;
-            float t = 0;
-
-            while (t < moveDuration)
+            catch (OperationCanceledException)
             {
-                t += Time.deltaTime / time;
-                obj.position = Vector3.Lerp(start, target, t);
-                yield return null;
+                // Disabled or destroyed; the loop restarts on the next OnEnable.
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception, this);
             }
         }
 
-        IEnumerator JumpRoutine()
+        private UniTask MoveEveryoneToSlotsAsync(CancellationToken token)
         {
-            jumpers.Remove(_first);
-            yield return new WaitForSeconds(delayBetweenJumps);
-            _first.transform.position = queuePositions[queuePositions.Count - 1];
-            jumpers.Add(_first);
+            for (int i = 0; i < _queue.Count; i++)
+                _moves[i] = _queue[i].MoveToAsync(_slots[i], _moveDuration, token);
+
+            return UniTask.WhenAll(_moves);
         }
 
-        private void TriggerJump()
+        private bool HasValidJumpers()
         {
-            _first.JumpForward();
-            StartCoroutine(JumpRoutine());
+            if (_jumpers == null || _jumpers.Count == 0)
+                return false;
+
+            foreach (NPCMover jumper in _jumpers)
+            {
+                if (jumper == null)
+                    return false;
+            }
+
+            return true;
         }
     }
 }

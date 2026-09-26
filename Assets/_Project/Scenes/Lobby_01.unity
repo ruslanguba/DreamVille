@@ -2147,11 +2147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startState: 1
-  _isTalk: 1
-  _isGreeting: 0
-  _isApplause: 0
   _isSwim: 0
-  _isIdle: 0
 --- !u!82 &88513862
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4366,10 +4362,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d8a9bc61818a54c9e93712e766e396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  animator: {fileID: 0}
-  jumpForce: 8
-  forwardForce: 3
+  _jumpForce: 8
+  _forwardForce: 3
 --- !u!136 &137797551
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5208,11 +5202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startState: 2
-  _isTalk: 0
-  _isGreeting: 1
-  _isApplause: 0
   _isSwim: 0
-  _isIdle: 0
 --- !u!1 &221305176 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e44491dbd84a5f4499b88bda785cc779, type: 3}
@@ -5235,10 +5225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d8a9bc61818a54c9e93712e766e396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  animator: {fileID: 0}
-  jumpForce: 8
-  forwardForce: 3
+  _jumpForce: 8
+  _forwardForce: 3
 --- !u!136 &221305179
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5720,11 +5708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startState: 1
-  _isTalk: 1
-  _isGreeting: 0
-  _isApplause: 0
   _isSwim: 0
-  _isIdle: 0
 --- !u!82 &237807876
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11780,15 +11764,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 985765c25d71d1a45bc7ac0465157c4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpers:
+  _jumpers:
   - {fileID: 137797550}
   - {fileID: 1150668504}
   - {fileID: 2033636544}
   - {fileID: 221305178}
   - {fileID: 1159315953}
   - {fileID: 1195903646}
-  moveDuration: 1
-  delayBetweenJumps: 2
+  _moveDuration: 1
+  _delayBetweenJumps: 2
 --- !u!1 &478881989
 GameObject:
   m_ObjectHideFlags: 0
@@ -13509,10 +13493,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d8a9bc61818a54c9e93712e766e396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  animator: {fileID: 0}
-  jumpForce: 8
-  forwardForce: 3
+  _jumpForce: 8
+  _forwardForce: 3
 --- !u!1 &524856956 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f635041cdfe3664890a0d3ab3ae8a19, type: 3}
@@ -20139,10 +20121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d8a9bc61818a54c9e93712e766e396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  animator: {fileID: 0}
-  jumpForce: 8
-  forwardForce: 3
+  _jumpForce: 8
+  _forwardForce: 3
 --- !u!4 &864409161 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 98d106ad989ddea48aea931cdc48a199, type: 3}
@@ -21646,15 +21626,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 985765c25d71d1a45bc7ac0465157c4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpers:
+  _jumpers:
   - {fileID: 2035000868}
   - {fileID: 1548920982}
   - {fileID: 2092363789}
   - {fileID: 522570935}
   - {fileID: 1354371387}
   - {fileID: 862863986}
-  moveDuration: 1
-  delayBetweenJumps: 2
+  _moveDuration: 1
+  _delayBetweenJumps: 2
 --- !u!1 &929735710 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8e39935e144fca5478a90cbedc8ddada, type: 3}
@@ -25720,10 +25700,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d8a9bc61818a54c9e93712e766e396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  animator: {fileID: 0}
-  jumpForce: 8
-  forwardForce: 3
+  _jumpForce: 8
+  _forwardForce: 3
 --- !u!136 &1150668505
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -26549,10 +26527,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d8a9bc61818a54c9e93712e766e396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  animator: {fileID: 0}
-  jumpForce: 8
-  forwardForce: 3
+  _jumpForce: 8
+  _forwardForce: 3
 --- !u!136 &1159315954
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -27406,10 +27382,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d8a9bc61818a54c9e93712e766e396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  animator: {fileID: 0}
-  jumpForce: 8
-  forwardForce: 3
+  _jumpForce: 8
+  _forwardForce: 3
 --- !u!136 &1195903647
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -32842,10 +32816,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d8a9bc61818a54c9e93712e766e396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  animator: {fileID: 0}
-  jumpForce: 8
-  forwardForce: 3
+  _jumpForce: 8
+  _forwardForce: 3
 --- !u!4 &1358253429 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5bad9a3d5cb03874a96116000aee22a3, type: 3}
@@ -37139,10 +37111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d8a9bc61818a54c9e93712e766e396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  animator: {fileID: 0}
-  jumpForce: 8
-  forwardForce: 3
+  _jumpForce: 8
+  _forwardForce: 3
 --- !u!1 &1551238577
 GameObject:
   m_ObjectHideFlags: 0
@@ -47218,10 +47188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d8a9bc61818a54c9e93712e766e396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  animator: {fileID: 0}
-  jumpForce: 8
-  forwardForce: 3
+  _jumpForce: 8
+  _forwardForce: 3
 --- !u!136 &2033636545
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -47388,10 +47356,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d8a9bc61818a54c9e93712e766e396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  animator: {fileID: 0}
-  jumpForce: 8
-  forwardForce: 3
+  _jumpForce: 8
+  _forwardForce: 3
 --- !u!1 &2036677966
 GameObject:
   m_ObjectHideFlags: 0
@@ -48518,10 +48484,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d8a9bc61818a54c9e93712e766e396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  animator: {fileID: 0}
-  jumpForce: 8
-  forwardForce: 3
+  _jumpForce: 8
+  _forwardForce: 3
 --- !u!1 &2102203727
 GameObject:
   m_ObjectHideFlags: 0

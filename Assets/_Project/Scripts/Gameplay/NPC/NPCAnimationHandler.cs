@@ -1,94 +1,49 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace DreamVille.Gameplay.NPC
 {
-    /// <summary>Drives an NPC's bool animator parameters for talk/greeting/applause/swim/idle states.</summary>
-    public class NPCAnimationHandler : MonoBehaviour
+    /// <summary>
+    /// Scene-facing shell of <see cref="NpcAnimationState"/>: finds the NPC's Animator and applies the authored pose.
+    /// </summary>
+    public sealed class NPCAnimationHandler : MonoBehaviour
     {
-        private Animator _animator;
-
         [SerializeField, Tooltip("Mood the NPC shows from its first frame, unless a reaction was requested before Start.")]
         private NpcState _startState;
 
-        [SerializeField] private bool _isTalk;
-        [SerializeField] private bool _isGreeting;
-        [SerializeField] private bool _isApplause;
-        [SerializeField] private bool _isSwim;
-        [SerializeField] private bool _isIdle;
+        [SerializeField, Tooltip("Swimming pose; independent of the mood. Ignored by controllers without an isSwim bool.")]
+        private bool _isSwim;
 
-        private HashSet<string> _boolParameters;
+        private NpcAnimationState _state;
 
         /// <summary>Authored start mood; read by content tests.</summary>
         public NpcState StartState => _startState;
 
+        /// <summary>Last written mood; null before Start unless a state was requested earlier.</summary>
+        public NpcState? State => _state?.Current;
+
         private void Awake()
         {
-            _animator = GetComponentInChildren<Animator>();
-            _boolParameters = new HashSet<string>();
-
-            if (_animator == null)
+            Animator animator = GetComponentInChildren<Animator>();
+            if (animator == null)
             {
                 Debug.LogError($"[{nameof(NPCAnimationHandler)}] '{name}' has no Animator in its children.", this);
+                enabled = false;
                 return;
             }
 
-            foreach (AnimatorControllerParameter parameter in _animator.parameters)
-            {
-                if (parameter.type == AnimatorControllerParameterType.Bool)
-                    _boolParameters.Add(parameter.name);
-            }
+            _state = new NpcAnimationState(new AnimatorBoolParameters(animator));
         }
 
         private void Start()
         {
-            SetStartAnim();
+            _state?.ApplyStartPose(_startState, _isSwim);
         }
 
-        public void SetIdleAnim()
+        /// <summary>Switches the NPC's mood. A request made before Start wins over the authored start pose.</summary>
+        public void SetState(NpcState state)
         {
-            SetBool("isTalk", false);
-            SetBool("isGreeting", false);
-            SetBool("isApplause", false);
-        }
-
-        public void SetStartAnim()
-        {
-            SetBool("isTalk", _isTalk);
-            SetBool("isGreeting", _isGreeting);
-            SetBool("isApplause", _isApplause);
-            SetBool("isSwim", _isSwim);
-        }
-
-        public void SetApplauseAnim()
-        {
-            SetBool("isApplause", true);
-            SetBool("isTalk", false);
-            SetBool("isGreeting", false);
-        }
-
-        public void SetGreetingAnim()
-        {
-            SetBool("isGreeting", true);
-            SetBool("isTalk", false);
-            SetBool("isApplause", false);
-        }
-
-        public void SetTalkAnim()
-        {
-            SetBool("isTalk", true);
-            SetBool("isGreeting", false);
-            SetBool("isApplause", false);
-        }
-
-        // Not every NPC animator controller declares the same set of parameters
-        // (e.g. isSwim), so unknown parameter names are silently ignored.
-        private void SetBool(string name, bool value)
-        {
-            if (_animator == null || !_boolParameters.Contains(name))
-                return;
-
-            _animator.SetBool(name, value);
+            // Null only when Awake found no Animator; that was already reported once.
+            _state?.Set(state);
         }
     }
 }
