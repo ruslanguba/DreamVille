@@ -13,11 +13,13 @@ using DreamVille.Bootstrap;
 using DreamVille.Configs;
 using DreamVille.Dialogue;
 using DreamVille.Gameplay.Enemies;
+using DreamVille.Gameplay.NPC;
 using DreamVille.Gameplay.Player;
 using DreamVille.Gameplay.Player.Ground;
 using DreamVille.Gameplay.Weapons.Aiming;
 using DreamVille.Gameplay.Weapons.Pillow;
 using DreamVille.Input;
+using DreamVille.Progression;
 using DreamVille.SceneManagement;
 using DreamVille.UI;
 
@@ -260,6 +262,68 @@ namespace DreamVille.Tests.EditMode.Composition
 
             foreach (SceneTransitionTrigger trigger in FindAll<SceneTransitionTrigger>())
                 AssertPrefabFieldAssigned(trigger, "_target");
+        }
+
+        /// <summary>A FinalZone the player can actually trigger: its dialogue is wired, directly or as a child.</summary>
+        private static bool IsArmable(FinalZone zone)
+        {
+            var serializedZone = new SerializedObject(zone);
+            SerializedProperty dialogue = serializedZone.FindProperty("_dialogue");
+
+            if (dialogue.objectReferenceValue != null)
+                return true;
+
+            return zone.GetComponentInChildren<DialogueTrigger>(true) != null;
+        }
+
+        [TestCaseSource(nameof(GameplayScenePaths))]
+        public void GameplayScene_WithAFinalZone_HasLevelActorsPointingAtIt(string scenePath)
+        {
+            OpenScene(scenePath);
+
+            FinalZone[] armableZones = FindAll<FinalZone>().Where(IsArmable).ToArray();
+
+            if (armableZones.Length == 0)
+            {
+                TestContext.WriteLine($"{scenePath}: no armed-able FinalZone (legitimately absent, e.g. Lobby_02).");
+                return;
+            }
+
+            Assert.That(armableZones, Has.Length.EqualTo(1),
+                $"{scenePath} has {armableZones.Length} armed-able FinalZone components; expected exactly one (regression guard for 920740b).");
+
+            LevelActors levelActors = FindSingle<LevelActors>();
+
+            Assert.That(levelActors.FinalZone, Is.SameAs(armableZones[0]),
+                $"{scenePath}'s LevelActors must point at the armed-able FinalZone, not a decoy; the final zone never arms otherwise.");
+        }
+
+        private const float NpcNearFinalZoneMaxDistance = 20f;
+
+        [TestCaseSource(nameof(GameplayScenePaths))]
+        public void GameplayScene_LevelActorsFinalNpc_IsInsideOrNearFinalZone(string scenePath)
+        {
+            OpenScene(scenePath);
+
+            LevelActors[] found = FindAll<LevelActors>();
+            if (found.Length != 1)
+                return;
+
+            var serializedActors = new SerializedObject(found[0]);
+            var finalNpc = serializedActors.FindProperty("_finalNpc").objectReferenceValue as NPCReactionController;
+
+            if (finalNpc == null)
+            {
+                Assert.Ignore($"{scenePath}: LevelActors has no FinalNpc (legitimately absent, e.g. Level_01).");
+                return;
+            }
+
+            FinalZone zone = found[0].FinalZone;
+            Assert.That(zone, Is.Not.Null, $"{scenePath}'s LevelActors has a FinalNpc but no FinalZone.");
+
+            float distance = Vector3.Distance(finalNpc.transform.position, zone.transform.position);
+            Assert.That(distance, Is.LessThanOrEqualTo(NpcNearFinalZoneMaxDistance),
+                $"{scenePath}'s final NPC is {distance:F1}m from its FinalZone (max {NpcNearFinalZoneMaxDistance}m); it should stand inside or near it.");
         }
 
         [Test]
