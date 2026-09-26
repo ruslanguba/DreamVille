@@ -6,7 +6,10 @@ namespace DreamVille.Gameplay.NPC
         /// <summary>Greets the player, e.g. when the level has just been won.</summary>
         void SetGreeting();
 
-        /// <summary>Applauds, then falls into talking after a short delay.</summary>
+        /// <summary>Mumbles and starts talking.</summary>
+        void SetTalk();
+
+        /// <summary>Mumbles and applauds, then falls into talking after a short delay.</summary>
         void SetApplause();
 
         /// <summary>Returns to the idle pose and stops any reaction sound.</summary>

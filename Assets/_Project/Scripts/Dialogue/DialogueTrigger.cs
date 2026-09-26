@@ -10,7 +10,7 @@ using DreamVille.Core.Players;
 namespace DreamVille.Dialogue
 {
     /// <summary>Starts a dialogue when the player enters its trigger zone.</summary>
-    public class DialogueTrigger : MonoBehaviour
+    public class DialogueTrigger : MonoBehaviour, IDialogueTrigger
     {
         /// <summary>Raised after the dialogue service accepted this trigger's lines.</summary>
         public event Action DialogueStarted;

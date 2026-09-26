@@ -37,6 +37,14 @@ namespace DreamVille.Gameplay.NPC
 
         public void SetGreeting() => _npcAnimationHandler.SetGreetingAnim();
 
+        public void SetTalk()
+        {
+            CancelApplause();
+            PlayTalkSound();
+            _npcAnimationHandler.SetTalkAnim();
+        }
+
+        /// <summary>Mumbles and applauds at once, then falls into talking after <see cref="ApplauseDuration"/> seconds.</summary>
         public void SetApplause()
         {
             if (!isActiveAndEnabled)
@@ -72,10 +80,10 @@ namespace DreamVille.Gameplay.NPC
         {
             try
             {
+                PlayTalkSound();
                 _npcAnimationHandler.SetApplauseAnim();
                 await UniTask.Delay(TimeSpan.FromSeconds(ApplauseDuration), cancellationToken: token);
 
-                PlayTalkSound();
                 _npcAnimationHandler.SetTalkAnim();
             }
             catch (OperationCanceledException)
