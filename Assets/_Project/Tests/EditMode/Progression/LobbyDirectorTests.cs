@@ -126,5 +126,16 @@ namespace DreamVille.Tests.EditMode.Progression
             Assert.That(_cast.SecondGate.OpenCount, Is.EqualTo(0));
             Assert.That(_cast.SecondTrigger.IsArmed, Is.False);
         }
+
+        [Test]
+        public void Dispose_AfterBothDialoguesDestroyedThemselves_DoesNotThrow()
+        {
+            _cast.FirstTriggerDestroyed = true;
+            _cast.SecondTriggerDestroyed = true;
+
+            Assert.DoesNotThrow(() => _director.Dispose());
+            Assert.That(_cast.FirstA.HandlerCount, Is.EqualTo(0));
+            Assert.That(_cast.Second.HandlerCount, Is.EqualTo(0));
+        }
     }
 }

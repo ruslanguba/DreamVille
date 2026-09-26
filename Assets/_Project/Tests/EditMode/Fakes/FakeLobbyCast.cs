@@ -25,8 +25,12 @@ namespace DreamVille.Tests.EditMode.Fakes
 
         public IReadOnlyList<IMortal> FirstGroup => new IMortal[] { FirstA, FirstB };
         public IReadOnlyList<IMortal> SecondGroup => new IMortal[] { Second };
-        public IDialogueTrigger FirstDialogue => FirstTrigger;
-        public IDialogueTrigger SecondDialogue => SecondTrigger;
+        /// <summary>Simulates deleteOnEnd: the real cast reports a destroyed trigger as null.</summary>
+        public bool FirstTriggerDestroyed { get; set; }
+        public bool SecondTriggerDestroyed { get; set; }
+
+        public IDialogueTrigger FirstDialogue => FirstTriggerDestroyed ? null : FirstTrigger;
+        public IDialogueTrigger SecondDialogue => SecondTriggerDestroyed ? null : SecondTrigger;
         public IDoor FirstDoor => FirstGate;
         public IDoor SecondDoor => SecondGate;
         public INpcReactions Guide => GuideLog;

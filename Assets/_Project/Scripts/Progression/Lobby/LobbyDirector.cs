@@ -1,6 +1,7 @@
 using System;
 using Zenject;
 
+using DreamVille.Dialogue;
 using DreamVille.Progression.Objectives;
 
 namespace DreamVille.Progression.Lobby
@@ -54,10 +55,22 @@ namespace DreamVille.Progression.Lobby
 
             _isInitialized = false;
 
-            _cast.FirstDialogue.DialogueStarted -= OnFirstDialogueStarted;
-            _cast.FirstDialogue.DialogueEnded -= OnFirstDialogueEnded;
-            _cast.SecondDialogue.DialogueStarted -= OnSecondDialogueStarted;
-            _cast.SecondDialogue.DialogueEnded -= OnSecondDialogueEnded;
+            // A trigger with deleteOnEnd has destroyed itself after its dialogue; the cast then reports it as null,
+            // and a destroyed trigger can never raise again, so there is nothing to detach from.
+            IDialogueTrigger firstDialogue = _cast.FirstDialogue;
+            if (firstDialogue != null)
+            {
+                firstDialogue.DialogueStarted -= OnFirstDialogueStarted;
+                firstDialogue.DialogueEnded -= OnFirstDialogueEnded;
+            }
+
+            IDialogueTrigger secondDialogue = _cast.SecondDialogue;
+            if (secondDialogue != null)
+            {
+                secondDialogue.DialogueStarted -= OnSecondDialogueStarted;
+                secondDialogue.DialogueEnded -= OnSecondDialogueEnded;
+            }
+
             _firstGroup.Completed -= OnFirstGroupCleared;
             _secondGroup.Completed -= OnSecondGroupCleared;
 
