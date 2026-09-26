@@ -43,7 +43,7 @@ namespace DreamVille.Bootstrap
                 .FromComponentInNewPrefab(_enemyProjectilePrefab)
                 .UnderTransformGroup("EnemyProjectiles");
 
-            // Lives on the LevelProgressSystem prefab in Prefabs/Utilities.
+            // Lives on the LevelSystems prefab in Prefabs/Utilities.
             Container.BindInterfacesTo<EnemyRegistry>().FromComponentInHierarchy().AsSingle();
         }
     }

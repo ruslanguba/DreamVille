@@ -27,16 +27,18 @@ namespace DreamVille.Progression
             IEnemyRegistry enemies,
             LevelDefinition level,
             IProgressRepository progress,
-            [InjectOptional] LevelActors actors)
+            LevelActors actors)
         {
             _enemies = enemies;
             _level = level;
             _progress = progress;
-            _actors = actors;
+
+            // Required on purpose: an optional cast once vanished from every scene without a single error.
+            _actors = actors != null ? actors : throw new ArgumentNullException(nameof(actors));
         }
 
-        private FinalZone FinalZone => _actors != null ? _actors.FinalZone : null;
-        private INpcReactions FinalNpc => _actors != null ? _actors.FinalNpc : null;
+        private FinalZone FinalZone => _actors.FinalZone;
+        private INpcReactions FinalNpc => _actors.FinalNpc;
 
         public void Initialize()
         {

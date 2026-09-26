@@ -8911,6 +8911,52 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.01286607, y: 0.012866068, z: 0.059901603}
   m_Center: {x: 0, y: 0, z: 0.029950801}
+--- !u!1 &362266643
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 362266645}
+  - component: {fileID: 362266644}
+  m_Layer: 0
+  m_Name: LevelActors
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &362266644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362266643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a015fafeb86e1cb47aaa177b6d546359, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Progression::DreamVille.Progression.LevelActors
+  _finalZone: {fileID: 1088994475}
+  _finalNpc: {fileID: 2076395064}
+--- !u!4 &362266645
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362266643}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &363103951 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 896022870346021145, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
@@ -27221,30 +27267,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2723250760080877088, guid: 75a7808c281e5604d8178c4798b3f5d8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1194836591}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75a7808c281e5604d8178c4798b3f5d8, type: 3}
---- !u!1 &1194836590 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2723250760080877088, guid: 75a7808c281e5604d8178c4798b3f5d8, type: 3}
-  m_PrefabInstance: {fileID: 1194836589}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1194836591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1194836590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a015fafeb86e1cb47aaa177b6d546359, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: DreamVille.Progression::DreamVille.Progression.LevelActors
-  _finalZone: {fileID: 1088994475}
-  _finalNpc: {fileID: 2076395064}
 --- !u!1 &1195059050
 GameObject:
   m_ObjectHideFlags: 0
@@ -29855,23 +29879,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 935719085804823929, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
       propertyPath: m_Name
-      value: LevelProgressSystem
-      objectReference: {fileID: 0}
-    - target: {fileID: 4398140863521126373, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
-      propertyPath: _levelId
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4398140863521126373, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
-      propertyPath: _screToFillFirstStar
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4398140863521126373, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
-      propertyPath: _screToFillThirdStar
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4398140863521126373, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
-      propertyPath: _screToFillSecondStar
-      value: 10
+      value: LevelSystems
       objectReference: {fileID: 0}
     - target: {fileID: 7969951425661181974, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -49728,3 +49736,4 @@ SceneRoots:
   - {fileID: 2051063804}
   - {fileID: 1194836589}
   - {fileID: 510573328}
+  - {fileID: 362266645}

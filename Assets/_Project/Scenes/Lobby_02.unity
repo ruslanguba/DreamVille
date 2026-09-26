@@ -11671,23 +11671,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 935719085804823929, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
       propertyPath: m_Name
-      value: LevelProgressSystem
-      objectReference: {fileID: 0}
-    - target: {fileID: 4398140863521126373, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
-      propertyPath: _levelId
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4398140863521126373, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
-      propertyPath: _screToFillFirstStar
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4398140863521126373, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
-      propertyPath: _screToFillThirdStar
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4398140863521126373, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
-      propertyPath: _screToFillSecondStar
-      value: 10
+      value: LevelSystems
       objectReference: {fileID: 0}
     - target: {fileID: 7969951425661181974, guid: 2cb29353ae990934096c7e001e02409b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17977,6 +17961,52 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 93daa4809d472a747a1e4e045dbe9bd0, type: 3}
   m_PrefabInstance: {fileID: 541970052}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2019358768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2019358770}
+  - component: {fileID: 2019358769}
+  m_Layer: 0
+  m_Name: LevelActors
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2019358769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019358768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a015fafeb86e1cb47aaa177b6d546359, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Progression::DreamVille.Progression.LevelActors
+  _finalZone: {fileID: 0}
+  _finalNpc: {fileID: 0}
+--- !u!4 &2019358770
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019358768}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2052549918 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 802302595977547691, guid: 2daa2e8b996f9d743a0386422249969c, type: 3}
@@ -19542,3 +19572,4 @@ SceneRoots:
   - {fileID: 745605029}
   - {fileID: 435218124}
   - {fileID: 947369567}
+  - {fileID: 2019358770}
