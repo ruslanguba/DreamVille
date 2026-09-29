@@ -1,10 +1,11 @@
 using UnityEngine;
 using Zenject;
-using DreamVille.UI;
+
+using DreamVille.UI.Hud;
 
 namespace DreamVille.Bootstrap
 {
-    /// <summary>Gameplay HUD. The container instantiates the prefab.</summary>
+    /// <summary>Gameplay HUD. The container instantiates the prefab and exposes it as <see cref="IGameHudView"/>.</summary>
     public class UiInstaller : MonoInstaller
     {
         [Header("Prefabs")]
@@ -12,7 +13,7 @@ namespace DreamVille.Bootstrap
 
         public override void InstallBindings()
         {
-            Container.Bind<GameUIRoot>().FromComponentInNewPrefab(_uiPrefab).AsSingle();
+            Container.Bind<IGameHudView>().To<GameUIRoot>().FromComponentInNewPrefab(_uiPrefab).AsSingle();
         }
     }
 }

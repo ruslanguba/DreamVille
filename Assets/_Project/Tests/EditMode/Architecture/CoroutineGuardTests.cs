@@ -10,8 +10,8 @@ namespace DreamVille.Tests.EditMode.Architecture
 {
     /// <summary>
     /// Guards spec 08 §5 group F: timed logic under <c>Assets/_Project/Scripts</c> waits through UniTask with an explicit
-    /// token, never through coroutines or string Invoke. The UI classes below are the only exceptions; roadmap 5.1/5.4
-    /// rewrite them, and the second test forces the list to shrink as they do.
+    /// token, never through coroutines or string Invoke. The UI classes below are the only exceptions; roadmap 5.4
+    /// rewrites them, and the second test forces the list to shrink as it does.
     /// </summary>
     public class CoroutineGuardTests
     {
@@ -27,9 +27,6 @@ namespace DreamVille.Tests.EditMode.Architecture
             "UI/OnText.cs",                  // 5.4 ProximityHint
             "UI/Hints/HintDestroyOnTime.cs", // 5.4 ProximityHint
             "UI/FadeCanvasText.cs",          // 5.4 UiFader (host prefab unused)
-            "UI/ScorePopupUI.cs",            // 5.1 IScoreView
-            "UI/RicochetUI.cs",              // 5.1 IRicochetView
-            "UI/ScoreStar.cs",               // 5.1 IStarsView
         };
 
         private static string ScriptsRoot => Path.Combine(Application.dataPath, "_Project", "Scripts");

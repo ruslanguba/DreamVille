@@ -32,6 +32,7 @@ namespace DreamVille.Bootstrap
             Container.BindInterfacesTo<ScoreService>().AsSingle();
             Container.BindInterfacesTo<StarProgressService>().AsSingle();
             Container.BindInterfacesTo<BestScoreService>().AsSingle();
+            Container.BindInterfacesTo<ScoringCoordinator>().AsSingle();
 
             // Scene-scoped: availability is capped by this scene's LevelDefinition; the unlock count itself is persisted.
             Container.BindInterfacesTo<PillowInventory>().AsSingle();

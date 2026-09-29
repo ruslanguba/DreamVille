@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DreamVille.UI
+namespace DreamVille.UI.Hud
 {
     /// <summary>HUD row of pillow icons: one per available pillow, visible while that pillow is in hand.</summary>
-    public class PillowUI : MonoBehaviour
+    public sealed class PillowView : MonoBehaviour, IPillowView
     {
         [SerializeField] private Image _iconPrefab;
         [SerializeField] private RectTransform _firstPosition;
