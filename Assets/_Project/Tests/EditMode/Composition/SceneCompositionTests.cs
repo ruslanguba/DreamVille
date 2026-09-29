@@ -143,7 +143,7 @@ namespace DreamVille.Tests.EditMode.Composition
         }
 
         [TestCaseSource(nameof(GameplayScenePaths))]
-        public void GameplayScene_InstallsTheFiveRequiredInstallers(string scenePath)
+        public void GameplayScene_InstallsTheFourRequiredInstallers(string scenePath)
         {
             OpenScene(scenePath);
             SceneContext sceneContext = FindSingle<SceneContext>();
@@ -154,7 +154,6 @@ namespace DreamVille.Tests.EditMode.Composition
             {
                 typeof(SceneServicesInstaller),
                 typeof(CombatInstaller),
-                typeof(GameplayInstaller),
                 typeof(ProgressionInstaller),
                 typeof(UiInstaller)
             }));

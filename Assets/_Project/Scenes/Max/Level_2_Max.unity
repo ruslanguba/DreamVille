@@ -1751,7 +1751,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2418066850084196106, guid: 124aed51fef565647859b1db51e221df, type: 3}
       propertyPath: _monoInstallers.Array.size
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2418066850084196106, guid: 124aed51fef565647859b1db51e221df, type: 3}
       propertyPath: '_monoInstallers.Array.data[1]'
@@ -1768,7 +1768,7 @@ PrefabInstance:
     - target: {fileID: 2418066850084196106, guid: 124aed51fef565647859b1db51e221df, type: 3}
       propertyPath: '_monoInstallers.Array.data[4]'
       value: 
-      objectReference: {fileID: 218201619}
+      objectReference: {fileID: 0}
     - target: {fileID: 2723250760080877088, guid: 124aed51fef565647859b1db51e221df, type: 3}
       propertyPath: m_Name
       value: SceneContext
@@ -1828,9 +1828,6 @@ PrefabInstance:
       addedObject: {fileID: 218201620}
     - targetCorrespondingSourceObject: {fileID: 2723250760080877088, guid: 124aed51fef565647859b1db51e221df, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 218201619}
-    - targetCorrespondingSourceObject: {fileID: 2723250760080877088, guid: 124aed51fef565647859b1db51e221df, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 218201623}
   m_SourcePrefab: {fileID: 100100000, guid: 124aed51fef565647859b1db51e221df, type: 3}
 --- !u!1 &218201618 stripped
@@ -1838,18 +1835,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2723250760080877088, guid: 124aed51fef565647859b1db51e221df, type: 3}
   m_PrefabInstance: {fileID: 218201617}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &218201619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 218201618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00709b82d62d1cc4f85db579f93d31ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &218201620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26158,11 +26143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startState: 0
-  _isTalk: 0
-  _isGreeting: 0
-  _isApplause: 0
   _isSwim: 1
-  _isIdle: 0
 --- !u!1 &2116162132 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 98d106ad989ddea48aea931cdc48a199, type: 3}
