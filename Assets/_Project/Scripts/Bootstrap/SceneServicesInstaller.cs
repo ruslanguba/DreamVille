@@ -23,7 +23,7 @@ namespace DreamVille.Bootstrap
             Container.BindInterfacesTo<PillowLauncher>().FromComponentInHierarchy().AsSingle();
             // Lazy: only a DamageVignetteView resolves it, and only scenes with a Volume have one.
             Container.Bind<IPlayerDamageState>().To<PlayerDamageReceiver>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<GameInput>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesTo<GameInput>().FromComponentInHierarchy().AsSingle();
 
             Container.BindInterfacesTo<DialogueService>().AsSingle();
             Container.Bind<DialogueManager>().FromComponentInHierarchy().AsSingle();

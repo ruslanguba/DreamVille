@@ -7,7 +7,8 @@ using DreamVille.Input;
 namespace DreamVille.App
 {
     /// <summary>
-    /// In-game menu: reacts to input, pauses the game and tells the UI what to show.
+    /// In-game menu rules: Esc and Tab open or close the menu and pause the game, and the UI is told what to show.
+    /// While a dialogue runs the player has no control; closing the menu during a dialogue keeps time stopped.
     /// Pause, cursor and scene transitions themselves live in dedicated services.
     /// </summary>
     public class InGameMenuController : IInGameMenu, IInitializable, IDisposable
@@ -19,24 +20,24 @@ namespace DreamVille.App
         private readonly IPauseService _pause;
         private readonly IGameFlowService _flow;
         private readonly IDialogueState _dialogue;
-        private readonly GameInput _input;
+        private readonly IMenuInput _input;
 
         public InGameMenuController(
             IPauseService pause,
             IGameFlowService flow,
             IDialogueState dialogue,
-            GameInput input)
+            IMenuInput input)
         {
-            _pause = pause;
-            _flow = flow;
-            _dialogue = dialogue;
-            _input = input;
+            _pause = pause ?? throw new ArgumentNullException(nameof(pause));
+            _flow = flow ?? throw new ArgumentNullException(nameof(flow));
+            _dialogue = dialogue ?? throw new ArgumentNullException(nameof(dialogue));
+            _input = input ?? throw new ArgumentNullException(nameof(input));
         }
 
         public void Initialize()
         {
-            _input.OnPause += ToggleMenu;
-            _input.OnTub += ToggleComics;
+            _input.PausePressed += ToggleMenu;
+            _input.ComicsPressed += ToggleComics;
             _dialogue.ActiveChanged += OnDialogueActiveChanged;
 
             _pause.Resume();
@@ -44,8 +45,8 @@ namespace DreamVille.App
 
         public void Dispose()
         {
-            _input.OnPause -= ToggleMenu;
-            _input.OnTub -= ToggleComics;
+            _input.PausePressed -= ToggleMenu;
+            _input.ComicsPressed -= ToggleComics;
             _dialogue.ActiveChanged -= OnDialogueActiveChanged;
         }
 
