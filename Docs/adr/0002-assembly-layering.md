@@ -45,6 +45,7 @@ graph LR
     Progression --> Dialogue
     Progression --> Gameplay
     Progression --> Persistence
+    Progression --> Scoring
     App --> Configs
     App --> Core
     App --> Dialogue
@@ -58,6 +59,7 @@ graph LR
     UI --> Input
     UI --> Persistence
     UI --> SceneManagement
+    UI --> Scoring
     Presentation --> Core
     Bootstrap --> App
     Bootstrap --> Audio
@@ -81,14 +83,14 @@ Supporting rules, all verified in the current tree:
 - Interfaces live in the module that owns the concept, not in `Core`: `IScoreService`/`IStarProgressService`/`IBestScoreService` in `Scoring`, `ISceneLoader` in `SceneManagement`, `IDialogueService`/`IDialogueState` in `Dialogue`, `IAudioService`/`IAudioSettings`/`IAudioOutput` in `Audio`, `IEnemyRegistry`/`IBulletSpawner`/`IBulletHitSource`/`IPillowThrower`/`IWeapon` in `Gameplay`, `ICursorService`/`IPauseService`/`IGameFlowService`/`IInGameMenu` in `App`. `Core` only holds a contract when the *consumer* sits below the *implementer* in the graph — the player-detection seams are the one case where that happens today (implemented by `PlayerCharacter`, `PlayerInputSwitch`, `PlayerDetectorTrigger` in `Gameplay`; consumed by `SceneManagement`, `Dialogue` and `UI`, all of which sit below or beside `Gameplay`).
 - `autoReferenced` is `false` on every DreamVille assembly except `DreamVille.Bootstrap`; a script placed outside an asmdef folder cannot silently see the whole project.
 - Namespace equals assembly name for every module (`rootNamespace` matches the asmdef `name`); the one nested case, `DreamVille.Core.Players`, is a folder inside `Core`, not a separate assembly.
-- The graph is leaner than first drafted, by design: a planned `Input → Core` edge and a planned `Dialogue → Configs` edge were both dropped in a review pass because neither module's code used anything from the other assembly — the edge was pure risk with no payoff. A planned `UI → Scoring` edge was dropped the same way: `GameplayPresenter` (in `Bootstrap`) is the only place that reads `IScoreService`, and it forwards plain floats and events into UI view components, so `UI` never needs the interface itself.
+- The graph is leaner than first drafted, by design: a planned `Input → Core` edge and a planned `Dialogue → Configs` edge were both dropped in a review pass because neither module's code used anything from the other assembly — the edge was pure risk with no payoff. A planned `UI → Scoring` edge was dropped the same way at first, while `GameplayPresenter` in `Bootstrap` was the only reader of `IScoreService`. It came back with the HUD MVP: `HudPresenter` now lives in `UI` next to its views and needs `IScoreService` and `IStarProgressService` events ([ADR 0007](0007-hud-mvp.md)).
 
 ## Consequences
 
 - `DreamVille.Presentation` (added with the player composition, 2026-09-25) is the only assembly that references the render pipeline: the damage vignette listens to `IPlayerDamageState` from `Core`, so `Gameplay` no longer links URP. Nothing references `Presentation`; its component sits on the scene's `Global Volume` and is injected by the scene context.
 - The compiler enforces the layering; a future `Gameplay` change that reaches for `DreamVille.UI` fails to compile instead of surfacing as a code-review comment.
-- `DreamVille.Progression` references `DreamVille.Gameplay` and `DreamVille.Dialogue` for their public events and interfaces (`IEnemyRegistry`, `INpcReactions`) — allowed because a feature-to-feature edge for interfaces only does not create a layering cycle, and `Progression` sits one layer above both.
-- The real graph outgrew the one drafted in `.claude/refactor/specs/01-assembly-layering-and-di.md` in a few places (`Progression` needs neither `Core` nor `Scoring` directly; `UI` needs neither `Scoring` nor `Dialogue` directly) — this ADR documents the graph as it compiles today, not the original proposal.
+- `DreamVille.Progression` references `DreamVille.Gameplay` and `DreamVille.Dialogue` for their public events and interfaces (`IEnemyRegistry`, `INpcReactions`) — allowed because a feature-to-feature edge for interfaces only does not create a layering cycle, and `Progression` sits one layer above both. It also references `DreamVille.Scoring`, because `ScoringCoordinator` joins `IEnemyRegistry` with the scoring services; `Scoring` itself may not reference `Gameplay`, so the join cannot live there.
+- The real graph outgrew the one drafted in `.claude/refactor/specs/01-assembly-layering-and-di.md` in a few places (`Progression` needs no `Core` edge; `UI` needs no `Dialogue` edge) — this ADR documents the graph as it compiles today, not the original proposal.
 - Adding a genuinely new cross-cutting concept still means asking "does `Core` need to know this", and the answer should almost always be no — `Core` growing back into a dumping ground is the failure mode this decision exists to prevent.
 
 ## Alternatives considered

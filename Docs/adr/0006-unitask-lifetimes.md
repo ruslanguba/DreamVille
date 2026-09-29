@@ -94,11 +94,12 @@ what Unity's scheduler happened to do before, verified against a Play Mode basel
 [`CoroutineGuardTests`](../../Assets/_Project/Tests/EditMode/Architecture/CoroutineGuardTests.cs)
 scans every `.cs` file under `Assets/_Project/Scripts` for `StartCoroutine`,
 `StopCoroutine`, `IEnumerator`, `WaitForSeconds`, string `Invoke` and `InvokeRepeating`,
-and fails if any of them appear outside six named UI files: `UI/OnText.cs`,
-`UI/Hints/HintDestroyOnTime.cs`, `UI/FadeCanvasText.cs`, `UI/ScorePopupUI.cs`,
-`UI/RicochetUI.cs`, `UI/ScoreStar.cs`. A second test fails if an allow-listed file no
+and fails if any of them appear outside three named UI files: `UI/OnText.cs`,
+`UI/Hints/HintDestroyOnTime.cs`, `UI/FadeCanvasText.cs`. (It started with six; the HUD
+files `ScorePopupUI`, `RicochetUI` and `ScoreStar` left the list when roadmap 5.1 moved
+them to UniTask, see [ADR 0007](0007-hud-mvp.md).) A second test fails if an allow-listed file no
 longer uses a coroutine API, so the list is a checked invariant that can only shrink as
-phase 5 (`5.1` UI presenters, `5.4` proximity hints) rewrites those six classes — not a
+phase 5 (`5.1` UI presenters, `5.4` proximity hints) rewrites those classes — not a
 README claim nobody re-checks.
 
 **The `PluhNPC.controller` fix.**
@@ -120,7 +121,7 @@ switching" bug) and is verified by
 - One class ([`GameTime`](../../Assets/_Project/Scripts/Core/Async/GameTime.cs)) states
   the pause/time-scale policy instead of eleven hand-written `Time.deltaTime` loops each
   getting to answer it independently.
-- `grep`-ing `Assets/_Project/Scripts` for a coroutine API returns only the six UI files
+- `grep`-ing `Assets/_Project/Scripts` for a coroutine API returns only the three UI files
   `CoroutineGuardTests` names — a checked fact, not a README claim, and it can only get
   shorter.
 - An NPC's mood is an enum with one owner
@@ -151,8 +152,8 @@ switching" bug) and is verified by
   base class would only save the lifetime plumbing, which `Cancellation.CancelAndDispose`
   already shares.
 - **Deferring the UI coroutines into this step instead of an allow-list.** Rejected:
-  `ScorePopupUI`, `RicochetUI` and `ScoreStar` have known overlap bugs that belong to the
-  `5.1` UI-presenter rewrite, and `OnText`/`HintDestroyOnTime`/`FadeCanvasText` belong to
+  `ScorePopupUI`, `RicochetUI` and `ScoreStar` had known overlap bugs that belonged to the
+  `5.1` UI-presenter rewrite (done, see [ADR 0007](0007-hud-mvp.md)), and `OnText`/`HintDestroyOnTime`/`FadeCanvasText` belong to
   `5.4`'s proximity-hint rewrite; converting them here would duplicate work those steps
   already own.
 
