@@ -19,6 +19,7 @@
         "DreamVille.Progression",
         "DreamVille.UI",
         "UnityEngine.UI",
+        "Unity.Localization",
         "DreamVille.Tests.Support",
         "UniTask",
         "Zenject",
