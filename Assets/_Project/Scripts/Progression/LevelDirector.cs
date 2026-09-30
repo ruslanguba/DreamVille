@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using Zenject;
 
 using DreamVille.Configs;
+using DreamVille.Core.Scenes;
 using DreamVille.Gameplay.Enemies;
 using DreamVille.Gameplay.NPC;
 using DreamVille.Persistence;
@@ -14,8 +15,9 @@ namespace DreamVille.Progression
     /// The level's completion scenario in one place: winning arms the final zone, the final
     /// dialogue starting and finishing drives the final-zone NPC reaction, and the dialogue
     /// finishing opens the path onward. Participants do not know about each other.
+    /// A level without enemies to beat (a hub) is completed from outside through <see cref="ILevelCompletion"/>.
     /// </summary>
-    public class LevelDirector : IInitializable, IDisposable
+    public class LevelDirector : ILevelCompletion, IInitializable, IDisposable
     {
         private readonly IEnemyRegistry _enemies;
         private readonly LevelDefinition _level;
@@ -75,6 +77,11 @@ namespace DreamVille.Progression
         /// so an NPC greeting applied here would be overwritten by its own Start. Wait for the
         /// first Update, when every component has initialised its authored pose.
         /// </summary>
+        public void CompleteLevel()
+        {
+            _progress.MarkCompleted(_level.LevelId);
+        }
+
         private async UniTaskVoid CompleteAfterSceneStartAsync(CancellationToken token)
         {
             try
@@ -90,7 +97,7 @@ namespace DreamVille.Progression
 
         private void OnAllEnemiesKilled()
         {
-            _progress.MarkCompleted(_level.LevelId);
+            CompleteLevel();
 
             if (FinalZone != null)
                 FinalZone.Arm();

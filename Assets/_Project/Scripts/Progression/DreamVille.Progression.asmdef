@@ -3,6 +3,7 @@
     "rootNamespace": "DreamVille.Progression",
     "references": [
         "DreamVille.Configs",
+        "DreamVille.Core",
         "DreamVille.Dialogue",
         "DreamVille.Gameplay",
         "DreamVille.Persistence",

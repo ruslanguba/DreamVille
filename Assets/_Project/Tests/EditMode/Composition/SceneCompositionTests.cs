@@ -265,6 +265,19 @@ namespace DreamVille.Tests.EditMode.Composition
                 AssertPrefabFieldAssigned(trigger, "_target");
         }
 
+        [TestCaseSource(nameof(GameplayScenePaths))]
+        public void GameplayScene_CanBeCompleted(string scenePath)
+        {
+            OpenScene(scenePath);
+
+            bool hasFinale = FindAll<FinalZone>().Any(IsArmable);
+            bool hasCompletingPortal = FindAll<SceneTransitionTrigger>()
+                .Any(trigger => new SerializedObject(trigger).FindProperty("_completesLevel").boolValue);
+
+            Assert.That(hasFinale || hasCompletingPortal, Is.True,
+                $"{scenePath} can never be completed: no armable FinalZone and no SceneTransitionTrigger with _completesLevel, so its level-select button stays locked.");
+        }
+
         /// <summary>A FinalZone the player can actually trigger: its dialogue is wired, directly or as a child.</summary>
         private static bool IsArmable(FinalZone zone)
         {
