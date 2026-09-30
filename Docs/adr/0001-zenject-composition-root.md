@@ -11,9 +11,9 @@ DreamVille needs one place that wires plain C# services to Unity objects across 
 
 Use Zenject/Extenject as the composition root, with three fixed entry points and nothing else:
 
-- **ProjectContext**, installed by [`ProjectInstaller`](../../Assets/_Project/Scripts/Bootstrap/ProjectInstaller.cs): app-lifetime services that outlive a scene — `SceneCatalog`, `AudioConfig`, the `AudioPlayer` prefab and `AudioService`, `ISceneLoader`, and the three persistence bindings (`ISaveStorage`, `IProgressRepository`, `IAudioSettingsRepository`).
+- **ProjectContext**, installed by [`ProjectInstaller`](../../Assets/_Project/Scripts/Bootstrap/ProjectInstaller.cs): app-lifetime services that outlive a scene — `SceneCatalog`, `AudioConfig`, the `AudioPlayer` prefab and `AudioService`, `ISceneLoader`, and the three persistence bindings (`ISaveStorage`, `IProgressRepository`, `IAudioSettingsRepository`), and the application-level services `ICursorService` (`CursorService`), `IApplicationQuitter` (`UnityApplicationQuitter`) and `FrameRateLimiter`.
 - One [`GameplaySceneContext.prefab`](../../Assets/_Project/Prefabs/Bootstrap/GameplaySceneContext.prefab) shared by all six gameplay scenes, carrying a `SceneContext` with four `MonoInstaller`s in a fixed order — [`SceneServicesInstaller`](../../Assets/_Project/Scripts/Bootstrap/SceneServicesInstaller.cs), [`CombatInstaller`](../../Assets/_Project/Scripts/Bootstrap/CombatInstaller.cs), [`ProgressionInstaller`](../../Assets/_Project/Scripts/Bootstrap/ProgressionInstaller.cs), [`UiInstaller`](../../Assets/_Project/Scripts/Bootstrap/UiInstaller.cs) — plus a `DialogueInputHandler` component that is not an installer but needs the same container.
-- [`MainMenuContext.prefab`](../../Assets/_Project/Prefabs/Bootstrap/MainMenuContext.prefab) for the menu scene, with an intentionally empty [`MainMenuInstaller`](../../Assets/_Project/Scripts/Bootstrap/MainMenuInstaller.cs) — a placeholder that still gives the scene a *declared* composition to test against, instead of "whatever prefab was dropped there".
+- [`MainMenuContext.prefab`](../../Assets/_Project/Prefabs/Bootstrap/MainMenuContext.prefab) for the menu scene, with [`MainMenuInstaller`](../../Assets/_Project/Scripts/Bootstrap/MainMenuInstaller.cs), which binds the menu, level-select and audio-settings views and presenters and the locale selector ([ADR 0008](0008-menus-mvp.md)). It was an empty placeholder until then; even empty, it gave the scene a *declared* composition to test against, instead of "whatever prefab was dropped there".
 - [`BootstrapInstaller`](../../Assets/_Project/Scripts/Bootstrap/BootstrapInstaller.cs) in the `GameStart` scene, which binds only the intro UI and [`GameBootstrap`](../../Assets/_Project/Scripts/Bootstrap/GameBootstrap.cs) — the class that plays the intro and then loads the menu scene named by `SceneCatalog`.
 
 Rules that hold across every installer:
@@ -33,7 +33,7 @@ flowchart LR
         BI[BootstrapInstaller]
     end
     subgraph Menu["MainMenu scene"]
-        MMC["MainMenuContext.prefab<br/>MainMenuInstaller (empty)"]
+        MMC["MainMenuContext.prefab<br/>MainMenuInstaller"]
     end
     subgraph Gameplay["6 gameplay scenes"]
         GSC["GameplaySceneContext.prefab<br/>SceneServicesInstaller, CombatInstaller,<br/>ProgressionInstaller, UiInstaller,<br/>DialogueInputHandler"]
@@ -44,7 +44,7 @@ flowchart LR
 ## Consequences
 
 - Adding a seventh gameplay scene means dropping in one prefab, not re-deriving which of four installers it needs; `SceneCompositionTests` fails loudly if one is missing.
-- `HudPresenter` depends only on interfaces (its view is bound as `IGameHudView`), so the HUD wiring is tested with fakes instead of a live scene. The scoring rules live in `ScoringCoordinator` (bound in `ProgressionInstaller`); `UiInstaller` binds the HUD view and its presenter together. See [ADR 0007](0007-hud-mvp.md). `GameplayInstaller` was removed once it had nothing left to bind.
+- `HudPresenter` depends only on interfaces (its view is bound as `IGameHudView`), so the HUD wiring is tested with fakes instead of a live scene. The scoring rules live in `ScoringCoordinator` (bound in `ProgressionInstaller`); `UiInstaller` binds the HUD view and its presenter together, plus the pause menu and audio settings views and presenters ([ADR 0008](0008-menus-mvp.md)); `InGameMenuController` takes `IMenuInput`, not the concrete `GameInput`. See [ADR 0007](0007-hud-mvp.md). `GameplayInstaller` was removed once it had nothing left to bind.
 - The four `Scenes/Max/*` work-in-progress scenes still reference the older `Prefabs/Bootstrap/SceneContext.prefab` and are excluded from Build Settings and from `SceneCompositionTests`; promoting one of them requires moving it onto `GameplaySceneContext.prefab` first.
 - `[InjectOptional]` is gone from the call sites that used to fall back to a `Debug.LogWarning`; a scene that forgets an installer now fails at container-build time instead of logging and continuing.
 

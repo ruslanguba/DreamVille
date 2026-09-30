@@ -1,6 +1,6 @@
 # Architecture Decision Records
 
-This folder records the decisions that shape DreamVille's codebase: the composition root, assembly layering, persistence, the scene/async patterns, the interactables channel, UniTask lifetimes and the HUD. Each record is one page — Context, Decision, Consequences, Alternatives considered — written after the decision shipped and checked against the code under [`Assets/_Project/Scripts`](../../Assets/_Project/Scripts), not as a design proposal. Records are numbered sequentially and never renumbered; a decision that gets superseded earns a new record that says so, and the old one stays as history.
+This folder records the decisions that shape DreamVille's codebase: the composition root, assembly layering, persistence, the scene/async patterns, the interactables channel, UniTask lifetimes, the HUD and the menus. Each record is one page — Context, Decision, Consequences, Alternatives considered — written after the decision shipped and checked against the code under [`Assets/_Project/Scripts`](../../Assets/_Project/Scripts), not as a design proposal. Records are numbered sequentially and never renumbered; a decision that gets superseded earns a new record that says so, and the old one stays as history.
 
 | # | Title | Status | Date |
 |---|---|---|---|
@@ -11,3 +11,4 @@ This folder records the decisions that shape DreamVille's codebase: the composit
 | [0005](0005-interaction-effects-as-components.md) | Interaction effects as sibling components | Accepted | 2026-09-26 |
 | [0006](0006-unitask-lifetimes.md) | UniTask lifetimes for coroutines: one-shot vs enable-bound | Accepted | 2026-09-26 |
 | [0007](0007-hud-mvp.md) | HUD as MVP: passive views, a presenter, a scoring coordinator | Accepted | 2026-09-30 |
+| [0008](0008-menus-mvp.md) | Menus as MVP: passive views, presenters, and one Inspector rule | Accepted | 2026-09-30 |

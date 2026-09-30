@@ -42,6 +42,7 @@ graph LR
     Gameplay --> Input
     Gameplay --> Scoring
     Progression --> Configs
+    Progression --> Core
     Progression --> Dialogue
     Progression --> Gameplay
     Progression --> Persistence
@@ -79,7 +80,7 @@ graph LR
 
 Supporting rules, all verified in the current tree:
 
-- `DreamVille.Core` is a handful of interfaces and one static helper — [`IActiveSceneTracker`](../../Assets/_Project/Scripts/Core/Scenes/IActiveSceneTracker.cs) (the active-scene seam `Audio` listens to instead of `SceneManager`), [`IPlayerMarker`](../../Assets/_Project/Scripts/Core/Players/IPlayerMarker.cs), [`IPlayerControlSwitch`](../../Assets/_Project/Scripts/Core/Players/IPlayerControlSwitch.cs), [`IPlayerZone`](../../Assets/_Project/Scripts/Core/Players/IPlayerZone.cs), [`PlayerDetection`](../../Assets/_Project/Scripts/Core/Players/PlayerDetection.cs) — and nothing else.
+- `DreamVille.Core` is a handful of interfaces and one static helper — [`IActiveSceneTracker`](../../Assets/_Project/Scripts/Core/Scenes/IActiveSceneTracker.cs) (the active-scene seam `Audio` listens to instead of `SceneManager`), [`ILevelCompletion`](../../Assets/_Project/Scripts/Core/Scenes/ILevelCompletion.cs), [`IPlayerMarker`](../../Assets/_Project/Scripts/Core/Players/IPlayerMarker.cs), [`IPlayerControlSwitch`](../../Assets/_Project/Scripts/Core/Players/IPlayerControlSwitch.cs), [`IPlayerZone`](../../Assets/_Project/Scripts/Core/Players/IPlayerZone.cs), [`PlayerDetection`](../../Assets/_Project/Scripts/Core/Players/PlayerDetection.cs) — and nothing else.
 - Interfaces live in the module that owns the concept, not in `Core`: `IScoreService`/`IStarProgressService`/`IBestScoreService` in `Scoring`, `ISceneLoader` in `SceneManagement`, `IDialogueService`/`IDialogueState` in `Dialogue`, `IAudioService`/`IAudioSettings`/`IAudioOutput` in `Audio`, `IEnemyRegistry`/`IBulletSpawner`/`IBulletHitSource`/`IPillowThrower`/`IWeapon` in `Gameplay`, `ICursorService`/`IPauseService`/`IGameFlowService`/`IInGameMenu` in `App`. `Core` only holds a contract when the *consumer* sits below the *implementer* in the graph — the player-detection seams are the one case where that happens today (implemented by `PlayerCharacter`, `PlayerInputSwitch`, `PlayerDetectorTrigger` in `Gameplay`; consumed by `SceneManagement`, `Dialogue` and `UI`, all of which sit below or beside `Gameplay`).
 - `autoReferenced` is `false` on every DreamVille assembly except `DreamVille.Bootstrap`; a script placed outside an asmdef folder cannot silently see the whole project.
 - Namespace equals assembly name for every module (`rootNamespace` matches the asmdef `name`); the one nested case, `DreamVille.Core.Players`, is a folder inside `Core`, not a separate assembly.
@@ -89,8 +90,8 @@ Supporting rules, all verified in the current tree:
 
 - `DreamVille.Presentation` (added with the player composition, 2026-09-25) is the only assembly that references the render pipeline: the damage vignette listens to `IPlayerDamageState` from `Core`, so `Gameplay` no longer links URP. Nothing references `Presentation`; its component sits on the scene's `Global Volume` and is injected by the scene context.
 - The compiler enforces the layering; a future `Gameplay` change that reaches for `DreamVille.UI` fails to compile instead of surfacing as a code-review comment.
-- `DreamVille.Progression` references `DreamVille.Gameplay` and `DreamVille.Dialogue` for their public events and interfaces (`IEnemyRegistry`, `INpcReactions`) — allowed because a feature-to-feature edge for interfaces only does not create a layering cycle, and `Progression` sits one layer above both. It also references `DreamVille.Scoring`, because `ScoringCoordinator` joins `IEnemyRegistry` with the scoring services; `Scoring` itself may not reference `Gameplay`, so the join cannot live there.
-- The real graph outgrew the one drafted in `.claude/refactor/specs/01-assembly-layering-and-di.md` in a few places (`Progression` needs no `Core` edge; `UI` needs no `Dialogue` edge) — this ADR documents the graph as it compiles today, not the original proposal.
+- `DreamVille.Progression` references `DreamVille.Gameplay` and `DreamVille.Dialogue` for their public events and interfaces (`IEnemyRegistry`, `INpcReactions`) — allowed because a feature-to-feature edge for interfaces only does not create a layering cycle, and `Progression` sits one layer above both. It also references `DreamVille.Scoring`, because `ScoringCoordinator` joins `IEnemyRegistry` with the scoring services; `Scoring` itself may not reference `Gameplay`, so the join cannot live there. It references `DreamVille.Core` for [`ILevelCompletion`](../../Assets/_Project/Scripts/Core/Scenes/ILevelCompletion.cs), which `LevelDirector` implements so that `SceneManagement` can complete a level without knowing about progress ([ADR 0008](0008-menus-mvp.md)). Like the player-detection seams, it is a `Core` contract because its consumer sits below its implementer.
+- The real graph outgrew the one drafted in `.claude/refactor/specs/01-assembly-layering-and-di.md` in a few places (`UI` needs no `Dialogue` edge; `Progression` first needed no `Core` edge and gained one later, see above) — this ADR documents the graph as it compiles today, not the original proposal.
 - Adding a genuinely new cross-cutting concept still means asking "does `Core` need to know this", and the answer should almost always be no — `Core` growing back into a dumping ground is the failure mode this decision exists to prevent.
 
 ## Alternatives considered

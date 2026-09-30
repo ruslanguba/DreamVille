@@ -65,7 +65,7 @@ refactor documented below is the author's.
   became the single owner of an NPC's pose (one enum instead of five bools), and a
   content fix to `PluhNPC.controller` removed an animation-switching bug (mood changes
   no longer detour through Idle). See [ADR 0006](Docs/adr/0006-unitask-lifetimes.md).
-- **436 EditMode tests** (434 pass, 2 intentionally skipped), including a
+- **480 EditMode tests** (478 pass, 2 intentionally skipped), including a
   scene-composition guard
   ([`SceneCompositionTests`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs))
   that opens every build scene and checks its installers and catalog references, and
@@ -158,8 +158,9 @@ persistence bindings. Each of the six gameplay scenes carries the same
 `GameplaySceneContext.prefab` (`SceneServicesInstaller`, `CombatInstaller`,
 `ProgressionInstaller`, `UiInstaller`); the menu scene carries
 `MainMenuContext.prefab`. Runtime flow: `GameStart` plays the intro, then
-`GameBootstrap` loads the scene `SceneCatalog` names as the main menu; a menu button
-resolves a `LevelDefinition` and asks `ISceneLoader` to load it by scene name.
+`GameBootstrap` loads the scene `SceneCatalog` names as the main menu; a level button
+raises an event, `LevelSelectPresenter` takes its `LevelDefinition` and asks `ISceneLoader` to load
+it by scene name.
 
 Full decision records: [ADR 0001 — Zenject composition root](Docs/adr/0001-zenject-composition-root.md),
 [ADR 0002 — assembly layering](Docs/adr/0002-assembly-layering.md),
@@ -167,7 +168,8 @@ Full decision records: [ADR 0001 — Zenject composition root](Docs/adr/0001-zen
 [ADR 0004 — scene catalog and UniTask for gameplay async](Docs/adr/0004-scene-catalog-and-async.md),
 [ADR 0005 — interaction effects as sibling components](Docs/adr/0005-interaction-effects-as-components.md),
 [ADR 0006 — UniTask lifetimes for coroutines](Docs/adr/0006-unitask-lifetimes.md),
-[ADR 0007 — HUD as MVP](Docs/adr/0007-hud-mvp.md).
+[ADR 0007 — HUD as MVP](Docs/adr/0007-hud-mvp.md),
+[ADR 0008 — menus as MVP](Docs/adr/0008-menus-mvp.md).
 
 ## Where to look first
 
@@ -182,6 +184,7 @@ Full decision records: [ADR 0001 — Zenject composition root](Docs/adr/0001-zen
 - [`Assets/_Project/Scripts/Gameplay/Interactables/Interactable.cs`](Assets/_Project/Scripts/Gameplay/Interactables/Interactable.cs) — the shot-reacting host of the interaction channel; a shot and a touch both arrive as one `InteractionContext`.
 - [`Assets/_Project/Scripts/Gameplay/Interactables/EffectChain.cs`](Assets/_Project/Scripts/Gameplay/Interactables/EffectChain.cs) — the plain class that turns sibling `IInteractionEffect` components into one ordered, fault-isolated call.
 - [`Assets/_Project/Scripts/UI/Hud/HudPresenter.cs`](Assets/_Project/Scripts/UI/Hud/HudPresenter.cs) — the HUD as MVP: a plain presenter over five one-method view interfaces, tested with fakes and no scene.
+- [`Assets/_Project/Scripts/UI/Menus/LevelSelectPresenter.cs`](Assets/_Project/Scripts/UI/Menus/LevelSelectPresenter.cs) — level select from saved progress over a passive view; [`PauseMenuPresenter.cs`](Assets/_Project/Scripts/UI/Menus/PauseMenuPresenter.cs) draws the rules that [`InGameMenuController`](Assets/_Project/Scripts/App/InGameMenuController.cs) keeps, and [`MenuWiringTests`](Assets/_Project/Tests/EditMode/UI/MenuWiringTests.cs) guards the Inspector-wiring rule.
 - [`Assets/_Project/Scripts/Progression/ScoringCoordinator.cs`](Assets/_Project/Scripts/Progression/ScoringCoordinator.cs) — the scoring rules (kill to score, score to stars, cleared level to best score) in one UI-free class.
 - [`Assets/_Project/Scripts/Persistence/ProgressRepository.cs`](Assets/_Project/Scripts/Persistence/ProgressRepository.cs) — the only place stars and completion are read from or written to a save.
 - [`Assets/_Project/Scripts/Audio/AudioService.cs`](Assets/_Project/Scripts/Audio/AudioService.cs) — saved volume plus per-scene music, driven by the scene catalog.
@@ -223,7 +226,7 @@ press Play.
 
 ## Tests
 
-Window → General → Test Runner → EditMode → Run All. 436 tests (434 pass, 2
+Window → General → Test Runner → EditMode → Run All. 480 tests (478 pass, 2
 intentionally skipped). PlayMode tests and CI are not set up yet.
 
 ## Status and roadmap
@@ -249,10 +252,13 @@ props, the enemy hideout's door tween) behind two lifetime models — one-shot o
 destroy token, endless loops bound to `OnEnable`/`OnDisable` — plus the `PluhNPC`
 animation-switching fix; the gameplay HUD as MVP (passive views behind interfaces,
 `HudPresenter` in `UI`, scoring rules in Progression's `ScoringCoordinator`, popups on
-UniTask with "newest show owns the timer"); 436 EditMode tests; seven ADRs.
+UniTask with "newest show owns the timer"); the menus and pause as MVP (5.2: passive
+views, `MainMenuPresenter`, `LevelSelectPresenter`, `PauseMenuPresenter`, an
+Inspector-wiring guard test, remembered language, Lobby 2 completable through its
+portal); 480 EditMode tests; eight ADRs.
 
-**Next:** phase 5 continues — 5.2 menus and pause as presenters, 5.3 data-driven
-dialogues, 5.4 the last three UI coroutines (proximity hints); then CI with game-ci and a
+**Next:** phase 5 continues — 5.3 data-driven dialogues (`DialogueAsset` on Localization
+tables, `DialoguePresenter`), 5.4 the last three UI coroutines (proximity hints); then CI with game-ci and a
 playable build.
 
 ## Documentation
