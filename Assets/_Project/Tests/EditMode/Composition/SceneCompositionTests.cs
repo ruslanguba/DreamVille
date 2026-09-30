@@ -170,6 +170,7 @@ namespace DreamVille.Tests.EditMode.Composition
             Assert.That(FindAll<EnemyRegistry>(), Is.Not.Empty, "EnemyRegistry is missing.");
             Assert.That(FindAll<DialogueManager>(), Is.Not.Empty, "DialogueManager is missing.");
             Assert.That(FindAll<GameInput>(), Is.Not.Empty, "GameInput is missing.");
+            Assert.That(FindAll<PauseMenuView>(), Has.Length.EqualTo(1), "Expected exactly one PauseMenuView.");
             Assert.That(FindAll<AudioSettingsView>(), Has.Length.EqualTo(1), "Expected exactly one AudioSettingsView (the pause menu's).");
 
             if (!HasLevelActors())

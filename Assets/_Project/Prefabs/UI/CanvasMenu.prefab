@@ -120,19 +120,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8301271530525419754}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8622495811368919200}
-        m_TargetAssemblyTypeName: DreamVille.UI.MenuUI, DreamVille.UI
-        m_MethodName: ContinueGame
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1797220839740731288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,6 +337,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -597,6 +586,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -967,19 +957,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8367322888679543780}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8622495811368919200}
-        m_TargetAssemblyTypeName: DreamVille.UI.MenuUI, DreamVille.UI
-        m_MethodName: ExitToMenu
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &3218191119387209175
 GameObject:
   m_ObjectHideFlags: 0
@@ -1355,6 +1333,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2153,6 +2132,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2444,6 +2424,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2581,6 +2562,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2918,6 +2900,9 @@ MonoBehaviour:
   _exitPanel: {fileID: 5455383980256981538}
   _menuParent: {fileID: 4411463439833731275}
   _comics: {fileID: 3351627291487574788}
+  _continueButton: {fileID: 2124759650917384108}
+  _restartButton: {fileID: 8135776207714910117}
+  _exitToMenuButton: {fileID: 253573521333207421}
 --- !u!114 &1120152255549168991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2930,8 +2915,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e60cf8a277e07ad4592833ff377fc931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSlider: {fileID: 168021121920095908}
-  sfxSlider: {fileID: 7356298320670341073}
+  _musicSlider: {fileID: 168021121920095908}
+  _sfxSlider: {fileID: 7356298320670341073}
 --- !u!1 &7287571577120613005
 GameObject:
   m_ObjectHideFlags: 0
@@ -3129,19 +3114,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8838784810742670639}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8622495811368919200}
-        m_TargetAssemblyTypeName: DreamVille.UI.MenuUI, DreamVille.UI
-        m_MethodName: RestartLevel
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &7374345131827296221
 GameObject:
   m_ObjectHideFlags: 0
@@ -3696,6 +3669,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

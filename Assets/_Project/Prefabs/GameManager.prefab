@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pauseAction: {fileID: -2221797779242361203, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
-  _tubAction: {fileID: 1497672536054046492, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
+  _comicsAction: {fileID: 1497672536054046492, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
 --- !u!1001 &4525900983508088457
 PrefabInstance:
   m_ObjectHideFlags: 0
