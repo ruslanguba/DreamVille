@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Zenject;
 
+using DreamVille.App;
 using DreamVille.Audio;
 using DreamVille.Configs;
 using DreamVille.Persistence;
@@ -43,6 +44,10 @@ namespace DreamVille.Bootstrap
             Container.BindInterfacesTo<PlayerPrefsSaveStorage>().AsSingle();
             Container.BindInterfacesTo<ProgressRepository>().AsSingle();
             Container.BindInterfacesTo<AudioSettingsRepository>().AsSingle();
+
+            Container.BindInterfacesTo<CursorService>().AsSingle();
+            Container.BindInterfacesTo<UnityApplicationQuitter>().AsSingle();
+            Container.BindInterfacesTo<FrameRateLimiter>().AsSingle();
         }
     }
 }

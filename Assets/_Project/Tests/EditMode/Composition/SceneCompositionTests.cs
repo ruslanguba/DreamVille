@@ -21,7 +21,7 @@ using DreamVille.Gameplay.Weapons.Pillow;
 using DreamVille.Input;
 using DreamVille.Progression;
 using DreamVille.SceneManagement;
-using DreamVille.UI;
+using DreamVille.UI.Menus;
 
 namespace DreamVille.Tests.EditMode.Composition
 {
@@ -170,6 +170,7 @@ namespace DreamVille.Tests.EditMode.Composition
             Assert.That(FindAll<EnemyRegistry>(), Is.Not.Empty, "EnemyRegistry is missing.");
             Assert.That(FindAll<DialogueManager>(), Is.Not.Empty, "DialogueManager is missing.");
             Assert.That(FindAll<GameInput>(), Is.Not.Empty, "GameInput is missing.");
+            Assert.That(FindAll<AudioSettingsView>(), Has.Length.EqualTo(1), "Expected exactly one AudioSettingsView (the pause menu's).");
 
             if (!HasLevelActors())
                 TestContext.WriteLine($"{scenePath}: no LevelActors (optional; legitimately absent from Lobby_02).");
@@ -326,15 +327,26 @@ namespace DreamVille.Tests.EditMode.Composition
         }
 
         [Test]
+        public void MenuScene_HasEveryFromComponentInHierarchyTarget()
+        {
+            string menuScenePath = EnabledScenePaths().Single(path => Classify(path) == SceneRole.Menu);
+            OpenScene(menuScenePath);
+
+            Assert.That(FindAll<MainMenuView>(), Has.Length.EqualTo(1), "Expected exactly one MainMenuView.");
+            Assert.That(FindAll<LevelSelectView>(), Has.Length.EqualTo(1), "Expected exactly one LevelSelectView.");
+            Assert.That(FindAll<AudioSettingsView>(), Has.Length.EqualTo(1), "Expected exactly one AudioSettingsView.");
+        }
+
+        [Test]
         public void MenuScene_LevelButtonsReferenceCatalogLevels()
         {
             string menuScenePath = EnabledScenePaths().Single(path => Classify(path) == SceneRole.Menu);
             OpenScene(menuScenePath);
 
-            LevelSelectButton[] buttons = FindAll<LevelSelectButton>();
-            Assert.That(buttons, Is.Not.Empty, "The menu scene has no LevelSelectButton components.");
+            LevelButtonView[] buttons = FindAll<LevelButtonView>();
+            Assert.That(buttons, Is.Not.Empty, "The menu scene has no LevelButtonView components.");
 
-            foreach (LevelSelectButton button in buttons)
+            foreach (LevelButtonView button in buttons)
             {
                 var serializedButton = new SerializedObject(button);
                 SerializedProperty levelField = serializedButton.FindProperty("_level");

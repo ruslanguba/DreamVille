@@ -28,7 +28,6 @@ namespace DreamVille.Bootstrap
             Container.BindInterfacesTo<DialogueService>().AsSingle();
             Container.Bind<DialogueManager>().FromComponentInHierarchy().AsSingle();
 
-            Container.BindInterfacesTo<CursorService>().AsSingle();
             Container.BindInterfacesTo<PauseService>().AsSingle();
             Container.BindInterfacesTo<GameFlowService>().AsSingle();
             Container.BindInterfacesTo<InGameMenuController>().AsSingle().NonLazy();

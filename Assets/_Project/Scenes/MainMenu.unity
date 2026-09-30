@@ -718,50 +718,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 317564943}
   m_CullTransparentMesh: 1
---- !u!1 &331987701
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 331987703}
-  - component: {fileID: 331987702}
-  m_Layer: 0
-  m_Name: CursorActivator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &331987702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 331987701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38130e31e0813694e9abfaefed7ed641, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &331987703
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 331987701}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.621584, y: -5.8445992, z: 100.46389}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &359827914
 GameObject:
   m_ObjectHideFlags: 0
@@ -1812,7 +1768,6 @@ GameObject:
   - component: {fileID: 559012882}
   - component: {fileID: 559012881}
   - component: {fileID: 559012880}
-  - component: {fileID: 559012883}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1881,30 +1836,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &559012883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 559012879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ce20c32acacdf44822a3c763ec53bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &594564450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3978492618352262815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2fe384361bad45408c8897f8a3c79cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &620960480
 GameObject:
   m_ObjectHideFlags: 0
@@ -5759,19 +5690,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1438792928}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 559012883}
-        m_TargetAssemblyTypeName: LocaleOnButton, Assembly-CSharp
-        m_MethodName: OnClickRu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1438792928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7584,6 +7503,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1788828359}
   - component: {fileID: 1788828361}
+  - component: {fileID: 1788828362}
   m_Layer: 5
   m_Name: SelectLevelPanel
   m_TagString: Untagged
@@ -7626,6 +7546,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1788828358}
   m_CullTransparentMesh: 1
+--- !u!114 &1788828362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788828358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c948d3584cd59024486f02e8dcd3ddf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.UI::DreamVille.UI.Menus.LevelSelectView
+  _buttons:
+  - {fileID: 620960486}
+  - {fileID: 106311898}
+  - {fileID: 2125700660}
+  - {fileID: 1121557293}
+  - {fileID: 949529659}
+  - {fileID: 2092106501}
 --- !u!1 &1817237952
 GameObject:
   m_ObjectHideFlags: 0
@@ -7639,7 +7578,6 @@ GameObject:
   - component: {fileID: 1817237956}
   - component: {fileID: 1817237955}
   - component: {fileID: 1817237954}
-  - component: {fileID: 1817237958}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: Untagged
@@ -7789,21 +7727,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1817237952}
   m_CullTransparentMesh: 1
---- !u!114 &1817237958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1817237952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82666b5b567f2234daf6685435364a65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _level: {fileID: 11400000, guid: cc5b778dc9743664da499f5bdb47e844, type: 2}
-  _button: {fileID: 1817237955}
-  _stars: []
 --- !u!1 &1844171756
 GameObject:
   m_ObjectHideFlags: 0
@@ -8214,19 +8137,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1967521711}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 559012883}
-        m_TargetAssemblyTypeName: LocaleOnButton, Assembly-CSharp
-        m_MethodName: OnClickEn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1967521711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9107,6 +9018,7 @@ GameObject:
   - component: {fileID: 1944135270368219024}
   - component: {fileID: 7605059262880213294}
   - component: {fileID: 7605059262880213295}
+  - component: {fileID: 7605059262880213296}
   m_Layer: 5
   m_Name: Canvas Menu
   m_TagString: Untagged
@@ -9202,19 +9114,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7454082923455089920}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 594564450}
-        m_TargetAssemblyTypeName: CloseApp, Assembly-CSharp
-        m_MethodName: QuitApplication
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &737788037716996083
 GameObject:
   m_ObjectHideFlags: 0
@@ -9951,7 +9851,6 @@ GameObject:
   - component: {fileID: 5266254461304799162}
   - component: {fileID: 7454082923455089920}
   - component: {fileID: 643146027091248617}
-  - component: {fileID: 594564450}
   - component: {fileID: 7454082923455089921}
   m_Layer: 5
   m_Name: Quit Button
@@ -10717,6 +10616,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _musicSlider: {fileID: 2627197438537360645}
   _sfxSlider: {fileID: 7669395880453530844}
+--- !u!114 &7605059262880213296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326765697402203827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8825889530fb4784986f7a3baf7f6d31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.UI::DreamVille.UI.Menus.MainMenuView
+  _newGameButton: {fileID: 1817237955}
+  _quitButton: {fileID: 643146027091248617}
+  _locales:
+  - _button: {fileID: 1438792927}
+    _locale: {fileID: 11400000, guid: 79aca0d06db6507498c2d5b338d4a131, type: 2}
+  - _button: {fileID: 1967521710}
+    _locale: {fileID: 11400000, guid: 91fe263f3a111c14cab18d5d271955ef, type: 2}
 --- !u!1 &7657270056044439655
 GameObject:
   m_ObjectHideFlags: 0
@@ -11199,5 +11117,4 @@ SceneRoots:
   - {fileID: 1640303183}
   - {fileID: 3263357688766727494}
   - {fileID: 559012882}
-  - {fileID: 331987703}
   - {fileID: 417676877}
