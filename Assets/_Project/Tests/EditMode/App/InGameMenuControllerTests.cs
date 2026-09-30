@@ -83,7 +83,7 @@ namespace DreamVille.Tests.EditMode.App
         }
 
         [Test]
-        public void ContinueGame_DuringDialogue_ClosesMenuButKeepsTimeStopped()
+        public void ContinueGame_DuringDialogue_RestoresTimeButKeepsControlOff()
         {
             _controller.Initialize();
             _dialogue.SetActive(true);
@@ -92,8 +92,8 @@ namespace DreamVille.Tests.EditMode.App
 
             _controller.ContinueGame();
 
-            Assert.That(_log, Is.EqualTo(new[] { "MenuClosed" }));
-            Assert.That(_pause.IsPaused, Is.True);
+            Assert.That(_log, Is.EqualTo(new[] { "MenuClosed", "Resume", "SetPlayerControl:false" }));
+            Assert.That(_pause.IsPaused, Is.False);
         }
 
         [Test]
