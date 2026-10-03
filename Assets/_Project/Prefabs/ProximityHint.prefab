@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3822276491119845225}
   - component: {fileID: 5922144955133617365}
   m_Layer: 0
-  m_Name: TriggerForText
+  m_Name: ProximityHint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,3 +68,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _object: {fileID: 0}
   _fadeDuration: 4
+  _showDuration: 2
+  _showOnce: 0

@@ -19,6 +19,7 @@
         "DreamVille.Progression",
         "DreamVille.UI",
         "UnityEngine.UI",
+        "Unity.TextMeshPro",
         "Unity.Localization",
         "Unity.Localization.Editor",
         "DreamVille.Tests.Support",
