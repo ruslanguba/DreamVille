@@ -65,6 +65,8 @@ namespace DreamVille.Tests.EditMode.UI
                 "А что, если пульнуть в ракету?\nОна полетит?"),
             new HintRow("Level_02", "TriggerForText (1)", "AllLevel_1/Image (1)", 2f, 2f, false,
                 "Покрути колесиком мыши - осмотрись."),
+            new HintRow("Level_02", "TriggerForText (2)", "AllLevel_1/Image (2)", 2f, 1f, true,
+                "Подушечка! Она мне пригодится!"),
 
             new HintRow("Final Level 1_Max", "TriggerForText", "AllLevel_1/Image", 2f, 6f, false,
                 "Нажми TAB - открыть инструкцию"),

@@ -143,6 +143,23 @@ namespace DreamVille.Tests.EditMode.Composition
             Assert.That(contexts, Has.Length.EqualTo(1), $"{scenePath} must install exactly one SceneContext.");
         }
 
+        /// <summary>
+        /// A component whose script was deleted stays in the scene as a silent "missing script". Checks every
+        /// GameObject, inactive ones and children included, not only the roots.
+        /// </summary>
+        [TestCaseSource(nameof(EnabledScenePaths))]
+        public void EveryEnabledScene_HasNoMissingScripts(string scenePath)
+        {
+            OpenScene(scenePath);
+
+            string[] broken = FindAll<Transform>()
+                .Where(transform => GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(transform.gameObject) > 0)
+                .Select(transform => transform.name)
+                .ToArray();
+
+            Assert.That(broken, Is.Empty, $"{scenePath} has missing scripts on: {string.Join(", ", broken)}");
+        }
+
         [TestCaseSource(nameof(GameplayScenePaths))]
         public void GameplayScene_InstallsTheFourRequiredInstallers(string scenePath)
         {

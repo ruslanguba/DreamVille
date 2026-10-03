@@ -24,7 +24,6 @@ namespace DreamVille.Tests.EditMode.Architecture
         // Paths relative to Assets/_Project/Scripts. May only shrink.
         private static readonly string[] AllowList =
         {
-            "UI/Hints/HintDestroyOnTime.cs", // 5.4 ProximityHint
             "UI/FadeCanvasText.cs",          // 5.4 UiFader (host prefab unused)
         };
 
