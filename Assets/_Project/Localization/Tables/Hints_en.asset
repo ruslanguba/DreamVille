@@ -17,7 +17,65 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: e0b3115b996ff7c439a0af29771c5862, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 1371582468
+    m_Localized: WASD - move
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1371582466
+    m_Localized: "Bang! Ka-boom! \nHee-hee!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1371582465
+    m_Localized: I'll prove myself and become the sheriff!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1371582464
+    m_Localized: SPACE - jump
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1371582467
+    m_Localized: What if I need to shoot upwards?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1371582469
+    m_Localized: Don't forget to bring the pillow back with F
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1367388162
+    m_Localized: Forgot the controls? Press TAB to open the manual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1367388161
+    m_Localized: 'What if I shoot the rocket?
+
+      Will it fly?'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1312862208
+    m_Localized: Scroll the mouse wheel to look around.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1367388160
+    m_Localized: A pillow! That'll come in handy!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1371582470
+    m_Localized: Press TAB to open the manual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1371582471
+    m_Localized: Scroll the mouse wheel to see what's around
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1371582472
+    m_Localized: Forgot the controls? Press TAB to open the manual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1371582473
+    m_Localized: Don't forget to bring the pillows back - press F
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -139,6 +139,19 @@ namespace DreamVille.Tests.EditMode.UI
         }
 
         [Test]
+        public void HintsTable_EveryKeyHasEnglishText()
+        {
+            StringTable english = Table("en");
+
+            string[] missing = Collection().SharedData.Entries
+                .Where(entry => string.IsNullOrEmpty(english.GetEntry(entry.Id)?.Value))
+                .Select(entry => entry.Key)
+                .ToArray();
+
+            Assert.That(missing, Is.Empty, "Hints without English text (they would fall back to Russian):\n" + string.Join("\n", missing));
+        }
+
+        [Test]
         public void HintsTable_EveryKeyIsUsedByExactlyOneHint()
         {
             var used = _texts.GroupBy(text => text.KeyId).ToDictionary(group => group.Key, group => group.Count());
