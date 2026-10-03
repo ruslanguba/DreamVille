@@ -22,6 +22,7 @@ using DreamVille.Gameplay.Weapons.Pillow;
 using DreamVille.Input;
 using DreamVille.Progression;
 using DreamVille.SceneManagement;
+using DreamVille.UI.Hints;
 using DreamVille.UI.Menus;
 
 namespace DreamVille.Tests.EditMode.Composition
@@ -141,6 +142,30 @@ namespace DreamVille.Tests.EditMode.Composition
             SceneContext[] contexts = FindAll<SceneContext>();
 
             Assert.That(contexts, Has.Length.EqualTo(1), $"{scenePath} must install exactly one SceneContext.");
+        }
+
+        /// <summary>
+        /// A UGUI graphic is drawn only under a Canvas. Level_02's hints once sat under a plain level object and never
+        /// appeared (spec 12 F1); every hint target must live under a screen-space canvas.
+        /// </summary>
+        [TestCaseSource(nameof(GameplayScenePaths))]
+        public void GameplayScene_EveryHintTargetIsUnderAScreenSpaceCanvas(string scenePath)
+        {
+            OpenScene(scenePath);
+
+            string[] offenders = FindAll<ProximityHint>()
+                .Select(hint => new SerializedObject(hint).FindProperty("_object").objectReferenceValue as GameObject)
+                .Where(target => target == null || !IsUnderScreenSpaceCanvas(target))
+                .Select(target => target == null ? "<no target>" : target.name)
+                .ToArray();
+
+            Assert.That(offenders, Is.Empty, $"{scenePath}: hint targets not under a screen-space canvas: {string.Join(", ", offenders)}");
+        }
+
+        private static bool IsUnderScreenSpaceCanvas(GameObject target)
+        {
+            Canvas canvas = target.GetComponentInParent<Canvas>(true);
+            return canvas != null && canvas.rootCanvas.renderMode != RenderMode.WorldSpace;
         }
 
         /// <summary>
