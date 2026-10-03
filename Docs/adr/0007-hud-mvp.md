@@ -108,6 +108,7 @@ raises progress again for the new current star. 40 + 20 now shows star 2 at 0.2 
   one 60-line class instead of a presenter that also draws.
 - The coroutine allow-list in `CoroutineGuardTests` shrank from six files to three
   (`OnText`, `HintDestroyOnTime`, `FadeCanvasText`). Those three belong to roadmap 5.4.
+  (Since emptied: see the [ADR 0006 update](0006-unitask-lifetimes.md#update-54).)
 - Two behaviours changed on purpose and are visible: overlapping popups and badges stay
   up longer, and the next star fills immediately after an unlock. Everything else (look,
   durations, pause freezing the HUD) is unchanged.

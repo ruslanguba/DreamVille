@@ -47,9 +47,10 @@ _A gameplay GIF and screenshots are coming with the playable build._
 - **UniTask with cancellation instead of coroutines.** Gameplay waits through
   [`GameTime`](Assets/_Project/Scripts/Core/Async/GameTime.cs) on scaled time, with two
   lifetime models: one-shot sequences die with their object, endless loops follow
-  `OnEnable`/`OnDisable`. Coroutines survive in three UI files only, pinned by
+  `OnEnable`/`OnDisable`. No coroutine remains:
   [`CoroutineGuardTests`](Assets/_Project/Tests/EditMode/Architecture/CoroutineGuardTests.cs)
-  (the allow-list may only shrink). [ADR 0006](Docs/adr/0006-unitask-lifetimes.md).
+  fails on any coroutine API, and its allow-list for deliberate exceptions is empty.
+  [ADR 0006](Docs/adr/0006-unitask-lifetimes.md).
 - **UI as MVP, dialogues as data.** The HUD, menus and dialogues are plain presenters
   over passive views, tested with fakes and no scene
   ([ADR 0007](Docs/adr/0007-hud-mvp.md), [ADR 0008](Docs/adr/0008-menus-mvp.md)). The 15
@@ -57,11 +58,11 @@ _A gameplay GIF and screenshots are coming with the playable build._
   a checked-in snapshot of all 53 lines proves the move out of the scenes lost no text,
   and the move fixed a shipped bug where English dialogues never started.
   [ADR 0009](Docs/adr/0009-data-driven-dialogues.md).
-- **549 EditMode tests that guard the wiring.**
+- **610 EditMode tests that guard the wiring.**
   [`SceneCompositionTests`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs)
-  opens every build scene and checks its installers and catalog references, and prefab
-  tests pin the player's composition, so a mis-wired scene fails a test run instead of a
-  play session.
+  opens every build scene and checks its installers, catalog references and missing
+  scripts, and prefab tests pin the player's composition, so a mis-wired scene fails a
+  test run instead of a play session.
 
 ## Architecture
 
@@ -128,7 +129,7 @@ makes `LevelSelectPresenter` ask `ISceneLoader` to load its `LevelDefinition`'s 
 - [`Gameplay/Interactables/EffectChain.cs`](Assets/_Project/Scripts/Gameplay/Interactables/EffectChain.cs) — turns sibling `IInteractionEffect` components into one ordered, fault-isolated call; [`Interactable.cs`](Assets/_Project/Scripts/Gameplay/Interactables/Interactable.cs) is its host.
 - [`Progression/LevelDirector.cs`](Assets/_Project/Scripts/Progression/LevelDirector.cs) — level completion as a plain class: no MonoBehaviour, no `Update` polling.
 - [`UI/Hud/HudPresenter.cs`](Assets/_Project/Scripts/UI/Hud/HudPresenter.cs) — the HUD as MVP: a plain presenter over small view interfaces, tested with fakes. [`DialoguePresenter.cs`](Assets/_Project/Scripts/UI/Dialogues/DialoguePresenter.cs) and [`LevelSelectPresenter.cs`](Assets/_Project/Scripts/UI/Menus/LevelSelectPresenter.cs) follow the same pattern.
-- [`Tests/EditMode/Dialogue/DialogueContentTests.cs`](Assets/_Project/Tests/EditMode/Dialogue/DialogueContentTests.cs) — compares every dialogue definition with the checked-in [`DialogueSnapshot.tsv`](Assets/_Project/Tests/EditMode/Dialogue/DialogueSnapshot.tsv), so a lost or changed line fails a test.
+- [`Tests/EditMode/Dialogue/DialogueContentTests.cs`](Assets/_Project/Tests/EditMode/Dialogue/DialogueContentTests.cs) — compares every dialogue definition with the checked-in [`DialogueSnapshot.tsv`](Assets/_Project/Tests/EditMode/Dialogue/DialogueSnapshot.tsv), so a lost or changed line fails a test. [`ProximityHintContentTests`](Assets/_Project/Tests/EditMode/UI/ProximityHintContentTests.cs) does the same for the 14 screen hints.
 - [`Tests/EditMode/Composition/SceneCompositionTests.cs`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs) — opens every build scene and asserts its composition against the catalog.
 
 ## Tech stack
@@ -165,7 +166,7 @@ press Play.
 
 ## Tests
 
-Window → General → Test Runner → EditMode → Run All. 549 EditMode tests (547 pass, 2
+Window → General → Test Runner → EditMode → Run All. 610 EditMode tests (608 pass, 2
 intentionally skipped). PlayMode tests and CI are not set up yet.
 
 ## Status and roadmap
@@ -184,10 +185,13 @@ intentionally skipped). PlayMode tests and CI are not set up yet.
   classes); `LobbyDirector` over composable `KillGroupObjective`s and `Door`s; coroutines
   moved to UniTask (ADRs 0005, 0006).
 - **UI.** HUD, menus and pause, and dialogues as MVP; remembered language; Lobby 2
-  completable through its portal (ADRs 0007-0009).
+  completable through its portal (ADRs 0007-0009). Screen hints are one `ProximityHint`
+  on UniTask, pinned by a content snapshot; it retired the last coroutines (5.4, ADR 0006
+  update).
 
-**Next:** 5.4 micro-scripts (`ProximityHint`, `PlayerProximityToggle`, `UiFader`) that
-retire the last three UI coroutines; then CI with game-ci and a playable build.
+**Next:** 5.5 localized proximity hints (the hard-coded Russian hint texts, 10 in the
+build scenes and 4 in WIP scenes, move into a Localization table with English); then CI
+with game-ci and a playable build.
 
 ## Documentation
 

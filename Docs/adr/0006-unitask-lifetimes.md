@@ -2,6 +2,7 @@
 
 Status: Accepted
 Date: 2026-09-26
+Updated: 2026-10-03, see [Update (5.4)](#update-54)
 
 ## Context
 
@@ -40,7 +41,7 @@ reference any third-party package before; `DreamVille.Core.asmdef` now reference
 
 | Pattern | Token | Starts | Stops | Used for |
 |---|---|---|---|---|
-| **One-shot, object-bound** | `this.GetCancellationTokenOnDestroy()`, linked into a per-operation `CancellationTokenSource` where a new call supersedes the old one or a second object's death must end it too | on request | destroy, supersede, or completion | [`EnemyHideout.AbsorbAsync`](../../Assets/_Project/Scripts/Gameplay/Enemies/EnemyHideout.cs) (linked to both the hideout's and the enemy's destroy token), [`ImageFadeOut`](../../Assets/_Project/Scripts/UI/ImageFadeOut.cs) (main-menu logo fade), `NPCMover.MoveToAsync`, `NPCReactionController`'s applause-then-talk |
+| **One-shot, object-bound** | `this.GetCancellationTokenOnDestroy()`, linked into a per-operation `CancellationTokenSource` where a new call supersedes the old one or a second object's death must end it too | on request | destroy, supersede, or completion | [`EnemyHideout.AbsorbAsync`](../../Assets/_Project/Scripts/Gameplay/Enemies/EnemyHideout.cs) (linked to both the hideout's and the enemy's destroy token), [`ImageFadeOut`](../../Assets/_Project/Scripts/UI/ImageFadeOut.cs) (main-menu logo fade), `NPCMover.MoveToAsync`, `NPCReactionController`'s applause-then-talk, [`ProximityHint`](../../Assets/_Project/Scripts/UI/Hints/ProximityHint.cs) (added in 5.4) |
 | **Endless ambient loop, enable-bound** | `_loopCts` created when the loop starts, cancelled and disposed in `OnDisable` | first in `Start`, again in `OnEnable` once `Start` has already run (a `_started` flag) | `OnDisable` (deactivation, destroy, scene unload) | [`NPCDialogueHandler`](../../Assets/_Project/Scripts/Gameplay/NPC/NPCDialogueHandler.cs) (hatters alternating), [`NpcQueueManager`](../../Assets/_Project/Scripts/Gameplay/NPC/NpcQueueManager.cs) (queue jumps), `NPCFire` (NPC shooters), `RandomFloating` (balloon drift) |
 
 The destroy token alone is the wrong choice for an endless loop: a loop that outlives
@@ -100,7 +101,8 @@ files `ScorePopupUI`, `RicochetUI` and `ScoreStar` left the list when roadmap 5.
 them to UniTask, see [ADR 0007](0007-hud-mvp.md).) A second test fails if an allow-listed file no
 longer uses a coroutine API, so the list is a checked invariant that can only shrink as
 phase 5 (`5.1` UI presenters, `5.4` proximity hints) rewrites those classes — not a
-README claim nobody re-checks.
+README claim nobody re-checks. That is the state this record was written in; roadmap 5.4
+emptied the list, see [Update (5.4)](#update-54).
 
 **The `PluhNPC.controller` fix.**
 [`PluhNPC.controller`](../../Assets/_Project/Art/CitizensModels/Animations/PluhNPC.controller)
@@ -121,9 +123,10 @@ switching" bug) and is verified by
 - One class ([`GameTime`](../../Assets/_Project/Scripts/Core/Async/GameTime.cs)) states
   the pause/time-scale policy instead of eleven hand-written `Time.deltaTime` loops each
   getting to answer it independently.
-- `grep`-ing `Assets/_Project/Scripts` for a coroutine API returns only the three UI files
-  `CoroutineGuardTests` names — a checked fact, not a README claim, and it can only get
-  shorter.
+- `grep`-ing `Assets/_Project/Scripts` for a coroutine API returned only the three UI files
+  `CoroutineGuardTests` names — a checked fact, not a README claim, and it could only get
+  shorter. Since 5.4 it finds no coroutine API in code at all (comments may still name
+  one), see [Update (5.4)](#update-54).
 - An NPC's mood is an enum with one owner
   ([`NPCAnimationHandler.SetState`](../../Assets/_Project/Scripts/Gameplay/NPC/NPCAnimationHandler.cs)),
   so "talking while applauding" is no longer representable, and a director may react
@@ -135,6 +138,45 @@ switching" bug) and is verified by
   toggles these components at runtime, so this is not observed today, but it is a
   documented behaviour change (spec 08 §3.8, D1).
 - `403` EditMode tests (401 pass, 2 intentionally ignored), up from 357 before this step.
+
+## Update (5.4)
+
+2026-10-03. Roadmap step 5.4 retired the last three UI coroutines. No coroutine remains
+under `Assets/_Project/Scripts`. The decisions above stand; this is what changed.
+
+- **`OnText` and `HintDestroyOnTime` became one component,**
+  [`ProximityHint`](../../Assets/_Project/Scripts/UI/Hints/ProximityHint.cs). It is the
+  one-shot pattern from the table: the show is a `UniTaskVoid` whose token comes from
+  `Cancellation.Restart(ref _showCts, this.GetCancellationTokenOnDestroy())`, the same
+  helper the HUD views use ([ADR 0007](0007-hud-mvp.md)). Entering the trigger again
+  supersedes the running show; destroying the hint ends it. The wait and the fade run
+  through `GameTime.DelayAsync` and `Tween.RunAsync`, so pause freezes them. A `_showOnce`
+  flag replaces the second class: it destroys the trigger after the first fade.
+- **The prefab kept its identity.** `TriggerForText.prefab` was renamed to
+  [`ProximityHint.prefab`](../../Assets/_Project/Prefabs/ProximityHint.prefab) with its
+  GUID, and the serialized field names stayed, so the instances in seven scenes (four
+  build scenes, three excluded `Scenes/Max` scenes) kept their overrides.
+- **Dead code was deleted, not ported.** `FadeCanvasText`, `CanvasTrigger` and `Tooltip`
+  had no callers; they went with two orphan prefabs. The planned `UiFader` and
+  `PlayerProximityToggle` helpers were not built for the same reason, and their shared
+  mechanics (`GameTime`, `Tween`, `Cancellation`) already live in `Core/Async`.
+- **`CoroutineGuardTests` keeps an empty allow-list.** The allow-list stays in the test
+  as the one place for a deliberate exception, each entry with a reason comment. That was
+  a deliberate choice over a strict ban. The second test, which fails when a listed file
+  stops using coroutines, passes on an empty list and checks again once an entry exists.
+  The pattern also catches `StopAllCoroutines`, `WaitForSecondsRealtime`, `WaitForEndOfFrame`,
+  `WaitForFixedUpdate`, `new WaitUntil`/`new WaitWhile` (not `UniTask.WaitUntil`),
+  `CancelInvoke`, `Invoke(nameof(...))` and `Coroutine` fields, and has line-level tests
+  for what it must flag and what it must ignore.
+- **Content tests pin the hints.**
+  [`ProximityHintContentTests`](../../Assets/_Project/Tests/EditMode/UI/ProximityHintContentTests.cs)
+  compares all 14 hints in the scenes (target, durations, `showOnce`, text) with
+  [`ProximityHintSnapshot`](../../Assets/_Project/Tests/EditMode/UI/ProximityHintSnapshot.cs).
+  Scene and prefab tests fail on missing scripts: the net under the GUID scan done before
+  each deletion. A composition test requires every hint target in a gameplay scene to sit under
+  a screen-space canvas: Level_02's three hints had never been drawn because no canvas was
+  above them, a pre-existing bug fixed in the same step.
+- **`610` EditMode tests** (608 pass, 2 intentionally ignored).
 
 ## Alternatives considered
 
@@ -154,8 +196,24 @@ switching" bug) and is verified by
 - **Deferring the UI coroutines into this step instead of an allow-list.** Rejected:
   `ScorePopupUI`, `RicochetUI` and `ScoreStar` had known overlap bugs that belonged to the
   `5.1` UI-presenter rewrite (done, see [ADR 0007](0007-hud-mvp.md)), and `OnText`/`HintDestroyOnTime`/`FadeCanvasText` belong to
-  `5.4`'s proximity-hint rewrite; converting them here would duplicate work those steps
-  already own.
+  `5.4`'s proximity-hint rewrite (done, see [Update (5.4)](#update-54)); converting them
+  here would duplicate work those steps already own.
+- **An `ICoroutineRunner`**: one MonoBehaviour that runs coroutines on behalf of plain
+  classes (considered for 5.4). Rejected. The run's lifetime is detached from its owner: a
+  destroyed or unloaded owner leaves the coroutine running against destroyed objects, the
+  same class of teardown failure [ADR 0009](0009-data-driven-dialogues.md) fixed for
+  dialogues (restart or exit to menu used to log a `MissingReferenceException`). A
+  coroutine takes no cancellation token and returns no value. And it would be a second
+  async model next to `Core/Async`.
+- **Keeping coroutines for simple UI effects.** Defensible: a fade is a few lines either
+  way. Rejected as the default because two models mean two sets of cancel, pause and test
+  rules for the same job. The empty allow-list keeps the door open one file at a time, with
+  a written reason.
+- **Unity 6 `Awaitable`** (built-in async/await, no package). Not adopted. UniTask stays
+  for its allocation-free waits, `WhenAll`/`WhenAny` (`NpcQueueManager` uses `WhenAll`),
+  a `PlayerLoopTiming` chosen per call and test ergonomics, and because the project had
+  already standardised on it: switching would touch every call site for no gain the code
+  needs. No benchmark was run here; the choice rests on features and consistency.
 
 Related: [ADR 0004 — scene catalog and UniTask for gameplay async](0004-scene-catalog-and-async.md)
 (bullet lifetime, pillow recall, one NPC reaction and scene loading — the UniTask
