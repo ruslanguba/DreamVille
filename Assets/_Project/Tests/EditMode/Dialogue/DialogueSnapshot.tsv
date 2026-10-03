@@ -1,54 +1,54 @@
 scene	triggerPath	index	speaker	ru	en
-Prefabs	DialogueSample	0	Player	Привет я Плюх.	
-Prefabs	DialogueSample	1	Npc	А я тут эту систему писал всю ночь.	
-Prefabs	DialogueSample	2	Player	Ну давай пока.	
-Prefabs	FinalLevel	0	Npc	Привет Плюх.	
-Prefabs	FinalLevel	1	Player	Привет Непись	
-Prefabs	FinalLevel	2	Npc	Дуй в портал	
-Level_01	FinalLevel	0	Npc	Привет Плюх, всех поймал?	
-Level_01	FinalLevel	1	Player	Да! Этот сон очищен от кошмариков!	
-Level_01	FinalLevel	2	Npc	Прыгай в часы, чтобы попасть в следующий сон!	
-Level_02	AllLevel_1/FinalLevel	0	Npc	Отличная работа, Плюх! \nПора научиться чему-то новому.\nПрыгай в часы!	
-Level_03	FinalLevel	0	Npc	Рад тебя снова видеть, Плюх. Ты все знаешь, прыгай в часы!	
-Level_04	FinalLevel	0	Npc	Плюх! Как высоко ты забрался! Как успехи?	
-Level_04	FinalLevel	1	Player	Всех поймал.	
-Level_04	FinalLevel	2	Npc	Ух, шустряк! Посмотрим, сколько очков ты набрал... Ого, солидно! \nЕсли хочешь, можешь пройти ещё раз и попробовать улучшить свой результат! 	
-Level_04	FinalLevel	3	Npc	У нас на сегодня для тебя заданий больше нет. Благодарю за службу! 	
-Lobby_01	DialogueSample	0	Npc	Привет, Плюх! Заступил на смену?	
-Lobby_01	DialogueSample	1	Player	Да, моему мальчику снова снятся кошмары.	
-Lobby_01	DialogueSample	2	Npc	Ну, получай свой подушкомет. Напомни, как ты  его называешь?	
-Lobby_01	DialogueSample	3	Player	Моя тихобойка  Хахаха!	
-Lobby_01	DialogueSample	4	Npc	Так давай проведем инструктаж, стандартная процедура, ну ты понимаешь...	
-Lobby_01	DialogueSample	5	Player	Да, конечно.	
-Lobby_01	DialogueSample	6	Npc	Зайди в сноведение и ПОЙМАЙ в нем ВСЕХ КОШМАРИКОВ. В верхнем углу усть СЧЕТЧИК кошмариков, ты всегда можешь посмотреть сколько кошмариков осталось поймать.	
-Lobby_01	DialogueSample	7	Player	О, это что-то новенькое, удобно.	
-Lobby_01	DialogueSample	8	Npc	По Тихобойке все по старому. ПРАВАЯ КОНОПКА мыши прицелиться, ЛЕВАЯ стрельнуть.  На ПРОБЕЛ ты можешь подпрыгнуть. КОЛЕСИКОМ мыши отдалить или приблизить вид. Так вроде все...	
-Lobby_01	DialogueSample	9	Player	Тихобойка по прежнему не стреляет вверх и вниз, только вперед ?	
-Lobby_01	DialogueSample	10	Npc	К сожалению, да. Наши инженеры все еще работают над этим.	
-Lobby_01	DialogueSample	11	Player	Понял, не привыкать, справимся!	
-Lobby_01	DialogueSample	12	Npc	Мне всегда нравился твой настрой. Давай проверим твои рефлексы, проходи в комнату. Как закончишь возвращайся ко мне, расскажу кое что.	
-Lobby_01	FinalLevel (1)	0	Npc	Ты готов? Прыгай в песочные часы и попадёшь в сновидение. Когда поймаешь всех кошмариков, найди меня. 	
-Lobby_01	FinalLevel (1)	1	Npc	И последнее. Если что-то забудешь, нажми TAB, откроется инструкция. Удачи, Плюх!	
-Lobby_01	FirstDialog	0	Npc	Привет, новобранец! \nДобро пожаловать в тренировочный лагерь мира снов!	
-Lobby_01	SecondDialog	0	Player	А как стать шерифом?	
-Lobby_01	SecondDialog	1	Npc	Заработай больше звезд - станешь шерифом!\nПолучай очки за успешные выстрелы. \nБольше рикошетов - больше очков!	
-Lobby_01	SecondDialog	2	Player	Я в деле!	
-Lobby_02	DialogueSample	0	Npc	Плюх, для следующего сна тебе понадобится новый инструмент.\nВижу, ты уже нашел одну подушку.	
-Lobby_02	DialogueSample	1	Player	Новый инструмент - это подушка? Ха-ха-ха!	
-Lobby_02	DialogueSample	2	Npc	Подушка - платформа, да! \nИспользуй её, если не можешь допрыгнуть.\nПроходи в тренировочную зону.	
+Prefabs	DialogueSample	0	Player	Привет я Плюх.	Hi, I'm Plukh.
+Prefabs	DialogueSample	1	Npc	А я тут эту систему писал всю ночь.	And I've been writing this system all night.
+Prefabs	DialogueSample	2	Player	Ну давай пока.	Well, see you.
+Prefabs	FinalLevel	0	Npc	Привет Плюх.	Hi Plukh.
+Prefabs	FinalLevel	1	Player	Привет Непись	Hi, NPC.
+Prefabs	FinalLevel	2	Npc	Дуй в портал	Off to the portal.
+Level_01	FinalLevel	0	Npc	Привет Плюх, всех поймал?	Hi Plukh, did you catch them all?
+Level_01	FinalLevel	1	Player	Да! Этот сон очищен от кошмариков!	Yes! This dream is clear of nightmarelings!
+Level_01	FinalLevel	2	Npc	Прыгай в часы, чтобы попасть в следующий сон!	Jump into the hourglass to get to the next dream!
+Level_02	AllLevel_1/FinalLevel	0	Npc	Отличная работа, Плюх! \nПора научиться чему-то новому.\nПрыгай в часы!	Great job, Plukh!\nTime to learn something new.\nJump into the hourglass!
+Level_03	FinalLevel	0	Npc	Рад тебя снова видеть, Плюх. Ты все знаешь, прыгай в часы!	Good to see you again, Plukh. You know the drill, jump into the hourglass!
+Level_04	FinalLevel	0	Npc	Плюх! Как высоко ты забрался! Как успехи?	Plukh! Look how high you've climbed! How's it going?
+Level_04	FinalLevel	1	Player	Всех поймал.	Caught them all.
+Level_04	FinalLevel	2	Npc	Ух, шустряк! Посмотрим, сколько очков ты набрал... Ого, солидно! \nЕсли хочешь, можешь пройти ещё раз и попробовать улучшить свой результат! 	Wow, you're quick! Let's see how many points you scored... Whoa, impressive!\nIf you like, you can play it again and try to beat your score!
+Level_04	FinalLevel	3	Npc	У нас на сегодня для тебя заданий больше нет. Благодарю за службу! 	That's all the work we have for you today. Thank you for your service!
+Lobby_01	DialogueSample	0	Npc	Привет, Плюх! Заступил на смену?	Hi, Plukh! On shift again?
+Lobby_01	DialogueSample	1	Player	Да, моему мальчику снова снятся кошмары.	Yes, my boy is having nightmares again.
+Lobby_01	DialogueSample	2	Npc	Ну, получай свой подушкомет. Напомни, как ты  его называешь?	Well, here's your pillow launcher. Remind me, what do you call it?
+Lobby_01	DialogueSample	3	Player	Моя тихобойка  Хахаха!	My Hushblaster! Ha-ha-ha!
+Lobby_01	DialogueSample	4	Npc	Так давай проведем инструктаж, стандартная процедура, ну ты понимаешь...	Right, let's do the briefing. Standard procedure, you know how it is...
+Lobby_01	DialogueSample	5	Player	Да, конечно.	Yes, of course.
+Lobby_01	DialogueSample	6	Npc	Зайди в сноведение и ПОЙМАЙ в нем ВСЕХ КОШМАРИКОВ. В верхнем углу усть СЧЕТЧИК кошмариков, ты всегда можешь посмотреть сколько кошмариков осталось поймать.	Go into the dream and CATCH ALL THE NIGHTMARELINGS. There's a nightmareling COUNTER in the top corner, so you can always check how many are left to catch.
+Lobby_01	DialogueSample	7	Player	О, это что-то новенькое, удобно.	Oh, that's new. Handy.
+Lobby_01	DialogueSample	8	Npc	По Тихобойке все по старому. ПРАВАЯ КОНОПКА мыши прицелиться, ЛЕВАЯ стрельнуть.  На ПРОБЕЛ ты можешь подпрыгнуть. КОЛЕСИКОМ мыши отдалить или приблизить вид. Так вроде все...	The Hushblaster works the same as before. RIGHT MOUSE BUTTON to aim, LEFT to shoot. SPACE to jump. MOUSE WHEEL to zoom the view in and out. I think that's everything...
+Lobby_01	DialogueSample	9	Player	Тихобойка по прежнему не стреляет вверх и вниз, только вперед ?	The Hushblaster still doesn't shoot up or down, only straight ahead?
+Lobby_01	DialogueSample	10	Npc	К сожалению, да. Наши инженеры все еще работают над этим.	I'm afraid so. Our engineers are still working on it.
+Lobby_01	DialogueSample	11	Player	Понял, не привыкать, справимся!	Got it. Nothing new, we'll manage!
+Lobby_01	DialogueSample	12	Npc	Мне всегда нравился твой настрой. Давай проверим твои рефлексы, проходи в комнату. Как закончишь возвращайся ко мне, расскажу кое что.	I've always liked your attitude. Let's test your reflexes, step into the room. Come back to me when you're done, I've got something to tell you.
+Lobby_01	FinalLevel (1)	0	Npc	Ты готов? Прыгай в песочные часы и попадёшь в сновидение. Когда поймаешь всех кошмариков, найди меня. 	Ready? Jump into the hourglass and you'll enter the dream. Once you've caught all the nightmarelings, come and find me.
+Lobby_01	FinalLevel (1)	1	Npc	И последнее. Если что-то забудешь, нажми TAB, откроется инструкция. Удачи, Плюх!	One last thing. If you forget anything, press TAB to open the manual. Good luck, Plukh!
+Lobby_01	FirstDialog	0	Npc	Привет, новобранец! \nДобро пожаловать в тренировочный лагерь мира снов!	Hello, rookie!\nWelcome to the Dreamworld training camp!
+Lobby_01	SecondDialog	0	Player	А как стать шерифом?	So how do I become a sheriff?
+Lobby_01	SecondDialog	1	Npc	Заработай больше звезд - станешь шерифом!\nПолучай очки за успешные выстрелы. \nБольше рикошетов - больше очков!	Earn more stars and you'll become a sheriff!\nScore points for successful shots.\nMore ricochets, more points!
+Lobby_01	SecondDialog	2	Player	Я в деле!	I'm in!
+Lobby_02	DialogueSample	0	Npc	Плюх, для следующего сна тебе понадобится новый инструмент.\nВижу, ты уже нашел одну подушку.	Plukh, you'll need a new tool for the next dream.\nI see you've already found a pillow.
+Lobby_02	DialogueSample	1	Player	Новый инструмент - это подушка? Ха-ха-ха!	The new tool is a pillow? Ha-ha-ha!
+Lobby_02	DialogueSample	2	Npc	Подушка - платформа, да! \nИспользуй её, если не можешь допрыгнуть.\nПроходи в тренировочную зону.	A pillow platform, yes!\nUse it when you can't jump high enough.\nHead to the training zone.
 Final Level 1_Max	AllLevel_1/FinalLevel	0	Npc	Привет Плюх, всех поймал ?	Hi Plukh, did you catch everyone?
 Final Level 1_Max	AllLevel_1/FinalLevel	1	Player	Всех. Теперь можно спать спокойно.	Everyone. Now you can sleep in peace.
 Final Level 1_Max	AllLevel_1/FinalLevel	2	Npc	Ну тогда прыгай в мои часы и полетели дальше.	Well, then jump into my watch and fly on.
-Level_2_Max	FinalLevel	0	Npc	Плюх! Как высоко забрался. Как дела с кошмариками ?	
-Level_2_Max	FinalLevel	1	Player	Сладко спят. Тут всех поймал.	
-Level_2_Max	FinalLevel	2	Npc	Быстро ты справляешься. У нас на сегодня для тебя заданий больше нет. Спасибо за службу!	
-Level_3_Max	FinalLevel	0	Npc	Привет Плюх.	
-Level_3_Max	FinalLevel	1	Player	Привет Непись	
-Level_3_Max	FinalLevel	2	Npc	Дуй в портал	
-Lobby_2_Max	DialogueSample	0	Npc	Плюх, мне нужно выдать тебе новый инструмент.	
-Lobby_2_Max	DialogueSample	1	Player	Ух ты! И что это будет ?	
-Lobby_2_Max	DialogueSample	2	Npc	Ни за что не угадаешь. ПОДУШКА-ПЛАТФОРМА, поможет тебе преодолевать препятствия. Не можешь допрыгнуть - используй подушку.	
-Lobby_2_Max	DialogueSample	3	Player	Звучит интересно. Как ей пользоваться ?	
-Lobby_2_Max	DialogueSample	4	Npc	Нажми R - запустить подушку, нажми еще раз R чтобы остановить подушку на нужном расстоянии, нажми F чтобы вернуть подушку. Пока инструмент тестируется и нам разрешено выдавать только по две подушки на хранителя..	
-Lobby_2_Max	DialogueSample	5	Player	Как же мне ее не хватало. 	
-Lobby_2_Max	DialogueSample	6	Npc	Осваивайся. Держи инструкцию с собой, все также на TAB. Доберись до моих часов.	
+Level_2_Max	FinalLevel	0	Npc	Плюх! Как высоко забрался. Как дела с кошмариками ?	Plukh! You've climbed so high. How are things with the nightmarelings?
+Level_2_Max	FinalLevel	1	Player	Сладко спят. Тут всех поймал.	Sleeping soundly. Caught them all here.
+Level_2_Max	FinalLevel	2	Npc	Быстро ты справляешься. У нас на сегодня для тебя заданий больше нет. Спасибо за службу!	You're fast. That's all the work we have for you today. Thanks for your service!
+Level_3_Max	FinalLevel	0	Npc	Привет Плюх.	Hi Plukh.
+Level_3_Max	FinalLevel	1	Player	Привет Непись	Hi, NPC.
+Level_3_Max	FinalLevel	2	Npc	Дуй в портал	Off to the portal.
+Lobby_2_Max	DialogueSample	0	Npc	Плюх, мне нужно выдать тебе новый инструмент.	Plukh, I need to hand you a new tool.
+Lobby_2_Max	DialogueSample	1	Player	Ух ты! И что это будет ?	Wow! What is it?
+Lobby_2_Max	DialogueSample	2	Npc	Ни за что не угадаешь. ПОДУШКА-ПЛАТФОРМА, поможет тебе преодолевать препятствия. Не можешь допрыгнуть - используй подушку.	You'll never guess. A PILLOW PLATFORM, to help you get past obstacles. Can't jump high enough? Use the pillow.
+Lobby_2_Max	DialogueSample	3	Player	Звучит интересно. Как ей пользоваться ?	Sounds interesting. How do I use it?
+Lobby_2_Max	DialogueSample	4	Npc	Нажми R - запустить подушку, нажми еще раз R чтобы остановить подушку на нужном расстоянии, нажми F чтобы вернуть подушку. Пока инструмент тестируется и нам разрешено выдавать только по две подушки на хранителя..	Press R to launch the pillow, press R again to stop it at the right distance, press F to bring it back. The tool is still being tested, so we're only allowed to issue two pillows per keeper.
+Lobby_2_Max	DialogueSample	5	Player	Как же мне ее не хватало. 	I've missed it so much.
+Lobby_2_Max	DialogueSample	6	Npc	Осваивайся. Держи инструкцию с собой, все также на TAB. Доберись до моих часов.	Get settled in. Keep the manual with you, it's still on TAB. Make your way to my hourglass.

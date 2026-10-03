@@ -30,6 +30,244 @@ MonoBehaviour:
     m_Localized: Well, then jump into my watch and fly on.
     m_Metadata:
       m_Items: []
+  - m_Id: 658550784
+    m_Localized: Hi, I'm Plukh.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 717271040
+    m_Localized: And I've been writing this system all night.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 717271041
+    m_Localized: Well, see you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1212198912
+    m_Localized: Hi Plukh.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1212198913
+    m_Localized: Hi, NPC.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1212198914
+    m_Localized: Off to the portal.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1455468544
+    m_Localized: Hi Plukh, did you catch them all?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1455468545
+    m_Localized: Yes! This dream is clear of nightmarelings!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1455468546
+    m_Localized: Jump into the hourglass to get to the next dream!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1929424896
+    m_Localized: 'Great job, Plukh!
+
+      Time to learn something new.
+
+      Jump
+      into the hourglass!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420158464
+    m_Localized: Good to see you again, Plukh. You know the drill, jump into the
+      hourglass!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2902503424
+    m_Localized: Plukh! Look how high you've climbed! How's it going?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2902503425
+    m_Localized: Caught them all.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2902503426
+    m_Localized: 'Wow, you''re quick! Let''s see how many points you scored... Whoa,
+      impressive!
+
+      If you like, you can play it again and try to beat your
+      score!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2902503427
+    m_Localized: That's all the work we have for you today. Thank you for your service!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393236992
+    m_Localized: Hi, Plukh! On shift again?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393236993
+    m_Localized: Yes, my boy is having nightmares again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393236994
+    m_Localized: Well, here's your pillow launcher. Remind me, what do you call it?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393236995
+    m_Localized: My Hushblaster! Ha-ha-ha!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393236996
+    m_Localized: Right, let's do the briefing. Standard procedure, you know how it
+      is...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393236997
+    m_Localized: Yes, of course.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393236998
+    m_Localized: Go into the dream and CATCH ALL THE NIGHTMARELINGS. There's a nightmareling
+      COUNTER in the top corner, so you can always check how many are left to catch.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393236999
+    m_Localized: Oh, that's new. Handy.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393237000
+    m_Localized: The Hushblaster works the same as before. RIGHT MOUSE BUTTON to
+      aim, LEFT to shoot. SPACE to jump. MOUSE WHEEL to zoom the view in and out.
+      I think that's everything...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393237001
+    m_Localized: The Hushblaster still doesn't shoot up or down, only straight ahead?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393237002
+    m_Localized: I'm afraid so. Our engineers are still working on it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393237003
+    m_Localized: Got it. Nothing new, we'll manage!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393237004
+    m_Localized: I've always liked your attitude. Let's test your reflexes, step
+      into the room. Come back to me when you're done, I've got something to tell
+      you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3875581952
+    m_Localized: Ready? Jump into the hourglass and you'll enter the dream. Once
+      you've caught all the nightmarelings, come and find me.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3875581953
+    m_Localized: One last thing. If you forget anything, press TAB to open the manual.
+      Good luck, Plukh!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4106268672
+    m_Localized: 'Hello, rookie!
+
+      Welcome to the Dreamworld training camp!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4336955392
+    m_Localized: So how do I become a sheriff?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4336955393
+    m_Localized: 'Earn more stars and you''ll become a sheriff!
+
+      Score points
+      for successful shots.
+
+      More ricochets, more points!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4336955394
+    m_Localized: I'm in!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4571836416
+    m_Localized: 'Plukh, you''ll need a new tool for the next dream.
+
+      I see
+      you''ve already found a pillow.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4571836417
+    m_Localized: The new tool is a pillow? Ha-ha-ha!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4571836418
+    m_Localized: 'A pillow platform, yes!
+
+      Use it when you can''t jump high
+      enough.
+
+      Head to the training zone.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5523943424
+    m_Localized: Plukh! You've climbed so high. How are things with the nightmarelings?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5523943425
+    m_Localized: Sleeping soundly. Caught them all here.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5523943426
+    m_Localized: You're fast. That's all the work we have for you today. Thanks for
+      your service!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6010482688
+    m_Localized: Hi Plukh.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6010482689
+    m_Localized: Hi, NPC.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6010482690
+    m_Localized: Off to the portal.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6501216256
+    m_Localized: Plukh, I need to hand you a new tool.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6501216257
+    m_Localized: Wow! What is it?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6501216258
+    m_Localized: You'll never guess. A PILLOW PLATFORM, to help you get past obstacles.
+      Can't jump high enough? Use the pillow.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6501216259
+    m_Localized: Sounds interesting. How do I use it?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6501216260
+    m_Localized: Press R to launch the pillow, press R again to stop it at the right
+      distance, press F to bring it back. The tool is still being tested, so we're
+      only allowed to issue two pillows per keeper.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6501216261
+    m_Localized: I've missed it so much.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6501216262
+    m_Localized: Get settled in. Keep the manual with you, it's still on TAB. Make
+      your way to my hourglass.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
