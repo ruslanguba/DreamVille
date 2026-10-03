@@ -68,9 +68,9 @@ namespace DreamVille.Tests.EditMode.UI
             new HintRow("Level_02", "TriggerForText (2)", "HintCanvas/Image (2)", 2f, 1f, true,
                 "Подушечка! Она мне пригодится!"),
 
-            new HintRow("Final Level 1_Max", "TriggerForText", "AllLevel_1/Image", 2f, 6f, false,
+            new HintRow("Final Level 1_Max", "TriggerForText", "HintCanvas/Image", 2f, 6f, false,
                 "Нажми TAB - открыть инструкцию"),
-            new HintRow("Final Level 1_Max", "TriggerForText (1)", "AllLevel_1/Image (1)", 2f, 6f, false,
+            new HintRow("Final Level 1_Max", "TriggerForText (1)", "HintCanvas/Image (1)", 2f, 6f, false,
                 "Покрути колесиком мыши - посмотри что вокруг"),
             new HintRow("Level_2_Max", "TriggerForText", "Canvas/Image", 2f, 6f, false,
                 "Забыл куда нажимать - открой инструкцию нажми на TAB"),
