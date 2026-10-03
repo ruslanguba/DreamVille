@@ -30,6 +30,11 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e0b3115b996ff7c439a0af29771c5862
+    m_Address: Assets/_Project/Localization/Tables/Hints Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 516f1d74c75d94b4eb243f96512cb564, type: 2}
   m_SchemaSet:
