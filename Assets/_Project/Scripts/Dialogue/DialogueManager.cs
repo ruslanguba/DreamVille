@@ -43,7 +43,7 @@ namespace DreamVille.Dialogue
             _ui = _container.InstantiatePrefabForComponent<DialogueUI>(_dialogueUIPrefab);
 
             _dialogue.ActiveChanged += OnActiveChanged;
-            _dialogue.SentenceShown += OnSentenceShown;
+            _dialogue.LineShown += OnLineShown;
         }
 
         private void OnDestroy()
@@ -52,7 +52,7 @@ namespace DreamVille.Dialogue
                 return;
 
             _dialogue.ActiveChanged -= OnActiveChanged;
-            _dialogue.SentenceShown -= OnSentenceShown;
+            _dialogue.LineShown -= OnLineShown;
         }
 
         private void OnActiveChanged(bool isActive)
@@ -63,9 +63,9 @@ namespace DreamVille.Dialogue
                 _ui.HidePanel();
         }
 
-        private void OnSentenceShown(Dialogue sentence)
+        private void OnLineShown(SpokenLine line)
         {
-            _ui.ShowNextSentence(sentence.IsPluh, sentence.Sentence);
+            _ui.ShowNextSentence(line.Speaker == DialogueSpeaker.Player, line.Text);
         }
 
         /// <summary>

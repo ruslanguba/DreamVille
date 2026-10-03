@@ -3,9 +3,11 @@
     "rootNamespace": "DreamVille.Dialogue",
     "references": [
         "DreamVille.Core",
+        "UniTask",
         "Unity.Cinemachine",
         "Unity.InputSystem",
         "Unity.Localization",
+        "Unity.ResourceManager",
         "Unity.TextMeshPro",
         "UnityEngine.UI",
         "Zenject"

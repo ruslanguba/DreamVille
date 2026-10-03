@@ -1,106 +1,323 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.TestTools;
 
 using DreamVille.Dialogue;
-using DialogueLine = DreamVille.Dialogue.Dialogue;
+using DreamVille.Tests.EditMode.Fakes;
+using LegacyDialogue = DreamVille.Dialogue.Dialogue;
 
 namespace DreamVille.Tests.EditMode.Dialogue
 {
+    /// <summary>
+    /// The run contract of <see cref="DialogueService"/>: synchronous acceptance and end, line order,
+    /// text resolution and cancellation. Every run uses a cancellable token, like the trigger's destroy token.
+    /// </summary>
     public class DialogueServiceTests
     {
+        private const string Table = "Dialogues";
+
+        private readonly List<DialogueDefinition> _definitions = new List<DialogueDefinition>();
+        private readonly List<string> _events = new List<string>();
+        private readonly List<SpokenLine> _shown = new List<SpokenLine>();
+
+        private FakeLocalizedTextProvider _provider;
         private DialogueService _service;
+        private CancellationTokenSource _cancellation;
 
         [SetUp]
         public void SetUp()
         {
-            _service = new DialogueService();
+            _events.Clear();
+            _shown.Clear();
+
+            _provider = new FakeLocalizedTextProvider();
+            _service = new DialogueService(_provider);
+            _cancellation = new CancellationTokenSource();
+
+            _service.ActiveChanged += isActive => _events.Add($"ActiveChanged:{isActive}");
+            _service.LineShown += line =>
+            {
+                _shown.Add(line);
+                _events.Add($"Line:{line.Text}");
+            };
         }
 
-        private static DialogueLine Line(string sentence) => new DialogueLine { Sentence = sentence };
+        [TearDown]
+        public void TearDown()
+        {
+            _cancellation.Dispose();
+
+            foreach (DialogueDefinition definition in _definitions)
+                UnityEngine.Object.DestroyImmediate(definition);
+
+            _definitions.Clear();
+        }
+
+        private static DialogueLine Line(string key, DialogueSpeaker speaker = DialogueSpeaker.Npc)
+            => new DialogueLine(speaker, new LocalizedString(Table, key));
+
+        private static string TextOf(string key) => FakeLocalizedTextProvider.TextFor(Table, key);
+
+        private DialogueDefinition Define(params DialogueLine[] lines)
+        {
+            DialogueDefinition definition = DialogueDefinition.Create(lines);
+            _definitions.Add(definition);
+            return definition;
+        }
+
+        private UniTask Start(params DialogueLine[] lines)
+        {
+            _service.TryStart(Define(lines), _cancellation.Token, out UniTask completion);
+            return completion;
+        }
+
+        // Appends "Completed" or "Canceled" to the event log at the moment the run's task finishes.
+        private void RecordOutcome(UniTask completion) => RecordOutcomeAsync(completion).Forget();
+
+        private async UniTaskVoid RecordOutcomeAsync(UniTask completion)
+        {
+            try
+            {
+                await completion;
+                _events.Add("Completed");
+            }
+            catch (OperationCanceledException)
+            {
+                _events.Add("Canceled");
+            }
+        }
 
         [Test]
-        public void Begin_WithLines_RaisesActiveChangedTrueAndShowsFirstSentence()
+        public void TryStart_WhenIdle_ReturnsTrueAndRaisesActiveChangedTrue()
         {
-            bool? active = null;
-            DialogueLine shown = null;
-            _service.ActiveChanged += value => active = value;
-            _service.SentenceShown += dialogue => shown = dialogue;
-
-            bool started = _service.Begin(new[] { Line("first"), Line("second") });
+            bool started = _service.TryStart(Define(Line("a")), _cancellation.Token, out _);
 
             Assert.That(started, Is.True);
-            Assert.That(active, Is.True);
-            Assert.That(shown.Sentence, Is.EqualTo("first"));
+            Assert.That(_service.IsActive, Is.True);
+            Assert.That(_events, Is.EqualTo(new[] { "ActiveChanged:True", $"Line:{TextOf("a")}" }));
         }
 
         [Test]
-        public void Begin_WithNullOrEmptyList_ReturnsFalseAndRaisesNothing()
+        public void TryStart_WhenActive_ReturnsFalseAndKeepsCurrentRun()
         {
-            bool anyEventRaised = false;
-            _service.ActiveChanged += _ => anyEventRaised = true;
-            _service.SentenceShown += _ => anyEventRaised = true;
+            _service.TryStart(Define(Line("first"), Line("second")), _cancellation.Token, out _);
 
-            bool startedWithNull = _service.Begin(null);
-            bool startedWithEmpty = _service.Begin(new DialogueLine[0]);
-
-            Assert.That(startedWithNull, Is.False);
-            Assert.That(startedWithEmpty, Is.False);
-            Assert.That(anyEventRaised, Is.False);
-        }
-
-        [Test]
-        public void Begin_WhileActive_ReturnsFalseAndDoesNotChangeCurrentQueue()
-        {
-            var shown = new List<string>();
-            _service.SentenceShown += dialogue => shown.Add(dialogue.Sentence);
-            _service.Begin(new[] { Line("first"), Line("second") });
-
-            bool startedAgain = _service.Begin(new[] { Line("intruder") });
+            bool startedAgain = _service.TryStart(Define(Line("intruder")), _cancellation.Token, out _);
             _service.ShowNext();
 
             Assert.That(startedAgain, Is.False);
-            Assert.That(shown, Is.EqualTo(new[] { "first", "second" }));
+            Assert.That(_shown.Select(line => line.Text), Is.EqualTo(new[] { TextOf("first"), TextOf("second") }));
         }
 
         [Test]
-        public void ShowNext_DequeuesInOrder()
+        public void TryStart_WithNullDefinition_ReturnsFalseAndStaysIdle()
         {
-            var shown = new List<string>();
-            _service.SentenceShown += dialogue => shown.Add(dialogue.Sentence);
+            bool started = _service.TryStart(null, _cancellation.Token, out _);
 
-            _service.Begin(new[] { Line("first"), Line("second"), Line("third") });
-            _service.ShowNext();
-            _service.ShowNext();
-
-            Assert.That(shown, Is.EqualTo(new[] { "first", "second", "third" }));
+            Assert.That(started, Is.False);
+            Assert.That(_service.IsActive, Is.False);
+            Assert.That(_events, Is.Empty);
         }
 
         [Test]
-        public void ShowNext_LastLine_EndsDialogueAndInvokesCompletionExactlyOnce()
+        public void TryStart_WithEmptyDefinition_ReturnsFalseAndStaysIdle()
         {
-            int completedCount = 0;
-            bool? active = null;
-            _service.ActiveChanged += value => active = value;
-            _service.SentenceShown += _ => { };
+            bool started = _service.TryStart(Define(), _cancellation.Token, out _);
 
-            _service.Begin(new[] { Line("first"), Line("second") }, () => completedCount++);
-            _service.ShowNext();
-            _service.ShowNext();
-
-            Assert.That(active, Is.False);
-            Assert.That(completedCount, Is.EqualTo(1));
+            Assert.That(started, Is.False);
+            Assert.That(_service.IsActive, Is.False);
+            Assert.That(_events, Is.Empty);
         }
 
         [Test]
-        public void ShowNext_WhenInactive_DoesNothing()
+        public void TryStart_ShowsFirstLineWithResolvedTextAndSpeaker()
         {
-            bool anyEventRaised = false;
-            _service.ActiveChanged += _ => anyEventRaised = true;
-            _service.SentenceShown += _ => anyEventRaised = true;
+            _service.TryStart(Define(Line("hello", DialogueSpeaker.Player), Line("bye")), _cancellation.Token, out _);
+
+            Assert.That(_shown, Has.Count.EqualTo(1));
+            Assert.That(_shown[0].Speaker, Is.EqualTo(DialogueSpeaker.Player));
+            Assert.That(_shown[0].Text, Is.EqualTo(TextOf("hello")));
+        }
+
+        [Test]
+        public void ShowNext_ShowsLinesInDefinitionOrder()
+        {
+            Start(Line("first"), Line("second", DialogueSpeaker.Player), Line("third"));
+
+            _service.ShowNext();
+            _service.ShowNext();
+
+            Assert.That(_shown.Select(line => line.Text), Is.EqualTo(new[] { TextOf("first"), TextOf("second"), TextOf("third") }));
+            Assert.That(_shown.Select(line => line.Speaker), Is.EqualTo(new[] { DialogueSpeaker.Npc, DialogueSpeaker.Player, DialogueSpeaker.Npc }));
+        }
+
+        [Test]
+        public void ShowNext_AfterLastLine_RaisesActiveChangedFalseThenCompletes()
+        {
+            RecordOutcome(Start(Line("only")));
 
             _service.ShowNext();
 
-            Assert.That(anyEventRaised, Is.False);
+            Assert.That(_events, Is.EqualTo(new[] { "ActiveChanged:True", $"Line:{TextOf("only")}", "ActiveChanged:False", "Completed" }));
         }
+
+        [Test]
+        public void ShowNext_AfterLastLine_CompletesSynchronously()
+        {
+            UniTask completion = Start(Line("only"));
+
+            _service.ShowNext();
+
+            Assert.That(completion.Status, Is.EqualTo(UniTaskStatus.Succeeded));
+        }
+
+        [Test]
+        public void ShowNext_WhenIdle_DoesNothing()
+        {
+            _service.ShowNext();
+
+            Assert.That(_events, Is.Empty);
+        }
+
+        [Test]
+        public void ShowNext_WhileTextsResolve_IsIgnored()
+        {
+            _provider.Deferred = true;
+            Start(Line("first"), Line("second"));
+
+            _service.ShowNext();
+            _provider.CompletePending();
+
+            Assert.That(_shown.Select(line => line.Text), Is.EqualTo(new[] { TextOf("first") }));
+            Assert.That(_service.IsActive, Is.True);
+        }
+
+        [Test]
+        public void Cancel_DuringRun_EndsRunAndCompletionThrowsCanceled()
+        {
+            RecordOutcome(Start(Line("first"), Line("second")));
+
+            _cancellation.Cancel();
+
+            Assert.That(_service.IsActive, Is.False);
+            Assert.That(_events, Is.EqualTo(new[] { "ActiveChanged:True", $"Line:{TextOf("first")}", "ActiveChanged:False", "Canceled" }));
+        }
+
+        [Test]
+        public void Cancel_DuringRun_AllowsNextStart()
+        {
+            Start(Line("first"));
+            _cancellation.Cancel();
+
+            bool startedAgain = _service.TryStart(Define(Line("second")), CancellationToken.None, out _);
+
+            Assert.That(startedAgain, Is.True);
+            Assert.That(_service.IsActive, Is.True);
+        }
+
+        [Test]
+        public void Cancel_WhileTextsResolve_EndsRunEvenIfProviderIgnoresTheToken()
+        {
+            _provider.Deferred = true;
+            RecordOutcome(Start(Line("first")));
+
+            _cancellation.Cancel();
+
+            Assert.That(_events, Is.EqualTo(new[] { "ActiveChanged:True", "ActiveChanged:False", "Canceled" }));
+        }
+
+        [Test]
+        public void TryStart_WithCancelledToken_EndsRunWithoutShowingLines()
+        {
+            _cancellation.Cancel();
+
+            bool started = _service.TryStart(Define(Line("first")), _cancellation.Token, out UniTask completion);
+            RecordOutcome(completion);
+
+            Assert.That(started, Is.True);
+            Assert.That(_events, Is.EqualTo(new[] { "ActiveChanged:True", "ActiveChanged:False", "Canceled" }));
+        }
+
+        [Test]
+        public void ProviderThrows_EndsRunAndLogsError()
+        {
+            _provider.Failure = new InvalidOperationException("table is missing");
+            LogAssert.Expect(LogType.Error, new Regex("Could not resolve"));
+
+            RecordOutcome(Start(Line("first")));
+
+            Assert.That(_service.IsActive, Is.False);
+            Assert.That(_events, Is.EqualTo(new[] { "ActiveChanged:True", "ActiveChanged:False", "Completed" }));
+        }
+
+        [Test]
+        public void RunAsync_WhenRejected_ReturnsFalse()
+        {
+            Start(Line("running"));
+
+            UniTask<bool> run = _service.RunAsync(Define(Line("intruder")), _cancellation.Token);
+
+            Assert.That(run.GetAwaiter().GetResult(), Is.False);
+        }
+
+        [Test]
+        public void RunAsync_WhenCompleted_ReturnsTrue()
+        {
+            UniTask<bool> run = _service.RunAsync(Define(Line("only")), _cancellation.Token);
+
+            _service.ShowNext();
+
+            Assert.That(run.Status, Is.EqualTo(UniTaskStatus.Succeeded));
+            Assert.That(run.GetAwaiter().GetResult(), Is.True);
+        }
+
+        [Test]
+        public void Texts_AreResolvedOncePerRun()
+        {
+            Start(Line("first"), Line("second"), Line("third"));
+
+            _service.ShowNext();
+            _service.ShowNext();
+            _service.ShowNext();
+
+            Assert.That(_service.IsActive, Is.False);
+            Assert.That(_provider.CallCount, Is.EqualTo(3));
+        }
+
+#pragma warning disable CS0618 // Begin is transitional; these tests go with it.
+        [Test]
+        public void Begin_Legacy_RaisesLineShownWithMappedSpeaker()
+        {
+            var lines = new[]
+            {
+                new LegacyDialogue { IsPluh = false, Sentence = "npc line" },
+                new LegacyDialogue { IsPluh = true, Sentence = "player line" },
+            };
+
+            _service.Begin(lines);
+            _service.ShowNext();
+
+            Assert.That(_shown.Select(line => line.Speaker), Is.EqualTo(new[] { DialogueSpeaker.Npc, DialogueSpeaker.Player }));
+            Assert.That(_shown.Select(line => line.Text), Is.EqualTo(new[] { "npc line", "player line" }));
+        }
+
+        [Test]
+        public void Begin_Legacy_AfterLastLine_RaisesActiveChangedFalseThenInvokesCompletionOnce()
+        {
+            var lines = new[] { new LegacyDialogue { Sentence = "only" } };
+
+            _service.Begin(lines, () => _events.Add("Completed"));
+            _service.ShowNext();
+
+            Assert.That(_events, Is.EqualTo(new[] { "ActiveChanged:True", "Line:only", "ActiveChanged:False", "Completed" }));
+        }
+#pragma warning restore CS0618
     }
 }

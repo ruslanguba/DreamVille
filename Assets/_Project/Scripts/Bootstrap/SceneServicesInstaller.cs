@@ -25,6 +25,7 @@ namespace DreamVille.Bootstrap
             Container.Bind<IPlayerDamageState>().To<PlayerDamageReceiver>().FromComponentInHierarchy().AsSingle();
             Container.BindInterfacesTo<GameInput>().FromComponentInHierarchy().AsSingle();
 
+            Container.BindInterfacesTo<UnityLocalizedTextProvider>().AsSingle();
             Container.BindInterfacesTo<DialogueService>().AsSingle();
             Container.Bind<DialogueManager>().FromComponentInHierarchy().AsSingle();
 
