@@ -11,7 +11,6 @@ using UnityEngine.TestTools;
 
 using DreamVille.Dialogue;
 using DreamVille.Tests.EditMode.Fakes;
-using LegacyDialogue = DreamVille.Dialogue.Dialogue;
 
 namespace DreamVille.Tests.EditMode.Dialogue
 {
@@ -290,34 +289,5 @@ namespace DreamVille.Tests.EditMode.Dialogue
             Assert.That(_service.IsActive, Is.False);
             Assert.That(_provider.CallCount, Is.EqualTo(3));
         }
-
-#pragma warning disable CS0618 // Begin is transitional; these tests go with it.
-        [Test]
-        public void Begin_Legacy_RaisesLineShownWithMappedSpeaker()
-        {
-            var lines = new[]
-            {
-                new LegacyDialogue { IsPluh = false, Sentence = "npc line" },
-                new LegacyDialogue { IsPluh = true, Sentence = "player line" },
-            };
-
-            _service.Begin(lines);
-            _service.ShowNext();
-
-            Assert.That(_shown.Select(line => line.Speaker), Is.EqualTo(new[] { DialogueSpeaker.Npc, DialogueSpeaker.Player }));
-            Assert.That(_shown.Select(line => line.Text), Is.EqualTo(new[] { "npc line", "player line" }));
-        }
-
-        [Test]
-        public void Begin_Legacy_AfterLastLine_RaisesActiveChangedFalseThenInvokesCompletionOnce()
-        {
-            var lines = new[] { new LegacyDialogue { Sentence = "only" } };
-
-            _service.Begin(lines, () => _events.Add("Completed"));
-            _service.ShowNext();
-
-            Assert.That(_events, Is.EqualTo(new[] { "ActiveChanged:True", "Line:only", "ActiveChanged:False", "Completed" }));
-        }
-#pragma warning restore CS0618
     }
 }

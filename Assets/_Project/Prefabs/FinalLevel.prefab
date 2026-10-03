@@ -156,14 +156,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _definition: {fileID: 11400000, guid: 4d3c428adea9b3c48aede9559a9783fc, type: 2}
-  _sentencesRu:
-  - IsPluh: 0
-    Sentence: "\u041F\u0440\u0438\u0432\u0435\u0442 \u041F\u043B\u044E\u0445."
-  - IsPluh: 1
-    Sentence: "\u041F\u0440\u0438\u0432\u0435\u0442 \u041D\u0435\u043F\u0438\u0441\u044C"
-  - IsPluh: 0
-    Sentence: "\u0414\u0443\u0439 \u0432 \u043F\u043E\u0440\u0442\u0430\u043B"
-  _sentencesEn: []
   _deleteOnEnd: 1
 --- !u!114 &2516464366815981834
 MonoBehaviour:

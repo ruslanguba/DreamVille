@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
 using DreamVille.Dialogue;
-using LegacyDialogue = DreamVille.Dialogue.Dialogue;
 
 namespace DreamVille.Tests.EditMode.Fakes
 {
@@ -56,9 +54,6 @@ namespace DreamVille.Tests.EditMode.Fakes
             RaiseActiveChanged(true);
             return true;
         }
-
-        [Obsolete("Transitional until spec 11 B4")]
-        public bool Begin(IReadOnlyList<LegacyDialogue> lines, Action onCompleted = null) => false;
 
         public void ShowNext() => ShowNextCount++;
 

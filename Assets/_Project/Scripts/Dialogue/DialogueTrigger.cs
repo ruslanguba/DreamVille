@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 using UnityEngine.Serialization;
 using Zenject;
 
@@ -21,11 +19,6 @@ namespace DreamVille.Dialogue
         public event Action DialogueEnded;
 
         [SerializeField] private DialogueDefinition _definition;
-
-        [FormerlySerializedAs("sentence")]
-        [SerializeField] private List<Dialogue> _sentencesRu;
-        [FormerlySerializedAs("sentenceEn")]
-        [SerializeField] private List<Dialogue> _sentencesEn;
 
         [FormerlySerializedAs("deleteOnEnd")]
         [SerializeField] private bool _deleteOnEnd;
@@ -65,14 +58,12 @@ namespace DreamVille.Dialogue
             if (!IsArmed)
                 return;
 
-            if (_definition != null)
-                TriggerDefinition();
-            else
-                TriggerLegacyLists();
-        }
+            if (_definition == null)
+            {
+                Debug.LogError($"[{nameof(DialogueTrigger)}] '{name}' has no dialogue definition assigned.", this);
+                return;
+            }
 
-        private void TriggerDefinition()
-        {
             if (_definition.Lines.Count == 0)
             {
                 Debug.LogError($"[{nameof(DialogueTrigger)}] '{name}': dialogue '{_definition.name}' has no lines.", this);
@@ -114,41 +105,6 @@ namespace DreamVille.Dialogue
 
             if (_deleteOnEnd)
                 Destroy(this);
-        }
-
-        private void TriggerLegacyLists()
-        {
-            var selectedLocale = LocalizationSettings.SelectedLocale.Identifier;
-            var lines = selectedLocale == "en" ? _sentencesEn : _sentencesRu;
-
-            if (lines == null || lines.Count == 0)
-            {
-                Debug.LogError($"[{nameof(DialogueTrigger)}] '{name}': no dialogue lines for locale '{selectedLocale}'.", this);
-                return;
-            }
-
-            if (_service.IsActive)
-            {
-                Debug.LogWarning($"[{nameof(DialogueTrigger)}] '{name}': a dialogue is already active, ignoring the trigger.", this);
-                return;
-            }
-
-#pragma warning disable CS0618 // Begin stays until every trigger has a definition.
-            if (!_service.Begin(lines, OnDialogueCompleted))
-                return;
-#pragma warning restore CS0618
-
-            DialogueStarted?.Invoke();
-        }
-
-        private void OnDialogueCompleted()
-        {
-            DialogueEnded?.Invoke();
-
-            if (_deleteOnEnd)
-            {
-                Destroy(this);
-            }
         }
     }
 }

@@ -45,17 +45,6 @@ namespace DreamVille.Dialogue
             return true;
         }
 
-        [Obsolete("Transitional until spec 11 B4")]
-        public bool Begin(IReadOnlyList<Dialogue> lines, Action onCompleted = null)
-        {
-            if (IsActive || lines == null || lines.Count == 0)
-                return false;
-
-            Activate();
-            PlayLegacyAsync(lines, onCompleted).Forget();
-            return true;
-        }
-
         public void ShowNext()
         {
             _lineDismissed?.TrySetResult();
@@ -90,20 +79,6 @@ namespace DreamVille.Dialogue
             {
                 End();
             }
-        }
-
-        private async UniTaskVoid PlayLegacyAsync(IReadOnlyList<Dialogue> lines, Action onCompleted)
-        {
-            try
-            {
-                await ShowAsync(ToSpokenLines(lines), CancellationToken.None);
-            }
-            finally
-            {
-                End();
-            }
-
-            onCompleted?.Invoke();
         }
 
         private async UniTask<SpokenLine[]> ResolveAsync(IReadOnlyList<DialogueLine> lines, CancellationToken cancellationToken)
@@ -142,19 +117,6 @@ namespace DreamVille.Dialogue
             _lineDismissed = null;
             IsActive = false;
             ActiveChanged?.Invoke(false);
-        }
-
-        private static SpokenLine[] ToSpokenLines(IReadOnlyList<Dialogue> lines)
-        {
-            var spokenLines = new SpokenLine[lines.Count];
-
-            for (int i = 0; i < spokenLines.Length; i++)
-            {
-                DialogueSpeaker speaker = lines[i].IsPluh ? DialogueSpeaker.Player : DialogueSpeaker.Npc;
-                spokenLines[i] = new SpokenLine(speaker, lines[i].Sentence);
-            }
-
-            return spokenLines;
         }
     }
 }

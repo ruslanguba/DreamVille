@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
@@ -18,13 +17,6 @@ namespace DreamVille.Dialogue
         /// <paramref name="cancellationToken"/> fires, in which case the service also ends the run and raises ActiveChanged(false).
         /// </summary>
         bool TryStart(DialogueDefinition dialogue, CancellationToken cancellationToken, out UniTask completion);
-
-        /// <summary>
-        /// Starts a conversation from raw sentences. A dialogue that is already running is not interrupted:
-        /// the new request is ignored and false is returned.
-        /// </summary>
-        [Obsolete("Transitional until spec 11 B4")]
-        bool Begin(IReadOnlyList<Dialogue> lines, Action onCompleted = null);
 
         /// <summary>Dismisses the current line; ignored when idle or while texts are still resolving.</summary>
         void ShowNext();

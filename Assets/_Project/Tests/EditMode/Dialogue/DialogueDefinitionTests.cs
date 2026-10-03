@@ -18,7 +18,7 @@ namespace DreamVille.Tests.EditMode.Dialogue
         }
 
         [Test]
-        public void DialogueSpeaker_ValuesMatchLegacyIsPluhFlag()
+        public void DialogueSpeaker_SerializedValuesNeverChange()
         {
             Assert.That((int)DialogueSpeaker.Npc, Is.EqualTo(0));
             Assert.That((int)DialogueSpeaker.Player, Is.EqualTo(1));
