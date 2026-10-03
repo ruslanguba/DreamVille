@@ -56,9 +56,10 @@ _A gameplay GIF and screenshots are coming with the playable build._
   ([ADR 0007](Docs/adr/0007-hud-mvp.md), [ADR 0008](Docs/adr/0008-menus-mvp.md)). The 15
   conversations are `DialogueDefinition` assets on one `Dialogues` string table (ru, en);
   a checked-in snapshot of all 53 lines proves the move out of the scenes lost no text,
-  and the move fixed a shipped bug where English dialogues never started.
+  and the move fixed a shipped bug where English dialogues never started. Screen hints
+  use a `Hints` table the same way, so the English game is English from the first lobby.
   [ADR 0009](Docs/adr/0009-data-driven-dialogues.md).
-- **610 EditMode tests that guard the wiring.**
+- **617 EditMode tests that guard the wiring.**
   [`SceneCompositionTests`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs)
   opens every build scene and checks its installers, catalog references and missing
   scripts, and prefab tests pin the player's composition, so a mis-wired scene fails a
@@ -166,7 +167,7 @@ press Play.
 
 ## Tests
 
-Window → General → Test Runner → EditMode → Run All. 610 EditMode tests (608 pass, 2
+Window → General → Test Runner → EditMode → Run All. 617 EditMode tests (615 pass, 2
 intentionally skipped). PlayMode tests and CI are not set up yet.
 
 ## Status and roadmap
@@ -187,11 +188,9 @@ intentionally skipped). PlayMode tests and CI are not set up yet.
 - **UI.** HUD, menus and pause, and dialogues as MVP; remembered language; Lobby 2
   completable through its portal (ADRs 0007-0009). Screen hints are one `ProximityHint`
   on UniTask, pinned by a content snapshot; it retired the last coroutines (5.4, ADR 0006
-  update).
+  update). Hint texts are localized ru/en (5.5).
 
-**Next:** 5.5 localized proximity hints (the hard-coded Russian hint texts, 10 in the
-build scenes and 4 in WIP scenes, move into a Localization table with English); then CI
-with game-ci and a playable build.
+**Next:** CI with game-ci and a playable build.
 
 ## Documentation
 

@@ -166,6 +166,11 @@ pins it.
 - **English structure wins for Level_02 (three lines, two new Russian ones).** It would change
   the primary language's content to match English lines that do not translate it. Rejected.
 
+Update (2026-10-04, roadmap 5.5): the 14 proximity hints follow the same table approach
+with a `Hints` string table, but through the package's `LocalizeStringEvent` on each hint
+text rather than a definition asset: a hint is one line of text with no speaker or order,
+and the component also re-applies the text when the language changes mid-show.
+
 Related: [ADR 0001](0001-zenject-composition-root.md) (installers),
 [ADR 0002](0002-assembly-layering.md) (the new edges),
 [ADR 0006](0006-unitask-lifetimes.md) (one-shot lifetime),
