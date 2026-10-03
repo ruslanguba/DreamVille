@@ -65,7 +65,15 @@ refactor documented below is the author's.
   became the single owner of an NPC's pose (one enum instead of five bools), and a
   content fix to `PluhNPC.controller` removed an animation-switching bug (mood changes
   no longer detour through Idle). See [ADR 0006](Docs/adr/0006-unitask-lifetimes.md).
-- **480 EditMode tests** (478 pass, 2 intentionally skipped), including a
+- **Dialogues as data, not scene text.** Each of the 15 conversations is a
+  [`DialogueDefinition`](Assets/_Project/Scripts/Dialogue/DialogueDefinition.cs) asset whose
+  lines point into one `Dialogues` string table (ru, en). The service accepts a run
+  synchronously (`TryStart`) and hands back its completion as a `UniTask`;
+  [`DialoguePresenter`](Assets/_Project/Scripts/UI/Dialogues/DialoguePresenter.cs) draws it
+  over a passive view. A checked-in snapshot of all 53 lines proves the move out of the
+  scenes lost no text, and it fixed a shipped bug where English dialogues never started.
+  See [ADR 0009](Docs/adr/0009-data-driven-dialogues.md).
+- **549 EditMode tests** (547 pass, 2 intentionally skipped), including a
   scene-composition guard
   ([`SceneCompositionTests`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs))
   that opens every build scene and checks its installers and catalog references, and
@@ -119,6 +127,7 @@ graph LR
     Gameplay --> Input
     Gameplay --> Scoring
     Progression --> Configs
+    Progression --> Core
     Progression --> Dialogue
     Progression --> Gameplay
     Progression --> Persistence
@@ -132,6 +141,7 @@ graph LR
     UI --> Audio
     UI --> Configs
     UI --> Core
+    UI --> Dialogue
     UI --> Gameplay
     UI --> Input
     UI --> Persistence
@@ -169,7 +179,8 @@ Full decision records: [ADR 0001 — Zenject composition root](Docs/adr/0001-zen
 [ADR 0005 — interaction effects as sibling components](Docs/adr/0005-interaction-effects-as-components.md),
 [ADR 0006 — UniTask lifetimes for coroutines](Docs/adr/0006-unitask-lifetimes.md),
 [ADR 0007 — HUD as MVP](Docs/adr/0007-hud-mvp.md),
-[ADR 0008 — menus as MVP](Docs/adr/0008-menus-mvp.md).
+[ADR 0008 — menus as MVP](Docs/adr/0008-menus-mvp.md),
+[ADR 0009 — data-driven dialogues](Docs/adr/0009-data-driven-dialogues.md).
 
 ## Where to look first
 
@@ -185,6 +196,8 @@ Full decision records: [ADR 0001 — Zenject composition root](Docs/adr/0001-zen
 - [`Assets/_Project/Scripts/Gameplay/Interactables/EffectChain.cs`](Assets/_Project/Scripts/Gameplay/Interactables/EffectChain.cs) — the plain class that turns sibling `IInteractionEffect` components into one ordered, fault-isolated call.
 - [`Assets/_Project/Scripts/UI/Hud/HudPresenter.cs`](Assets/_Project/Scripts/UI/Hud/HudPresenter.cs) — the HUD as MVP: a plain presenter over five one-method view interfaces, tested with fakes and no scene.
 - [`Assets/_Project/Scripts/UI/Menus/LevelSelectPresenter.cs`](Assets/_Project/Scripts/UI/Menus/LevelSelectPresenter.cs) — level select from saved progress over a passive view; [`PauseMenuPresenter.cs`](Assets/_Project/Scripts/UI/Menus/PauseMenuPresenter.cs) draws the rules that [`InGameMenuController`](Assets/_Project/Scripts/App/InGameMenuController.cs) keeps, and [`MenuWiringTests`](Assets/_Project/Tests/EditMode/UI/MenuWiringTests.cs) guards the Inspector-wiring rule.
+- [`Assets/_Project/Scripts/UI/Dialogues/DialoguePresenter.cs`](Assets/_Project/Scripts/UI/Dialogues/DialoguePresenter.cs) — the third MVP surface: dialogue events to view calls, no rules; [`DialogueService.cs`](Assets/_Project/Scripts/Dialogue/DialogueService.cs) is the plain class behind it, with a synchronous `TryStart`, an awaited completion, and text resolved once per run through the `ILocalizedTextProvider` seam.
+- [`Assets/_Project/Tests/EditMode/Dialogue/DialogueContentTests.cs`](Assets/_Project/Tests/EditMode/Dialogue/DialogueContentTests.cs) — compares every dialogue definition with the checked-in [`DialogueSnapshot.tsv`](Assets/_Project/Tests/EditMode/Dialogue/DialogueSnapshot.tsv) (53 lines: speaker, Russian, English), so a lost or changed line fails a test.
 - [`Assets/_Project/Scripts/Progression/ScoringCoordinator.cs`](Assets/_Project/Scripts/Progression/ScoringCoordinator.cs) — the scoring rules (kill to score, score to stars, cleared level to best score) in one UI-free class.
 - [`Assets/_Project/Scripts/Persistence/ProgressRepository.cs`](Assets/_Project/Scripts/Persistence/ProgressRepository.cs) — the only place stars and completion are read from or written to a save.
 - [`Assets/_Project/Scripts/Audio/AudioService.cs`](Assets/_Project/Scripts/Audio/AudioService.cs) — saved volume plus per-scene music, driven by the scene catalog.
@@ -212,7 +225,8 @@ Assets/_Project/
                    Level_03, Level_04 (Scenes/Max/* are excluded work-in-progress)
   Prefabs/        Bootstrap (SceneContext prefabs), gameplay and UI prefabs
   Settings/       ScriptableObject configs: Levels/ (SceneCatalog, LevelDefinition),
-                   Score/, Audio/, Bullet/, Movement/, Rendering/
+                   Dialogues/ (DialogueDefinition), Score/, Audio/, Bullet/,
+                   Movement/, Rendering/
   Characters/     player, skins, enemies, NPCs
   Art/ Audio/ Animations/ Environment/ Localization/
   Tests/EditMode/ NUnit tests, one folder per module, fakes in Tests/EditMode/Fakes
@@ -226,7 +240,7 @@ press Play.
 
 ## Tests
 
-Window → General → Test Runner → EditMode → Run All. 480 tests (478 pass, 2
+Window → General → Test Runner → EditMode → Run All. 549 tests (547 pass, 2
 intentionally skipped). PlayMode tests and CI are not set up yet.
 
 ## Status and roadmap
@@ -255,10 +269,13 @@ animation-switching fix; the gameplay HUD as MVP (passive views behind interface
 UniTask with "newest show owns the timer"); the menus and pause as MVP (5.2: passive
 views, `MainMenuPresenter`, `LevelSelectPresenter`, `PauseMenuPresenter`, an
 Inspector-wiring guard test, remembered language, Lobby 2 completable through its
-portal); 480 EditMode tests; eight ADRs.
+portal); data-driven dialogues (5.3: `DialogueDefinition` assets on a `Dialogues`
+string table with English fallback, a `TryStart` service with UniTask completion,
+`DialoguePresenter` over a passive view, a snapshot test pinning all 53 lines, and the
+fix for English dialogues that never started); 549 EditMode tests; nine ADRs.
 
-**Next:** phase 5 continues — 5.3 data-driven dialogues (`DialogueAsset` on Localization
-tables, `DialoguePresenter`), 5.4 the last three UI coroutines (proximity hints); then CI with game-ci and a
+**Next:** phase 5 continues — 5.4 micro-scripts (`ProximityHint`, `PlayerProximityToggle`,
+`UiFader`) that retire the last three UI coroutines; then CI with game-ci and a
 playable build.
 
 ## Documentation
