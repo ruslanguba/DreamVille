@@ -109,7 +109,7 @@ namespace DreamVille.Tests.EditMode.Persistence
         [Test]
         public void Write_WithEmptyLevelId_DoesNotTouchStorage()
         {
-            LogAssert.Expect(LogType.Error, new Regex(".*"));
+            LogAssert.Expect(LogType.Error, new Regex("Cannot save stars for an empty level id"));
 
             bool written = _repository.SetStarsIfHigher(string.Empty, 3);
 

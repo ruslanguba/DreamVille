@@ -64,8 +64,9 @@ namespace DreamVille.Tests.EditMode.SceneManagement
             var backend = new FakeSceneLoadingBackend();
             var loader = new SceneLoader(backend);
             loader.ProgressChanged += _ => throw new InvalidOperationException("listener failure");
-            LogAssert.Expect(LogType.Exception, new Regex(".*"));
-            LogAssert.Expect(LogType.Exception, new Regex(".*"));
+            // Both progress reports (0 and 1) reach the throwing listener.
+            LogAssert.Expect(LogType.Exception, new Regex("listener failure"));
+            LogAssert.Expect(LogType.Exception, new Regex("listener failure"));
 
             UniTask task = loader.LoadAsync("Level1");
             backend.CompleteRequest(0);
