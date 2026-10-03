@@ -13519,6 +13519,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 933f63d35809768468b2cd5bc99c29d7, type: 2}
     - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _definition
+      value: 
+      objectReference: {fileID: 11400000, guid: 5a73ad14052f47142b69ad446bc2f756, type: 2}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
       propertyPath: sentence.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -34293,11 +34297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startState: 0
-  _isTalk: 0
-  _isGreeting: 0
-  _isApplause: 0
   _isSwim: 1
-  _isIdle: 0
 --- !u!4 &2120099317 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3836863985700584883, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}

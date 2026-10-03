@@ -2504,11 +2504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startState: 2
-  _isTalk: 0
-  _isGreeting: 1
-  _isApplause: 0
   _isSwim: 0
-  _isIdle: 0
 --- !u!4 &585408715 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3464737132984173325, guid: 046745ea47331b241947a2784512b093, type: 3}
@@ -6503,11 +6499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startState: 0
-  _isTalk: 0
-  _isGreeting: 0
-  _isApplause: 0
   _isSwim: 1
-  _isIdle: 0
 --- !u!114 &1858283133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6685,6 +6677,10 @@ PrefabInstance:
       propertyPath: _target
       value: 
       objectReference: {fileID: 11400000, guid: a484ebab42fa41042a9e62c894e6f168, type: 2}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _definition
+      value: 
+      objectReference: {fileID: 11400000, guid: 005f0f3a84c24df48ab87e17b1454bd8, type: 2}
     - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
       propertyPath: sentence.Array.size
       value: 1

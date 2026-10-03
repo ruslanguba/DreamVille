@@ -4704,6 +4704,10 @@ PrefabInstance:
       value: Lobby_2_Max
       objectReference: {fileID: 0}
     - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _definition
+      value: 
+      objectReference: {fileID: 11400000, guid: ea3e1a4333df03348b0269e3e0fad400, type: 2}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
       propertyPath: sentenceEn.Array.size
       value: 3
       objectReference: {fileID: 0}

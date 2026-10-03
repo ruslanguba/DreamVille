@@ -1,0 +1,240 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Dialogues Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Dialogues
+  m_TableCollectionNameGuidString: 92cb2097d87e0894daf04a7c0f3b8b50
+  m_Entries:
+  - m_Id: 658550784
+    m_Key: Prefabs/DialogueSample_Placeholder/00
+    m_Metadata:
+      m_Items: []
+  - m_Id: 717271040
+    m_Key: Prefabs/DialogueSample_Placeholder/01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 717271041
+    m_Key: Prefabs/DialogueSample_Placeholder/02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1212198912
+    m_Key: Prefabs/FinalLevel_Placeholder/00
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1212198913
+    m_Key: Prefabs/FinalLevel_Placeholder/01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1212198914
+    m_Key: Prefabs/FinalLevel_Placeholder/02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1455468544
+    m_Key: Level_01/FinalLevel/00
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1455468545
+    m_Key: Level_01/FinalLevel/01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1455468546
+    m_Key: Level_01/FinalLevel/02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1929424896
+    m_Key: Level_02/FinalLevel/00
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420158464
+    m_Key: Level_03/FinalLevel/00
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2902503424
+    m_Key: Level_04/FinalLevel/00
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2902503425
+    m_Key: Level_04/FinalLevel/01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2902503426
+    m_Key: Level_04/FinalLevel/02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2902503427
+    m_Key: Level_04/FinalLevel/03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393236992
+    m_Key: Lobby_01/DialogueSample/00
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393236993
+    m_Key: Lobby_01/DialogueSample/01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393236994
+    m_Key: Lobby_01/DialogueSample/02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393236995
+    m_Key: Lobby_01/DialogueSample/03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393236996
+    m_Key: Lobby_01/DialogueSample/04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393236997
+    m_Key: Lobby_01/DialogueSample/05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393236998
+    m_Key: Lobby_01/DialogueSample/06
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393236999
+    m_Key: Lobby_01/DialogueSample/07
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393237000
+    m_Key: Lobby_01/DialogueSample/08
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393237001
+    m_Key: Lobby_01/DialogueSample/09
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393237002
+    m_Key: Lobby_01/DialogueSample/10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393237003
+    m_Key: Lobby_01/DialogueSample/11
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3393237004
+    m_Key: Lobby_01/DialogueSample/12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3875581952
+    m_Key: Lobby_01/FinalLevel1/00
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3875581953
+    m_Key: Lobby_01/FinalLevel1/01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4106268672
+    m_Key: Lobby_01/FirstDialog/00
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4336955392
+    m_Key: Lobby_01/SecondDialog/00
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4336955393
+    m_Key: Lobby_01/SecondDialog/01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4336955394
+    m_Key: Lobby_01/SecondDialog/02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4571836416
+    m_Key: Lobby_02/DialogueSample/00
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4571836417
+    m_Key: Lobby_02/DialogueSample/01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4571836418
+    m_Key: Lobby_02/DialogueSample/02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5049987072
+    m_Key: FinalLevel1_Max/FinalLevel/00
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5049987073
+    m_Key: FinalLevel1_Max/FinalLevel/01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5049987074
+    m_Key: FinalLevel1_Max/FinalLevel/02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5523943424
+    m_Key: Level_2_Max/FinalLevel/00
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5523943425
+    m_Key: Level_2_Max/FinalLevel/01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5523943426
+    m_Key: Level_2_Max/FinalLevel/02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6010482688
+    m_Key: Level_3_Max/FinalLevel/00
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6010482689
+    m_Key: Level_3_Max/FinalLevel/01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6010482690
+    m_Key: Level_3_Max/FinalLevel/02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6501216256
+    m_Key: Lobby_2_Max/DialogueSample/00
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6501216257
+    m_Key: Lobby_2_Max/DialogueSample/01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6501216258
+    m_Key: Lobby_2_Max/DialogueSample/02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6501216259
+    m_Key: Lobby_2_Max/DialogueSample/03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6501216260
+    m_Key: Lobby_2_Max/DialogueSample/04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6501216261
+    m_Key: Lobby_2_Max/DialogueSample/05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6501216262
+    m_Key: Lobby_2_Max/DialogueSample/06
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 3830602932395704320
+  references:
+    version: 2
+    RefIds:
+    - rid: 3830602932395704320
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1791026753760

@@ -1610,6 +1610,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FinalLevel
       objectReference: {fileID: 0}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _definition
+      value: 
+      objectReference: {fileID: 11400000, guid: 8756ee3dc2d9d1d4794c803e3e00997f, type: 2}
     - target: {fileID: 4642010679245938707, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 105.97906

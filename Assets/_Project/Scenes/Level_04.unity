@@ -17089,6 +17089,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 70bcb47406d644a40bd564ec5b3a742a, type: 2}
     - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
+      propertyPath: _definition
+      value: 
+      objectReference: {fileID: 11400000, guid: 0476448527633434c997a2e824f90599, type: 2}
+    - target: {fileID: 4222001605948369635, guid: 0c57df96f6e90b149a41c9367b29a7eb, type: 3}
       propertyPath: sentence.Array.size
       value: 4
       objectReference: {fileID: 0}

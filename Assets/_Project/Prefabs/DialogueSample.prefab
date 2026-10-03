@@ -63,6 +63,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -84,9 +86,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &1574764679027847775
 BoxCollider:
@@ -166,8 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e7fa8df4ad90d42b9b3e07295fdc1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deleteOnEnd: 1
-  sentence:
+  _definition: {fileID: 11400000, guid: 989fc4e8eacccbc40b96880ba9c1196c, type: 2}
+  _sentencesRu:
   - IsPluh: 1
     Sentence: "\u041F\u0440\u0438\u0432\u0435\u0442 \u044F \u041F\u043B\u044E\u0445."
   - IsPluh: 0
@@ -175,3 +179,5 @@ MonoBehaviour:
       \u043F\u0438\u0441\u0430\u043B \u0432\u0441\u044E \u043D\u043E\u0447\u044C."
   - IsPluh: 1
     Sentence: "\u041D\u0443 \u0434\u0430\u0432\u0430\u0439 \u043F\u043E\u043A\u0430."
+  _sentencesEn: []
+  _deleteOnEnd: 1

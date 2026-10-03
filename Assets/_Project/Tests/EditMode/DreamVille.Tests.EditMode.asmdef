@@ -20,6 +20,7 @@
         "DreamVille.UI",
         "UnityEngine.UI",
         "Unity.Localization",
+        "Unity.Localization.Editor",
         "DreamVille.Tests.Support",
         "UniTask",
         "Zenject",

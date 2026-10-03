@@ -12610,6 +12610,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8826465643194921373, guid: f4d12ee87e61f6948966be90e44d7593, type: 3}
+      propertyPath: _definition
+      value: 
+      objectReference: {fileID: 11400000, guid: eb3282c6f746f8448b7ceebb761782f9, type: 2}
+    - target: {fileID: 8826465643194921373, guid: f4d12ee87e61f6948966be90e44d7593, type: 3}
       propertyPath: sentence.Array.size
       value: 3
       objectReference: {fileID: 0}
