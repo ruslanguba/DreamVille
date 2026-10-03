@@ -4,204 +4,132 @@ A cozy third-person shooter built with Unity 6 (URP): pillows ricochet off walls
 runaway "nightmare" enemies, townsfolk NPCs react and talk back, and lobbies open the
 way into the next level.
 
-DreamVille started as a small team project (gameplay, art and level content are the
-team's; folder names such as `Scenes/Max` still carry that history). It is now being
-reworked, solo, into a portfolio piece: layered assemblies,
-a Zenject composition root, centralised persistence, data-driven scene identity, and an
-EditMode test suite. The gameplay content is the team's work; the architecture
-refactor documented below is the author's.
+DreamVille started as a small team project: gameplay, art and level content are the
+team's, and folder names such as `Scenes/Max` still carry that history. It is now being
+reworked, solo, into a portfolio piece: layered assemblies, a Zenject composition root,
+centralised persistence, data-driven scene identity and an EditMode test suite. The
+architecture refactor documented below is the author's.
 
 ## Screenshots
 
-<!-- TODO: gameplay GIF and screenshots -->
+_A gameplay GIF and screenshots are coming with the playable build._
 
 ## Highlights
 
-- **Composition root with a fixed set of entry points.** `ProjectContext` binds
-  app-lifetime services; `GameStart` installs only the intro bootstrap; one shared
+- **Composition root with fixed entry points.** `ProjectContext` holds app-lifetime
+  services; one shared
   [`GameplaySceneContext.prefab`](Assets/_Project/Prefabs/Bootstrap/GameplaySceneContext.prefab)
-  wires every gameplay scene; `MainMenuContext.prefab` wires the menu. Every service is
-  bound by interface (`Container.BindInterfacesTo<T>()`), so consumers depend on
-  `IScoreService`, `IPillowThrower`, `IEnemyRegistry` — never a concrete type. See
-  [ADR 0001](Docs/adr/0001-zenject-composition-root.md).
-- **Layered, acyclic assembly graph.** 14 runtime `.asmdef`s (`Configs`, `Core`,
-  `Persistence`, `Input`, `Audio`, `Scoring`, `SceneManagement`, `Gameplay`, `Dialogue`,
-  `Progression`, `App`, `UI`, `Presentation`, `Bootstrap`), every reference pointing from
-  a feature toward the infrastructure it needs, never back. 13 of the 14 set
-  `"autoReferenced": false` (`Bootstrap`, the composition root, is the one exception),
-  and only `Presentation` links the render pipeline.
-  See [ADR 0002](Docs/adr/0002-assembly-layering.md).
-- **A composed player.** `Character.prefab` carries a Zenject `GameObjectContext` whose
-  [`PlayerInstaller`](Assets/_Project/Scripts/Gameplay/Player/PlayerInstaller.cs)
-  constructs movement, gravity, jump, look, knockback and hit recovery as plain,
-  unit-tested classes; [`PlayerMotor`](Assets/_Project/Scripts/Gameplay/Player/PlayerMotor.cs)
-  moves the body exactly once per frame, and one allocation-free ground query feeds
-  both movement and respawn.
-- **One persistence seam.** Every save read/write goes through
+  wires all six gameplay scenes, `MainMenuContext.prefab` wires the menu. Services are
+  bound by interface, so consumers depend on `IScoreService` or `IEnemyRegistry`, never
+  a concrete type. [ADR 0001](Docs/adr/0001-zenject-composition-root.md).
+- **Layered, acyclic assembly graph.** 14 runtime `.asmdef`s; every reference points from
+  a feature toward the infrastructure it needs. 13 of 14 set `"autoReferenced": false`
+  (`Bootstrap`, the composition root, is the exception) and only `Presentation` links the
+  render pipeline. [ADR 0002](Docs/adr/0002-assembly-layering.md).
+- **A composed player.** `Character.prefab` carries a Zenject `GameObjectContext`;
+  [`PlayerInstaller`](Assets/_Project/Scripts/Gameplay/Player/PlayerInstaller.cs) builds
+  movement, gravity, jump, look, knockback and hit recovery as plain, unit-tested
+  classes, and [`PlayerMotor`](Assets/_Project/Scripts/Gameplay/Player/PlayerMotor.cs)
+  moves the body once per frame.
+- **One persistence seam, data-driven scene identity.** Every save goes through
   [`ISaveStorage`](Assets/_Project/Scripts/Persistence/ISaveStorage.cs) and two
-  repositories (`IProgressRepository`, `IAudioSettingsRepository`); key formats are
-  frozen in [`SaveKeys`](Assets/_Project/Scripts/Persistence/SaveKeys.cs) so nobody
-  spells out a `PlayerPrefs` key by hand. See
-  [ADR 0003](Docs/adr/0003-persistence-abstraction.md).
-- **Data-driven scene identity.** `SceneCatalog` and `LevelDefinition` assets are the
-  only place a scene name or level id is spelled out — no build indices, no scene-name
-  string literals in code. See [ADR 0004](Docs/adr/0004-scene-catalog-and-async.md).
+  repositories, with key formats frozen in
+  [`SaveKeys`](Assets/_Project/Scripts/Persistence/SaveKeys.cs).
+  `SceneCatalog` and `LevelDefinition` assets are the only place a scene name or level
+  id is spelled out. [ADR 0003](Docs/adr/0003-persistence-abstraction.md),
+  [ADR 0004](Docs/adr/0004-scene-catalog-and-async.md).
 - **One interaction channel, composable effects.** A bullet hit and a player touch both
-  become an `InteractionContext` handed to `IInteractable.OnInteract`; two thin hosts
-  (`Interactable` for repeatable shots, `Pickup` for a one-time touch with score and
-  tween) apply whatever `IInteractionEffect` components sit next to them. A lamp is
-  `Interactable` + `ToggleLightEffect` + `PlayAudioSourceEffect` — visible on
-  [`InteractableLamp.prefab`](Assets/_Project/Prefabs/InteractableLamp.prefab). See
+  become an `InteractionContext` for `IInteractable.OnInteract`. Two thin hosts
+  (`Interactable`, `Pickup`) run the `IInteractionEffect` components beside them: a lamp
+  is `Interactable` + `ToggleLightEffect` + `PlayAudioSourceEffect`, see
+  [`InteractableLamp.prefab`](Assets/_Project/Prefabs/InteractableLamp.prefab).
   [ADR 0005](Docs/adr/0005-interaction-effects-as-components.md).
-- **UniTask with cancellation, not coroutines, anywhere in Gameplay.** Bullet lifetime,
-  pillow recall, scene loading, the NPC queue, ambient dialogue, NPC shooters, floating
-  props and the enemy hideout's door tween all wait through
-  [`GameTime`](Assets/_Project/Scripts/Core/Async/GameTime.cs) on scaled time. Two
-  lifetime models cover every case: one-shot sequences die with their object
-  (`GetCancellationTokenOnDestroy`), endless ambient loops start in `Start`, stop in
-  `OnDisable` and restart in `OnEnable`.
+- **UniTask with cancellation instead of coroutines.** Gameplay waits through
+  [`GameTime`](Assets/_Project/Scripts/Core/Async/GameTime.cs) on scaled time, with two
+  lifetime models: one-shot sequences die with their object, endless loops follow
+  `OnEnable`/`OnDisable`. Coroutines survive in three UI files only, pinned by
   [`CoroutineGuardTests`](Assets/_Project/Tests/EditMode/Architecture/CoroutineGuardTests.cs)
-  pins a three-file UI allow-list that may only shrink. `NPCAnimationHandler.SetState`
-  became the single owner of an NPC's pose (one enum instead of five bools), and a
-  content fix to `PluhNPC.controller` removed an animation-switching bug (mood changes
-  no longer detour through Idle). See [ADR 0006](Docs/adr/0006-unitask-lifetimes.md).
-- **Dialogues as data, not scene text.** Each of the 15 conversations is a
-  [`DialogueDefinition`](Assets/_Project/Scripts/Dialogue/DialogueDefinition.cs) asset whose
-  lines point into one `Dialogues` string table (ru, en). The service accepts a run
-  synchronously (`TryStart`) and hands back its completion as a `UniTask`;
-  [`DialoguePresenter`](Assets/_Project/Scripts/UI/Dialogues/DialoguePresenter.cs) draws it
-  over a passive view. A checked-in snapshot of all 53 lines proves the move out of the
-  scenes lost no text, and it fixed a shipped bug where English dialogues never started.
-  See [ADR 0009](Docs/adr/0009-data-driven-dialogues.md).
-- **549 EditMode tests** (547 pass, 2 intentionally skipped), including a
-  scene-composition guard
-  ([`SceneCompositionTests`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs))
-  that opens every build scene and checks its installers and catalog references, and
-  prefab tests that pin the player's composition, so a mis-wired scene fails a test run
-  instead of a play session.
+  (the allow-list may only shrink). [ADR 0006](Docs/adr/0006-unitask-lifetimes.md).
+- **UI as MVP, dialogues as data.** The HUD, menus and dialogues are plain presenters
+  over passive views, tested with fakes and no scene
+  ([ADR 0007](Docs/adr/0007-hud-mvp.md), [ADR 0008](Docs/adr/0008-menus-mvp.md)). The 15
+  conversations are `DialogueDefinition` assets on one `Dialogues` string table (ru, en);
+  a checked-in snapshot of all 53 lines proves the move out of the scenes lost no text,
+  and the move fixed a shipped bug where English dialogues never started.
+  [ADR 0009](Docs/adr/0009-data-driven-dialogues.md).
+- **549 EditMode tests that guard the wiring.**
+  [`SceneCompositionTests`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs)
+  opens every build scene and checks its installers and catalog references, and prefab
+  tests pin the player's composition, so a mis-wired scene fails a test run instead of a
+  play session.
 
 ## Architecture
+
+The graph is read off the `.asmdef` files under
+[`Assets/_Project/Scripts`](Assets/_Project/Scripts) (project-to-project edges only).
 
 ```mermaid
 graph LR
     subgraph L0["Layer 0 — data and contracts"]
-        Configs[Configs]
-        Core[Core]
-        Persistence[Persistence]
+        Configs
+        Core
+        Persistence
     end
 
     subgraph L1["Layer 1 — infrastructure"]
-        Input[Input]
-        Audio[Audio]
-        Scoring[Scoring]
-        SceneManagement[SceneManagement]
+        Input
+        Audio
+        Scoring
+        SceneManagement
     end
 
     subgraph L2["Layer 2 — features"]
-        Gameplay[Gameplay]
-        Dialogue[Dialogue]
-        Progression[Progression]
+        Gameplay
+        Dialogue
+        Progression
     end
 
     subgraph L3["Layer 3 — app and presentation"]
-        App[App]
-        UI[UI]
-        Presentation[Presentation]
+        App
+        UI
+        Presentation
     end
 
     subgraph L4["Layer 4 — composition root"]
-        Bootstrap[Bootstrap]
+        Bootstrap
     end
 
-    Audio --> Configs
-    Audio --> Core
-    Audio --> Persistence
-    Scoring --> Configs
-    Scoring --> Persistence
-    SceneManagement --> Core
-    SceneManagement --> Configs
+    Audio --> Configs & Core & Persistence
+    Scoring --> Configs & Persistence
+    SceneManagement --> Configs & Core
     Dialogue --> Core
-    Gameplay --> Audio
-    Gameplay --> Configs
-    Gameplay --> Core
-    Gameplay --> Input
-    Gameplay --> Scoring
-    Progression --> Configs
-    Progression --> Core
-    Progression --> Dialogue
-    Progression --> Gameplay
-    Progression --> Persistence
-    Progression --> Scoring
-    App --> Configs
-    App --> Core
-    App --> Dialogue
-    App --> Input
-    App --> SceneManagement
-    UI --> App
-    UI --> Audio
-    UI --> Configs
-    UI --> Core
-    UI --> Dialogue
-    UI --> Gameplay
-    UI --> Input
-    UI --> Persistence
-    UI --> SceneManagement
-    UI --> Scoring
+    Gameplay --> Audio & Configs & Core & Input & Scoring
+    Progression --> Configs & Core & Dialogue & Gameplay & Persistence & Scoring
+    App --> Configs & Core & Dialogue & Input & SceneManagement
+    UI --> App & Audio & Configs & Core & Dialogue & Gameplay & Input & Persistence & SceneManagement & Scoring
     Presentation --> Core
-    Bootstrap --> App
-    Bootstrap --> Audio
-    Bootstrap --> Configs
-    Bootstrap --> Core
-    Bootstrap --> Dialogue
-    Bootstrap --> Gameplay
-    Bootstrap --> Input
-    Bootstrap --> Persistence
-    Bootstrap --> Progression
-    Bootstrap --> SceneManagement
-    Bootstrap --> Scoring
-    Bootstrap --> UI
+    Bootstrap --> App & Audio & Configs & Core & Dialogue & Gameplay & Input & Persistence & Progression & SceneManagement & Scoring & UI
 ```
 
-`ProjectContext` (installed by `ProjectInstaller`) holds services that outlive a scene:
-the scene catalog, audio config and service, the scene loader, and the three
-persistence bindings. Each of the six gameplay scenes carries the same
-`GameplaySceneContext.prefab` (`SceneServicesInstaller`, `CombatInstaller`,
-`ProgressionInstaller`, `UiInstaller`); the menu scene carries
-`MainMenuContext.prefab`. Runtime flow: `GameStart` plays the intro, then
+`ProjectContext` (`ProjectInstaller`) holds services that outlive a scene. Each gameplay
+scene carries the same `GameplaySceneContext.prefab` (`SceneServicesInstaller`,
+`CombatInstaller`, `ProgressionInstaller`, `UiInstaller`); the menu scene carries
+`MainMenuContext.prefab`. Runtime flow: the `GameStart` scene plays the intro, then
 `GameBootstrap` loads the scene `SceneCatalog` names as the main menu; a level button
-raises an event, `LevelSelectPresenter` takes its `LevelDefinition` and asks `ISceneLoader` to load
-it by scene name.
-
-Full decision records: [ADR 0001 — Zenject composition root](Docs/adr/0001-zenject-composition-root.md),
-[ADR 0002 — assembly layering](Docs/adr/0002-assembly-layering.md),
-[ADR 0003 — persistence abstraction](Docs/adr/0003-persistence-abstraction.md),
-[ADR 0004 — scene catalog and UniTask for gameplay async](Docs/adr/0004-scene-catalog-and-async.md),
-[ADR 0005 — interaction effects as sibling components](Docs/adr/0005-interaction-effects-as-components.md),
-[ADR 0006 — UniTask lifetimes for coroutines](Docs/adr/0006-unitask-lifetimes.md),
-[ADR 0007 — HUD as MVP](Docs/adr/0007-hud-mvp.md),
-[ADR 0008 — menus as MVP](Docs/adr/0008-menus-mvp.md),
-[ADR 0009 — data-driven dialogues](Docs/adr/0009-data-driven-dialogues.md).
+makes `LevelSelectPresenter` ask `ISceneLoader` to load its `LevelDefinition`'s scene.
 
 ## Where to look first
 
-- [`Assets/_Project/Scripts/Bootstrap/ProjectInstaller.cs`](Assets/_Project/Scripts/Bootstrap/ProjectInstaller.cs) — the app-lifetime composition root: every project-scope interface binding in one file.
-- [`Assets/_Project/Prefabs/Bootstrap/GameplaySceneContext.prefab`](Assets/_Project/Prefabs/Bootstrap/GameplaySceneContext.prefab) — the one installer set shared by all six gameplay scenes.
-- [`Assets/_Project/Scripts/SceneManagement/SceneLoader.cs`](Assets/_Project/Scripts/SceneManagement/SceneLoader.cs) — UniTask scene loading with a concurrent-transition guard and progress events.
-- [`Assets/_Project/Scripts/Progression/LevelDirector.cs`](Assets/_Project/Scripts/Progression/LevelDirector.cs) — level completion as a plain class: no MonoBehaviour, no `Update` polling.
-- [`Assets/_Project/Scripts/Gameplay/Enemies/States/EnemyStateMachine.cs`](Assets/_Project/Scripts/Gameplay/Enemies/States/EnemyStateMachine.cs) — guarded enemy state machine; [`Enemy.cs`](Assets/_Project/Scripts/Gameplay/Enemies/Enemy.cs) is the thin MonoBehaviour context its seven states see through `IEnemyContext`, and `EnemyConfig` assets hold the archetype tuning.
-- [`Assets/_Project/Scripts/Gameplay/Player/PlayerInstaller.cs`](Assets/_Project/Scripts/Gameplay/Player/PlayerInstaller.cs) — the player prefab's own composition root (`GameObjectContext`); [`PlayerMotor.cs`](Assets/_Project/Scripts/Gameplay/Player/PlayerMotor.cs) shows the fixed per-frame order.
-- [`Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowRack.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowRack.cs) — the throw / recall / freeze rules of the core mechanic as a plain, unit-tested class; [`PillowLauncher.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowLauncher.cs) is the thin MonoBehaviour shell with a cancellable UniTask recall loop, and [`PillowInventory.cs`](Assets/_Project/Scripts/Progression/Pillows/PillowInventory.cs) decides how many pillows a level allows.
-- [`Assets/_Project/Scripts/Gameplay/Weapons/Aiming/BouncePath.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Aiming/BouncePath.cs) — the ricochet preview as pure math behind an `ISphereCaster` seam; the gun and the preview read one `ShotRay`, so the line ends exactly where the bullet dies.
-- [`Assets/_Project/Scripts/Gameplay/Interactables/Interactable.cs`](Assets/_Project/Scripts/Gameplay/Interactables/Interactable.cs) — the shot-reacting host of the interaction channel; a shot and a touch both arrive as one `InteractionContext`.
-- [`Assets/_Project/Scripts/Gameplay/Interactables/EffectChain.cs`](Assets/_Project/Scripts/Gameplay/Interactables/EffectChain.cs) — the plain class that turns sibling `IInteractionEffect` components into one ordered, fault-isolated call.
-- [`Assets/_Project/Scripts/UI/Hud/HudPresenter.cs`](Assets/_Project/Scripts/UI/Hud/HudPresenter.cs) — the HUD as MVP: a plain presenter over five one-method view interfaces, tested with fakes and no scene.
-- [`Assets/_Project/Scripts/UI/Menus/LevelSelectPresenter.cs`](Assets/_Project/Scripts/UI/Menus/LevelSelectPresenter.cs) — level select from saved progress over a passive view; [`PauseMenuPresenter.cs`](Assets/_Project/Scripts/UI/Menus/PauseMenuPresenter.cs) draws the rules that [`InGameMenuController`](Assets/_Project/Scripts/App/InGameMenuController.cs) keeps, and [`MenuWiringTests`](Assets/_Project/Tests/EditMode/UI/MenuWiringTests.cs) guards the Inspector-wiring rule.
-- [`Assets/_Project/Scripts/UI/Dialogues/DialoguePresenter.cs`](Assets/_Project/Scripts/UI/Dialogues/DialoguePresenter.cs) — the third MVP surface: dialogue events to view calls, no rules; [`DialogueService.cs`](Assets/_Project/Scripts/Dialogue/DialogueService.cs) is the plain class behind it, with a synchronous `TryStart`, an awaited completion, and text resolved once per run through the `ILocalizedTextProvider` seam.
-- [`Assets/_Project/Tests/EditMode/Dialogue/DialogueContentTests.cs`](Assets/_Project/Tests/EditMode/Dialogue/DialogueContentTests.cs) — compares every dialogue definition with the checked-in [`DialogueSnapshot.tsv`](Assets/_Project/Tests/EditMode/Dialogue/DialogueSnapshot.tsv) (53 lines: speaker, Russian, English), so a lost or changed line fails a test.
-- [`Assets/_Project/Scripts/Progression/ScoringCoordinator.cs`](Assets/_Project/Scripts/Progression/ScoringCoordinator.cs) — the scoring rules (kill to score, score to stars, cleared level to best score) in one UI-free class.
-- [`Assets/_Project/Scripts/Persistence/ProgressRepository.cs`](Assets/_Project/Scripts/Persistence/ProgressRepository.cs) — the only place stars and completion are read from or written to a save.
-- [`Assets/_Project/Scripts/Audio/AudioService.cs`](Assets/_Project/Scripts/Audio/AudioService.cs) — saved volume plus per-scene music, driven by the scene catalog.
-- [`Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs) — opens every build scene and asserts its composition against the catalog.
+- [`Bootstrap/ProjectInstaller.cs`](Assets/_Project/Scripts/Bootstrap/ProjectInstaller.cs) — the app-lifetime composition root: every project-scope binding in one file. [`GameplaySceneContext.prefab`](Assets/_Project/Prefabs/Bootstrap/GameplaySceneContext.prefab) is the installer set shared by the six gameplay scenes.
+- [`Gameplay/Enemies/States/EnemyStateMachine.cs`](Assets/_Project/Scripts/Gameplay/Enemies/States/EnemyStateMachine.cs) — guarded enemy state machine; [`Enemy.cs`](Assets/_Project/Scripts/Gameplay/Enemies/Enemy.cs) is the thin MonoBehaviour its seven states see through `IEnemyContext`, and `EnemyConfig` assets hold the archetype tuning.
+- [`Gameplay/Player/PlayerInstaller.cs`](Assets/_Project/Scripts/Gameplay/Player/PlayerInstaller.cs) — the player prefab's own composition root; [`PlayerMotor.cs`](Assets/_Project/Scripts/Gameplay/Player/PlayerMotor.cs) shows the fixed per-frame order.
+- [`Gameplay/Weapons/Pillow/PillowRack.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowRack.cs) — the throw / recall / freeze rules of the core mechanic as a plain, unit-tested class; [`PillowLauncher.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowLauncher.cs) is the thin shell with a cancellable UniTask recall loop.
+- [`Gameplay/Weapons/Aiming/BouncePath.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Aiming/BouncePath.cs) — the ricochet preview as pure math behind an `ISphereCaster` seam; the gun and the preview read one `ShotRay`, so the line ends where the bullet dies.
+- [`Gameplay/Interactables/EffectChain.cs`](Assets/_Project/Scripts/Gameplay/Interactables/EffectChain.cs) — turns sibling `IInteractionEffect` components into one ordered, fault-isolated call; [`Interactable.cs`](Assets/_Project/Scripts/Gameplay/Interactables/Interactable.cs) is its host.
+- [`Progression/LevelDirector.cs`](Assets/_Project/Scripts/Progression/LevelDirector.cs) — level completion as a plain class: no MonoBehaviour, no `Update` polling.
+- [`UI/Hud/HudPresenter.cs`](Assets/_Project/Scripts/UI/Hud/HudPresenter.cs) — the HUD as MVP: a plain presenter over small view interfaces, tested with fakes. [`DialoguePresenter.cs`](Assets/_Project/Scripts/UI/Dialogues/DialoguePresenter.cs) and [`LevelSelectPresenter.cs`](Assets/_Project/Scripts/UI/Menus/LevelSelectPresenter.cs) follow the same pattern.
+- [`Tests/EditMode/Dialogue/DialogueContentTests.cs`](Assets/_Project/Tests/EditMode/Dialogue/DialogueContentTests.cs) — compares every dialogue definition with the checked-in [`DialogueSnapshot.tsv`](Assets/_Project/Tests/EditMode/Dialogue/DialogueSnapshot.tsv), so a lost or changed line fails a test.
+- [`Tests/EditMode/Composition/SceneCompositionTests.cs`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs) — opens every build scene and asserts its composition against the catalog.
 
 ## Tech stack
 
@@ -213,23 +141,20 @@ Full decision records: [ADR 0001 — Zenject composition root](Docs/adr/0001-zen
 | Input | Unity Input System |
 | Camera | Cinemachine 3 |
 | Localization | Unity Localization (English, Russian) |
+| Tests | NUnit via Unity Test Framework, EditMode |
 
 ## Project layout
 
 ```
 Assets/_Project/
-  Scripts/        one assembly per module: App, Audio, Bootstrap, Configs, Core,
-                   Dialogue, Gameplay, Input, Persistence, Presentation,
-                   Progression, SceneManagement, Scoring, UI
-  Scenes/         GameStart -> MainMenu -> Lobby_01, Level_01, Level_02, Lobby_02,
-                   Level_03, Level_04 (Scenes/Max/* are excluded work-in-progress)
-  Prefabs/        Bootstrap (SceneContext prefabs), gameplay and UI prefabs
-  Settings/       ScriptableObject configs: Levels/ (SceneCatalog, LevelDefinition),
-                   Dialogues/ (DialogueDefinition), Score/, Audio/, Bullet/,
-                   Movement/, Rendering/
-  Characters/     player, skins, enemies, NPCs
-  Art/ Audio/ Animations/ Environment/ Localization/
-  Tests/EditMode/ NUnit tests, one folder per module, fakes in Tests/EditMode/Fakes
+  Scripts/     one assembly per module (14, see the diagram above)
+  Scenes/      GameStart, MainMenu, Lobby_01, Level_01, Level_02, Lobby_02,
+               Level_03, Level_04 (Scenes/Max/* are excluded work-in-progress)
+  Prefabs/     Bootstrap/ (SceneContext prefabs), gameplay and UI prefabs
+  Settings/    ScriptableObject configs: Levels, Dialogues, Score, Audio, ...
+  Tests/       EditMode/ NUnit tests, one folder per module
+  Art/ Audio/ Animations/ Characters/ Environment/ Localization/
+Docs/          ADRs and the documentation index
 ```
 
 ## Running
@@ -240,45 +165,31 @@ press Play.
 
 ## Tests
 
-Window → General → Test Runner → EditMode → Run All. 549 tests (547 pass, 2
+Window → General → Test Runner → EditMode → Run All. 549 EditMode tests (547 pass, 2
 intentionally skipped). PlayMode tests and CI are not set up yet.
 
 ## Status and roadmap
 
-**Done:** repository hygiene (dead code, `_Legacy` and unused packages removed);
-critical gameplay fixes (bullet pool, enemy death, saved volume, dialogue re-entrancy,
-pillow throw/recall); layered, acyclic assemblies with `autoReferenced: false`;
-services bound by interface; persistence behind `ISaveStorage`/repositories; data-driven
-scene and level identity (`SceneCatalog`/`LevelDefinition`); an `IAudioService` behind
-the composition root; one enemy state machine driven by `EnemyConfig` assets, with
-pooled projectiles, in place of four separate enemy scripts; a player composed through
-a `GameObjectContext` with its damage vignette split into a `Presentation` assembly;
-weapons behind one `IWeapon`/`IAimSource` with a timestamp cooldown, a ricochet preview
-that matches the bullet, pillow rules in a plain `PillowRack`, and pillow unlocks
-persisted per save and capped per level; a single interaction channel
-(`IInteractable.OnInteract(in InteractionContext)`) replacing eleven hand-rolled
-"something happens when it is hit or touched" classes with two hosts (`Interactable`,
-`Pickup`) and a small vocabulary of sibling `IInteractionEffect` components; the lobby
-scenario as a `LobbyDirector` over composable `KillGroupObjective`s and `Door`s, with
-every level's cast (`LevelActors`) required at composition; coroutines replaced by
-UniTask everywhere in Gameplay (NPC queue, ambient dialogue, NPC shooters, floating
-props, the enemy hideout's door tween) behind two lifetime models — one-shot on the
-destroy token, endless loops bound to `OnEnable`/`OnDisable` — plus the `PluhNPC`
-animation-switching fix; the gameplay HUD as MVP (passive views behind interfaces,
-`HudPresenter` in `UI`, scoring rules in Progression's `ScoringCoordinator`, popups on
-UniTask with "newest show owns the timer"); the menus and pause as MVP (5.2: passive
-views, `MainMenuPresenter`, `LevelSelectPresenter`, `PauseMenuPresenter`, an
-Inspector-wiring guard test, remembered language, Lobby 2 completable through its
-portal); data-driven dialogues (5.3: `DialogueDefinition` assets on a `Dialogues`
-string table with English fallback, a `TryStart` service with UniTask completion,
-`DialoguePresenter` over a passive view, a snapshot test pinning all 53 lines, and the
-fix for English dialogues that never started); 549 EditMode tests; nine ADRs.
+**Done**
 
-**Next:** phase 5 continues — 5.4 micro-scripts (`ProximityHint`, `PlayerProximityToggle`,
-`UiFader`) that retire the last three UI coroutines; then CI with game-ci and a
-playable build.
+- **Hygiene and fixes.** Dead code, `_Legacy` and unused packages removed; bullet pool,
+  enemy death, saved volume, dialogue re-entrancy and pillow throw/recall fixed.
+- **Architecture.** Layered assemblies, services bound by interface, persistence behind
+  `ISaveStorage`, `SceneCatalog`/`LevelDefinition`, `IAudioService`, a scene-composition
+  test (ADRs 0001-0004).
+- **Gameplay.** One enemy state machine driven by `EnemyConfig` assets with pooled
+  projectiles (replacing four enemy scripts); a composed player; weapons behind
+  `IWeapon`/`IAimSource` with a ricochet preview that matches the bullet; `PillowRack`
+  and per-level pillow unlocks; one interaction channel (replacing eleven hand-rolled
+  classes); `LobbyDirector` over composable `KillGroupObjective`s and `Door`s; coroutines
+  moved to UniTask (ADRs 0005, 0006).
+- **UI.** HUD, menus and pause, and dialogues as MVP; remembered language; Lobby 2
+  completable through its portal (ADRs 0007-0009).
+
+**Next:** 5.4 micro-scripts (`ProximityHint`, `PlayerProximityToggle`, `UiFader`) that
+retire the last three UI coroutines; then CI with game-ci and a playable build.
 
 ## Documentation
 
-[`Docs/README.md`](Docs/README.md) indexes everything under `Docs/`. Architecture
-decisions: [`Docs/adr/`](Docs/adr/README.md).
+[`Docs/README.md`](Docs/README.md) indexes everything under `Docs/`. The nine
+architecture decision records are listed in [`Docs/adr/`](Docs/adr/README.md).
