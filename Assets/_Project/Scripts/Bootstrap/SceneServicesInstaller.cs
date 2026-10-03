@@ -27,7 +27,6 @@ namespace DreamVille.Bootstrap
 
             Container.BindInterfacesTo<UnityLocalizedTextProvider>().AsSingle();
             Container.BindInterfacesTo<DialogueService>().AsSingle();
-            Container.Bind<DialogueManager>().FromComponentInHierarchy().AsSingle();
 
             Container.BindInterfacesTo<PauseService>().AsSingle();
             Container.BindInterfacesTo<GameFlowService>().AsSingle();

@@ -1,13 +1,17 @@
+using System;
 using TMPro;
+using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
-using UnityEngine;
-using Zenject;
 
-namespace DreamVille.Dialogue
+namespace DreamVille.UI.Dialogues
 {
-    /// <summary>Displays the currently shown dialogue sentence and speaker icon.</summary>
-    public class DialogueUI : MonoBehaviour
+    /// <summary>
+    /// The dialogue canvas: a panel with a speaker icon and a text cloud on each side. Passive: shows what
+    /// <see cref="DialoguePresenter"/> asks for and raises <see cref="NextRequested"/> for the Next button,
+    /// bound in code.
+    /// </summary>
+    public sealed class DialogueView : MonoBehaviour, IDialogueView
     {
         [FormerlySerializedAs("panel")]
         [SerializeField] private Image _panel;
@@ -30,6 +34,8 @@ namespace DreamVille.Dialogue
         [FormerlySerializedAs("sizeOffset")]
         [SerializeField] private float _sizeOffset;
 
+        [SerializeField] private Button _nextButton;
+
         private float _positionOffset;
 
         private Vector2 _originalSize;
@@ -37,16 +43,13 @@ namespace DreamVille.Dialogue
         private Vector3 _leftOriginalPos;
         private Vector3 _rightOriginalPos;
 
-        private IDialogueService _dialogue;
-
-        [Inject]
-        public void Construct(IDialogueService dialogue)
-        {
-            _dialogue = dialogue;
-        }
+        public event Action NextRequested;
 
         private void Awake()
         {
+            if (_nextButton == null)
+                Debug.LogError($"[{nameof(DialogueView)}] {nameof(_nextButton)} is not assigned.", this);
+
             _originalSize = _leftImage.rectTransform.sizeDelta;
 
             _leftOriginalPos = _leftImage.rectTransform.localPosition;
@@ -55,14 +58,31 @@ namespace DreamVille.Dialogue
             _panel.gameObject.SetActive(false);
         }
 
-        public void SetLeftImage(Sprite sprite)
+        private void OnEnable()
         {
-            _leftImage.sprite = sprite;
+            if (_nextButton != null)
+                _nextButton.onClick.AddListener(OnNextClicked);
         }
 
-        public void ShowNextSentence(bool isPluh, string text)
+        private void OnDisable()
         {
-            if (isPluh)
+            if (_nextButton != null)
+                _nextButton.onClick.RemoveListener(OnNextClicked);
+        }
+
+        public void Show()
+        {
+            _panel.gameObject.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            _panel.gameObject.SetActive(false);
+        }
+
+        public void ShowLine(bool speakerOnRight, string text)
+        {
+            if (speakerOnRight)
             {
                 _rightText.text = text;
                 _leftTextBackground.gameObject.SetActive(false);
@@ -74,7 +94,12 @@ namespace DreamVille.Dialogue
                 _leftTextBackground.gameObject.SetActive(true);
                 _rightTextBackground.gameObject.SetActive(false);
             }
-            ChangeIconsSize(isPluh);
+            ChangeIconsSize(speakerOnRight);
+        }
+
+        private void OnNextClicked()
+        {
+            NextRequested?.Invoke();
         }
 
         private void ChangeIconsSize(bool isRight)
@@ -96,27 +121,6 @@ namespace DreamVille.Dialogue
             newPos.y += _positionOffset;
             newPos.x += isRight ? -_positionOffset : _positionOffset;
             selected.localPosition = newPos;
-        }
-
-        public void OnNextButtonClick()
-        {
-            if (_dialogue == null)
-            {
-                Debug.LogError($"[{nameof(DialogueUI)}] {nameof(IDialogueService)} was not injected; create this prefab through the DI container.", this);
-                return;
-            }
-
-            _dialogue.ShowNext();
-        }
-
-        public void ShowPanel()
-        {
-            _panel.gameObject.SetActive(true);
-        }
-
-        public void HidePanel()
-        {
-            _panel.gameObject.SetActive(false);
         }
     }
 }

@@ -6,6 +6,7 @@ using NUnit.Framework;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using Zenject;
 
@@ -168,7 +169,6 @@ namespace DreamVille.Tests.EditMode.Composition
             Assert.That(FindAll<PlayerInputSwitch>(), Is.Not.Empty, "PlayerInputSwitch is missing.");
             Assert.That(FindAll<PillowLauncher>(), Is.Not.Empty, "PillowLauncher is missing.");
             Assert.That(FindAll<EnemyRegistry>(), Is.Not.Empty, "EnemyRegistry is missing.");
-            Assert.That(FindAll<DialogueManager>(), Is.Not.Empty, "DialogueManager is missing.");
             Assert.That(FindAll<GameInput>(), Is.Not.Empty, "GameInput is missing.");
             Assert.That(FindAll<PauseMenuView>(), Has.Length.EqualTo(1), "Expected exactly one PauseMenuView.");
             Assert.That(FindAll<AudioSettingsView>(), Has.Length.EqualTo(1), "Expected exactly one AudioSettingsView (the pause menu's).");
@@ -187,6 +187,26 @@ namespace DreamVille.Tests.EditMode.Composition
             AssertPrefabFieldAssigned(FindSingle<CombatInstaller>(), "_enemyProjectilePrefab");
             AssertPrefabFieldAssigned(FindSingle<ProgressionInstaller>(), "_catalog");
             AssertPrefabFieldAssigned(FindSingle<ProgressionInstaller>(), "_scoreRules");
+        }
+
+        [TestCaseSource(nameof(GameplayScenePaths))]
+        public void GameplayScene_UiInstallerHasDialoguePrefab(string scenePath)
+        {
+            OpenScene(scenePath);
+
+            AssertPrefabFieldAssigned(FindSingle<UiInstaller>(), "_dialoguePrefab");
+        }
+
+        /// <summary>
+        /// The dialogue canvas no longer creates an EventSystem at runtime (spec 11 B3), so every gameplay scene
+        /// must bring exactly one for the Next button and the pause menu to receive clicks.
+        /// </summary>
+        [TestCaseSource(nameof(GameplayScenePaths))]
+        public void GameplayScene_HasExactlyOneEventSystem(string scenePath)
+        {
+            OpenScene(scenePath);
+
+            Assert.That(FindAll<EventSystem>(), Has.Length.EqualTo(1), $"{scenePath} must have exactly one EventSystem.");
         }
 
         [Test]

@@ -105,6 +105,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -243,6 +244,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -669,19 +671,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4756924293575774591}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6633340737771868357}
-        m_TargetAssemblyTypeName: DialogueUI, Assembly-CSharp
-        m_MethodName: OnNextButtonClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &720147094035564605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1031,11 +1021,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d21d7ae5bc20a2d42b95f4efc7f51e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panel: {fileID: 1978274080740914702}
-  leftImage: {fileID: 6849890887194482039}
-  rightImage: {fileID: 243967883789979779}
-  leftTextBackground: {fileID: 7179397890288264309}
-  rightTextBackground: {fileID: 4559214880322041279}
-  leftText: {fileID: 3582462236955042230}
-  rightText: {fileID: 2310727161427458274}
-  sizeOffset: 100
+  _panel: {fileID: 1978274080740914702}
+  _leftImage: {fileID: 6849890887194482039}
+  _rightImage: {fileID: 243967883789979779}
+  _leftTextBackground: {fileID: 7179397890288264309}
+  _rightTextBackground: {fileID: 4559214880322041279}
+  _leftText: {fileID: 3582462236955042230}
+  _rightText: {fileID: 2310727161427458274}
+  _sizeOffset: 100
+  _nextButton: {fileID: 1249239220337996737}

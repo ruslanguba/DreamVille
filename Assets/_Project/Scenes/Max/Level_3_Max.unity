@@ -2311,6 +2311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uiPrefab: {fileID: 459705769865869607, guid: 61c362074c83cd140a9ed145f44edafd, type: 3}
+  _dialoguePrefab: {fileID: 6633340737771868357, guid: b2572f3218ff5e64a8e9e76a451405a6, type: 3}
 --- !u!114 &664740366
 MonoBehaviour:
   m_ObjectHideFlags: 0

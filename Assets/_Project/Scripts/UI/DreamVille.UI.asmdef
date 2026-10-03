@@ -6,6 +6,7 @@
         "DreamVille.Audio",
         "DreamVille.Configs",
         "DreamVille.Core",
+        "DreamVille.Dialogue",
         "DreamVille.Gameplay",
         "DreamVille.Input",
         "DreamVille.Persistence",
