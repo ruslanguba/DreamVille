@@ -34,7 +34,7 @@ namespace DreamVille.Dialogue
 
         public bool TryStart(DialogueDefinition dialogue, CancellationToken cancellationToken, out UniTask completion)
         {
-            if (IsActive || dialogue == null || dialogue.Lines.Count == 0)
+            if (IsActive || dialogue == null || dialogue.Lines.Count == 0 || cancellationToken.IsCancellationRequested)
             {
                 completion = default;
                 return false;

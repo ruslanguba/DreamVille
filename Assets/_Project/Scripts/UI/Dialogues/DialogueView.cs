@@ -77,6 +77,10 @@ namespace DreamVille.UI.Dialogues
 
         public void Hide()
         {
+            // A dialogue cut short by unloading the scene ends after the canvas may already be destroyed.
+            if (_panel == null)
+                return;
+
             _panel.gameObject.SetActive(false);
         }
 

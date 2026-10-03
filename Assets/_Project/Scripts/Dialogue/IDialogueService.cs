@@ -16,6 +16,11 @@ namespace DreamVille.Dialogue
         /// last line was dismissed and ActiveChanged(false) was raised; it is cancelled (OperationCanceledException) when
         /// <paramref name="cancellationToken"/> fires, in which case the service also ends the run and raises ActiveChanged(false).
         /// </summary>
+        /// <remarks>
+        /// An already cancelled token is rejected like a running conversation. A text that cannot be resolved is logged
+        /// and the run ends with no line shown; <paramref name="completion"/> then finishes normally, so whatever waits
+        /// for the end of the conversation (a portal, a reward) still happens.
+        /// </remarks>
         bool TryStart(DialogueDefinition dialogue, CancellationToken cancellationToken, out UniTask completion);
 
         /// <summary>Dismisses the current line; ignored when idle or while texts are still resolving.</summary>

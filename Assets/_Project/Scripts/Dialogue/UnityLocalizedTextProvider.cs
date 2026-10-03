@@ -11,6 +11,7 @@ namespace DreamVille.Dialogue
     {
         public async UniTask<string> GetTextAsync(LocalizedString text, CancellationToken cancellationToken)
         {
+            // Localization releases this handle itself a frame after it completes: read it here, never cache or release it.
             AsyncOperationHandle<string> handle = text.GetLocalizedStringAsync();
 
             // No WaitForCompletion: it blocks the main thread and is not available on WebGL.

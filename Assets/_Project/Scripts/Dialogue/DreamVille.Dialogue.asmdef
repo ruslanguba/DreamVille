@@ -8,8 +8,6 @@
         "Unity.InputSystem",
         "Unity.Localization",
         "Unity.ResourceManager",
-        "Unity.TextMeshPro",
-        "UnityEngine.UI",
         "Zenject"
     ],
     "includePlatforms": [],

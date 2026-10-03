@@ -233,15 +233,57 @@ namespace DreamVille.Tests.EditMode.Dialogue
         }
 
         [Test]
-        public void TryStart_WithCancelledToken_EndsRunWithoutShowingLines()
+        public void TryStart_WithCancelledToken_ReturnsFalseAndStaysIdle()
         {
             _cancellation.Cancel();
 
-            bool started = _service.TryStart(Define(Line("first")), _cancellation.Token, out UniTask completion);
-            RecordOutcome(completion);
+            bool started = _service.TryStart(Define(Line("first")), _cancellation.Token, out UniTask _);
 
-            Assert.That(started, Is.True);
-            Assert.That(_events, Is.EqualTo(new[] { "ActiveChanged:True", "ActiveChanged:False", "Canceled" }));
+            Assert.That(started, Is.False);
+            Assert.That(_service.IsActive, Is.False);
+            Assert.That(_events, Is.Empty);
+        }
+
+        [Test]
+        public void LineShownListener_DismissingItsLine_ShowsTheNextOne()
+        {
+            bool dismissed = false;
+            _service.LineShown += line =>
+            {
+                if (dismissed)
+                    return;
+
+                dismissed = true;
+                _service.ShowNext();
+            };
+
+            Start(Line("first"), Line("second"));
+
+            Assert.That(_shown.Select(line => line.Text), Is.EqualTo(new[] { TextOf("first"), TextOf("second") }));
+            Assert.That(_service.IsActive, Is.True);
+        }
+
+        [Test]
+        public void ActiveChangedFalseListener_StartingTheNextRun_IsAccepted()
+        {
+            DialogueDefinition next = Define(Line("next"));
+            bool nextStarted = false;
+            _service.ActiveChanged += isActive =>
+            {
+                if (!isActive && !nextStarted)
+                    nextStarted = _service.TryStart(next, _cancellation.Token, out UniTask _);
+            };
+            RecordOutcome(Start(Line("first")));
+
+            _service.ShowNext();
+
+            Assert.That(nextStarted, Is.True);
+            Assert.That(_service.IsActive, Is.True);
+            Assert.That(_events, Is.EqualTo(new[]
+            {
+                "ActiveChanged:True", $"Line:{TextOf("first")}", "ActiveChanged:False",
+                "ActiveChanged:True", $"Line:{TextOf("next")}", "Completed"
+            }));
         }
 
         [Test]

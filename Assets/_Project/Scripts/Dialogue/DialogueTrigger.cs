@@ -86,11 +86,12 @@ namespace DreamVille.Dialogue
             if (!_service.TryStart(_definition, destroyToken, out UniTask completion))
                 return;
 
+            // A throwing listener must not cost the conversation its end: the portal and rewards wait for DialogueEnded.
+            Raise(DialogueStarted);
+
             try
             {
-                DialogueStarted?.Invoke();
                 await completion;
-                DialogueEnded?.Invoke();
             }
             catch (OperationCanceledException)
             {
@@ -99,12 +100,26 @@ namespace DreamVille.Dialogue
             }
             catch (Exception exception)
             {
+                // A line listener failed; the service has still ended the run.
                 Debug.LogException(exception, this);
-                return;
             }
+
+            Raise(DialogueEnded);
 
             if (_deleteOnEnd)
                 Destroy(this);
+        }
+
+        private void Raise(Action dialogueEvent)
+        {
+            try
+            {
+                dialogueEvent?.Invoke();
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception, this);
+            }
         }
     }
 }

@@ -26,6 +26,10 @@ namespace DreamVille.Gameplay.Player
 
         private void SetEnabled(bool value)
         {
+            // Pause and dialogue rules may still call in while the scene is being unloaded.
+            if (_input == null || _axisController == null)
+                return;
+
             _input.enabled = value;
             _axisController.enabled = value;
         }

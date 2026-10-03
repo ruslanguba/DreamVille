@@ -53,7 +53,13 @@ namespace DreamVille.Tests.EditMode.UI
                 for (int i = 0; i < button.onClick.GetPersistentEventCount(); i++)
                 {
                     Object target = button.onClick.GetPersistentTarget(i);
-                    string targetNamespace = target != null ? target.GetType().Namespace ?? string.Empty : string.Empty;
+                    if (target == null)
+                    {
+                        offenders.Add($"{button.name} -> missing target ({button.onClick.GetPersistentMethodName(i)})");
+                        continue;
+                    }
+
+                    string targetNamespace = target.GetType().Namespace ?? string.Empty;
                     if (targetNamespace.StartsWith("DreamVille"))
                         offenders.Add($"{button.name} -> {target.GetType().Name}.{button.onClick.GetPersistentMethodName(i)}");
                 }
