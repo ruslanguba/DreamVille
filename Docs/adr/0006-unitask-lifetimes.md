@@ -20,7 +20,7 @@ UniTask; this record covers the rest of the Gameplay assembly and states the lif
 rule those five cases only implied.
 
 Full inventory, GUID scan and migration steps: spec
-[`08-coroutines-to-unitask.md`](../../.claude/refactor/specs/08-coroutines-to-unitask.md).
+`08-coroutines-to-unitask.md` (local planning notes, not committed).
 
 ## Decision
 
@@ -160,5 +160,5 @@ switching" bug) and is verified by
 Related: [ADR 0004 — scene catalog and UniTask for gameplay async](0004-scene-catalog-and-async.md)
 (bullet lifetime, pillow recall, one NPC reaction and scene loading — the UniTask
 patterns this record extends to the rest of Gameplay), spec
-[`08-coroutines-to-unitask.md`](../../.claude/refactor/specs/08-coroutines-to-unitask.md)
+`08-coroutines-to-unitask.md` (local planning notes, not committed)
 (the full migration, GUID scan and test list).

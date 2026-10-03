@@ -19,7 +19,7 @@ persistent calls on Inspector buttons.
 
 [ADR 0007](0007-hud-mvp.md) had already settled the pattern for the HUD. This step applies it to
 the menus. Full design, GUID scan, smoke plan and test list: spec
-[`10-menus-and-pause.md`](../../.claude/refactor/specs/10-menus-and-pause.md).
+`10-menus-and-pause.md` (local planning notes, not committed).
 
 ## Decision
 
@@ -43,8 +43,8 @@ Inspector on purpose: panel flow is a designer concern and the Inspector shows i
 [`MenuWiringTests`](../../Assets/_Project/Tests/EditMode/UI/MenuWiringTests.cs) guards the rule.
 It fails when a persistent call does not resolve to a method, when a button has no action, when
 the level-select view does not list every catalog level in order, or when a pause-menu prefab
-reference is unassigned. The rule is written into
-[`04_CONVENTIONS.md`](../../.claude/refactor/04_CONVENTIONS.md) section 4.
+reference is unassigned. The rule is also part of the project's coding conventions (section 4 of the local
+conventions file, not committed).
 
 **App keeps the rules, UI draws.**
 [`InGameMenuController`](../../Assets/_Project/Scripts/App/InGameMenuController.cs) stays in

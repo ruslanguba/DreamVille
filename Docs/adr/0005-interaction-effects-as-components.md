@@ -132,6 +132,5 @@ DI.
   `ChangeSkinEffect`'s player lookup).
 
 Related: [ADR 0002 — assembly layering](0002-assembly-layering.md) (why the namespace
-back-reference does not cross an assembly boundary), spec
-[`06-interactables-composition.md`](../../.claude/refactor/specs/06-interactables-composition.md)
+back-reference does not cross an assembly boundary), spec `06-interactables-composition.md` (local planning notes, not committed)
 (the full migration, GUID scan and test list).

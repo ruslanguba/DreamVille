@@ -23,7 +23,7 @@ Three HUD classes still used coroutines, and two of them had overlap bugs:
   With 40 points and a +20 kill, star 2 stayed at 0 instead of 0.2 until the next score.
 
 Full design, GUID scan, smoke plan and test list: spec
-[`09-hud-presenter.md`](../../.claude/refactor/specs/09-hud-presenter.md).
+`09-hud-presenter.md` (local planning notes, not committed).
 
 ## Decision
 
