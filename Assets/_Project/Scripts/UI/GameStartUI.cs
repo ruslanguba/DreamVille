@@ -63,12 +63,12 @@ namespace DreamVille.UI
 
         private void InitImages()
         {
-            SetAlpha(firstImage, 1f);
+            firstImage.SetAlpha(1f);
             firstImage.transform.localScale = Vector3.one;
 
             foreach (Image image in collageImages)
             {
-                SetAlpha(image, 0f);
+                image.SetAlpha(0f);
                 image.transform.localScale = Vector3.one * appearScale;
             }
         }
@@ -78,7 +78,7 @@ namespace DreamVille.UI
             await AnimateAsync(
                 progress =>
                 {
-                    SetAlpha(firstImage, Mathf.Lerp(1f, 0.5f, progress));
+                    firstImage.SetAlpha(Mathf.Lerp(1f, 0.5f, progress));
                     firstImage.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.one * firstScale, progress);
                 },
                 token);
@@ -91,12 +91,12 @@ namespace DreamVille.UI
             await AnimateAsync(
                 progress =>
                 {
-                    SetAlpha(image, progress);
+                    image.SetAlpha(progress);
                     image.transform.localScale = Vector3.Lerp(startScale, Vector3.one, progress);
                 },
                 token);
 
-            SetAlpha(image, 1f);
+            image.SetAlpha(1f);
             image.transform.localScale = Vector3.one;
         }
 
@@ -111,13 +111,6 @@ namespace DreamVille.UI
                 apply(Mathf.Clamp01(elapsed / fadeTime));
                 await UniTask.Yield(PlayerLoopTiming.Update, token);
             }
-        }
-
-        private static void SetAlpha(Image image, float alpha)
-        {
-            Color color = image.color;
-            color.a = alpha;
-            image.color = color;
         }
     }
 }

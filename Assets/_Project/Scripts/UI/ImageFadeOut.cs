@@ -47,7 +47,7 @@ namespace DreamVille.UI
             try
             {
                 await GameTime.DelayAsync(_showDuration, token);
-                await Tween.RunAsync(_fadeDuration, SetAlpha, token);
+                await Tween.RunAsync(_fadeDuration, ApplyFade, token);
 
                 _image.gameObject.SetActive(false);
             }
@@ -61,11 +61,9 @@ namespace DreamVille.UI
             }
         }
 
-        private void SetAlpha(float progress)
+        private void ApplyFade(float progress)
         {
-            Color color = _image.color;
-            color.a = Mathf.Lerp(_startAlpha, 0f, progress);
-            _image.color = color;
+            _image.SetAlpha(Mathf.Lerp(_startAlpha, 0f, progress));
         }
     }
 }

@@ -27,7 +27,10 @@ namespace DreamVille.UI.Hud
             // The prefab's own alpha is the visible look.
             float alphaVisible = _iconPrefab.color.a;
             for (int i = 0; i < _pillowIcons.Count; i++)
-                SetAlpha(_pillowIcons[i], i < inHand ? alphaVisible : _alphaHidden);
+            {
+                if (_pillowIcons[i] != null)
+                    _pillowIcons[i].SetAlpha(i < inHand ? alphaVisible : _alphaHidden);
+            }
         }
 
         private void SpawnIcons(int count)
@@ -42,16 +45,6 @@ namespace DreamVille.UI.Hud
                 icon.transform.localPosition = startPos + new Vector3(i * _posOffset, 0f, 0f);
                 _pillowIcons.Add(icon);
             }
-        }
-
-        private static void SetAlpha(Image image, float alpha)
-        {
-            if (image == null)
-                return;
-
-            Color color = image.color;
-            color.a = Mathf.Clamp01(alpha);
-            image.color = color;
         }
 
         private void ClearIcons()
