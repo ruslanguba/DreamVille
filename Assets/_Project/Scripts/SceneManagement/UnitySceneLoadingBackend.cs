@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace DreamVille.SceneManagement
 {
+    /// <summary>ISceneLoadingBackend over UnityEngine.SceneManagement: loads a scene asynchronously and reports its progress.</summary>
     public sealed class UnitySceneLoadingBackend : ISceneLoadingBackend
     {
         public string ActiveSceneName => SceneManager.GetActiveScene().name;

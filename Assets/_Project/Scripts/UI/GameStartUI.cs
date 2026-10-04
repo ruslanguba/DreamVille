@@ -8,8 +8,7 @@ using UnityEngine.UI;
 namespace DreamVille.UI
 {
     /// <summary>
-    /// Вступительная заставка. Только показывает картинки —
-    /// решение о переходе принимает точка входа игры.
+    /// Intro splash. It only shows the pictures; the game's entry point decides what comes next.
     /// </summary>
     public class GameStartUI : MonoBehaviour
     {
@@ -47,7 +46,7 @@ namespace DreamVille.UI
 
         private void OnSkipPerformed(InputAction.CallbackContext _) => _skipRequested = true;
 
-        /// <summary>Проигрывает заставку целиком. Завершается, когда показан последний кадр.</summary>
+        /// <summary>Plays the whole intro. Completes when the last frame has been shown.</summary>
         public async UniTask PlayAsync(CancellationToken token = default)
         {
             InitImages();
@@ -100,7 +99,7 @@ namespace DreamVille.UI
             image.transform.localScale = Vector3.one;
         }
 
-        /// <summary>Общий цикл анимации: прерывается по Skip или по отмене.</summary>
+        /// <summary>Shared animation loop: stops early on Skip or cancellation.</summary>
         private async UniTask AnimateAsync(Action<float> apply, CancellationToken token)
         {
             float elapsed = 0f;

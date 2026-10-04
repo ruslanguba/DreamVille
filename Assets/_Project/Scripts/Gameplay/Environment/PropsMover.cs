@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace DreamVille.Gameplay.Environment
 {
+    /// <summary>Moves a prop (a balloon) around a loop of points while spinning it; when hit, it floats upwards for a while and then resumes its route.</summary>
     public class PropsMover : MonoBehaviour
     {
         [SerializeField] private Transform _baloon;

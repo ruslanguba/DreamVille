@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace DreamVille.Audio
 {
+    /// <summary>Plays the NPC's Timeline (PlayableDirector) when the player enters the trigger.</summary>
     public class NpcAudio : MonoBehaviour
     {
         private PlayableDirector pd;

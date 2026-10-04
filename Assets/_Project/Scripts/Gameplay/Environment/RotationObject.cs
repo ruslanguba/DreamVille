@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace DreamVille.Gameplay.Environment
 {
+    /// <summary>Spins this object at constant per-axis speeds and exposes the rotation applied since the last frame, so whatever stands on it can turn with it.</summary>
     public class RotationObject : MonoBehaviour
     {
         [SerializeField] private float _speedRotationX;
@@ -19,7 +20,7 @@ namespace DreamVille.Gameplay.Environment
 
         void LateUpdate()
         {
-            // вычисляем разницу между прошлой и новой ротацией
+            // Rotation applied since the last frame.
             DeltaRot = transform.rotation * Quaternion.Inverse(_lastRotation);
 
             _lastRotation = transform.rotation;

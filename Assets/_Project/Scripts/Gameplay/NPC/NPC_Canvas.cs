@@ -4,6 +4,7 @@ using DreamVille.Core.Players;
 
 namespace DreamVille.Gameplay.NPC
 {
+    /// <summary>Shows the NPC's world-space canvas while the player stands in the trigger and hides it when the player leaves.</summary>
     public class NPC_Canvas : MonoBehaviour
     {
         [SerializeField] private GameObject Canvas;

@@ -5,6 +5,7 @@ using UnityEngine.Serialization;
 
 namespace DreamVille.Input
 {
+    /// <summary>IPlayerInput over Input System action references; an action left unassigned in the Inspector reads as idle.</summary>
     public class InputReader : MonoBehaviour, IPlayerInput
     {
         [Header("Input Actions")]

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace DreamVille.Input
 {
+    /// <summary>Player gameplay input: values to poll every frame (move, look, held buttons) and events for presses.</summary>
     public interface IPlayerInput
     {
         // Pull

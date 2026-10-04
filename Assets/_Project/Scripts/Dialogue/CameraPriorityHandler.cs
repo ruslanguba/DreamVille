@@ -6,6 +6,7 @@ using DreamVille.Dialogue;
 
 namespace DreamVille.Dialogue
 {
+    /// <summary>Raises this Cinemachine camera above the gameplay camera while the parent DialogueTrigger's conversation runs, and drops it back when it ends.</summary>
     public class CameraPriorityHandler : MonoBehaviour
     {
         CinemachineCamera _cinCamera;

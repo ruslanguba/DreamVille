@@ -5,6 +5,7 @@ using DreamVille.Configs;
 
 namespace DreamVille.Scoring
 {
+    /// <summary>The run's score: a kill is worth ScorePerKill times its ricochets, other sources add points directly; raises the added amount and the new total.</summary>
     public class ScoreService : IScoreService
     {
         public event Action<float> ScoreAdded;

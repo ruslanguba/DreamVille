@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace DreamVille.UI
 {
+    /// <summary>Draws a ParticleSystem inside a UGUI canvas by baking its mesh every frame through a camera.</summary>
     public class UiParticleSystem : MaskableGraphic
     {
         [SerializeField] private ParticleSystemRenderer _renderer;

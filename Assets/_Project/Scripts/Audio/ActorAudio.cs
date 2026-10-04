@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace DreamVille.Audio
 {
+    /// <summary>An actor's sounds from one AudioSource: death, attack and jump one-shots, footsteps while it moves, and random ambient clips on a timer.</summary>
     public class ActorAudio : MonoBehaviour, IActorAudio
     {
         private AudioSource audioSource;
@@ -34,7 +35,7 @@ namespace DreamVille.Audio
         }
         private void Update()
         {
-            // Вызов случайного звука таймером
+            // Play a random ambient clip whenever the timer runs out.
             if (Time.time >= _nextRandomTime)
             {
                 PlayRandomClip();
@@ -70,7 +71,7 @@ namespace DreamVille.Audio
         {
             if (_jumpClip != null)
             {
-                audioSource.pitch = Random.Range(0.9f, 1.1f); // Случайный питч
+                audioSource.pitch = Random.Range(0.9f, 1.1f); // Random pitch
                 audioSource.PlayOneShot(_jumpClip);
             }
         }
@@ -95,7 +96,7 @@ namespace DreamVille.Audio
             if (_footstepClips == null || _footstepClips.Length == 0)
                 return;
 
-            // Случайный индекс, но не повторяем тот же самый звук дважды подряд
+            // Random index, but never the same clip twice in a row.
             int index;
             do
             {
