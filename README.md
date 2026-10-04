@@ -59,7 +59,7 @@ _A gameplay GIF and screenshots are coming with the playable build._
   and the move fixed a shipped bug where English dialogues never started. Screen hints
   use a `Hints` table the same way, so the English game is English from the first lobby.
   [ADR 0009](Docs/adr/0009-data-driven-dialogues.md).
-- **617 EditMode tests that guard the wiring.**
+- **619 EditMode tests that guard the wiring.**
   [`SceneCompositionTests`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs)
   opens every build scene and checks its installers, catalog references and missing
   scripts, and prefab tests pin the player's composition, so a mis-wired scene fails a
@@ -167,7 +167,7 @@ press Play.
 
 ## Tests
 
-Window → General → Test Runner → EditMode → Run All. 617 EditMode tests (615 pass, 2
+Window → General → Test Runner → EditMode → Run All. 619 EditMode tests (617 pass, 2
 intentionally skipped). PlayMode tests and CI are not set up yet.
 
 ## Status and roadmap
