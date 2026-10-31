@@ -1,5 +1,6 @@
 using System;
 
+using DreamVille.Gameplay.Npc;
 using DreamVille.UI;
 
 namespace DreamVille.Tests.EditMode.Architecture
@@ -14,6 +15,7 @@ namespace DreamVille.Tests.EditMode.Architecture
         public static readonly (Type Owner, string[] OldNames)[] All =
         {
             (typeof(GameStartUI), new[] { "firstImage", "collageImages", "fadeTime", "appearScale", "firstScale" }),
+            (typeof(NpcCanvasToggle), new[] { "Canvas" }),
         };
     }
 }

@@ -50,7 +50,6 @@ namespace DreamVille.Tests.EditMode.Architecture
             "DreamVille.Gameplay.Enemies.Enemy.moveSpeed",
             "DreamVille.Gameplay.Enemies.Enemy.patrolPoints",
             "DreamVille.Gameplay.Enemies.EnemyRotationHandler.rotationSpeed",
-            "DreamVille.Gameplay.Npc.NpcCanvasToggle.Canvas",
         };
 
         /// <summary>Every loaded DreamVille runtime assembly (the test assemblies excluded), ordered by name.</summary>
