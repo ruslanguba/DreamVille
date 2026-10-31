@@ -48,9 +48,6 @@ namespace DreamVille.Tests.EditMode.Architecture
         // its self-test, when the last entry goes. Format: "Namespace.Type.field".
         private static readonly string[] PendingSerializedRenames =
         {
-            "DreamVille.Audio.ActorAudio.pitchRandom",
-            "DreamVille.Audio.ActorAudio.randomClips",
-            "DreamVille.Audio.ActorAudio.randomInterval",
             "DreamVille.Gameplay.Enemies.Enemy.attackCooldown",
             "DreamVille.Gameplay.Enemies.Enemy.attackRange",
             "DreamVille.Gameplay.Enemies.Enemy.attackSpawn",

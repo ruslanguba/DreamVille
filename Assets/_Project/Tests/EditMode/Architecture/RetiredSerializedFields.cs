@@ -1,5 +1,6 @@
 using System;
 
+using DreamVille.Audio;
 using DreamVille.Gameplay.Environment;
 using DreamVille.Gameplay.Npc;
 using DreamVille.UI;
@@ -20,6 +21,9 @@ namespace DreamVille.Tests.EditMode.Architecture
 
             // _isInterracted was runtime state stored as data; it became the non-serialized _isFloating.
             (typeof(PropsMover), new[] { "_baloon", "_isInterracted" }),
+
+            // Two fields were both called "pitch random"; each now names the clip group it jitters.
+            (typeof(ActorAudio), new[] { "_pitchRandom", "randomClips", "randomInterval", "pitchRandom" }),
         };
     }
 }

@@ -475,10 +475,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f00fc6d3ae2c162468c6e273a5070e45, type: 3}
   - {fileID: 8300000, guid: 6eb2d68b359602247977f30802fd045d, type: 3}
   _stepInterval: 1.2
-  _pitchRandom: 0.1
-  randomClips: []
-  randomInterval: {x: 3, y: 7}
-  pitchRandom: 0.15
+  _footstepPitchJitter: 0.1
+  _randomClips: []
+  _randomClipInterval: {x: 3, y: 7}
+  _randomClipPitchJitter: 0.15
 --- !u!82 &6129635068301384898
 AudioSource:
   m_ObjectHideFlags: 0

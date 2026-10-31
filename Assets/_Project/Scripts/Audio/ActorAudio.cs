@@ -13,14 +13,14 @@ namespace DreamVille.Audio
         [Header("Footsteps")]
         [SerializeField] private AudioClip[] _footstepClips;
         [SerializeField] private float _stepInterval = 0.5f;
-        [SerializeField] private float _pitchRandom = 0.1f;
+        [SerializeField] private float _footstepPitchJitter = 0.1f;
 
         private int _lastFootstepIndex = -1;
 
         [Header("Random Clips")]
-        public AudioClip[] randomClips;
-        public Vector2 randomInterval = new Vector2(3f, 7f);
-        public float pitchRandom = 0.15f;
+        [SerializeField] private AudioClip[] _randomClips;
+        [SerializeField] private Vector2 _randomClipInterval = new Vector2(3f, 7f);
+        [SerializeField] private float _randomClipPitchJitter = 0.15f;
 
         private float _nextRandomTime;
         private float _stepTimer;
@@ -44,16 +44,16 @@ namespace DreamVille.Audio
         }
         private void PlayRandomClip()
         {
-            if (randomClips.Length == 0) return;
+            if (_randomClips.Length == 0) return;
 
-            _audioSource.pitch = 1f + Random.Range(-pitchRandom, pitchRandom);
-            var clip = randomClips[Random.Range(0, randomClips.Length)];
+            _audioSource.pitch = 1f + Random.Range(-_randomClipPitchJitter, _randomClipPitchJitter);
+            var clip = _randomClips[Random.Range(0, _randomClips.Length)];
             _audioSource.PlayOneShot(clip);
         }
 
         private void ScheduleNextRandom()
         {
-            _nextRandomTime = Time.time + Random.Range(randomInterval.x, randomInterval.y);
+            _nextRandomTime = Time.time + Random.Range(_randomClipInterval.x, _randomClipInterval.y);
         }
         public void PlayDeath()
         {
@@ -106,7 +106,7 @@ namespace DreamVille.Audio
 
             _lastFootstepIndex = index;
 
-            _audioSource.pitch = 1f + Random.Range(-_pitchRandom, _pitchRandom);
+            _audioSource.pitch = 1f + Random.Range(-_footstepPitchJitter, _footstepPitchJitter);
             _audioSource.PlayOneShot(_footstepClips[index]);
         }
 

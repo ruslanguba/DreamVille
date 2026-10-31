@@ -290,10 +290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cd413bd3743cf45b0817970762a6b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 1882540213636037003}
-  _enemy1: {fileID: 5412930626940712927}
-  _enemy2: {fileID: 1444302141386615453}
-  isEnemy: 1
   _isOpen: 0
 --- !u!114 &8542265787605196215
 MonoBehaviour:
@@ -522,10 +518,10 @@ MonoBehaviour:
   _jumpClip: {fileID: 0}
   _footstepClips: []
   _stepInterval: 0.5
-  _pitchRandom: 0.1
-  randomClips: []
-  randomInterval: {x: 3, y: 7}
-  pitchRandom: 0.15
+  _footstepPitchJitter: 0.1
+  _randomClips: []
+  _randomClipInterval: {x: 3, y: 7}
+  _randomClipPitchJitter: 0.15
 --- !u!82 &7311321322370705427
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1546,10 +1542,10 @@ MonoBehaviour:
   _jumpClip: {fileID: 0}
   _footstepClips: []
   _stepInterval: 0.5
-  _pitchRandom: 0.1
-  randomClips: []
-  randomInterval: {x: 3, y: 7}
-  pitchRandom: 0.15
+  _footstepPitchJitter: 0.1
+  _randomClips: []
+  _randomClipInterval: {x: 3, y: 7}
+  _randomClipPitchJitter: 0.15
 --- !u!82 &2323115206242959780
 AudioSource:
   m_ObjectHideFlags: 0
