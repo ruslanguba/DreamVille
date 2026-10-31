@@ -6,27 +6,27 @@ using Random = UnityEngine.Random;
 
 using DreamVille.Core.Async;
 
-namespace DreamVille.Gameplay.NPC
+namespace DreamVille.Gameplay.Npc
 {
     /// <summary>
     /// Drives an NPC's greeting/applause/talk/idle reactions to level events.
-    /// The authored start pose belongs to <see cref="NPCAnimationHandler"/>; this component
+    /// The authored start pose belongs to <see cref="NpcAnimationHandler"/>; this component
     /// only changes state when a reaction is requested, and every new reaction supersedes a pending applause.
     /// </summary>
-    [RequireComponent(typeof(NPCAnimationHandler))]
-    public class NPCReactionController : MonoBehaviour, INpcReactions
+    [RequireComponent(typeof(NpcAnimationHandler))]
+    public class NpcReactionController : MonoBehaviour, INpcReactions
     {
         private const float ApplauseDuration = 3f;
 
         [SerializeField] private AudioClip[] _mumbleClips;
 
-        private NPCAnimationHandler _npcAnimationHandler;
+        private NpcAnimationHandler _npcAnimationHandler;
         private AudioSource _audio;
         private CancellationTokenSource _applauseCts;
 
         private void Awake()
         {
-            _npcAnimationHandler = GetComponent<NPCAnimationHandler>();
+            _npcAnimationHandler = GetComponent<NpcAnimationHandler>();
 
             // Sound is optional: some NPCs stand without an AudioSource.
             _audio = GetComponent<AudioSource>();

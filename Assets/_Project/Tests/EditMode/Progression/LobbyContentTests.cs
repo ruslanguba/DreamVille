@@ -12,7 +12,7 @@ using Zenject;
 using DreamVille.Configs;
 using DreamVille.Gameplay.Enemies;
 using DreamVille.Gameplay.Environment;
-using DreamVille.Gameplay.NPC;
+using DreamVille.Gameplay.Npc;
 using DreamVille.Progression;
 using DreamVille.Progression.Lobby;
 
@@ -206,7 +206,7 @@ namespace DreamVille.Tests.EditMode.Progression
             OpenLobby();
 
             LobbyActors actors = FindAll<LobbyActors>().Single();
-            var guide = (NPCReactionController)actors.Guide;
+            var guide = (NpcReactionController)actors.Guide;
             Assert.That(guide, Is.Not.Null, "Lobby_01's guide is not assigned.");
             Assert.That(HierarchyPath(guide.transform), Is.EqualTo("PluchAllNpces/PluchNpc"),
                 "The guide must live on PluchAllNpces/PluchNpc.");

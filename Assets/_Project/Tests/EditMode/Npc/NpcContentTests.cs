@@ -7,9 +7,9 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-using DreamVille.Gameplay.NPC;
+using DreamVille.Gameplay.Npc;
 
-namespace DreamVille.Tests.EditMode.NPC
+namespace DreamVille.Tests.EditMode.Npc
 {
     /// <summary>
     /// Guards spec 08 §5 group G (NPC part): pins the authored NPC start poses, the hatter dialogue timing,
@@ -51,7 +51,7 @@ namespace DreamVille.Tests.EditMode.NPC
                 EditorSceneManager.OpenScene(_originalScenePath, OpenSceneMode.Single);
         }
 
-        // Per asset, the multiset of "GameObject name: start state[+swim]" of every NPCAnimationHandler.
+        // Per asset, the multiset of "GameObject name: start state[+swim]" of every NpcAnimationHandler.
         private static IEnumerable<TestCaseData> AuthoredPoses()
         {
             yield return Poses("Assets/_Project/Prefabs/NPC/PluchNpc.prefab", "PluchNpc: Greeting");
@@ -81,9 +81,9 @@ namespace DreamVille.Tests.EditMode.NPC
         [TestCaseSource(nameof(AuthoredPoses))]
         public void NpcAnimationHandlers_StartStates_MatchAuthoredPoses(string assetPath, string[] expected)
         {
-            IEnumerable<NPCAnimationHandler> handlers = assetPath.EndsWith(".prefab")
-                ? LoadPrefab(assetPath).GetComponentsInChildren<NPCAnimationHandler>(true)
-                : OpenSceneAndFindAll<NPCAnimationHandler>(assetPath);
+            IEnumerable<NpcAnimationHandler> handlers = assetPath.EndsWith(".prefab")
+                ? LoadPrefab(assetPath).GetComponentsInChildren<NpcAnimationHandler>(true)
+                : OpenSceneAndFindAll<NpcAnimationHandler>(assetPath);
 
             string[] actual = handlers.Select(DescribePose).ToArray();
 
@@ -93,8 +93,8 @@ namespace DreamVille.Tests.EditMode.NPC
         [Test]
         public void NpcDialoguePrefab_KeepsTwoSpeakersAndFiveSecondInterval()
         {
-            NPCDialogueHandler dialogue = LoadPrefab(NpcDialoguePrefabPath).GetComponent<NPCDialogueHandler>();
-            Assert.That(dialogue, Is.Not.Null, $"{NpcDialoguePrefabPath} has no {nameof(NPCDialogueHandler)} on its root.");
+            NpcDialogueHandler dialogue = LoadPrefab(NpcDialoguePrefabPath).GetComponent<NpcDialogueHandler>();
+            Assert.That(dialogue, Is.Not.Null, $"{NpcDialoguePrefabPath} has no {nameof(NpcDialogueHandler)} on its root.");
 
             var serialized = new SerializedObject(dialogue);
             SerializedProperty speakers = serialized.FindProperty("_speakers");
@@ -111,11 +111,11 @@ namespace DreamVille.Tests.EditMode.NPC
         [Test]
         public void Lobby01Queues_EachDriveTheirOwnSixNpcsWithAuthoredTiming()
         {
-            NpcQueueManager[] queues = OpenSceneAndFindAll<NpcQueueManager>(Lobby01ScenePath);
+            NpcQueue[] queues = OpenSceneAndFindAll<NpcQueue>(Lobby01ScenePath);
             Assert.That(queues, Has.Length.EqualTo(QueueCount), "Lobby_01 has two separate NPC queues (Column, Column (1)).");
 
             var drivenNpcs = new HashSet<GameObject>();
-            foreach (NpcQueueManager queue in queues)
+            foreach (NpcQueue queue in queues)
             {
                 var serialized = new SerializedObject(queue);
                 SerializedProperty jumpers = serialized.FindProperty("_jumpers");
@@ -126,7 +126,7 @@ namespace DreamVille.Tests.EditMode.NPC
 
                 for (int i = 0; i < jumpers.arraySize; i++)
                 {
-                    var mover = jumpers.GetArrayElementAtIndex(i).objectReferenceValue as NPCMover;
+                    var mover = jumpers.GetArrayElementAtIndex(i).objectReferenceValue as NpcMover;
                     Assert.That(mover, Is.Not.Null, $"'{queue.name}' jumper {i} is not assigned.");
                     Assert.That(mover.transform.IsChildOf(queue.transform), Is.True,
                         $"'{queue.name}' jumper {i} ('{mover.name}') is not one of the queue's own NPCs.");
@@ -135,13 +135,13 @@ namespace DreamVille.Tests.EditMode.NPC
                 }
             }
 
-            NPCMover[] movers = FindAll<NPCMover>();
+            NpcMover[] movers = FindAll<NpcMover>();
             Assert.That(movers, Has.Length.EqualTo(QueueCount * NpcsPerQueue), "one mover per queued NPC, none elsewhere.");
-            foreach (NPCMover mover in movers)
+            foreach (NpcMover mover in movers)
             {
                 var serialized = new SerializedObject(mover);
 
-                Assert.That(mover.GetComponents<NPCMover>(), Has.Length.EqualTo(1), $"'{mover.name}' has more than one mover.");
+                Assert.That(mover.GetComponents<NpcMover>(), Has.Length.EqualTo(1), $"'{mover.name}' has more than one mover.");
                 Assert.That(serialized.FindProperty("_jumpForce").floatValue, Is.EqualTo(8f), $"'{mover.name}' jump force.");
                 Assert.That(serialized.FindProperty("_forwardForce").floatValue, Is.EqualTo(3f), $"'{mover.name}' forward force.");
             }
@@ -150,11 +150,11 @@ namespace DreamVille.Tests.EditMode.NPC
         [Test]
         public void Lobby01Shooters_KeepAuthoredRhythm()
         {
-            NPCFire[] shooters = OpenSceneAndFindAll<NPCFire>(Lobby01ScenePath);
+            NpcFire[] shooters = OpenSceneAndFindAll<NpcFire>(Lobby01ScenePath);
             GameObject bulletPrefab = LoadPrefab(NpcBulletPrefabPath);
 
             var rhythms = new List<(float Rate, float LifeTime)>();
-            foreach (NPCFire shooter in shooters)
+            foreach (NpcFire shooter in shooters)
             {
                 var serialized = new SerializedObject(shooter);
 
@@ -169,7 +169,7 @@ namespace DreamVille.Tests.EditMode.NPC
             Assert.That(rhythms, Is.EquivalentTo(new[] { (1f, 3f), (2f, 2f) }));
         }
 
-        private static string DescribePose(NPCAnimationHandler handler)
+        private static string DescribePose(NpcAnimationHandler handler)
         {
             bool swims = new SerializedObject(handler).FindProperty("_isSwim").boolValue;
             return $"{handler.name}: {handler.StartState}{(swims ? "+swim" : string.Empty)}";

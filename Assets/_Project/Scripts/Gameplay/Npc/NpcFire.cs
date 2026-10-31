@@ -6,13 +6,13 @@ using Random = UnityEngine.Random;
 
 using DreamVille.Core.Async;
 
-namespace DreamVille.Gameplay.NPC
+namespace DreamVille.Gameplay.Npc
 {
     /// <summary>
     /// Ambient shooter: one reused visual bullet is launched at a random point around the target, lives for a
     /// while and hides, then the cycle repeats. Runs while the component is enabled; deals no damage.
     /// </summary>
-    public sealed class NPCFire : MonoBehaviour
+    public sealed class NpcFire : MonoBehaviour
     {
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private Transform _spawn;
@@ -34,7 +34,7 @@ namespace DreamVille.Gameplay.NPC
         {
             if (_bulletPrefab == null || _spawn == null || _target == null)
             {
-                Debug.LogError($"[{nameof(NPCFire)}] '{name}' needs a bullet prefab, a spawn point and a target.", this);
+                Debug.LogError($"[{nameof(NpcFire)}] '{name}' needs a bullet prefab, a spawn point and a target.", this);
                 enabled = false;
             }
         }
@@ -47,7 +47,7 @@ namespace DreamVille.Gameplay.NPC
 
             if (_bulletBody == null)
             {
-                Debug.LogError($"[{nameof(NPCFire)}] Bullet prefab '{_bulletPrefab.name}' has no Rigidbody.", this);
+                Debug.LogError($"[{nameof(NpcFire)}] Bullet prefab '{_bulletPrefab.name}' has no Rigidbody.", this);
                 enabled = false;
                 return;
             }

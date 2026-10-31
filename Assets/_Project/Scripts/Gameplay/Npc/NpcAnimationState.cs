@@ -1,6 +1,6 @@
 using System;
 
-namespace DreamVille.Gameplay.NPC
+namespace DreamVille.Gameplay.Npc
 {
     /// <summary>
     /// Writes an NPC's mood as one operation (exactly one of isTalk/isGreeting/isApplause true, none for Idle)

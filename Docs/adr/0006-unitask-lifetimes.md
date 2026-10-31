@@ -6,7 +6,7 @@ Updated: 2026-10-03, see [Update (5.4)](#update-54)
 
 ## Context
 
-Before this step, nine components under `Gameplay/NPC`, `Gameplay/Enemies` and
+Before this step, nine components under `Gameplay/Npc`, `Gameplay/Enemies` and
 `Gameplay/Environment` used coroutines (`StartCoroutine`, `WaitForSeconds`, bare
 `yield return null`) for timed behaviour: an NPC queue jumping and re-forming, two
 hatters taking turns talking, an NPC shooter's fire cycle, a balloon's random drift, an
@@ -14,7 +14,7 @@ enemy hideout's open/shrink/close sequence, and the main-menu logo fade. Each on
 answered "what happens to a running timer when the object is destroyed, deactivated, or
 the game is paused" differently, by accident rather than by design — three ad-hoc
 lifetimes, a latent lerp bug in the hideout, two coroutines racing over one list in the
-NPC queue, and an `NPCAnimationHandler` with five independent bools that could describe
+NPC queue, and an `NpcAnimationHandler` with five independent bools that could describe
 an impossible pose (talking and applauding at once). [ADR 0004](0004-scene-catalog-and-async.md)
 already moved bullet lifetime, pillow recall, one NPC reaction and scene loading to
 UniTask; this record covers the rest of the Gameplay assembly and states the lifetime
@@ -41,14 +41,14 @@ reference any third-party package before; `DreamVille.Core.asmdef` now reference
 
 | Pattern | Token | Starts | Stops | Used for |
 |---|---|---|---|---|
-| **One-shot, object-bound** | `this.GetCancellationTokenOnDestroy()`, linked into a per-operation `CancellationTokenSource` where a new call supersedes the old one or a second object's death must end it too | on request | destroy, supersede, or completion | [`EnemyHideout.AbsorbAsync`](../../Assets/_Project/Scripts/Gameplay/Enemies/EnemyHideout.cs) (linked to both the hideout's and the enemy's destroy token), [`ImageFadeOut`](../../Assets/_Project/Scripts/UI/ImageFadeOut.cs) (main-menu logo fade), `NPCMover.MoveToAsync`, `NPCReactionController`'s applause-then-talk, [`ProximityHint`](../../Assets/_Project/Scripts/UI/Hints/ProximityHint.cs) (added in 5.4) |
-| **Endless ambient loop, enable-bound** | `_loopCts` created when the loop starts, cancelled and disposed in `OnDisable` | first in `Start`, again in `OnEnable` once `Start` has already run (a `_started` flag) | `OnDisable` (deactivation, destroy, scene unload) | [`NPCDialogueHandler`](../../Assets/_Project/Scripts/Gameplay/NPC/NPCDialogueHandler.cs) (hatters alternating), [`NpcQueueManager`](../../Assets/_Project/Scripts/Gameplay/NPC/NpcQueueManager.cs) (queue jumps), `NPCFire` (NPC shooters), `RandomFloating` (balloon drift) |
+| **One-shot, object-bound** | `this.GetCancellationTokenOnDestroy()`, linked into a per-operation `CancellationTokenSource` where a new call supersedes the old one or a second object's death must end it too | on request | destroy, supersede, or completion | [`EnemyHideout.AbsorbAsync`](../../Assets/_Project/Scripts/Gameplay/Enemies/EnemyHideout.cs) (linked to both the hideout's and the enemy's destroy token), [`ImageFadeOut`](../../Assets/_Project/Scripts/UI/ImageFadeOut.cs) (main-menu logo fade), `NpcMover.MoveToAsync`, `NpcReactionController`'s applause-then-talk, [`ProximityHint`](../../Assets/_Project/Scripts/UI/Hints/ProximityHint.cs) (added in 5.4) |
+| **Endless ambient loop, enable-bound** | `_loopCts` created when the loop starts, cancelled and disposed in `OnDisable` | first in `Start`, again in `OnEnable` once `Start` has already run (a `_started` flag) | `OnDisable` (deactivation, destroy, scene unload) | [`NpcDialogueHandler`](../../Assets/_Project/Scripts/Gameplay/Npc/NpcDialogueHandler.cs) (hatters alternating), [`NpcQueue`](../../Assets/_Project/Scripts/Gameplay/Npc/NpcQueue.cs) (queue jumps), `NpcFire` (NPC shooters), `RandomFloating` (balloon drift) |
 
 The destroy token alone is the wrong choice for an endless loop: a loop that outlives
 `OnDisable` keeps calling `Animator.SetBool` on a deactivated NPC (Unity logs "Animator
 is not playing an AnimatorController" every cycle) and keeps moving a queue member that
 should have frozen with the rest of the scene. Starting the loop in `Start`, not
-`OnEnable`, matters too: `NpcQueueManager`'s first step jumps immediately, and a mover on
+`OnEnable`, matters too: `NpcQueue`'s first step jumps immediately, and a mover on
 another GameObject may not have run its own `Awake` yet if the loop started there
 instead.
 
@@ -64,29 +64,29 @@ span, and a zero-length wait that completed synchronously inside a `while (true)
 editor. `Tween.RunAsync` with a non-positive duration applies progress `1` once instead
 of looping.
 
-**`NPCAnimationHandler.SetState(NpcState)` is the single owner of an NPC's pose.**
-[`NpcState`](../../Assets/_Project/Scripts/Gameplay/NPC/NpcState.cs) is one enum
+**`NpcAnimationHandler.SetState(NpcState)` is the single owner of an NPC's pose.**
+[`NpcState`](../../Assets/_Project/Scripts/Gameplay/Npc/NpcState.cs) is one enum
 (`Idle`, `Talk`, `Greeting`, `Applause`) instead of four independent bools plus a fifth,
-unread one. [`NpcAnimationState`](../../Assets/_Project/Scripts/Gameplay/NPC/NpcAnimationState.cs)
+unread one. [`NpcAnimationState`](../../Assets/_Project/Scripts/Gameplay/Npc/NpcAnimationState.cs)
 writes the three mood flags as one operation through
-[`INpcAnimatorParameters`](../../Assets/_Project/Scripts/Gameplay/NPC/INpcAnimatorParameters.cs)
+[`INpcAnimatorParameters`](../../Assets/_Project/Scripts/Gameplay/Npc/INpcAnimatorParameters.cs)
 (implemented by
-[`AnimatorBoolParameters`](../../Assets/_Project/Scripts/Gameplay/NPC/AnimatorBoolParameters.cs),
+[`AnimatorBoolParameters`](../../Assets/_Project/Scripts/Gameplay/Npc/AnimatorBoolParameters.cs),
 which ignores bool parameters a given controller does not declare — `PluhNPC` has
 talk/greeting/applause, `Townsman_2_greetings_only` has greeting/applause/swim). Its
 `ApplyStartPose` rule is: apply the authored start mood unless a state was already
 requested, in which case the earlier request wins. This removes a frame-order dependency
 several directors used to work around by waiting a frame after scene start before
 reacting.
-[`NPCAnimationHandler`](../../Assets/_Project/Scripts/Gameplay/NPC/NPCAnimationHandler.cs)
+[`NpcAnimationHandler`](../../Assets/_Project/Scripts/Gameplay/Npc/NpcAnimationHandler.cs)
 is the MonoBehaviour shell: it finds the NPC's `Animator` in `Awake` and exposes
-`SetState`; `NPCReactionController` calls it instead of writing bools by name.
+`SetState`; `NpcReactionController` calls it instead of writing bools by name.
 
 **The NPC queue's two racing coroutines become one sequential loop.**
-`NpcQueueManager` used to run an endless loop and a per-jump coroutine that both read and
+`NpcQueue` used to run an endless loop and a per-jump coroutine that both read and
 wrote the same jumper list, with correctness depending on which coroutine Unity resumed
 first after an equal-length wait. It is now one `while (true)` loop over a tested
-[`RotatingQueue<T>`](../../Assets/_Project/Scripts/Gameplay/NPC/RotatingQueue.cs): jump,
+[`RotatingQueue<T>`](../../Assets/_Project/Scripts/Gameplay/Npc/RotatingQueue.cs): jump,
 wait, rotate the queue, then move everybody (the re-queued member included) to their
 slots with `UniTask.WhenAll`. The order — re-queue before the move — was chosen to match
 what Unity's scheduler happened to do before, verified against a Play Mode baseline.
@@ -128,7 +128,7 @@ switching" bug) and is verified by
   shorter. Since 5.4 it finds no coroutine API in code at all (comments may still name
   one), see [Update (5.4)](#update-54).
 - An NPC's mood is an enum with one owner
-  ([`NPCAnimationHandler.SetState`](../../Assets/_Project/Scripts/Gameplay/NPC/NPCAnimationHandler.cs)),
+  ([`NpcAnimationHandler.SetState`](../../Assets/_Project/Scripts/Gameplay/Npc/NpcAnimationHandler.cs)),
   so "talking while applauding" is no longer representable, and a director may react
   before an NPC's `Start` without its request being silently overwritten.
 - The NPC queue's jump/move order is deterministic (`RotatingQueue<T>` plus one loop)
@@ -210,7 +210,7 @@ under `Assets/_Project/Scripts`. The decisions above stand; this is what changed
   rules for the same job. The empty allow-list keeps the door open one file at a time, with
   a written reason.
 - **Unity 6 `Awaitable`** (built-in async/await, no package). Not adopted. UniTask stays
-  for its allocation-free waits, `WhenAll`/`WhenAny` (`NpcQueueManager` uses `WhenAll`),
+  for its allocation-free waits, `WhenAll`/`WhenAny` (`NpcQueue` uses `WhenAll`),
   a `PlayerLoopTiming` chosen per call and test ergonomics, and because the project had
   already standardised on it: switching would touch every call site for no gain the code
   needs. No benchmark was run here; the choice rests on features and consistency.

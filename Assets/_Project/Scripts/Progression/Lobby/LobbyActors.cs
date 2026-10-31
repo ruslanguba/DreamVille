@@ -5,7 +5,7 @@ using DreamVille.Dialogue;
 using DreamVille.Gameplay.Damage;
 using DreamVille.Gameplay.Enemies;
 using DreamVille.Gameplay.Environment;
-using DreamVille.Gameplay.NPC;
+using DreamVille.Gameplay.Npc;
 
 namespace DreamVille.Progression.Lobby
 {
@@ -22,7 +22,7 @@ namespace DreamVille.Progression.Lobby
         [SerializeField] private DialogueTrigger _secondDialogue;
         [SerializeField] private Door _firstDoor;
         [SerializeField] private Door _secondDoor;
-        [SerializeField] private NPCReactionController _guide;
+        [SerializeField] private NpcReactionController _guide;
 
         public IReadOnlyList<IMortal> FirstGroup => _firstGroup;
         public IReadOnlyList<IMortal> SecondGroup => _secondGroup;

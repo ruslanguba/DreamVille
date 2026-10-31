@@ -2,10 +2,10 @@ using System;
 using NUnit.Framework;
 
 using DreamVille.Gameplay;
-using DreamVille.Gameplay.NPC;
+using DreamVille.Gameplay.Npc;
 using DreamVille.Tests.EditMode.Fakes;
 
-namespace DreamVille.Tests.EditMode.NPC
+namespace DreamVille.Tests.EditMode.Npc
 {
     /// <summary>Mood flags and start-pose precedence of <see cref="NpcAnimationState"/> against a <see cref="FakeNpcAnimatorParameters"/>.</summary>
     public class NpcAnimationStateTests

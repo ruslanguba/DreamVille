@@ -1,4 +1,4 @@
-namespace DreamVille.Gameplay.NPC
+namespace DreamVille.Gameplay.Npc
 {
     /// <summary>Reactions an NPC can play in response to level events.</summary>
     public interface INpcReactions

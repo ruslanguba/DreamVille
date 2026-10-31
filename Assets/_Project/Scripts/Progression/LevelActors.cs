@@ -1,6 +1,6 @@
 using UnityEngine;
 
-using DreamVille.Gameplay.NPC;
+using DreamVille.Gameplay.Npc;
 
 namespace DreamVille.Progression
 {
@@ -14,7 +14,7 @@ namespace DreamVille.Progression
     public class LevelActors : MonoBehaviour
     {
         [SerializeField] private FinalZone _finalZone;
-        [SerializeField] private NPCReactionController _finalNpc;
+        [SerializeField] private NpcReactionController _finalNpc;
 
         /// <summary>The zone that opens the path to the next level, or null when the level has none.</summary>
         public FinalZone FinalZone => _finalZone != null ? _finalZone : null;

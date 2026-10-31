@@ -5,11 +5,11 @@ using UnityEngine.Serialization;
 
 using DreamVille.Core.Async;
 
-namespace DreamVille.Gameplay.NPC
+namespace DreamVille.Gameplay.Npc
 {
     /// <summary>A queue member's body: jumps out of the front slot and walks to a new slot.</summary>
     [RequireComponent(typeof(Rigidbody))]
-    public sealed class NPCMover : MonoBehaviour
+    public sealed class NpcMover : MonoBehaviour
     {
         [SerializeField, FormerlySerializedAs("jumpForce")]
         [Tooltip("Upward velocity change of a jump, m/s.")]
@@ -30,7 +30,7 @@ namespace DreamVille.Gameplay.NPC
 
             if (_animator == null)
             {
-                Debug.LogError($"[{nameof(NPCMover)}] '{name}' has no Animator.", this);
+                Debug.LogError($"[{nameof(NpcMover)}] '{name}' has no Animator.", this);
                 enabled = false;
             }
         }

@@ -2,10 +2,10 @@ using UnityEngine;
 
 using DreamVille.Core.Players;
 
-namespace DreamVille.Gameplay.NPC
+namespace DreamVille.Gameplay.Npc
 {
     /// <summary>Shows the NPC's world-space canvas while the player stands in the trigger and hides it when the player leaves.</summary>
-    public class NPC_Canvas : MonoBehaviour
+    public class NpcCanvasToggle : MonoBehaviour
     {
         [SerializeField] private GameObject Canvas;
 

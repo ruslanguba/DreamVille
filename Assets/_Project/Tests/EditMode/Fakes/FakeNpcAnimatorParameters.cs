@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-using DreamVille.Gameplay.NPC;
+using DreamVille.Gameplay.Npc;
 
 namespace DreamVille.Tests.EditMode.Fakes
 {

@@ -3,7 +3,7 @@ using NUnit.Framework;
 using UnityEditor;
 using UnityEditor.Animations;
 
-namespace DreamVille.Tests.EditMode.NPC
+namespace DreamVille.Tests.EditMode.Npc
 {
     /// <summary>
     /// Pins the fix of the "Pluh animation switching" bug: after applause the NPC must go straight to Talk,

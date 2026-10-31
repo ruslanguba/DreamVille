@@ -6,7 +6,7 @@ using Zenject;
 using DreamVille.Configs;
 using DreamVille.Core.Scenes;
 using DreamVille.Gameplay.Enemies;
-using DreamVille.Gameplay.NPC;
+using DreamVille.Gameplay.Npc;
 using DreamVille.Persistence;
 
 namespace DreamVille.Progression

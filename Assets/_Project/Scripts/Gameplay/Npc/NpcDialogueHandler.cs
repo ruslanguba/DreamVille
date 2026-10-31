@@ -6,20 +6,20 @@ using UnityEngine.Serialization;
 
 using DreamVille.Core.Async;
 
-namespace DreamVille.Gameplay.NPC
+namespace DreamVille.Gameplay.Npc
 {
     /// <summary>
     /// Ambient dialogue: the first speaker starts talking, then after every switch interval (game time)
     /// each speaker flips between talking and listening. Runs while the component is enabled.
     /// </summary>
-    public sealed class NPCDialogueHandler : MonoBehaviour
+    public sealed class NpcDialogueHandler : MonoBehaviour
     {
         [SerializeField, Min(0f), FormerlySerializedAs("_timer")]
         [Tooltip("Seconds of game time between two turns.")]
         private float _switchInterval = 5f;
 
         [SerializeField, FormerlySerializedAs("_handler")]
-        private NPCHandler[] _speakers;
+        private NpcHandler[] _speakers;
 
         private CancellationTokenSource _loopCts;
         private bool _started;
@@ -28,7 +28,7 @@ namespace DreamVille.Gameplay.NPC
         {
             if (!HasValidSpeakers())
             {
-                Debug.LogError($"[{nameof(NPCDialogueHandler)}] '{name}' needs at least one speaker and no empty slots.", this);
+                Debug.LogError($"[{nameof(NpcDialogueHandler)}] '{name}' needs at least one speaker and no empty slots.", this);
                 enabled = false;
             }
         }
@@ -69,7 +69,7 @@ namespace DreamVille.Gameplay.NPC
                 {
                     await GameTime.DelayAsync(_switchInterval, token);
 
-                    foreach (NPCHandler speaker in _speakers)
+                    foreach (NpcHandler speaker in _speakers)
                         speaker.SwitchTalking();
                 }
             }
@@ -88,7 +88,7 @@ namespace DreamVille.Gameplay.NPC
             if (_speakers == null || _speakers.Length == 0)
                 return false;
 
-            foreach (NPCHandler speaker in _speakers)
+            foreach (NpcHandler speaker in _speakers)
             {
                 if (speaker == null)
                     return false;

@@ -14,7 +14,7 @@ using DreamVille.Bootstrap;
 using DreamVille.Configs;
 using DreamVille.Dialogue;
 using DreamVille.Gameplay.Enemies;
-using DreamVille.Gameplay.NPC;
+using DreamVille.Gameplay.Npc;
 using DreamVille.Gameplay.Player;
 using DreamVille.Gameplay.Player.Ground;
 using DreamVille.Gameplay.Weapons.Aiming;
@@ -386,7 +386,7 @@ namespace DreamVille.Tests.EditMode.Composition
                 return;
 
             var serializedActors = new SerializedObject(found[0]);
-            var finalNpc = serializedActors.FindProperty("_finalNpc").objectReferenceValue as NPCReactionController;
+            var finalNpc = serializedActors.FindProperty("_finalNpc").objectReferenceValue as NpcReactionController;
 
             if (finalNpc == null)
             {

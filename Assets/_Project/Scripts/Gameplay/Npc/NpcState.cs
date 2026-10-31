@@ -1,4 +1,4 @@
-namespace DreamVille.Gameplay.NPC
+namespace DreamVille.Gameplay.Npc
 {
     /// <summary>Mutually exclusive mood of an NPC. Swimming is an independent pose flag, not a mood.</summary>
     public enum NpcState

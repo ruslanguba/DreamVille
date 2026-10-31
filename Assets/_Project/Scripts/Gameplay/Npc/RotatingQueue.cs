@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DreamVille.Gameplay.NPC
+namespace DreamVille.Gameplay.Npc
 {
     /// <summary>Fixed-membership queue whose front can be moved to the back; the NPC queue's order rule.</summary>
     public sealed class RotatingQueue<T>

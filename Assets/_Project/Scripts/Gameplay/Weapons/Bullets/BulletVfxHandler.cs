@@ -4,7 +4,7 @@ using UnityEngine;
 namespace DreamVille.Gameplay.Weapons.Bullets
 {
     /// <summary>Plays the bullet's hit effect at the hit point and clears its trails when the pooled bullet is disabled.</summary>
-    public class BulletVFXHandler : MonoBehaviour
+    public class BulletVfxHandler : MonoBehaviour
     {
         [SerializeField] private ParticleSystem _hitEffect;
         [SerializeField] private TrailRenderer[] _trailEffect;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DreamVille.Dialogue;
 using DreamVille.Gameplay.Damage;
 using DreamVille.Gameplay.Environment;
-using DreamVille.Gameplay.NPC;
+using DreamVille.Gameplay.Npc;
 
 namespace DreamVille.Progression.Lobby
 {

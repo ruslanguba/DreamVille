@@ -10,10 +10,10 @@ using UnityEngine;
 namespace DreamVille.Tests.EditMode.Architecture
 {
     /// <summary>
-    /// Pins the naming rules of conventions §2 and §4 on the compiled runtime assemblies (spec 14 §5 items 4-10):
+    /// Pins the naming rules of conventions §2 and §4 on the compiled runtime assemblies (spec 14 §5 items 4-12):
     /// no public instance fields, <c>_camelCase</c> private fields, PascalCase constants, <c>[SerializeField]</c> only on
-    /// private fields, events without an <c>On</c> prefix, and ScriptableObjects named after their role with a
-    /// <c>DreamVille/</c> menu. Reflection, not source text: modifiers and attributes are facts of the compiled types,
+    /// private fields, events without an <c>On</c> prefix, ScriptableObjects named after their role with a
+    /// <c>DreamVille/</c> menu, and type names without underscores, long capitalised acronyms or a <c>Manager</c> suffix. Reflection, not source text: modifiers and attributes are facts of the compiled types,
     /// and compiler-generated members (closures, async state machines, backing fields) are skipped.
     /// </summary>
     public class NamingConventionsTests
@@ -26,6 +26,10 @@ namespace DreamVille.Tests.EditMode.Architecture
         private static readonly Regex PascalCase = new Regex("^[A-Z][A-Za-z0-9]*$", RegexOptions.Compiled);
         private static readonly Regex UnderscoreCamelCase = new Regex("^_[a-z][A-Za-z0-9]*$", RegexOptions.Compiled);
         private static readonly Regex OnPrefix = new Regex("^On[A-Z]", RegexOptions.Compiled);
+
+        // Two-letter acronyms stay upper case (UI), longer ones are PascalCase (Npc, Vfx, Hud): four capitals in a row
+        // mean an acronym of three or more followed by the next word, three at the end mean a trailing one.
+        private static readonly Regex LongAcronym = new Regex("[A-Z]{4}|[A-Z]{3}$", RegexOptions.Compiled);
 
         private static readonly string[] ScriptableObjectRoles = { "Config", "Definition", "Rules", "Catalog" };
 
@@ -46,7 +50,7 @@ namespace DreamVille.Tests.EditMode.Architecture
             "DreamVille.Gameplay.Enemies.Enemy.moveSpeed",
             "DreamVille.Gameplay.Enemies.Enemy.patrolPoints",
             "DreamVille.Gameplay.Enemies.EnemyRotationHandler.rotationSpeed",
-            "DreamVille.Gameplay.NPC.NPC_Canvas.Canvas",
+            "DreamVille.Gameplay.Npc.NpcCanvasToggle.Canvas",
             "DreamVille.UI.GameStartUI.appearScale",
             "DreamVille.UI.GameStartUI.collageImages",
             "DreamVille.UI.GameStartUI.fadeTime",
@@ -171,6 +175,46 @@ namespace DreamVille.Tests.EditMode.Architecture
             offenders.Sort(StringComparer.Ordinal);
 
             Assert.That(offenders, Is.Empty, "ScriptableObject types that break conventions §7:\n" + string.Join("\n", offenders));
+        }
+
+        [Test]
+        public void TypeNames_HaveNoUnderscoreOrLongAcronym()
+        {
+            string[] offenders = UserTypes()
+                .Where(type => type.Name.Contains("_") || LongAcronym.IsMatch(NameForAcronymCheck(type)))
+                .Select(type => type.FullName)
+                .OrderBy(name => name, StringComparer.Ordinal)
+                .ToArray();
+
+            Assert.That(offenders, Is.Empty,
+                "Type names with an underscore or an acronym longer than two letters in capitals (UI stays, Npc and Vfx are PascalCase):\n" +
+                string.Join("\n", offenders));
+        }
+
+        [Test]
+        public void TypeNames_DoNotEndWithManager()
+        {
+            string[] offenders = UserTypes()
+                .Where(type => StripGenericArity(type.Name).EndsWith("Manager", StringComparison.Ordinal))
+                .Select(type => type.FullName)
+                .OrderBy(name => name, StringComparer.Ordinal)
+                .ToArray();
+
+            Assert.That(offenders, Is.Empty, "Types named 'Manager' (name the one job the type does):\n" + string.Join("\n", offenders));
+        }
+
+        private static string NameForAcronymCheck(Type type)
+        {
+            string name = StripGenericArity(type.Name);
+
+            // The leading I of an interface is a prefix, not part of an acronym: IUIView reads as I + UIView.
+            return type.IsInterface && name.Length > 1 && name[0] == 'I' && char.IsUpper(name[1]) ? name.Substring(1) : name;
+        }
+
+        private static string StripGenericArity(string name)
+        {
+            int tick = name.IndexOf('`');
+            return tick < 0 ? name : name.Substring(0, tick);
         }
 
         private static bool IsRuntimeAssemblyName(string name)

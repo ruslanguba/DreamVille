@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 
-using DreamVille.Gameplay.NPC;
+using DreamVille.Gameplay.Npc;
 
-namespace DreamVille.Tests.EditMode.NPC
+namespace DreamVille.Tests.EditMode.Npc
 {
     /// <summary>Order rule of <see cref="RotatingQueue{T}"/>, the NPC queue's single source of order.</summary>
     public class RotatingQueueTests

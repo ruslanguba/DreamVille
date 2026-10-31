@@ -1,11 +1,11 @@
 using UnityEngine;
 
-namespace DreamVille.Gameplay.NPC
+namespace DreamVille.Gameplay.Npc
 {
     /// <summary>
     /// Scene-facing shell of <see cref="NpcAnimationState"/>: finds the NPC's Animator and applies the authored pose.
     /// </summary>
-    public sealed class NPCAnimationHandler : MonoBehaviour
+    public sealed class NpcAnimationHandler : MonoBehaviour
     {
         [SerializeField, Tooltip("Mood the NPC shows from its first frame, unless a reaction was requested before Start.")]
         private NpcState _startState;
@@ -26,7 +26,7 @@ namespace DreamVille.Gameplay.NPC
             Animator animator = GetComponentInChildren<Animator>();
             if (animator == null)
             {
-                Debug.LogError($"[{nameof(NPCAnimationHandler)}] '{name}' has no Animator in its children.", this);
+                Debug.LogError($"[{nameof(NpcAnimationHandler)}] '{name}' has no Animator in its children.", this);
                 enabled = false;
                 return;
             }
