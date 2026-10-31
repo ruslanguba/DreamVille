@@ -12,7 +12,7 @@ namespace DreamVille.Tests.EditMode.Fakes
 
         public void RaiseHit(int ricochetCount, Vector3 hitPoint)
         {
-            BulletHit?.Invoke(new BulletHitInfo { RicochetCount = ricochetCount, HitPoint = hitPoint });
+            BulletHit?.Invoke(new BulletHitInfo(null, hitPoint, 0f, ricochetCount));
         }
     }
 }

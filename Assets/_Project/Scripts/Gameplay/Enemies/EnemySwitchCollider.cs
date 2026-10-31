@@ -26,11 +26,11 @@ namespace DreamVille.Gameplay.Enemies
             _deadCollider.enabled = false;
         }
 
-        private void OnEnable() => _health.OnDeath += OnEnemyDeath;
+        private void OnEnable() => _health.Killed += OnEnemyKilled;
 
-        private void OnDisable() => _health.OnDeath -= OnEnemyDeath;
+        private void OnDisable() => _health.Killed -= OnEnemyKilled;
 
-        private void OnEnemyDeath(EnemyHealth enemy, int ricochetCount)
+        private void OnEnemyKilled(EnemyHealth enemy, int ricochetCount)
         {
             _aliveCollider.enabled = false;
             _deadCollider.enabled = true;

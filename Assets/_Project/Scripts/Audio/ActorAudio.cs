@@ -5,7 +5,7 @@ namespace DreamVille.Audio
     /// <summary>An actor's sounds from one AudioSource: death, attack and jump one-shots, footsteps while it moves, and random ambient clips on a timer.</summary>
     public class ActorAudio : MonoBehaviour, IActorAudio
     {
-        private AudioSource audioSource;
+        private AudioSource _audioSource;
         [SerializeField] private AudioClip _deathClip;
         [SerializeField] private AudioClip _attackClip;
         [SerializeField] private AudioClip _jumpClip;
@@ -27,7 +27,7 @@ namespace DreamVille.Audio
 
         private void Awake()
         {
-            audioSource = GetComponent<AudioSource>();
+            _audioSource = GetComponent<AudioSource>();
         }
         private void Start()
         {
@@ -46,9 +46,9 @@ namespace DreamVille.Audio
         {
             if (randomClips.Length == 0) return;
 
-            audioSource.pitch = 1f + Random.Range(-pitchRandom, pitchRandom);
+            _audioSource.pitch = 1f + Random.Range(-pitchRandom, pitchRandom);
             var clip = randomClips[Random.Range(0, randomClips.Length)];
-            audioSource.PlayOneShot(clip);
+            _audioSource.PlayOneShot(clip);
         }
 
         private void ScheduleNextRandom()
@@ -58,21 +58,21 @@ namespace DreamVille.Audio
         public void PlayDeath()
         {
             if (_deathClip != null)
-                audioSource.PlayOneShot(_deathClip);
+                _audioSource.PlayOneShot(_deathClip);
         }
 
         public void PlayAttack()
         {
             if (_attackClip != null)
-                audioSource.PlayOneShot(_attackClip);
+                _audioSource.PlayOneShot(_attackClip);
         }
 
         public void PlayJump()
         {
             if (_jumpClip != null)
             {
-                audioSource.pitch = Random.Range(0.9f, 1.1f); // Random pitch
-                audioSource.PlayOneShot(_jumpClip);
+                _audioSource.pitch = Random.Range(0.9f, 1.1f); // Random pitch
+                _audioSource.PlayOneShot(_jumpClip);
             }
         }
         public void TickFootsteps(bool isMoving)
@@ -106,8 +106,8 @@ namespace DreamVille.Audio
 
             _lastFootstepIndex = index;
 
-            audioSource.pitch = 1f + Random.Range(-_pitchRandom, _pitchRandom);
-            audioSource.PlayOneShot(_footstepClips[index]);
+            _audioSource.pitch = 1f + Random.Range(-_pitchRandom, _pitchRandom);
+            _audioSource.PlayOneShot(_footstepClips[index]);
         }
 
     }

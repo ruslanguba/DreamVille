@@ -7,7 +7,7 @@ namespace DreamVille.Gameplay.Environment
     {
         [SerializeField] private GameObject _object;
 
-        void Update()
+        private void Update()
         {
             transform.rotation = Quaternion.LookRotation(transform.position - _object.transform.position);
         }

@@ -1,0 +1,229 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
+using NUnit.Framework;
+using UnityEngine;
+
+namespace DreamVille.Tests.EditMode.Architecture
+{
+    /// <summary>
+    /// Pins the naming rules of conventions §2 and §4 on the compiled runtime assemblies (spec 14 §5 items 4-10):
+    /// no public instance fields, <c>_camelCase</c> private fields, PascalCase constants, <c>[SerializeField]</c> only on
+    /// private fields, events without an <c>On</c> prefix, and ScriptableObjects named after their role with a
+    /// <c>DreamVille/</c> menu. Reflection, not source text: modifiers and attributes are facts of the compiled types,
+    /// and compiler-generated members (closures, async state machines, backing fields) are skipped.
+    /// </summary>
+    public class NamingConventionsTests
+    {
+        private const int RuntimeAssemblyCount = 14;
+
+        private const BindingFlags DeclaredMembers =
+            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
+
+        private static readonly Regex PascalCase = new Regex("^[A-Z][A-Za-z0-9]*$", RegexOptions.Compiled);
+        private static readonly Regex UnderscoreCamelCase = new Regex("^_[a-z][A-Za-z0-9]*$", RegexOptions.Compiled);
+        private static readonly Regex OnPrefix = new Regex("^On[A-Z]", RegexOptions.Compiled);
+
+        private static readonly string[] ScriptableObjectRoles = { "Config", "Definition", "Rules", "Catalog" };
+
+        private const string DreamVilleMenuPrefix = "DreamVille/";
+
+        // Serialized fields that keep their old names until their own batch of roadmap 6.2 (spec 14 B4a-B5) renames them
+        // together with the prefab-instance overrides that address them. The list can only shrink; it is deleted, with
+        // its self-test, when the last entry goes. Format: "Namespace.Type.field".
+        private static readonly string[] PendingSerializedRenames =
+        {
+            "DreamVille.Audio.ActorAudio.pitchRandom",
+            "DreamVille.Audio.ActorAudio.randomClips",
+            "DreamVille.Audio.ActorAudio.randomInterval",
+            "DreamVille.Gameplay.Enemies.Enemy.attackCooldown",
+            "DreamVille.Gameplay.Enemies.Enemy.attackRange",
+            "DreamVille.Gameplay.Enemies.Enemy.attackSpawn",
+            "DreamVille.Gameplay.Enemies.Enemy.chaseRange",
+            "DreamVille.Gameplay.Enemies.Enemy.moveSpeed",
+            "DreamVille.Gameplay.Enemies.Enemy.patrolPoints",
+            "DreamVille.Gameplay.Enemies.EnemyRotationHandler.rotationSpeed",
+            "DreamVille.Gameplay.NPC.NPC_Canvas.Canvas",
+            "DreamVille.UI.GameStartUI.appearScale",
+            "DreamVille.UI.GameStartUI.collageImages",
+            "DreamVille.UI.GameStartUI.fadeTime",
+            "DreamVille.UI.GameStartUI.firstImage",
+            "DreamVille.UI.GameStartUI.firstScale",
+        };
+
+        /// <summary>Every loaded DreamVille runtime assembly (the test assemblies excluded), ordered by name.</summary>
+        internal static IReadOnlyList<Assembly> RuntimeAssemblies()
+            => AppDomain.CurrentDomain.GetAssemblies()
+                .Where(assembly => IsRuntimeAssemblyName(assembly.GetName().Name))
+                .OrderBy(assembly => assembly.GetName().Name, StringComparer.Ordinal)
+                .ToArray();
+
+        [Test]
+        public void RuntimeAssemblies_AreAllLoaded()
+        {
+            string[] names = RuntimeAssemblies().Select(assembly => assembly.GetName().Name).ToArray();
+
+            Assert.That(names, Has.Length.EqualTo(RuntimeAssemblyCount),
+                "The reflection scans below would pass on an empty set; loaded runtime assemblies:\n" + string.Join("\n", names));
+        }
+
+        [Test]
+        public void Types_DeclareNoPublicInstanceFields()
+        {
+            string[] offenders = UserFields()
+                .Where(field => field.IsPublic && !field.IsStatic)
+                .Select(KeyOf)
+                .Where(key => !PendingSerializedRenames.Contains(key))
+                .OrderBy(key => key, StringComparer.Ordinal)
+                .ToArray();
+
+            Assert.That(offenders, Is.Empty,
+                "Public instance fields (expose a property; serialized data is [SerializeField] private):\n" + string.Join("\n", offenders));
+        }
+
+        [Test]
+        public void Fields_FollowNamingRules()
+        {
+            var offenders = new List<string>();
+
+            foreach (FieldInfo field in UserFields())
+            {
+                string key = KeyOf(field);
+                if (PendingSerializedRenames.Contains(key))
+                    continue;
+
+                if (IsConstant(field))
+                {
+                    if (!PascalCase.IsMatch(field.Name))
+                        offenders.Add($"{key} (constants and static readonly fields are PascalCase)");
+                }
+                else if (!field.IsPublic && !UnderscoreCamelCase.IsMatch(field.Name))
+                {
+                    offenders.Add($"{key} (private and protected fields are _camelCase)");
+                }
+            }
+
+            offenders.Sort(StringComparer.Ordinal);
+
+            Assert.That(offenders, Is.Empty, "Fields that break conventions §2:\n" + string.Join("\n", offenders));
+        }
+
+        [Test]
+        public void PendingSerializedRenames_EveryEntryStillExists()
+        {
+            Dictionary<string, FieldInfo> fields = UserFields().ToDictionary(KeyOf, StringComparer.Ordinal);
+            var stale = new List<string>();
+
+            foreach (string key in PendingSerializedRenames)
+            {
+                if (!fields.TryGetValue(key, out FieldInfo field))
+                    stale.Add($"{key} (no such field: drop the entry)");
+                else if (!Violates(field))
+                    stale.Add($"{key} (already conventional: drop the entry)");
+            }
+
+            Assert.That(stale, Is.Empty, "The pending-rename list may only name fields that are still waiting for their rename:\n" + string.Join("\n", stale));
+        }
+
+        [Test]
+        public void SerializeField_IsOnlyOnPrivateFields()
+        {
+            string[] offenders = UserFields()
+                .Where(field => field.IsDefined(typeof(SerializeField), false) && !field.IsPrivate)
+                .Select(KeyOf)
+                .OrderBy(key => key, StringComparer.Ordinal)
+                .ToArray();
+
+            Assert.That(offenders, Is.Empty, "[SerializeField] on a non-private field (it is either redundant or exposes data):\n" + string.Join("\n", offenders));
+        }
+
+        [Test]
+        public void Events_HaveNoOnPrefix()
+        {
+            string[] offenders = UserTypes()
+                .SelectMany(type => type.GetEvents(DeclaredMembers))
+                .Where(evt => OnPrefix.IsMatch(evt.Name))
+                .Select(evt => $"{evt.DeclaringType.FullName}.{evt.Name}")
+                .OrderBy(key => key, StringComparer.Ordinal)
+                .ToArray();
+
+            Assert.That(offenders, Is.Empty, "Events named like handlers (an event is what happened; On<Event> is its handler):\n" + string.Join("\n", offenders));
+        }
+
+        [Test]
+        public void ScriptableObjects_HaveRoleSuffixAndDreamVilleMenu()
+        {
+            var offenders = new List<string>();
+
+            foreach (Type type in UserTypes().Where(type => typeof(ScriptableObject).IsAssignableFrom(type) && !type.IsAbstract))
+            {
+                if (!ScriptableObjectRoles.Any(role => type.Name.EndsWith(role, StringComparison.Ordinal)))
+                    offenders.Add($"{type.FullName} (name must end with {string.Join(", ", ScriptableObjectRoles)})");
+
+                var menu = type.GetCustomAttribute<CreateAssetMenuAttribute>(false);
+                if (menu == null || menu.menuName == null || !menu.menuName.StartsWith(DreamVilleMenuPrefix, StringComparison.Ordinal))
+                    offenders.Add($"{type.FullName} (needs [CreateAssetMenu] with a menuName under '{DreamVilleMenuPrefix}')");
+            }
+
+            offenders.Sort(StringComparer.Ordinal);
+
+            Assert.That(offenders, Is.Empty, "ScriptableObject types that break conventions §7:\n" + string.Join("\n", offenders));
+        }
+
+        private static bool IsRuntimeAssemblyName(string name)
+            => name.StartsWith("DreamVille.", StringComparison.Ordinal) && !name.StartsWith("DreamVille.Tests", StringComparison.Ordinal);
+
+        private static IEnumerable<Type> UserTypes()
+            => RuntimeAssemblies()
+                .SelectMany(LoadableTypes)
+                .Where(type => !IsCompilerGenerated(type));
+
+        private static IEnumerable<Type> LoadableTypes(Assembly assembly)
+        {
+            try
+            {
+                return assembly.GetTypes();
+            }
+            catch (ReflectionTypeLoadException exception)
+            {
+                return exception.Types.Where(type => type != null);
+            }
+        }
+
+        // Enum members are values, not fields in the naming sense; compiler-generated members have '<' in their names.
+        private static IEnumerable<FieldInfo> UserFields()
+            => UserTypes()
+                .Where(type => !type.IsEnum)
+                .SelectMany(type => type.GetFields(DeclaredMembers))
+                .Where(field => !field.IsDefined(typeof(CompilerGeneratedAttribute), false) && !field.Name.Contains("<"));
+
+        private static bool IsCompilerGenerated(Type type)
+        {
+            for (Type current = type; current != null; current = current.DeclaringType)
+            {
+                if (current.IsDefined(typeof(CompilerGeneratedAttribute), false) || current.Name.Contains("<"))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private static bool IsConstant(FieldInfo field) => field.IsLiteral || (field.IsStatic && field.IsInitOnly);
+
+        private static bool Violates(FieldInfo field)
+        {
+            if (field.IsPublic && !field.IsStatic)
+                return true;
+
+            if (IsConstant(field))
+                return !PascalCase.IsMatch(field.Name);
+
+            return !field.IsPublic && !UnderscoreCamelCase.IsMatch(field.Name);
+        }
+
+        private static string KeyOf(FieldInfo field) => $"{field.DeclaringType.FullName}.{field.Name}";
+    }
+}

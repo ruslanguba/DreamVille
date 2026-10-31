@@ -27,15 +27,15 @@ namespace DreamVille.Gameplay.Enemies
             foreach (var enemy in FindObjectsByType<EnemyHealth>(FindObjectsInactive.Include, FindObjectsSortMode.None))
             {
                 _alive.Add(enemy);
-                enemy.OnDeath += OnEnemyDeath;
+                enemy.Killed += OnEnemyKilled;
             }
 
             TotalEnemies = _alive.Count;
         }
 
-        private void OnEnemyDeath(EnemyHealth enemy, int collisionsCount)
+        private void OnEnemyKilled(EnemyHealth enemy, int collisionsCount)
         {
-            enemy.OnDeath -= OnEnemyDeath;
+            enemy.Killed -= OnEnemyKilled;
 
             if (!_alive.Remove(enemy))
                 return;
@@ -50,7 +50,7 @@ namespace DreamVille.Gameplay.Enemies
         {
             foreach (var enemy in _alive)
                 if (enemy != null)
-                    enemy.OnDeath -= OnEnemyDeath;
+                    enemy.Killed -= OnEnemyKilled;
 
             _alive.Clear();
         }

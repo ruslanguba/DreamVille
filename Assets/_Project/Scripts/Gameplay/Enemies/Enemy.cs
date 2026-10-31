@@ -133,7 +133,7 @@ namespace DreamVille.Gameplay.Enemies
             });
 
             _machine.StateChanged += OnStateChanged;
-            _health.OnDeath += OnEnemyDeath;
+            _health.Killed += OnEnemyKilled;
 
             // A hideout releases its enemy on the same frame it activates it, so the flee target can
             // already be set by the time this first Awake runs.
@@ -143,7 +143,7 @@ namespace DreamVille.Gameplay.Enemies
         private void OnEnable()
         {
             if (_animationEvents != null && _actorAudio != null)
-                _animationEvents.OnAnimationJump += _actorAudio.PlayJump;
+                _animationEvents.JumpFrameReached += _actorAudio.PlayJump;
 
             if (_config == null)
                 return;
@@ -160,7 +160,7 @@ namespace DreamVille.Gameplay.Enemies
         private void OnDisable()
         {
             if (_animationEvents != null && _actorAudio != null)
-                _animationEvents.OnAnimationJump -= _actorAudio.PlayJump;
+                _animationEvents.JumpFrameReached -= _actorAudio.PlayJump;
 
             CancelImmunity();
         }
@@ -182,7 +182,7 @@ namespace DreamVille.Gameplay.Enemies
                 _machine.StateChanged -= OnStateChanged;
 
             if (_health != null)
-                _health.OnDeath -= OnEnemyDeath;
+                _health.Killed -= OnEnemyKilled;
 
             Destroyed?.Invoke(this);
         }
@@ -203,7 +203,7 @@ namespace DreamVille.Gameplay.Enemies
 
         private void OnStateChanged(EnemyStateId previous, EnemyStateId next) => StateChanged?.Invoke(previous, next);
 
-        private void OnEnemyDeath(EnemyHealth health, int ricochetCount) => _machine.ChangeState(EnemyStateId.Dead);
+        private void OnEnemyKilled(EnemyHealth health, int ricochetCount) => _machine.ChangeState(EnemyStateId.Dead);
 
         private async UniTaskVoid BecomeVulnerableAsync(float delay, CancellationToken token)
         {

@@ -21,7 +21,7 @@ namespace DreamVille.Gameplay.Weapons.Bullets
         public event Action<Bullet> ReturnedToPool;
 
         private BulletPool _pool;
-        private Rigidbody _rb;
+        private Rigidbody _body;
         private SphereCollider _collider;
         private int _hitCount;
         private BulletConfig _config;
@@ -30,7 +30,7 @@ namespace DreamVille.Gameplay.Weapons.Bullets
 
         private void Awake()
         {
-            _rb = GetComponent<Rigidbody>();
+            _body = GetComponent<Rigidbody>();
             _collider = GetComponent<SphereCollider>();
         }
 
@@ -67,8 +67,8 @@ namespace DreamVille.Gameplay.Weapons.Bullets
         /// <summary>Sets the bullet in motion along <paramref name="direction"/> and arms its lifetime.</summary>
         public void Launch(Vector3 direction)
         {
-            _rb.linearVelocity = direction.normalized * _config.Speed;
-            _rb.angularVelocity = Vector3.zero;
+            _body.linearVelocity = direction.normalized * _config.Speed;
+            _body.angularVelocity = Vector3.zero;
             RestartLifetime();
         }
 
@@ -78,13 +78,7 @@ namespace DreamVille.Gameplay.Weapons.Bullets
                 return;
 
             _hitCount++;
-            Hit?.Invoke(new BulletHitInfo
-            {
-                HitPoint = collision.GetContact(0).point,
-                Target = collision.gameObject,
-                RicochetCount = _hitCount,
-                Damage = _config.Damage
-            });
+            Hit?.Invoke(new BulletHitInfo(collision.gameObject, collision.GetContact(0).point, _config.Damage, _hitCount));
 
             if (_hitCount >= _config.MaxCollisionCount)
                 ReturnToPool();

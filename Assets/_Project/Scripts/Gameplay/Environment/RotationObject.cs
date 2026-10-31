@@ -13,12 +13,12 @@ namespace DreamVille.Gameplay.Environment
 
         private Quaternion _lastRotation;
 
-        void Start()
+        private void Start()
         {
             _lastRotation = transform.rotation;
         }
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             // Rotation applied since the last frame.
             DeltaRot = transform.rotation * Quaternion.Inverse(_lastRotation);
@@ -26,9 +26,8 @@ namespace DreamVille.Gameplay.Environment
             _lastRotation = transform.rotation;
         }
 
-        void Update()
+        private void Update()
         {
-
             transform.Rotate(_speedRotationX * Time.deltaTime, _speedRotationY * Time.deltaTime, _speedRotationZ * Time.deltaTime);
         }
     }

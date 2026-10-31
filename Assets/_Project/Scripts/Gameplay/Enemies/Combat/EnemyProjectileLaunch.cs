@@ -5,11 +5,6 @@ namespace DreamVille.Gameplay.Enemies.Combat
     /// <summary>Spawn parameters for a pooled enemy projectile.</summary>
     public readonly struct EnemyProjectileLaunch
     {
-        public readonly Vector3 Position;
-        public readonly Vector3 Direction;
-        public readonly float Impulse;
-        public readonly float Lifetime;
-
         public EnemyProjectileLaunch(Vector3 position, Vector3 direction, float impulse, float lifetime)
         {
             Position = position;
@@ -17,5 +12,13 @@ namespace DreamVille.Gameplay.Enemies.Combat
             Impulse = impulse;
             Lifetime = lifetime;
         }
+
+        public Vector3 Position { get; }
+
+        public Vector3 Direction { get; }
+
+        public float Impulse { get; }
+
+        public float Lifetime { get; }
     }
 }

@@ -10,14 +10,14 @@ namespace DreamVille.Gameplay.Enemies
 {
     /// <summary>
     /// Enemy hit-point holder. Delegates bookkeeping to <see cref="Damage.Health"/> so a
-    /// second hit or trigger after death cannot re-fire <see cref="OnDeath"/> or <see cref="Died"/>.
+    /// second hit or trigger after death cannot re-fire <see cref="Killed"/> or <see cref="Died"/>.
     /// </summary>
     public sealed class EnemyHealth : MonoBehaviour, IDamageable, IMortal
     {
-        /// <summary>Raised once on death. Arguments: this enemy, the ricochet count of the killing hit.</summary>
-        public event Action<EnemyHealth, int> OnDeath;
+        /// <summary>Raised once on death, before <see cref="Died"/>. Arguments: this enemy, the ricochet count of the killing hit.</summary>
+        public event Action<EnemyHealth, int> Killed;
 
-        /// <summary>Raised once on death, right after <see cref="OnDeath"/>. Payload-free seam for objectives.</summary>
+        /// <summary>Raised once on death, right after <see cref="Killed"/>. Payload-free seam for objectives.</summary>
         public event Action<IMortal> Died;
 
         [FormerlySerializedAs("_health")]
@@ -68,13 +68,13 @@ namespace DreamVille.Gameplay.Enemies
             if (_clip != null)
                 _audio?.PlaySfx(_clip);
 
-            OnDeath?.Invoke(this, _collisionsCount);
+            Killed?.Invoke(this, _collisionsCount);
             Died?.Invoke(this);
         }
 
         private void OnDestroy()
         {
-            OnDeath = null;
+            Killed = null;
             Died = null;
         }
     }

@@ -26,8 +26,8 @@ namespace DreamVille.Gameplay.Weapons.Bullets
 
         private void OnHit(BulletHitInfo info)
         {
-            if (info.Target.TryGetComponent(out IDamageable d))
-                d.TakeDamage(info.Damage, info.RicochetCount);
+            if (info.Target.TryGetComponent(out IDamageable damageable))
+                damageable.TakeDamage(info.Damage, info.RicochetCount);
         }
     }
 }
