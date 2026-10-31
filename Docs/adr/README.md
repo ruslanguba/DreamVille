@@ -1,6 +1,6 @@
 # Architecture Decision Records
 
-This folder records the decisions that shape DreamVille's codebase: the composition root, assembly layering, persistence, the scene/async patterns, the interactables channel, UniTask lifetimes, the HUD, the menus, the dialogues and how serialized fields get renamed. Each record is one page — Context, Decision, Consequences, Alternatives considered — written after the decision shipped and checked against the code under [`Assets/_Project/Scripts`](../../Assets/_Project/Scripts), not as a design proposal. Records are numbered sequentially and never renumbered; a decision that gets superseded earns a new record that says so, and the old one stays as history.
+This folder records the decisions that shape DreamVille's codebase: the composition root, assembly layering, persistence, the scene/async patterns, the interactables channel, UniTask lifetimes, the HUD, the menus, the dialogues, how serialized fields get renamed and how enemy tuning lives in archetype assets. Each record is one page — Context, Decision, Consequences, Alternatives considered — written after the decision shipped and checked against the code under [`Assets/_Project/Scripts`](../../Assets/_Project/Scripts), not as a design proposal. Records are numbered sequentially and never renumbered; a decision that gets superseded earns a new record that says so, and the old one stays as history.
 
 | # | Title | Status | Date |
 |---|---|---|---|
@@ -14,3 +14,4 @@ This folder records the decisions that shape DreamVille's codebase: the composit
 | [0008](0008-menus-mvp.md) | Menus as MVP: passive views, presenters, and one Inspector rule | Accepted | 2026-09-30 |
 | [0009](0009-data-driven-dialogues.md) | Data-driven dialogues: definitions on a string table, an async run API, a presenter over a passive view | Accepted | 2026-10-03 |
 | [0010](0010-renaming-serialized-fields.md) | Renaming serialized fields: one procedure, verified data, no attributes left behind | Accepted | 2026-10-31 |
+| [0011](0011-enemy-archetypes.md) | Enemy archetypes: five numbers in seven config assets, changed first and moved second | Accepted | 2026-10-31 |

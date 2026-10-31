@@ -59,13 +59,15 @@ _A gameplay GIF and screenshots are coming with the playable build._
   and the move fixed a shipped bug where English dialogues never started. Screen hints
   use a `Hints` table the same way, so the English game is English from the first lobby.
   [ADR 0009](Docs/adr/0009-data-driven-dialogues.md).
-- **679 EditMode tests that guard the wiring and the data.**
+- **687 EditMode tests that guard the wiring and the data.**
   [`SceneCompositionTests`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs)
   opens every build scene and checks its installers, catalog references and missing
   scripts, and prefab tests pin the player's composition, so a mis-wired scene fails a
   test run instead of a play session. Naming and serialized-data hygiene are tests, not
   reviews: no asset keeps data under a renamed field's old name, and every enemy's
-  per-instance tuning is pinned in a snapshot ([ADR 0010](Docs/adr/0010-renaming-serialized-fields.md)).
+  tuning and archetype are pinned in a snapshot
+  ([ADR 0010](Docs/adr/0010-renaming-serialized-fields.md),
+  [ADR 0011](Docs/adr/0011-enemy-archetypes.md)).
 
 ## Architecture
 
@@ -125,7 +127,7 @@ makes `LevelSelectPresenter` ask `ISceneLoader` to load its `LevelDefinition`'s 
 ## Where to look first
 
 - [`Bootstrap/ProjectInstaller.cs`](Assets/_Project/Scripts/Bootstrap/ProjectInstaller.cs) — the app-lifetime composition root: every project-scope binding in one file. [`GameplaySceneContext.prefab`](Assets/_Project/Prefabs/Bootstrap/GameplaySceneContext.prefab) is the installer set shared by the six gameplay scenes.
-- [`Gameplay/Enemies/States/EnemyStateMachine.cs`](Assets/_Project/Scripts/Gameplay/Enemies/States/EnemyStateMachine.cs) — guarded enemy state machine; [`Enemy.cs`](Assets/_Project/Scripts/Gameplay/Enemies/Enemy.cs) is the thin MonoBehaviour its seven states see through `IEnemyContext`, and `EnemyConfig` assets hold the archetype tuning.
+- [`Gameplay/Enemies/States/EnemyStateMachine.cs`](Assets/_Project/Scripts/Gameplay/Enemies/States/EnemyStateMachine.cs) — guarded enemy state machine; [`Enemy.cs`](Assets/_Project/Scripts/Gameplay/Enemies/Enemy.cs) is the thin MonoBehaviour its seven states see through `IEnemyContext`, and seven `EnemyConfig` archetype assets hold the tuning ([ADR 0011](Docs/adr/0011-enemy-archetypes.md)).
 - [`Gameplay/Player/PlayerInstaller.cs`](Assets/_Project/Scripts/Gameplay/Player/PlayerInstaller.cs) — the player prefab's own composition root; [`PlayerMotor.cs`](Assets/_Project/Scripts/Gameplay/Player/PlayerMotor.cs) shows the fixed per-frame order.
 - [`Gameplay/Weapons/Pillow/PillowRack.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowRack.cs) — the throw / recall / freeze rules of the core mechanic as a plain, unit-tested class; [`PillowLauncher.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowLauncher.cs) is the thin shell with a cancellable UniTask recall loop.
 - [`Gameplay/Weapons/Aiming/BouncePath.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Aiming/BouncePath.cs) — the ricochet preview as pure math behind an `ISphereCaster` seam; the gun and the preview read one `ShotRay`, so the line ends where the bullet dies.
@@ -169,7 +171,7 @@ press Play.
 
 ## Tests
 
-Window → General → Test Runner → EditMode → Run All. 679 EditMode tests (677 pass, 2
+Window → General → Test Runner → EditMode → Run All. 687 EditMode tests (685 pass, 2
 intentionally skipped). PlayMode tests and CI are not set up yet.
 
 ## Status and roadmap
@@ -196,5 +198,5 @@ intentionally skipped). PlayMode tests and CI are not set up yet.
 
 ## Documentation
 
-[`Docs/README.md`](Docs/README.md) indexes everything under `Docs/`. The ten
+[`Docs/README.md`](Docs/README.md) indexes everything under `Docs/`. The eleven
 architecture decision records are listed in [`Docs/adr/`](Docs/adr/README.md).
