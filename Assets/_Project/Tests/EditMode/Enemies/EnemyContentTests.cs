@@ -12,10 +12,10 @@ using DreamVille.Gameplay.Enemies.Combat;
 namespace DreamVille.Tests.EditMode.Enemies
 {
     /// <summary>
-    /// Content guards for spec 03 §3.2/§3.5 (roadmap 4.1): pins the shipped <see cref="EnemyConfig"/>
-    /// assets and the prefabs that reference them, so a batch-3 edit that forgets a config, an
-    /// attack spawn or a patrol point turns into a red test instead of an inert or unkillable enemy
-    /// discovered at runtime.
+    /// Content guards for the shipped <see cref="EnemyConfig"/> archetypes and the prefabs that reference them:
+    /// a forgotten config, attack spawn or patrol point, or an archetype whose numbers the state machine
+    /// cannot honour (a chase range that never chases, a thrower that never throws or never turns), turns
+    /// into a red test instead of an inert or unkillable enemy discovered at runtime (ADR 0011).
     /// </summary>
     public class EnemyContentTests
     {
@@ -39,7 +39,7 @@ namespace DreamVille.Tests.EditMode.Enemies
         private static EnemyConfig AssignedConfig(Enemy enemy, string context)
         {
             var serializedEnemy = new SerializedObject(enemy);
-            var config = serializedEnemy.FindProperty("_config").objectReferenceValue as EnemyConfig;
+            var config = serializedEnemy.FindProperty(EnemyTuningFields.Config).objectReferenceValue as EnemyConfig;
 
             Assert.That(config, Is.Not.Null, $"{context} has no EnemyConfig assigned.");
 
@@ -49,10 +49,13 @@ namespace DreamVille.Tests.EditMode.Enemies
         private static EnemyConfig[] LoadEnemyConfigs()
         {
             string[] guids = AssetDatabase.FindAssets("t:EnemyConfig", new[] { EnemyConfigsFolder });
-
-            return guids
+            EnemyConfig[] configs = guids
                 .Select(guid => AssetDatabase.LoadAssetAtPath<EnemyConfig>(AssetDatabase.GUIDToAssetPath(guid)))
                 .ToArray();
+
+            Assert.That(configs, Is.Not.Empty, $"No EnemyConfig assets under {EnemyConfigsFolder}; every config rule would pass vacuously.");
+
+            return configs;
         }
 
         [Test]
@@ -150,7 +153,7 @@ namespace DreamVille.Tests.EditMode.Enemies
                 AssignedConfig(walker, walker.name);
 
                 var serializedWalker = new SerializedObject(walker);
-                SerializedProperty patrolPoints = serializedWalker.FindProperty("_patrolPoints");
+                SerializedProperty patrolPoints = serializedWalker.FindProperty(EnemyTuningFields.PatrolPoints);
 
                 Assert.That(patrolPoints.arraySize, Is.EqualTo(2), $"{walker.name} must have exactly two patrol points.");
                 for (int i = 0; i < patrolPoints.arraySize; i++)
@@ -172,14 +175,14 @@ namespace DreamVille.Tests.EditMode.Enemies
             foreach ((string context, Enemy enemy) in enemies)
             {
                 var serializedEnemy = new SerializedObject(enemy);
-                var config = serializedEnemy.FindProperty("_config").objectReferenceValue as EnemyConfig;
+                var config = serializedEnemy.FindProperty(EnemyTuningFields.Config).objectReferenceValue as EnemyConfig;
 
                 Assert.That(config, Is.Not.Null, $"{context} has no EnemyConfig assigned.");
 
                 if (config.Attack != EnemyAttackKind.ThrowProjectile)
                     continue;
 
-                SerializedProperty attackSpawn = serializedEnemy.FindProperty("_attackSpawn");
+                SerializedProperty attackSpawn = serializedEnemy.FindProperty(EnemyTuningFields.AttackSpawn);
                 Assert.That(attackSpawn.objectReferenceValue, Is.Not.Null, $"{context} throws projectiles but has no attackSpawn assigned.");
             }
         }

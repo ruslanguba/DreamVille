@@ -25,7 +25,10 @@ namespace DreamVille.Tests.EditMode.Enemies
         public const string AttackSpawn = "_attackSpawn";
     }
 
-    /// <summary>One enemy of one scene or prefab: its key (asset and hierarchy path) and the tuning it resolves to through its config.</summary>
+    /// <summary>
+    /// One enemy of one scene or prefab: its key (asset and hierarchy path) and the tuning it resolves to through its config.
+    /// The five tuning numbers are the <see cref="EnemyConfig"/> values, or NaN when the enemy has no config.
+    /// </summary>
     internal readonly struct EnemyTuningRow
     {
         /// <summary>The TSV header and the column order of <see cref="ToCells"/>.</summary>
@@ -55,7 +58,6 @@ namespace DreamVille.Tests.EditMode.Enemies
         /// <summary>Hierarchy path from the scene or prefab root; every member of a same-name sibling group carries a zero-based <c>[n]</c> suffix.</summary>
         public string Path { get; }
 
-        /// <summary>The five tuning numbers are the <see cref="EnemyConfig"/> values, or NaN when the enemy has no config.</summary>
         public float MoveSpeed { get; }
 
         public float ChaseRange { get; }

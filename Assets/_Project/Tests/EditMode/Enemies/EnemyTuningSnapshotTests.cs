@@ -11,7 +11,7 @@ using DreamVille.Tests.EditMode.Composition;
 namespace DreamVille.Tests.EditMode.Enemies
 {
     /// <summary>
-    /// Guards spec 14 §5 items 1-3: every enemy in every scene and prefab keeps the tuning recorded in
+    /// Guards spec 14 §5 items 1-3 and spec 15 §5 item 5: every enemy in every scene and prefab keeps the tuning recorded in
     /// <c>EnemyTuningSnapshot.tsv</c> (move speed, chase and attack ranges, attack cooldown, rotation speed, attack spawn,
     /// patrol route, archetype config). Values are read as the asset resolves them, through the enemy's config and with
     /// prefab-instance overrides included, so a serialized rename that loses designer data turns this red. The snapshot

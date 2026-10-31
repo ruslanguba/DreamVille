@@ -54,6 +54,18 @@ namespace DreamVille.Tests.EditMode.Enemies
         }
 
         [Test]
+        public void FixedTick_BeforeArrival_SteersAtConfigSpeedAndAcceleration()
+        {
+            _context.Config = Track(EnemyConfig.CreateForTests(acceleration: 7.5f, hideoutArriveRadius: 2f, moveSpeed: 2.5f));
+            _context.FleeTargetPosition = new Vector3(10f, 0f, 0f);
+
+            _machine.FixedTick(0.1f);
+
+            Assert.That(_context.Steering.LastTargetSpeed, Is.EqualTo(2.5f));
+            Assert.That(_context.Steering.LastAcceleration, Is.EqualTo(7.5f));
+        }
+
+        [Test]
         public void FixedTick_OnArrivalAtHideout_BecomesVulnerableAndTransitionsToHidden()
         {
             _context.FleeTargetIsHideout = true;

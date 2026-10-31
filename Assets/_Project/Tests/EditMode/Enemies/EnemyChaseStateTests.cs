@@ -72,7 +72,7 @@ namespace DreamVille.Tests.EditMode.Enemies
         }
 
         [Test]
-        public void FixedTick_SteersTowardsPlayerAtTunedSpeedAndConfigAcceleration()
+        public void FixedTick_SteersTowardsPlayerAtConfigSpeedAndAcceleration()
         {
             _context.Config = Track(EnemyConfig.CreateForTests(moveSpeed: 4f, chaseRange: 5f, attackRange: 1f, attackCooldown: 2f));
             _context.PlayerPosition = new Vector3(2f, 0f, 3f);

@@ -89,7 +89,7 @@ namespace DreamVille.Tests.EditMode.Enemies
             _context.Config = Track(EnemyConfig.CreateForTests(moveSpeed: 3f, chaseRange: 0f, attackRange: 5f, attackCooldown: 2f));
             _context.HasPlayer = true;
             _context.Position = Vector3.zero;
-            _context.PlayerPosition = new Vector3(0.1f, 0f, 0f);
+            _context.PlayerPosition = Vector3.zero;
 
             _machine.Tick(0.1f);
 
@@ -107,6 +107,18 @@ namespace DreamVille.Tests.EditMode.Enemies
             Assert.That(_context.FacedTowards, Is.EqualTo(new[] { new Vector3(1f, 0f, 2f) }));
             Assert.That(_context.Steering.AccelerateCount, Is.EqualTo(0));
             Assert.That(_context.Steering.StopCount, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void FixedTick_WithRoute_SteersAtConfigSpeedAndAcceleration()
+        {
+            _context.PatrolPoints.Add(new Vector3(10f, 0f, 0f));
+            _context.Config = Track(EnemyConfig.CreateForTests(acceleration: 7.5f, moveSpeed: 2.5f));
+
+            _machine.FixedTick(0.1f);
+
+            Assert.That(_context.Steering.LastTargetSpeed, Is.EqualTo(2.5f));
+            Assert.That(_context.Steering.LastAcceleration, Is.EqualTo(7.5f));
         }
 
         [Test]
