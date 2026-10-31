@@ -30,7 +30,7 @@ namespace DreamVille.Gameplay.Enemies.States
             _context.FaceTowards(_context.PlayerPosition);
 
             float distance = Vector3.Distance(_context.Position, _context.PlayerPosition);
-            if (distance > _context.Tuning.AttackRange)
+            if (distance > _context.Config.AttackRange)
             {
                 _machine.ChangeState(EnemyStateId.Chase);
                 return;
@@ -41,7 +41,7 @@ namespace DreamVille.Gameplay.Enemies.States
             {
                 _context.Attack.Throw((_context.PlayerPosition - _context.Attack.Origin).normalized);
                 _context.Audio.PlayAttack();
-                _cooldown = _context.Tuning.AttackCooldown;
+                _cooldown = _context.Config.AttackCooldown;
             }
         }
 

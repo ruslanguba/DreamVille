@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
@@ -45,23 +46,38 @@ namespace DreamVille.Tests.EditMode.Enemies
             return config;
         }
 
+        private static EnemyConfig[] LoadEnemyConfigs()
+        {
+            string[] guids = AssetDatabase.FindAssets("t:EnemyConfig", new[] { EnemyConfigsFolder });
+
+            return guids
+                .Select(guid => AssetDatabase.LoadAssetAtPath<EnemyConfig>(AssetDatabase.GUIDToAssetPath(guid)))
+                .ToArray();
+        }
+
         [Test]
         public void EveryEnemyConfig_HasNonNegativeTimingsAndPositiveDespawnDelay()
         {
-            string[] guids = AssetDatabase.FindAssets("t:EnemyConfig", new[] { EnemyConfigsFolder });
-            EnemyConfig[] configs = guids
-                .Select(guid => AssetDatabase.LoadAssetAtPath<EnemyConfig>(AssetDatabase.GUIDToAssetPath(guid)))
-                .ToArray();
+            EnemyConfig[] configs = LoadEnemyConfigs();
 
             Assert.That(configs.Select(config => config.name), Is.SupersetOf(new[]
             {
-                "EnemyConfig_Thrower",
+                "EnemyConfig_Hunter",
+                "EnemyConfig_Stalker",
+                "EnemyConfig_RapidSentry",
+                "EnemyConfig_Sentry",
+                "EnemyConfig_Lookout",
                 "EnemyConfig_Runner",
                 "EnemyConfig_Walker"
             }));
 
             foreach (EnemyConfig config in configs)
             {
+                Assert.That(config.MoveSpeed, Is.GreaterThanOrEqualTo(0f), $"{config.name}.MoveSpeed is negative.");
+                Assert.That(config.ChaseRange, Is.GreaterThanOrEqualTo(0f), $"{config.name}.ChaseRange is negative.");
+                Assert.That(config.AttackRange, Is.GreaterThanOrEqualTo(0f), $"{config.name}.AttackRange is negative.");
+                Assert.That(config.AttackCooldown, Is.GreaterThanOrEqualTo(0f), $"{config.name}.AttackCooldown is negative.");
+                Assert.That(config.RotationSpeed, Is.GreaterThanOrEqualTo(0f), $"{config.name}.RotationSpeed is negative.");
                 Assert.That(config.Acceleration, Is.GreaterThanOrEqualTo(0f), $"{config.name}.Acceleration is negative.");
                 Assert.That(config.PatrolArriveRadius, Is.GreaterThanOrEqualTo(0f), $"{config.name}.PatrolArriveRadius is negative.");
                 Assert.That(config.HideoutArriveRadius, Is.GreaterThanOrEqualTo(0f), $"{config.name}.HideoutArriveRadius is negative.");
@@ -74,6 +90,37 @@ namespace DreamVille.Tests.EditMode.Enemies
                 if (!config.SpawnsVulnerable)
                     Assert.That(config.HitImmunityDuration, Is.GreaterThan(0f), $"{config.name} never becomes vulnerable but has no hit-immunity window.");
             }
+        }
+
+        [Test]
+        public void EveryEnemyConfig_ChaseRangeIsZeroOrBeyondAttackRange()
+        {
+            string[] offenders = LoadEnemyConfigs()
+                .Where(config => config.ChaseRange > 0f && config.ChaseRange <= config.AttackRange)
+                .Select(config => $"{config.name} (chaseRange {config.ChaseRange}, attackRange {config.AttackRange})")
+                .OrderBy(offender => offender, StringComparer.Ordinal)
+                .ToArray();
+
+            Assert.That(offenders, Is.Empty,
+                "A chase range at or below the attack range never chases: the enemy attacks as soon as the player is inside the " +
+                "attack range, so the chase range is never reached first. 0 is the only honest value for 'never chases':\n" +
+                string.Join("\n", offenders));
+        }
+
+        [Test]
+        public void ThrowingEnemyConfigs_HavePositiveRangeCooldownAndTurnSpeed()
+        {
+            string[] offenders = LoadEnemyConfigs()
+                .Where(config => config.Attack == EnemyAttackKind.ThrowProjectile)
+                .Where(config => config.AttackRange <= 0f || config.AttackCooldown <= 0f || config.RotationSpeed <= 0f)
+                .Select(config => $"{config.name} (attackRange {config.AttackRange}, attackCooldown {config.AttackCooldown}, rotationSpeed {config.RotationSpeed})")
+                .OrderBy(offender => offender, StringComparer.Ordinal)
+                .ToArray();
+
+            Assert.That(offenders, Is.Empty,
+                "A thrower needs a positive attack range (it never attacks otherwise), a positive cooldown (it throws every frame " +
+                "otherwise) and a positive rotation speed (0 snaps once when an attack starts and never tracks the player):\n" +
+                string.Join("\n", offenders));
         }
 
         [TestCaseSource(nameof(EnemyPrefabPaths))]

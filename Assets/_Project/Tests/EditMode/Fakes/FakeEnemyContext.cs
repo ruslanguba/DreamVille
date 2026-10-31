@@ -42,8 +42,6 @@ namespace DreamVille.Tests.EditMode.Fakes
 
         public EnemyConfig Config { get; set; }
 
-        public EnemyTuning Tuning { get; set; }
-
         public Vector3 Position { get; set; }
 
         public bool HasPlayer { get; set; }

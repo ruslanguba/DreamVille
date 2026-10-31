@@ -10,6 +10,22 @@ namespace DreamVille.Configs.Enemies
         [SerializeField] private EnemyStateId _initialState = EnemyStateId.Patrol;
         [SerializeField] private PatrolMode _patrolMode = PatrolMode.Loop;
 
+        [Header("Tuning")]
+        [SerializeField, Min(0f), Tooltip("Metres per second on a route, in a chase and when fleeing. 0 = stationary: no patrol route allowed.")]
+        private float _moveSpeed = 3f;
+
+        [SerializeField, Min(0f), Tooltip("Chases inside this distance. 0 = never chases; otherwise greater than Attack Range.")]
+        private float _chaseRange = 7f;
+
+        [SerializeField, Min(0f), Tooltip("Stops and throws inside this distance.")]
+        private float _attackRange = 5f;
+
+        [SerializeField, Min(0f), Tooltip("Seconds between throws; the first throw is immediate.")]
+        private float _attackCooldown = 2f;
+
+        [SerializeField, Min(0f), Tooltip("Facing slerp rate per second. Throwers need > 0: 0 snaps when an attack starts and never tracks.")]
+        private float _rotationSpeed = 8f;
+
         [Header("Steering")]
         [SerializeField, Min(0f)] private float _acceleration = 6f;
         [SerializeField, Min(0f)] private float _patrolArriveRadius = 0.5f;
@@ -32,6 +48,21 @@ namespace DreamVille.Configs.Enemies
         public EnemyStateId InitialState => _initialState;
 
         public PatrolMode PatrolMode => _patrolMode;
+
+        /// <summary>Top speed on a route, in a chase and when fleeing; 0 for an enemy that never moves.</summary>
+        public float MoveSpeed => _moveSpeed;
+
+        /// <summary>Distance inside which the enemy chases the player; 0 means it never chases.</summary>
+        public float ChaseRange => _chaseRange;
+
+        /// <summary>Distance inside which the enemy stops and throws.</summary>
+        public float AttackRange => _attackRange;
+
+        /// <summary>Seconds between throws; the first throw of an attack is immediate.</summary>
+        public float AttackCooldown => _attackCooldown;
+
+        /// <summary>Facing slerp rate per second.</summary>
+        public float RotationSpeed => _rotationSpeed;
 
         /// <summary>Steering acceleration applied while patrolling, chasing or fleeing.</summary>
         public float Acceleration => _acceleration;
@@ -75,7 +106,12 @@ namespace DreamVille.Configs.Enemies
             bool spawnsVulnerable = true,
             float hitImmunityDuration = 0f,
             float despawnDelay = 7f,
-            float maxLocomotionStartOffset = 0.5f)
+            float maxLocomotionStartOffset = 0.5f,
+            float moveSpeed = 3f,
+            float chaseRange = 7f,
+            float attackRange = 5f,
+            float attackCooldown = 2f,
+            float rotationSpeed = 8f)
         {
             var config = CreateInstance<EnemyConfig>();
             config._initialState = initialState;
@@ -90,6 +126,11 @@ namespace DreamVille.Configs.Enemies
             config._hitImmunityDuration = hitImmunityDuration;
             config._despawnDelay = despawnDelay;
             config._maxLocomotionStartOffset = maxLocomotionStartOffset;
+            config._moveSpeed = moveSpeed;
+            config._chaseRange = chaseRange;
+            config._attackRange = attackRange;
+            config._attackCooldown = attackCooldown;
+            config._rotationSpeed = rotationSpeed;
             return config;
         }
 #endif

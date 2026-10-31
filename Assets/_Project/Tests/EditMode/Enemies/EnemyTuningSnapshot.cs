@@ -8,38 +8,34 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
+using DreamVille.Configs.Enemies;
 using DreamVille.Gameplay.Enemies;
 
 namespace DreamVille.Tests.EditMode.Enemies
 {
     /// <summary>
-    /// The serialized field names the tuning snapshot reads from <see cref="Enemy"/> and <see cref="EnemyRotationHandler"/>.
-    /// Renaming one of those fields means changing exactly these constants: the TSV columns keep their names and values.
+    /// The serialized field names the tuning snapshot reads from <see cref="Enemy"/>. The five tuning numbers are not among
+    /// them: they come from the <see cref="EnemyConfig"/> the enemy references. Renaming one of these fields means changing
+    /// exactly these constants: the TSV columns keep their names and values.
     /// </summary>
     internal static class EnemyTuningFields
     {
-        public const string MoveSpeed = "_moveSpeed";
-        public const string ChaseRange = "_chaseRange";
-        public const string AttackRange = "_attackRange";
-        public const string AttackCooldown = "_attackCooldown";
+        public const string Config = "_config";
         public const string PatrolPoints = "_patrolPoints";
         public const string AttackSpawn = "_attackSpawn";
-
-        /// <summary>Lives on <see cref="EnemyRotationHandler"/>, not on <see cref="Enemy"/>.</summary>
-        public const string RotationSpeed = "_rotationSpeed";
     }
 
-    /// <summary>One enemy of one scene or prefab: its key (asset and hierarchy path) and the level-design tuning resolved on it.</summary>
+    /// <summary>One enemy of one scene or prefab: its key (asset and hierarchy path) and the tuning it resolves to through its config.</summary>
     internal readonly struct EnemyTuningRow
     {
         /// <summary>The TSV header and the column order of <see cref="ToCells"/>.</summary>
         public static readonly IReadOnlyList<string> Columns = new[]
         {
-            "asset", "path", "moveSpeed", "chaseRange", "attackRange", "attackCooldown", "rotationSpeed", "attackSpawn", "patrolPoints"
+            "asset", "path", "moveSpeed", "chaseRange", "attackRange", "attackCooldown", "rotationSpeed", "attackSpawn", "patrolPoints", "config"
         };
 
         public EnemyTuningRow(string asset, string path, float moveSpeed, float chaseRange, float attackRange,
-            float attackCooldown, float rotationSpeed, string attackSpawn, string patrolPoints)
+            float attackCooldown, float rotationSpeed, string attackSpawn, string patrolPoints, string config)
         {
             Asset = asset;
             Path = path;
@@ -50,6 +46,7 @@ namespace DreamVille.Tests.EditMode.Enemies
             RotationSpeed = rotationSpeed;
             AttackSpawn = attackSpawn;
             PatrolPoints = patrolPoints;
+            Config = config;
         }
 
         /// <summary>Path under <c>Assets/_Project/</c> without the extension, for example <c>Scenes/Max/Level_2_Max</c>.</summary>
@@ -58,6 +55,7 @@ namespace DreamVille.Tests.EditMode.Enemies
         /// <summary>Hierarchy path from the scene or prefab root; every member of a same-name sibling group carries a zero-based <c>[n]</c> suffix.</summary>
         public string Path { get; }
 
+        /// <summary>The five tuning numbers are the <see cref="EnemyConfig"/> values, or NaN when the enemy has no config.</summary>
         public float MoveSpeed { get; }
 
         public float ChaseRange { get; }
@@ -66,7 +64,6 @@ namespace DreamVille.Tests.EditMode.Enemies
 
         public float AttackCooldown { get; }
 
-        /// <summary>Read from the <see cref="EnemyRotationHandler"/> on the same GameObject.</summary>
         public float RotationSpeed { get; }
 
         /// <summary>Path relative to the enemy root: <c>.</c> is the enemy itself, <c>-</c> means unassigned.</summary>
@@ -74,6 +71,9 @@ namespace DreamVille.Tests.EditMode.Enemies
 
         /// <summary>Hierarchy paths in the same asset joined with <c>;</c>, <c>null</c> for an empty slot, an empty string for no points.</summary>
         public string PatrolPoints { get; }
+
+        /// <summary>File name without extension of the <see cref="EnemyConfig"/> asset the enemy references, <c>-</c> when unassigned.</summary>
+        public string Config { get; }
 
         public static EnemyTuningRow Parse(string tsvLine, int lineNumber)
         {
@@ -92,13 +92,15 @@ namespace DreamVille.Tests.EditMode.Enemies
                 attackCooldown: Number(5),
                 rotationSpeed: Number(6),
                 attackSpawn: cells[7],
-                patrolPoints: cells[8]);
+                patrolPoints: cells[8],
+                config: cells[9]);
         }
 
         /// <summary>The columns in <see cref="Columns"/> order, floats as <c>R</c> in the invariant culture.</summary>
         public string[] ToCells() => new[]
         {
-            Asset, Path, Format(MoveSpeed), Format(ChaseRange), Format(AttackRange), Format(AttackCooldown), Format(RotationSpeed), AttackSpawn, PatrolPoints
+            Asset, Path, Format(MoveSpeed), Format(ChaseRange), Format(AttackRange), Format(AttackCooldown), Format(RotationSpeed),
+            AttackSpawn, PatrolPoints, Config
         };
 
         public string ToTsv() => string.Join("\t", ToCells());
@@ -154,8 +156,9 @@ namespace DreamVille.Tests.EditMode.Enemies
     }
 
     /// <summary>
-    /// Builds <see cref="EnemyTuningRow"/>s from the real assets, reading every value through <see cref="SerializedObject"/>
-    /// with the names in <see cref="EnemyTuningFields"/>, so the result is what the scene or prefab resolves to, overrides included.
+    /// Builds <see cref="EnemyTuningRow"/>s from the real assets. Placement and the config reference are read through
+    /// <see cref="SerializedObject"/> with the names in <see cref="EnemyTuningFields"/>, so the result is what the scene or prefab
+    /// resolves to, overrides included; the five tuning numbers are then read from the referenced <see cref="EnemyConfig"/>.
     /// Scenes are opened Single: the caller guards against a dirty scene and restores the user's scene afterwards.
     /// </summary>
     internal static class EnemyTuningReader
@@ -205,24 +208,24 @@ namespace DreamVille.Tests.EditMode.Enemies
             string path = paths.PathOf(enemy.transform);
             string where = $"{asset}: {path}";
 
-            var rotation = enemy.GetComponent<EnemyRotationHandler>();
-            if (rotation == null)
-                throw new InvalidOperationException($"{where}: the enemy has no {nameof(EnemyRotationHandler)} on its GameObject.");
-
             using var enemyObject = new SerializedObject(enemy);
-            using var rotationObject = new SerializedObject(rotation);
+
+            var config = Property(enemyObject, EnemyTuningFields.Config, where).objectReferenceValue as EnemyConfig;
 
             return new EnemyTuningRow(
                 asset: asset,
                 path: path,
-                moveSpeed: Property(enemyObject, EnemyTuningFields.MoveSpeed, where).floatValue,
-                chaseRange: Property(enemyObject, EnemyTuningFields.ChaseRange, where).floatValue,
-                attackRange: Property(enemyObject, EnemyTuningFields.AttackRange, where).floatValue,
-                attackCooldown: Property(enemyObject, EnemyTuningFields.AttackCooldown, where).floatValue,
-                rotationSpeed: Property(rotationObject, EnemyTuningFields.RotationSpeed, where).floatValue,
+                moveSpeed: TuningOf(config, tuned => tuned.MoveSpeed),
+                chaseRange: TuningOf(config, tuned => tuned.ChaseRange),
+                attackRange: TuningOf(config, tuned => tuned.AttackRange),
+                attackCooldown: TuningOf(config, tuned => tuned.AttackCooldown),
+                rotationSpeed: TuningOf(config, tuned => tuned.RotationSpeed),
                 attackSpawn: AttackSpawnOf(Property(enemyObject, EnemyTuningFields.AttackSpawn, where), enemy.transform, paths),
-                patrolPoints: PatrolPointsOf(Property(enemyObject, EnemyTuningFields.PatrolPoints, where), paths));
+                patrolPoints: PatrolPointsOf(Property(enemyObject, EnemyTuningFields.PatrolPoints, where), paths),
+                config: config == null ? Unassigned : Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(config)));
         }
+
+        private static float TuningOf(EnemyConfig config, Func<EnemyConfig, float> read) => config == null ? float.NaN : read(config);
 
         private static SerializedProperty Property(SerializedObject owner, string name, string where)
             => owner.FindProperty(name)

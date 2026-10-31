@@ -49,7 +49,7 @@ namespace DreamVille.Tests.EditMode.Enemies
         [Test]
         public void Tick_WhenPlayerInsideChaseRange_TransitionsToChase()
         {
-            _context.Tuning = new EnemyTuning(moveSpeed: 3f, chaseRange: 10f, attackRange: 3f, attackCooldown: 2f);
+            _context.Config = Track(EnemyConfig.CreateForTests(moveSpeed: 3f, chaseRange: 10f, attackRange: 3f, attackCooldown: 2f));
             _context.HasPlayer = true;
             _context.Position = Vector3.zero;
             _context.PlayerPosition = new Vector3(5f, 0f, 0f);
@@ -62,7 +62,7 @@ namespace DreamVille.Tests.EditMode.Enemies
         [Test]
         public void Tick_WhenPlayerInsideAttackRangeButOutsideChaseRange_TransitionsToAttack()
         {
-            _context.Tuning = new EnemyTuning(moveSpeed: 3f, chaseRange: 1f, attackRange: 5f, attackCooldown: 2f);
+            _context.Config = Track(EnemyConfig.CreateForTests(moveSpeed: 3f, chaseRange: 1f, attackRange: 5f, attackCooldown: 2f));
             _context.HasPlayer = true;
             _context.Position = Vector3.zero;
             _context.PlayerPosition = new Vector3(3f, 0f, 0f);
@@ -75,12 +75,25 @@ namespace DreamVille.Tests.EditMode.Enemies
         [Test]
         public void Tick_WithoutPlayer_StaysInPatrol()
         {
-            _context.Tuning = new EnemyTuning(moveSpeed: 3f, chaseRange: 10f, attackRange: 5f, attackCooldown: 2f);
+            _context.Config = Track(EnemyConfig.CreateForTests(moveSpeed: 3f, chaseRange: 10f, attackRange: 5f, attackCooldown: 2f));
             _context.HasPlayer = false;
 
             _machine.Tick(0.1f);
 
             Assert.That(_machine.CurrentState.Id, Is.EqualTo(EnemyStateId.Patrol));
+        }
+
+        [Test]
+        public void Tick_WhenChaseRangeIsZero_AttacksEvenAtPointBlank()
+        {
+            _context.Config = Track(EnemyConfig.CreateForTests(moveSpeed: 3f, chaseRange: 0f, attackRange: 5f, attackCooldown: 2f));
+            _context.HasPlayer = true;
+            _context.Position = Vector3.zero;
+            _context.PlayerPosition = new Vector3(0.1f, 0f, 0f);
+
+            _machine.Tick(0.1f);
+
+            Assert.That(_machine.CurrentState.Id, Is.EqualTo(EnemyStateId.Attack), "a zero chase range means 'never chases': Patrol must go straight to Attack");
         }
 
         [Test]
@@ -104,7 +117,8 @@ namespace DreamVille.Tests.EditMode.Enemies
             _context.PatrolPoints.Add(pointA);
             _context.PatrolPoints.Add(pointB);
             _context.Position = pointA;
-            _context.Tuning = new EnemyTuning(moveSpeed: 2f, chaseRange: 0f, attackRange: 0f, attackCooldown: 0f);
+            _context.Config = Track(EnemyConfig.CreateForTests(
+                patrolArriveRadius: 0.5f, moveSpeed: 2f, chaseRange: 0f, attackRange: 0f, attackCooldown: 0f));
 
             _machine.FixedTick(0.1f);
             _machine.FixedTick(0.1f);
@@ -119,7 +133,8 @@ namespace DreamVille.Tests.EditMode.Enemies
             var pointB = new Vector3(5f, 0f, 0f);
             _context.PatrolPoints.Add(pointA);
             _context.PatrolPoints.Add(pointB);
-            _context.Tuning = new EnemyTuning(moveSpeed: 2f, chaseRange: 0f, attackRange: 0f, attackCooldown: 0f);
+            _context.Config = Track(EnemyConfig.CreateForTests(
+                patrolArriveRadius: 0.5f, moveSpeed: 2f, chaseRange: 0f, attackRange: 0f, attackCooldown: 0f));
 
             _context.Position = pointA;
             _machine.FixedTick(0.1f);
@@ -134,12 +149,12 @@ namespace DreamVille.Tests.EditMode.Enemies
         [Test]
         public void FixedTick_InOnceMode_StopsSteeringAtLastPoint()
         {
-            _context.Config = Track(EnemyConfig.CreateForTests(patrolMode: PatrolMode.Once, patrolArriveRadius: 0.5f));
+            _context.Config = Track(EnemyConfig.CreateForTests(
+                patrolMode: PatrolMode.Once, patrolArriveRadius: 0.5f, moveSpeed: 2f, chaseRange: 0f, attackRange: 0f, attackCooldown: 0f));
             var pointA = new Vector3(0f, 0f, 0f);
             var pointB = new Vector3(5f, 0f, 0f);
             _context.PatrolPoints.Add(pointA);
             _context.PatrolPoints.Add(pointB);
-            _context.Tuning = new EnemyTuning(moveSpeed: 2f, chaseRange: 0f, attackRange: 0f, attackCooldown: 0f);
 
             _context.Position = pointA;
             _machine.FixedTick(0.1f);

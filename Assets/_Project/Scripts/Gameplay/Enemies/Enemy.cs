@@ -20,8 +20,8 @@ namespace DreamVille.Gameplay.Enemies
     /// <summary>
     /// The one enemy component. It owns the per-instance seams (steering, animation, audio, attack),
     /// forwards the Unity lifecycle to an <see cref="EnemyStateMachine"/> and exposes the world to
-    /// its states through <see cref="IEnemyContext"/>. Behaviour comes from <see cref="EnemyConfig"/>;
-    /// the level-design knobs below stay on the prefab.
+    /// its states through <see cref="IEnemyContext"/>. Behaviour and tuning come from the
+    /// <see cref="EnemyConfig"/> archetype; only the placement below stays on the instance.
     /// </summary>
     [RequireComponent(typeof(Rigidbody), typeof(EnemyHealth), typeof(EnemyRotationHandler))]
     public sealed class Enemy : MonoBehaviour, IEnemyContext
@@ -34,13 +34,8 @@ namespace DreamVille.Gameplay.Enemies
 
         [SerializeField] private EnemyConfig _config;
 
-        // Level-design knobs: overridden per prefab instance and pinned by EnemyTuningSnapshotTests;
-        // archetype knobs live in EnemyConfig.
-        [Header("Instance tuning")]
-        [SerializeField] private float _moveSpeed = 3f;
-        [SerializeField] private float _chaseRange = 7f;
-        [SerializeField] private float _attackRange = 5f;
-        [SerializeField] private float _attackCooldown = 2f;
+        // Where this enemy walks and throws from; every number comes from the archetype in _config.
+        [Header("Placement")]
         [SerializeField] private Transform[] _patrolPoints;
         [SerializeField] private Transform _attackSpawn;
 
@@ -54,7 +49,6 @@ namespace DreamVille.Gameplay.Enemies
         private AnimationEventListener _animationEvents;
 
         private EnemyStateMachine _machine;
-        private EnemyTuning _tuning;
         private ISteering _steering;
         private IEnemyAnimator _animator;
         private IEnemyAudio _audio;
@@ -114,7 +108,7 @@ namespace DreamVille.Gameplay.Enemies
                 return;
             }
 
-            _tuning = new EnemyTuning(_moveSpeed, _chaseRange, _attackRange, _attackCooldown);
+            _rotation.Configure(_config.RotationSpeed);
             _route = PatrolRoute.WithoutEmptySlots(_patrolPoints);
             _steering = new RigidbodySteering(_body);
             _animator = new EnemyAnimatorDriver(GetComponentInChildren<Animator>());
@@ -235,8 +229,6 @@ namespace DreamVille.Gameplay.Enemies
         // The view the states get. Explicit implementations: none of it belongs to the component's API.
 
         EnemyConfig IEnemyContext.Config => _config;
-
-        EnemyTuning IEnemyContext.Tuning => _tuning;
 
         Vector3 IEnemyContext.Position => transform.position;
 

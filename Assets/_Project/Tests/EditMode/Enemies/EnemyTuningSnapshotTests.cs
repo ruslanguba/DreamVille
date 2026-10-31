@@ -11,10 +11,11 @@ using DreamVille.Tests.EditMode.Composition;
 namespace DreamVille.Tests.EditMode.Enemies
 {
     /// <summary>
-    /// Guards spec 14 §5 items 1-3: every enemy in every scene and prefab keeps the level-design tuning recorded in
+    /// Guards spec 14 §5 items 1-3: every enemy in every scene and prefab keeps the tuning recorded in
     /// <c>EnemyTuningSnapshot.tsv</c> (move speed, chase and attack ranges, attack cooldown, rotation speed, attack spawn,
-    /// patrol route). Values are read as the asset resolves them, prefab-instance overrides included, so a serialized
-    /// rename that loses designer data turns this red. The snapshot changes only on purpose, in a gameplay commit.
+    /// patrol route, archetype config). Values are read as the asset resolves them, through the enemy's config and with
+    /// prefab-instance overrides included, so a serialized rename that loses designer data turns this red. The snapshot
+    /// changes only on purpose: retuning an archetype or swapping an enemy's config lists every enemy it reaches.
     /// All assets are scanned once in the fixture setup; tests then compare plain rows.
     /// </summary>
     public class EnemyTuningSnapshotTests
@@ -114,6 +115,20 @@ namespace DreamVille.Tests.EditMode.Enemies
             Assert.That(duplicatedInSnapshot, Is.Empty, $"Duplicate keys in {EnemyTuningSnapshot.FileName}:\n" + string.Join("\n", duplicatedInSnapshot));
             Assert.That(duplicatedInAssets, Is.Empty,
                 "Two enemies resolve to the same key; the [n] sibling rule no longer tells them apart:\n" + string.Join("\n", duplicatedInAssets));
+        }
+
+        [Test]
+        public void StationaryEnemies_HaveNoPatrolRoute()
+        {
+            string[] offenders = _scanned
+                .Where(row => row.MoveSpeed <= 0f && row.PatrolPoints.Length > 0)
+                .Select(row => $"{row.Asset}: {row.Path} ({row.Config}, patrolPoints '{row.PatrolPoints}')")
+                .OrderBy(offender => offender, StringComparer.Ordinal)
+                .ToArray();
+
+            Assert.That(offenders, Is.Empty,
+                "A move speed of 0 means the enemy stands where it is placed, so a patrol route would never be walked " +
+                "(give the enemy a moving archetype, or remove the route):\n" + string.Join("\n", offenders));
         }
 
         private static string[] DuplicateKeys(IEnumerable<EnemyTuningRow> rows)

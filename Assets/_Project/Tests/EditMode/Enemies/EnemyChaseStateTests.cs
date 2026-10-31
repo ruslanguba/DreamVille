@@ -52,7 +52,7 @@ namespace DreamVille.Tests.EditMode.Enemies
         [Test]
         public void Tick_WhenPlayerLeavesChaseRange_ReturnsToPatrol()
         {
-            _context.Tuning = new EnemyTuning(moveSpeed: 3f, chaseRange: 5f, attackRange: 2f, attackCooldown: 2f);
+            _context.Config = Track(EnemyConfig.CreateForTests(moveSpeed: 3f, chaseRange: 5f, attackRange: 2f, attackCooldown: 2f));
             _context.PlayerPosition = new Vector3(10f, 0f, 0f);
 
             _machine.Tick(0.1f);
@@ -63,7 +63,7 @@ namespace DreamVille.Tests.EditMode.Enemies
         [Test]
         public void Tick_WhenPlayerEntersAttackRange_TransitionsToAttack()
         {
-            _context.Tuning = new EnemyTuning(moveSpeed: 3f, chaseRange: 5f, attackRange: 3f, attackCooldown: 2f);
+            _context.Config = Track(EnemyConfig.CreateForTests(moveSpeed: 3f, chaseRange: 5f, attackRange: 3f, attackCooldown: 2f));
             _context.PlayerPosition = new Vector3(1f, 0f, 0f);
 
             _machine.Tick(0.1f);
@@ -74,7 +74,7 @@ namespace DreamVille.Tests.EditMode.Enemies
         [Test]
         public void FixedTick_SteersTowardsPlayerAtTunedSpeedAndConfigAcceleration()
         {
-            _context.Tuning = new EnemyTuning(moveSpeed: 4f, chaseRange: 5f, attackRange: 1f, attackCooldown: 2f);
+            _context.Config = Track(EnemyConfig.CreateForTests(moveSpeed: 4f, chaseRange: 5f, attackRange: 1f, attackCooldown: 2f));
             _context.PlayerPosition = new Vector3(2f, 0f, 3f);
 
             _machine.FixedTick(0.1f);

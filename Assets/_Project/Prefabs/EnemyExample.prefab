@@ -416,10 +416,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: 3ddc719498228d940957e7eaf01d9c8f, type: 2}
-  _moveSpeed: 5
-  _chaseRange: 7
-  _attackRange: 5
-  _attackCooldown: 4
   _patrolPoints: []
   _attackSpawn: {fileID: 2066396746702385276}
 --- !u!114 &7867341581838299553
@@ -448,7 +444,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e3704e11a2c5294d8c9c5c2c4e57518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 8
 --- !u!114 &272754007688124369
 MonoBehaviour:
   m_ObjectHideFlags: 0

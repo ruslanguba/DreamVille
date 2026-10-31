@@ -60,7 +60,7 @@ namespace DreamVille.Tests.EditMode.Enemies
         [Test]
         public void Tick_ThrowsOncePerCooldown()
         {
-            _context.Tuning = new EnemyTuning(moveSpeed: 0f, chaseRange: 0f, attackRange: 100f, attackCooldown: 2f);
+            _context.Config = Track(EnemyConfig.CreateForTests(moveSpeed: 0f, chaseRange: 0f, attackRange: 100f, attackCooldown: 2f));
             _context.HasPlayer = true;
             _context.Attack.Origin = Vector3.zero;
             _context.PlayerPosition = new Vector3(5f, 0f, 0f);
@@ -93,7 +93,7 @@ namespace DreamVille.Tests.EditMode.Enemies
         [Test]
         public void Tick_WhenPlayerLeavesAttackRange_ReturnsToChaseAndRestoresAutoFacing()
         {
-            _context.Tuning = new EnemyTuning(moveSpeed: 0f, chaseRange: 0f, attackRange: 3f, attackCooldown: 2f);
+            _context.Config = Track(EnemyConfig.CreateForTests(moveSpeed: 0f, chaseRange: 0f, attackRange: 3f, attackCooldown: 2f));
             _context.HasPlayer = true;
             _context.PlayerPosition = new Vector3(10f, 0f, 0f);
             _machine.Start(EnemyStateId.Attack);

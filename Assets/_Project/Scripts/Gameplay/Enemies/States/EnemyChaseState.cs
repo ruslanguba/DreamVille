@@ -18,13 +18,13 @@ namespace DreamVille.Gameplay.Enemies.States
 
             float distance = Vector3.Distance(_context.Position, _context.PlayerPosition);
 
-            if (distance < _context.Tuning.AttackRange)
+            if (distance < _context.Config.AttackRange)
             {
                 _machine.ChangeState(EnemyStateId.Attack);
                 return;
             }
 
-            if (distance > _context.Tuning.ChaseRange)
+            if (distance > _context.Config.ChaseRange)
                 _machine.ChangeState(EnemyStateId.Patrol);
         }
 
@@ -33,7 +33,7 @@ namespace DreamVille.Gameplay.Enemies.States
             if (!_context.HasPlayer)
                 return;
 
-            _context.Steering.Accelerate(_context.PlayerPosition - _context.Position, _context.Tuning.MoveSpeed, _context.Config.Acceleration);
+            _context.Steering.Accelerate(_context.PlayerPosition - _context.Position, _context.Config.MoveSpeed, _context.Config.Acceleration);
         }
     }
 }

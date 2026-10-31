@@ -22,7 +22,7 @@ using DreamVille.UI.Menus;
 namespace DreamVille.Tests.EditMode.Architecture
 {
     /// <summary>
-    /// Ledger of every serialized field the project has renamed: the owner type and the names its data used to be
+    /// Ledger of every serialized field the project has renamed or removed: the owner type and the names its data used to be
     /// stored under. <see cref="SerializedDataHygieneTests"/> proves that no asset still carries data under one of these
     /// names and that no field takes one of them again. A rename batch adds its entry in the same commit as the data.
     /// </summary>
@@ -40,8 +40,9 @@ namespace DreamVille.Tests.EditMode.Architecture
             (typeof(ActorAudio), new[] { "_pitchRandom", "randomClips", "randomInterval", "pitchRandom" }),
 
             // target and throwForce left Enemy in step 4.2; their instance overrides were dead data until 6.2 dropped them.
-            (typeof(Enemy), new[] { "moveSpeed", "chaseRange", "attackRange", "attackCooldown", "patrolPoints", "attackSpawn", "target", "throwForce" }),
-            (typeof(EnemyRotationHandler), new[] { "rotationSpeed" }),
+            // 6.3: tuning moved to EnemyConfig archetypes (the underscored names, and the handler's rotation speed).
+            (typeof(Enemy), new[] { "moveSpeed", "chaseRange", "attackRange", "attackCooldown", "patrolPoints", "attackSpawn", "target", "throwForce", "_moveSpeed", "_chaseRange", "_attackRange", "_attackCooldown" }),
+            (typeof(EnemyRotationHandler), new[] { "rotationSpeed", "_rotationSpeed" }),
 
             // Renamed in phases 2-5 behind [FormerlySerializedAs]; 6.2 re-serialized the data and retired the attributes.
             (typeof(AudioPlayer), new[] { "audioMixer", "musicSource", "sfxSource" }),

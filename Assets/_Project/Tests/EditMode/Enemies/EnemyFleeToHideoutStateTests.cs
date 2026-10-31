@@ -20,8 +20,11 @@ namespace DreamVille.Tests.EditMode.Enemies
         [SetUp]
         public void SetUp()
         {
-            _context = new FakeEnemyContext { Config = Track(EnemyConfig.CreateForTests(hideoutArriveRadius: 2f)) };
-            _context.Tuning = new EnemyTuning(moveSpeed: 3f, chaseRange: 0f, attackRange: 0f, attackCooldown: 0f);
+            _context = new FakeEnemyContext
+            {
+                Config = Track(EnemyConfig.CreateForTests(
+                    hideoutArriveRadius: 2f, moveSpeed: 3f, chaseRange: 0f, attackRange: 0f, attackCooldown: 0f))
+            };
             _context.Position = Vector3.zero;
             _context.HasFleeTarget = true;
             _context.FleeTargetPosition = new Vector3(1f, 0f, 0f);

@@ -21,7 +21,7 @@ namespace DreamVille.Gameplay.Enemies.States
             if (!_context.HasFleeTarget)
                 return;
 
-            _context.Steering.Accelerate(_context.FleeTargetPosition - _context.Position, _context.Tuning.MoveSpeed, _context.Config.Acceleration);
+            _context.Steering.Accelerate(_context.FleeTargetPosition - _context.Position, _context.Config.MoveSpeed, _context.Config.Acceleration);
 
             float distance = Vector3.Distance(_context.Position, _context.FleeTargetPosition);
             if (distance >= _context.Config.HideoutArriveRadius)

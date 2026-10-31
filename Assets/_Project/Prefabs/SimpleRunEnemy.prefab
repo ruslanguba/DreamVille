@@ -989,7 +989,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e3704e11a2c5294d8c9c5c2c4e57518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 8
 --- !u!114 &279553783653144266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1005,6 +1004,7 @@ MonoBehaviour:
   _deathClip: {fileID: 0}
   _attackClip: {fileID: 0}
   _jumpClip: {fileID: 0}
+  _jumpPitchJitter: 0.1
   _footstepClips: []
   _stepInterval: 0.5
   _footstepPitchJitter: 0.1
@@ -1121,10 +1121,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: b033908115d14304da01eb071d65b5a0, type: 2}
-  _moveSpeed: 5
-  _chaseRange: 0
-  _attackRange: 0
-  _attackCooldown: 0
   _patrolPoints: []
   _attackSpawn: {fileID: 0}
 --- !u!114 &8068560695212955412

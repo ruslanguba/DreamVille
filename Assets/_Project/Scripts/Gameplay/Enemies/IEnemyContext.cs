@@ -10,8 +10,9 @@ namespace DreamVille.Gameplay.Enemies
     /// <summary>Everything a state may see. Implemented by the Enemy component, faked in EditMode tests.</summary>
     public interface IEnemyContext
     {
+        /// <summary>The enemy's archetype: tuning, behaviour and attack settings.</summary>
         EnemyConfig Config { get; }
-        EnemyTuning Tuning { get; }
+
         Vector3 Position { get; }
         bool HasPlayer { get; }
         Vector3 PlayerPosition { get; }

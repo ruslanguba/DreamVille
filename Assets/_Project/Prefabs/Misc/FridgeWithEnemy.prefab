@@ -466,10 +466,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: e200801ac15777446b3ed05e8b0670c3, type: 2}
-  _moveSpeed: 4
-  _chaseRange: 7
-  _attackRange: 5
-  _attackCooldown: 2
   _patrolPoints:
   - {fileID: 4140216127312232954}
   - {fileID: 6049488092328109569}
@@ -500,7 +496,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e3704e11a2c5294d8c9c5c2c4e57518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 10
 --- !u!114 &2221094944245687322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,6 +511,7 @@ MonoBehaviour:
   _deathClip: {fileID: 0}
   _attackClip: {fileID: 0}
   _jumpClip: {fileID: 0}
+  _jumpPitchJitter: 0.1
   _footstepClips: []
   _stepInterval: 0.5
   _footstepPitchJitter: 0.1
@@ -1490,10 +1486,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: e200801ac15777446b3ed05e8b0670c3, type: 2}
-  _moveSpeed: 4
-  _chaseRange: 7
-  _attackRange: 5
-  _attackCooldown: 2
   _patrolPoints:
   - {fileID: 4140216127312232954}
   - {fileID: 6212039154778867295}
@@ -1524,7 +1516,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e3704e11a2c5294d8c9c5c2c4e57518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 10
 --- !u!114 &6622779987348914365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1540,6 +1531,7 @@ MonoBehaviour:
   _deathClip: {fileID: 0}
   _attackClip: {fileID: 0}
   _jumpClip: {fileID: 0}
+  _jumpPitchJitter: 0.1
   _footstepClips: []
   _stepInterval: 0.5
   _footstepPitchJitter: 0.1

@@ -12,10 +12,10 @@ namespace DreamVille.Gameplay.Enemies
         private const float MinSqrSpeed = 0.01f;
         private const float MinSqrDirection = 0.0001f;
 
-        // Overridden per prefab instance and pinned by EnemyTuningSnapshotTests.
-        [SerializeField] private float _rotationSpeed = 8f;
-
         private Rigidbody _body;
+
+        // Set by Enemy.Awake from EnemyConfig.RotationSpeed; stays 0 (no turning) on an enemy that refused to start.
+        private float _turnSpeed;
 
         private void Awake()
         {
@@ -30,6 +30,9 @@ namespace DreamVille.Gameplay.Enemies
 
             RotateTowards(Flatten(velocity));
         }
+
+        /// <summary>Sets the facing slerp rate. Called once by <see cref="Enemy"/> in Awake.</summary>
+        public void Configure(float turnSpeed) => _turnSpeed = turnSpeed;
 
         /// <summary>Slerps facing towards a world point at the configured rotation speed.</summary>
         public void FaceTowards(Vector3 worldPoint) => RotateTowards(Flatten(worldPoint - transform.position));
@@ -50,7 +53,7 @@ namespace DreamVille.Gameplay.Enemies
                 return;
 
             Quaternion target = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, target, _rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target, _turnSpeed * Time.deltaTime);
         }
 
         private static Vector3 Flatten(Vector3 direction)

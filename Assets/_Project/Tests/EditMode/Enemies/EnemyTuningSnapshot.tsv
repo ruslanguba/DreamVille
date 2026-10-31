@@ -1,138 +1,138 @@
-asset	path	moveSpeed	chaseRange	attackRange	attackCooldown	rotationSpeed	attackSpawn	patrolPoints
-Prefabs/EnemyExample	EnemyExample	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap (1)/EnemyExample	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap (1)/Point_0 (1);AllLevel_1/AllEnemyMap/EnemyMap (1)/Point_1 (1)
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap/EnemyExample	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap/Point_0 (1);AllLevel_1/AllEnemyMap/EnemyMap/Point_1 (1)
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (1)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (1)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (1)/Point_1
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (10)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (10)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (10)/Point_1
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (11)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (11)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (11)/Point_1
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (12)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (12)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (12)/Point_1
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (13)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (13)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (13)/Point_1;AllLevel_1/AllEnemyMap/EnemyMap1 (13)/Point_1 (1)
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (2)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (2)/EnemyExample (3)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (2)/EnemyExample (4)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (2)/EnemyExample (5)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (2)/EnemyExample (6)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (2)/EnemyExample (7)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (2)/EnemyExample (8)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (5)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (5)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (5)/Point_1
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (6)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (6)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (6)/Point_1
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (7)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (7)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (7)/Point_1;AllLevel_1/AllEnemyMap/EnemyMap1 (7)/Point_1 (1)
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (8)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (8)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (8)/Point_1
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (9)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (9)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (9)/Point_1
-Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1/Point_1;AllLevel_1/AllEnemyMap/EnemyMap1/Point_0
-Prefabs/Levels/AllLevel_1	AllLevel_1/EnemyMap1(5) (1)/EnemyExample (4)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/EnemyMap1(5) (1)/Point_0 (1)
-Prefabs/Levels/AllLevel_1	AllLevel_1/EnemyMap1(5) (1)/EnemyExample (5)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/EnemyMap1(5) (1)/Point_0 (2)
-Prefabs/Levels/AllLevel_1	AllLevel_1/EnemyMap1(5) (1)/EnemyExample (6)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/EnemyMap1(5) (1)/Point_0 (3)
-Prefabs/Levels/AllLevel_1	AllLevel_1/EnemyMap1(5) (2)/EnemyExample (4)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/EnemyMap1(5) (2)/Point_0 (1)
-Prefabs/Levels/AllLevel_1	AllLevel_1/EnemyMap1(5)/EnemyExample (4)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/EnemyMap1(5)/Point_0 (1)
-Prefabs/Levels/AllLevel_1	AllLevel_1/S1/EnemyExample (5)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/S1/Point_2 (2);AllLevel_1/S1/Point_3 (2)
-Prefabs/Levels/AllLevel_1	AllLevel_1/S2/EnemyExample (4)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/S2/Point_2 (1);AllLevel_1/S2/Point_3 (1)
-Prefabs/Levels/AllLevel_1	AllLevel_1/S3/EnemyExample (1)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/S3/Point_2;AllLevel_1/S3/Point_3
-Prefabs/Levels/S1	S1/EnemyExample (5)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S1/Point_2 (2);S1/Point_3 (2)
-Prefabs/Levels/S2	S2/EnemyExample (4)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S2/Point_2 (1);S2/Point_3 (1)
-Prefabs/Levels/S3	S3/EnemyExample (1)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S3/Point_2;S3/Point_3
-Prefabs/Misc/FridgeWithEnemy	FridgeWithEnemy/EnemyExample	4	7	5	2	10	Shadow_Jumping/Root/body/head/BulletSpawnPoint	FridgeWithEnemy/Point 1;FridgeWithEnemy/Point 2
-Prefabs/Misc/FridgeWithEnemy	FridgeWithEnemy/EnemyExample (1)	4	7	5	2	10	Shadow_Jumping/Root/body/head/BulletSpawnPoint	FridgeWithEnemy/Point 1;FridgeWithEnemy/Point 3
-Prefabs/SimpleRunEnemy	SimpleRunEnemy	5	0	0	0	8	-	
-Scenes/Level_01	EnemyExample (6)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_01	S1/EnemyExample (5)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S1/Point_2 (2);S1/Point_3 (2)
-Scenes/Level_02	AllLevel_1/EnemyMap1(5) (2)/EnemyExample (4)	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/EnemyMap1(5) (2)/Point_0 (1)
-Scenes/Level_02	AllLevel_1/EnemyMap1(5)/EnemyExample (4)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/EnemyMap1(5)/Point_0 (1)
-Scenes/Level_02	AllLevel_1/S22/EnemyExample (5)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/S22/Point_2 (2);AllLevel_1/S22/Point_3 (2)
-Scenes/Level_02	AllLevel_1/S3/EnemyExample (1)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/S3/Point_2;AllLevel_1/S3/Point_3
-Scenes/Level_02	PatrolEnemie (1)/EnemyExample	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	PatrolEnemie (1)/Point1;PatrolEnemie (1)/Point2
-Scenes/Level_02	PatrolEnemie (2)/EnemyExample	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	PatrolEnemie (2)/Point1;PatrolEnemie (2)/Point2
-Scenes/Level_02	PatrolEnemie/EnemyExample	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	PatrolEnemie/Point1;PatrolEnemie/Point2
-Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy	5	0	0	0	8	-	
-Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy (1)	5	0	0	0	8	-	
-Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy (11)	5	0	0	0	8	-	
-Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy (12)	5	0	0	0	8	-	
-Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy (13)	5	0	0	0	8	-	
-Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy (2)	5	0	0	0	8	-	
-Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy (3)	5	0	0	0	8	-	
-Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy (4)	5	0	0	0	8	-	
-Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy (5)	5	0	0	0	8	-	
-Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy (6)	5	0	0	0	8	-	
-Scenes/Level_03	Card_Hous (1)/EnemyExample (12)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_03	Card_Hous (2)/EnemyExample (12)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_03	Card_Hous (3)/EnemyExample (12)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_03	Card_Hous/EnemyExample (12)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_03	EnemyExample	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_03	EnemyExample (2)	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_03	S8/EnemyExample (10)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S8/Point_0 (7)
-Scenes/Level_03	S8/EnemyExample (11)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S8/Point_0 (8)
-Scenes/Level_03	S8/EnemyExample (7)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S8/Point_0 (4)
-Scenes/Level_03	S8/EnemyExample (8)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S8/Point_0 (5)
-Scenes/Level_04	EnemyExample (11)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_04	Environment/Pen/EnemyExample (10)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_04	Environment/Pen/EnemyExample (4)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_04	Environment/Pen/EnemyExample (5)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_04	Environment/Pen/EnemyExample (6)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_04	Environment/Pen/EnemyExample (7)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_04	Environment/Pen/EnemyExample (8)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_04	Environment/Pen/EnemyExample (9)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_04	SimpleRunEnemy (1)	5	0	0	0	8	-	
-Scenes/Level_04	start/EnemyExample (02)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_04	start/EnemyExample (04)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_04	start/EnemyExample (06)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_04	start/EnemyExample (08)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_04	start/EnemyExample (1)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_04	start/EnemyExample (10)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_04	start/EnemyExample (11)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_04	start/EnemyExample (12)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Level_04	start/S5/EnemyMap1(5) (1)/EnemyExample (4)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	start/S5/EnemyMap1(5) (1)/Point_0 (1)
-Scenes/Level_04	start/S5/EnemyMap1(5) (1)/EnemyExample (5)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	start/S5/EnemyMap1(5) (1)/Point_0 (2)
-Scenes/Level_04	start/S5/EnemyMap1(5) (1)/EnemyExample (6)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	start/S5/EnemyMap1(5) (1)/Point_0 (3)
-Scenes/Level_04	start/SimpleRunEnemy (1)	5	0	0	0	8	-	
-Scenes/Lobby_01	S1/EnemyExample (1)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Lobby_01	exampl_1/EnemyExample (3)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Lobby_01	exampl_1/EnemyExample (5)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Lobby_01	exampl_1/EnemyExample (6)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Max/Final Level 1_Max	AllLevel_1/AllEnemyMap/EnemyMap (1)/EnemyExample	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap (1)/Point_0 (1);AllLevel_1/AllEnemyMap/EnemyMap (1)/Point_1 (1)
-Scenes/Max/Final Level 1_Max	AllLevel_1/AllEnemyMap/EnemyMap/EnemyExample	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap/Point_0 (1);AllLevel_1/AllEnemyMap/EnemyMap/Point_1 (1)
-Scenes/Max/Final Level 1_Max	AllLevel_1/AllEnemyMap/EnemyMap1 (10)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (10)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (10)/Point_1
-Scenes/Max/Final Level 1_Max	AllLevel_1/AllEnemyMap/EnemyMap1 (11)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (11)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (11)/Point_1
-Scenes/Max/Final Level 1_Max	AllLevel_1/AllEnemyMap/EnemyMap1 (13)/EnemyExample (2)	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (13)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (13)/Point_1;AllLevel_1/AllEnemyMap/EnemyMap1 (13)/Point_1 (1)
-Scenes/Max/Final Level 1_Max	AllLevel_1/AllEnemyMap/EnemyMap1 (5)/EnemyExample (2)	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (5)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (5)/Point_1
-Scenes/Max/Final Level 1_Max	AllLevel_1/AllEnemyMap/EnemyMap1 (7)/EnemyExample (2)	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (7)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (7)/Point_1;AllLevel_1/AllEnemyMap/EnemyMap1 (7)/Point_1 (1)
-Scenes/Max/Final Level 1_Max	AllLevel_1/AllEnemyMap/EnemyMap1 (9)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (9)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (9)/Point_1
-Scenes/Max/Final Level 1_Max	AllLevel_1/AllEnemyMap/EnemyMap1/EnemyExample (2)	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1/Point_1;AllLevel_1/AllEnemyMap/EnemyMap1/Point_0
-Scenes/Max/Final Level 1_Max	AllLevel_1/EnemyMap1(5) (2)/EnemyExample (4)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/EnemyMap1(5) (2)/Point_0 (1)
-Scenes/Max/Final Level 1_Max	AllLevel_1/EnemyMap1(5)/EnemyExample (4)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/EnemyMap1(5)/Point_0 (1)
-Scenes/Max/Final Level 1_Max	AllLevel_1/S1/EnemyExample (5)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/S1/Point_2 (2);AllLevel_1/S1/Point_3 (2)
-Scenes/Max/Final Level 1_Max	AllLevel_1/S2/EnemyExample (4)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/S2/Point_2 (1);AllLevel_1/S2/Point_3 (1)
-Scenes/Max/Final Level 1_Max	AllLevel_1/S3/EnemyExample (1)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/S3/Point_2;AllLevel_1/S3/Point_3
-Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy	5	0	0	0	8	-	
-Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy (1)	5	0	0	0	8	-	
-Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy (11)	5	0	0	0	8	-	
-Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy (12)	5	0	0	0	8	-	
-Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy (13)	5	0	0	0	8	-	
-Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy (2)	5	0	0	0	8	-	
-Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy (3)	5	0	0	0	8	-	
-Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy (4)	5	0	0	0	8	-	
-Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy (5)	5	0	0	0	8	-	
-Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy (6)	5	0	0	0	8	-	
-Scenes/Max/Level_2_Max	EnemyExample	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Max/Level_2_Max	EnemyExample (1)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Max/Level_2_Max	EnemyExample (10)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Max/Level_2_Max	EnemyExample (11)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Max/Level_2_Max	EnemyExample (2)	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Max/Level_2_Max	EnemyExample (3)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Max/Level_2_Max	EnemyExample (4)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Max/Level_2_Max	EnemyExample (5)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Max/Level_2_Max	EnemyExample (6)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Max/Level_2_Max	EnemyExample (7)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Max/Level_2_Max	EnemyExample (8)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Max/Level_2_Max	EnemyExample (9)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Max/Level_2_Max	SimpleRunEnemy	5	0	0	0	8	-	
-Scenes/Max/Level_3_Max	EnemyExample (1)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Max/Level_3_Max	EnemyExample (12)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	
-Scenes/Max/Level_3_Max	S5/EnemyMap1(5) (1)/EnemyExample (10)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S5/EnemyMap1(5) (1)/Point_0 (7)
-Scenes/Max/Level_3_Max	S5/EnemyMap1(5) (1)/EnemyExample (11)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S5/EnemyMap1(5) (1)/Point_0 (8)
-Scenes/Max/Level_3_Max	S5/EnemyMap1(5) (1)/EnemyExample (4)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S5/EnemyMap1(5) (1)/Point_0 (1)
-Scenes/Max/Level_3_Max	S5/EnemyMap1(5) (1)/EnemyExample (5)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S5/EnemyMap1(5) (1)/Point_0 (2)
-Scenes/Max/Level_3_Max	S5/EnemyMap1(5) (1)/EnemyExample (6)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S5/EnemyMap1(5) (1)/Point_0 (3)
-Scenes/Max/Level_3_Max	S5/EnemyMap1(5) (1)/EnemyExample (7)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S5/EnemyMap1(5) (1)/Point_0 (4)
-Scenes/Max/Level_3_Max	S5/EnemyMap1(5) (1)/EnemyExample (8)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S5/EnemyMap1(5) (1)/Point_0 (5)
-Scenes/Max/Level_3_Max	S5/EnemyMap1(5) (1)/EnemyExample (9)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S5/EnemyMap1(5) (1)/Point_0 (6)
-Scenes/Max/Level_3_Max	SimpleRunEnemy	5	0	0	0	8	-	
+asset	path	moveSpeed	chaseRange	attackRange	attackCooldown	rotationSpeed	attackSpawn	patrolPoints	config
+Prefabs/EnemyExample	EnemyExample	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap (1)/EnemyExample	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap (1)/Point_0 (1);AllLevel_1/AllEnemyMap/EnemyMap (1)/Point_1 (1)	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap/EnemyExample	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap/Point_0 (1);AllLevel_1/AllEnemyMap/EnemyMap/Point_1 (1)	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (1)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (1)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (1)/Point_1	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (10)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (10)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (10)/Point_1	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (11)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (11)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (11)/Point_1	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (12)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (12)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (12)/Point_1	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (13)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (13)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (13)/Point_1;AllLevel_1/AllEnemyMap/EnemyMap1 (13)/Point_1 (1)	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (2)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (2)/EnemyExample (3)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (2)/EnemyExample (4)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (2)/EnemyExample (5)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (2)/EnemyExample (6)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (2)/EnemyExample (7)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (2)/EnemyExample (8)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (5)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (5)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (5)/Point_1	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (6)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (6)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (6)/Point_1	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (7)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (7)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (7)/Point_1;AllLevel_1/AllEnemyMap/EnemyMap1 (7)/Point_1 (1)	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (8)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (8)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (8)/Point_1	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1 (9)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (9)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (9)/Point_1	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/AllEnemyMap/EnemyMap1/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1/Point_1;AllLevel_1/AllEnemyMap/EnemyMap1/Point_0	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/EnemyMap1(5) (1)/EnemyExample (4)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/EnemyMap1(5) (1)/Point_0 (1)	EnemyConfig_RapidSentry
+Prefabs/Levels/AllLevel_1	AllLevel_1/EnemyMap1(5) (1)/EnemyExample (5)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/EnemyMap1(5) (1)/Point_0 (2)	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/EnemyMap1(5) (1)/EnemyExample (6)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/EnemyMap1(5) (1)/Point_0 (3)	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/EnemyMap1(5) (2)/EnemyExample (4)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/EnemyMap1(5) (2)/Point_0 (1)	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/EnemyMap1(5)/EnemyExample (4)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/EnemyMap1(5)/Point_0 (1)	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/S1/EnemyExample (5)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/S1/Point_2 (2);AllLevel_1/S1/Point_3 (2)	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/S2/EnemyExample (4)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/S2/Point_2 (1);AllLevel_1/S2/Point_3 (1)	EnemyConfig_Hunter
+Prefabs/Levels/AllLevel_1	AllLevel_1/S3/EnemyExample (1)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/S3/Point_2;AllLevel_1/S3/Point_3	EnemyConfig_Hunter
+Prefabs/Levels/S1	S1/EnemyExample (5)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S1/Point_2 (2);S1/Point_3 (2)	EnemyConfig_Hunter
+Prefabs/Levels/S2	S2/EnemyExample (4)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S2/Point_2 (1);S2/Point_3 (1)	EnemyConfig_Hunter
+Prefabs/Levels/S3	S3/EnemyExample (1)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S3/Point_2;S3/Point_3	EnemyConfig_Hunter
+Prefabs/Misc/FridgeWithEnemy	FridgeWithEnemy/EnemyExample	4	7	5	2	10	Shadow_Jumping/Root/body/head/BulletSpawnPoint	FridgeWithEnemy/Point 1;FridgeWithEnemy/Point 2	EnemyConfig_Walker
+Prefabs/Misc/FridgeWithEnemy	FridgeWithEnemy/EnemyExample (1)	4	7	5	2	10	Shadow_Jumping/Root/body/head/BulletSpawnPoint	FridgeWithEnemy/Point 1;FridgeWithEnemy/Point 3	EnemyConfig_Walker
+Prefabs/SimpleRunEnemy	SimpleRunEnemy	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Level_01	EnemyExample (6)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Sentry
+Scenes/Level_01	S1/EnemyExample (5)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S1/Point_2 (2);S1/Point_3 (2)	EnemyConfig_Hunter
+Scenes/Level_02	AllLevel_1/EnemyMap1(5) (2)/EnemyExample (4)	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/EnemyMap1(5) (2)/Point_0 (1)	EnemyConfig_Lookout
+Scenes/Level_02	AllLevel_1/EnemyMap1(5)/EnemyExample (4)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/EnemyMap1(5)/Point_0 (1)	EnemyConfig_Hunter
+Scenes/Level_02	AllLevel_1/S22/EnemyExample (5)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/S22/Point_2 (2);AllLevel_1/S22/Point_3 (2)	EnemyConfig_Hunter
+Scenes/Level_02	AllLevel_1/S3/EnemyExample (1)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/S3/Point_2;AllLevel_1/S3/Point_3	EnemyConfig_Hunter
+Scenes/Level_02	PatrolEnemie (1)/EnemyExample	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	PatrolEnemie (1)/Point1;PatrolEnemie (1)/Point2	EnemyConfig_Lookout
+Scenes/Level_02	PatrolEnemie (2)/EnemyExample	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	PatrolEnemie (2)/Point1;PatrolEnemie (2)/Point2	EnemyConfig_Lookout
+Scenes/Level_02	PatrolEnemie/EnemyExample	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	PatrolEnemie/Point1;PatrolEnemie/Point2	EnemyConfig_Lookout
+Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy (1)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy (11)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy (12)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy (13)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy (2)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy (3)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy (4)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy (5)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Level_03	AllSimpleRunEnemy/SimpleRunEnemy (6)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Level_03	Card_Hous (1)/EnemyExample (12)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_RapidSentry
+Scenes/Level_03	Card_Hous (2)/EnemyExample (12)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_RapidSentry
+Scenes/Level_03	Card_Hous (3)/EnemyExample (12)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_RapidSentry
+Scenes/Level_03	Card_Hous/EnemyExample (12)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_RapidSentry
+Scenes/Level_03	EnemyExample	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Lookout
+Scenes/Level_03	EnemyExample (2)	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Lookout
+Scenes/Level_03	S8/EnemyExample (10)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S8/Point_0 (7)	EnemyConfig_RapidSentry
+Scenes/Level_03	S8/EnemyExample (11)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S8/Point_0 (8)	EnemyConfig_RapidSentry
+Scenes/Level_03	S8/EnemyExample (7)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S8/Point_0 (4)	EnemyConfig_RapidSentry
+Scenes/Level_03	S8/EnemyExample (8)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S8/Point_0 (5)	EnemyConfig_RapidSentry
+Scenes/Level_04	EnemyExample (11)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Sentry
+Scenes/Level_04	Environment/Pen/EnemyExample (10)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Sentry
+Scenes/Level_04	Environment/Pen/EnemyExample (4)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Level_04	Environment/Pen/EnemyExample (5)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Level_04	Environment/Pen/EnemyExample (6)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Level_04	Environment/Pen/EnemyExample (7)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Level_04	Environment/Pen/EnemyExample (8)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Level_04	Environment/Pen/EnemyExample (9)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Level_04	SimpleRunEnemy (1)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Level_04	start/EnemyExample (02)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Level_04	start/EnemyExample (04)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Level_04	start/EnemyExample (06)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Level_04	start/EnemyExample (08)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Level_04	start/EnemyExample (1)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Sentry
+Scenes/Level_04	start/EnemyExample (10)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Level_04	start/EnemyExample (11)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Level_04	start/EnemyExample (12)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Level_04	start/S5/EnemyMap1(5) (1)/EnemyExample (4)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	start/S5/EnemyMap1(5) (1)/Point_0 (1)	EnemyConfig_RapidSentry
+Scenes/Level_04	start/S5/EnemyMap1(5) (1)/EnemyExample (5)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	start/S5/EnemyMap1(5) (1)/Point_0 (2)	EnemyConfig_RapidSentry
+Scenes/Level_04	start/S5/EnemyMap1(5) (1)/EnemyExample (6)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	start/S5/EnemyMap1(5) (1)/Point_0 (3)	EnemyConfig_RapidSentry
+Scenes/Level_04	start/SimpleRunEnemy (1)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Lobby_01	S1/EnemyExample (1)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Sentry
+Scenes/Lobby_01	exampl_1/EnemyExample (3)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Sentry
+Scenes/Lobby_01	exampl_1/EnemyExample (5)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Sentry
+Scenes/Lobby_01	exampl_1/EnemyExample (6)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Sentry
+Scenes/Max/Final Level 1_Max	AllLevel_1/AllEnemyMap/EnemyMap (1)/EnemyExample	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap (1)/Point_0 (1);AllLevel_1/AllEnemyMap/EnemyMap (1)/Point_1 (1)	EnemyConfig_Lookout
+Scenes/Max/Final Level 1_Max	AllLevel_1/AllEnemyMap/EnemyMap/EnemyExample	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap/Point_0 (1);AllLevel_1/AllEnemyMap/EnemyMap/Point_1 (1)	EnemyConfig_Lookout
+Scenes/Max/Final Level 1_Max	AllLevel_1/AllEnemyMap/EnemyMap1 (10)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (10)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (10)/Point_1	EnemyConfig_Hunter
+Scenes/Max/Final Level 1_Max	AllLevel_1/AllEnemyMap/EnemyMap1 (11)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (11)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (11)/Point_1	EnemyConfig_Hunter
+Scenes/Max/Final Level 1_Max	AllLevel_1/AllEnemyMap/EnemyMap1 (13)/EnemyExample (2)	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (13)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (13)/Point_1;AllLevel_1/AllEnemyMap/EnemyMap1 (13)/Point_1 (1)	EnemyConfig_Lookout
+Scenes/Max/Final Level 1_Max	AllLevel_1/AllEnemyMap/EnemyMap1 (5)/EnemyExample (2)	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (5)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (5)/Point_1	EnemyConfig_Lookout
+Scenes/Max/Final Level 1_Max	AllLevel_1/AllEnemyMap/EnemyMap1 (7)/EnemyExample (2)	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (7)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (7)/Point_1;AllLevel_1/AllEnemyMap/EnemyMap1 (7)/Point_1 (1)	EnemyConfig_Lookout
+Scenes/Max/Final Level 1_Max	AllLevel_1/AllEnemyMap/EnemyMap1 (9)/EnemyExample (2)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1 (9)/Point_0;AllLevel_1/AllEnemyMap/EnemyMap1 (9)/Point_1	EnemyConfig_Hunter
+Scenes/Max/Final Level 1_Max	AllLevel_1/AllEnemyMap/EnemyMap1/EnemyExample (2)	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/AllEnemyMap/EnemyMap1/Point_1;AllLevel_1/AllEnemyMap/EnemyMap1/Point_0	EnemyConfig_Lookout
+Scenes/Max/Final Level 1_Max	AllLevel_1/EnemyMap1(5) (2)/EnemyExample (4)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/EnemyMap1(5) (2)/Point_0 (1)	EnemyConfig_Hunter
+Scenes/Max/Final Level 1_Max	AllLevel_1/EnemyMap1(5)/EnemyExample (4)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/EnemyMap1(5)/Point_0 (1)	EnemyConfig_Hunter
+Scenes/Max/Final Level 1_Max	AllLevel_1/S1/EnemyExample (5)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/S1/Point_2 (2);AllLevel_1/S1/Point_3 (2)	EnemyConfig_Hunter
+Scenes/Max/Final Level 1_Max	AllLevel_1/S2/EnemyExample (4)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/S2/Point_2 (1);AllLevel_1/S2/Point_3 (1)	EnemyConfig_Hunter
+Scenes/Max/Final Level 1_Max	AllLevel_1/S3/EnemyExample (1)	5	7	5	4	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint	AllLevel_1/S3/Point_2;AllLevel_1/S3/Point_3	EnemyConfig_Hunter
+Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy (1)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy (11)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy (12)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy (13)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy (2)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy (3)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy (4)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy (5)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Max/Level_2_Max	AllSimpleRunEnemy/SimpleRunEnemy (6)	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Max/Level_2_Max	EnemyExample	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Lookout
+Scenes/Max/Level_2_Max	EnemyExample (1)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Sentry
+Scenes/Max/Level_2_Max	EnemyExample (10)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Sentry
+Scenes/Max/Level_2_Max	EnemyExample (11)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Sentry
+Scenes/Max/Level_2_Max	EnemyExample (2)	3	0	10	2	8	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Lookout
+Scenes/Max/Level_2_Max	EnemyExample (3)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Sentry
+Scenes/Max/Level_2_Max	EnemyExample (4)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Max/Level_2_Max	EnemyExample (5)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Max/Level_2_Max	EnemyExample (6)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Max/Level_2_Max	EnemyExample (7)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Max/Level_2_Max	EnemyExample (8)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Max/Level_2_Max	EnemyExample (9)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Max/Level_2_Max	SimpleRunEnemy	5	0	0	0	8	-		EnemyConfig_Runner
+Scenes/Max/Level_3_Max	EnemyExample (1)	0	0	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Sentry
+Scenes/Max/Level_3_Max	EnemyExample (12)	1	10	5	2	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint		EnemyConfig_Stalker
+Scenes/Max/Level_3_Max	S5/EnemyMap1(5) (1)/EnemyExample (10)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S5/EnemyMap1(5) (1)/Point_0 (7)	EnemyConfig_RapidSentry
+Scenes/Max/Level_3_Max	S5/EnemyMap1(5) (1)/EnemyExample (11)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S5/EnemyMap1(5) (1)/Point_0 (8)	EnemyConfig_RapidSentry
+Scenes/Max/Level_3_Max	S5/EnemyMap1(5) (1)/EnemyExample (4)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S5/EnemyMap1(5) (1)/Point_0 (1)	EnemyConfig_RapidSentry
+Scenes/Max/Level_3_Max	S5/EnemyMap1(5) (1)/EnemyExample (5)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S5/EnemyMap1(5) (1)/Point_0 (2)	EnemyConfig_RapidSentry
+Scenes/Max/Level_3_Max	S5/EnemyMap1(5) (1)/EnemyExample (6)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S5/EnemyMap1(5) (1)/Point_0 (3)	EnemyConfig_RapidSentry
+Scenes/Max/Level_3_Max	S5/EnemyMap1(5) (1)/EnemyExample (7)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S5/EnemyMap1(5) (1)/Point_0 (4)	EnemyConfig_RapidSentry
+Scenes/Max/Level_3_Max	S5/EnemyMap1(5) (1)/EnemyExample (8)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S5/EnemyMap1(5) (1)/Point_0 (5)	EnemyConfig_RapidSentry
+Scenes/Max/Level_3_Max	S5/EnemyMap1(5) (1)/EnemyExample (9)	4	0	5	1	1	Shadow_Jumping/Root/body/head/BulletSpawnPoint	S5/EnemyMap1(5) (1)/Point_0 (6)	EnemyConfig_RapidSentry
+Scenes/Max/Level_3_Max	SimpleRunEnemy	5	0	0	0	8	-		EnemyConfig_Runner
