@@ -1,5 +1,6 @@
 using System;
 
+using DreamVille.Gameplay.Environment;
 using DreamVille.Gameplay.Npc;
 using DreamVille.UI;
 
@@ -16,6 +17,9 @@ namespace DreamVille.Tests.EditMode.Architecture
         {
             (typeof(GameStartUI), new[] { "firstImage", "collageImages", "fadeTime", "appearScale", "firstScale" }),
             (typeof(NpcCanvasToggle), new[] { "Canvas" }),
+
+            // _isInterracted was runtime state stored as data; it became the non-serialized _isFloating.
+            (typeof(PropsMover), new[] { "_baloon", "_isInterracted" }),
         };
     }
 }

@@ -5269,7 +5269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 006720a3071da0a41aab5a13d896fb01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baloon: {fileID: 1973320610}
+  _balloon: {fileID: 1973320610}
   _points:
   - {fileID: 2021642076}
   - {fileID: 1577165257}
@@ -5282,7 +5282,6 @@ MonoBehaviour:
   - {fileID: 1859898646}
   _speed: 2
   _rotation: 0.5
-  _isInterracted: 0
   _floatingTime: 10
 --- !u!95 &951801513
 Animator:

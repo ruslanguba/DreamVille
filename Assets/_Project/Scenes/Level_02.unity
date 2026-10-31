@@ -5612,13 +5612,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 006720a3071da0a41aab5a13d896fb01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baloon: {fileID: 1588755102}
+  _balloon: {fileID: 1588755102}
   _points:
   - {fileID: 834384708}
   - {fileID: 917712321}
   _speed: 1
   _rotation: 0.5
-  _isInterracted: 0
   _floatingTime: 10
 --- !u!114 &1588755104
 MonoBehaviour:

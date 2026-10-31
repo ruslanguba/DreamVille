@@ -333,7 +333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 006720a3071da0a41aab5a13d896fb01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baloon: {fileID: 1079202960236439814}
+  _balloon: {fileID: 1079202960236439814}
   _points:
   - {fileID: 5925690479496732431}
   - {fileID: 4810253433872294451}
@@ -346,7 +346,6 @@ MonoBehaviour:
   - {fileID: 1979495797609185312}
   _speed: 2
   _rotation: 0.5
-  _isInterracted: 0
   _floatingTime: 10
 --- !u!1001 &680219614370336493
 PrefabInstance:
@@ -600,11 +599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startState: 2
-  _isTalk: 0
-  _isGreeting: 1
-  _isApplause: 0
   _isSwim: 0
-  _isIdle: 0
 --- !u!4 &5537713819312603908 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3464737132984173325, guid: 046745ea47331b241947a2784512b093, type: 3}

@@ -33,6 +33,14 @@ namespace DreamVille.Tests.EditMode.Architecture
 
         private static readonly string[] ScriptableObjectRoles = { "Config", "Definition", "Rules", "Catalog" };
 
+        // Misspellings the code audits found in identifiers (the classes that carried most of them are gone);
+        // the list records them and keeps them from coming back.
+        private static readonly string[] KnownTypos =
+        {
+            "rigitbody", "interect", "interract", "hiden", "compleat", "damagable", "mumbel", "recive", "distannce",
+            "baloon", "tovards", "rutine", "upwords", "movig", "foott", "volium", "commics",
+        };
+
         private const string DreamVilleMenuPrefix = "DreamVille/";
 
         // Serialized fields that keep their old names until their own batch of roadmap 6.2 (spec 14 B4a-B5) renames them
@@ -195,6 +203,46 @@ namespace DreamVille.Tests.EditMode.Architecture
                 .ToArray();
 
             Assert.That(offenders, Is.Empty, "Types named 'Manager' (name the one job the type does):\n" + string.Join("\n", offenders));
+        }
+
+        [Test]
+        public void Identifiers_AvoidKnownTypos()
+        {
+            var offenders = new List<string>();
+
+            foreach (Type type in UserTypes())
+            {
+                AddIfMisspelled(offenders, type.FullName, type.Name);
+
+                foreach (MemberInfo member in type.GetMembers(DeclaredMembers))
+                {
+                    if (member.Name.Contains("<"))
+                        continue;
+
+                    AddIfMisspelled(offenders, $"{type.FullName}.{member.Name}", member.Name);
+
+                    if (member is MethodBase method)
+                    {
+                        foreach (ParameterInfo parameter in method.GetParameters())
+                            AddIfMisspelled(offenders, $"{type.FullName}.{member.Name}({parameter.Name})", parameter.Name);
+                    }
+                }
+            }
+
+            Assert.That(offenders.Distinct().OrderBy(entry => entry, StringComparer.Ordinal), Is.Empty,
+                "Identifiers with a known misspelling:\n" + string.Join("\n", offenders.Distinct()));
+        }
+
+        private static void AddIfMisspelled(List<string> offenders, string where, string identifier)
+        {
+            if (string.IsNullOrEmpty(identifier))
+                return;
+
+            foreach (string typo in KnownTypos)
+            {
+                if (identifier.IndexOf(typo, StringComparison.OrdinalIgnoreCase) >= 0)
+                    offenders.Add($"{where} ('{typo}')");
+            }
         }
 
         private static string NameForAcronymCheck(Type type)
