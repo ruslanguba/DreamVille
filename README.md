@@ -59,11 +59,13 @@ _A gameplay GIF and screenshots are coming with the playable build._
   and the move fixed a shipped bug where English dialogues never started. Screen hints
   use a `Hints` table the same way, so the English game is English from the first lobby.
   [ADR 0009](Docs/adr/0009-data-driven-dialogues.md).
-- **619 EditMode tests that guard the wiring.**
+- **679 EditMode tests that guard the wiring and the data.**
   [`SceneCompositionTests`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs)
   opens every build scene and checks its installers, catalog references and missing
   scripts, and prefab tests pin the player's composition, so a mis-wired scene fails a
-  test run instead of a play session.
+  test run instead of a play session. Naming and serialized-data hygiene are tests, not
+  reviews: no asset keeps data under a renamed field's old name, and every enemy's
+  per-instance tuning is pinned in a snapshot ([ADR 0010](Docs/adr/0010-renaming-serialized-fields.md)).
 
 ## Architecture
 
@@ -167,7 +169,7 @@ press Play.
 
 ## Tests
 
-Window → General → Test Runner → EditMode → Run All. 619 EditMode tests (617 pass, 2
+Window → General → Test Runner → EditMode → Run All. 679 EditMode tests (677 pass, 2
 intentionally skipped). PlayMode tests and CI are not set up yet.
 
 ## Status and roadmap
@@ -194,5 +196,5 @@ intentionally skipped). PlayMode tests and CI are not set up yet.
 
 ## Documentation
 
-[`Docs/README.md`](Docs/README.md) indexes everything under `Docs/`. The nine
+[`Docs/README.md`](Docs/README.md) indexes everything under `Docs/`. The ten
 architecture decision records are listed in [`Docs/adr/`](Docs/adr/README.md).
