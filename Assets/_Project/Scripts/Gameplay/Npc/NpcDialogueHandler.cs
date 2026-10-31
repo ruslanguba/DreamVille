@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 using DreamVille.Core.Async;
 
@@ -14,11 +13,11 @@ namespace DreamVille.Gameplay.Npc
     /// </summary>
     public sealed class NpcDialogueHandler : MonoBehaviour
     {
-        [SerializeField, Min(0f), FormerlySerializedAs("_timer")]
+        [SerializeField, Min(0f)]
         [Tooltip("Seconds of game time between two turns.")]
         private float _switchInterval = 5f;
 
-        [SerializeField, FormerlySerializedAs("_handler")]
+        [SerializeField]
         private NpcHandler[] _speakers;
 
         private CancellationTokenSource _loopCts;

@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace DreamVille.Input
 {
@@ -12,7 +11,6 @@ namespace DreamVille.Input
     public sealed class GameInput : MonoBehaviour, IMenuInput
     {
         [SerializeField] private InputActionReference _pauseAction;
-        [FormerlySerializedAs("_tubAction")]
         [SerializeField] private InputActionReference _comicsAction;
 
         public event Action PausePressed;

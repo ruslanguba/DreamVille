@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 using DreamVille.Configs;
@@ -13,7 +12,6 @@ namespace DreamVille.Gameplay.Weapons.Aiming
     /// </summary>
     public sealed class AimPreview : MonoBehaviour
     {
-        [FormerlySerializedAs("line")]
         [SerializeField] private LineRenderer _line;
 
         private IPlayerInput _input;

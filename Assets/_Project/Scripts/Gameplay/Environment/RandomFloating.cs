@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 using DreamVille.Core.Async;
@@ -26,11 +25,11 @@ namespace DreamVille.Gameplay.Environment
         [SerializeField] private float _maxSpeed = 4f;
 
         [Header("Height Limit")]
-        [SerializeField, FormerlySerializedAs("minY")] private float _minY = -50f;
-        [SerializeField, FormerlySerializedAs("maxY")] private float _maxY = 50f;
+        [SerializeField] private float _minY = -50f;
+        [SerializeField] private float _maxY = 50f;
 
         [Header("Pause")]
-        [SerializeField, FormerlySerializedAs("stopTime"), Min(0f)]
+        [SerializeField, Min(0f)]
         [Tooltip("Seconds of game time the prop rests at each target.")]
         private float _stopTime = 2f;
 

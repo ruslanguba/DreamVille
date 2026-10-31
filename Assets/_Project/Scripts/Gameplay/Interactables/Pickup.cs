@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 using DreamVille.Scoring;
@@ -22,10 +21,8 @@ namespace DreamVille.Gameplay.Interactables
         // Frozen name: a prefab-instance override in Level_02 addresses this field by property path.
         [SerializeField] private float _scoreToAdd = 1f;
 
-        [FormerlySerializedAs("_upScaleTime")]
         [SerializeField, Min(0f)] private float _growDuration = 0.3f;
 
-        [FormerlySerializedAs("_hideScaleTime")]
         [SerializeField, Min(0f)] private float _flyDuration = 0.5f;
 
         private IScoreService _score;

@@ -17,7 +17,8 @@ namespace DreamVille.Tests.EditMode.Architecture
     /// Guards spec 14 §5 items 14-15: once a serialized field has been renamed and its data migrated, no asset keeps
     /// data under the old name, neither in a component's own YAML nor as a prefab-instance override, and no field takes
     /// a retired name again (Unity would quietly load the stale data into it). Overrides on a ledger owner that point
-    /// at a field which no longer exists count as well: they are dead data the editor can no longer show.
+    /// at a field which no longer exists count as well: they are dead data the editor can no longer show (the few pairs in
+    /// <see cref="RetiredSerializedFields.KnownDeadOverrides"/> are tolerated until they are dropped, and must still exist).
     /// The scenes and prefabs are scanned once in the fixture setup.
     /// </summary>
     public class SerializedDataHygieneTests
@@ -35,6 +36,7 @@ namespace DreamVille.Tests.EditMode.Architecture
         private string _originalScenePath;
         private bool _scenesOpened;
         private List<string> _overrideOffenders;
+        private HashSet<string> _knownDeadOverridesSeen;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -53,6 +55,7 @@ namespace DreamVille.Tests.EditMode.Architecture
                 .ToDictionary(entry => entry.Owner, entry => new HashSet<string>(entry.OldNames, StringComparer.Ordinal));
 
             _overrideOffenders = new List<string>();
+            _knownDeadOverridesSeen = new HashSet<string>(StringComparer.Ordinal);
 
             // Prefabs before scenes: opening a scene Single unloads assets that nothing references any more.
             foreach (string prefabPath in SceneContentScan.AssetPaths("t:Prefab", ProjectFolder))
@@ -129,9 +132,17 @@ namespace DreamVille.Tests.EditMode.Architecture
         [Test]
         public void RetiredSerializedFields_HaveNoInstanceOverrides()
         {
+            string[] staleExceptions = RetiredSerializedFields.KnownDeadOverrides
+                .Select(entry => KnownDeadOverrideKey(entry.Owner, entry.Field))
+                .Where(key => !_knownDeadOverridesSeen.Contains(key))
+                .ToArray();
+
             Assert.That(_overrideOffenders, Is.Empty,
                 "Prefab-instance overrides that address a retired or missing field of a renamed type (rewrite or drop them):\n" +
                 string.Join("\n", _overrideOffenders));
+            Assert.That(staleExceptions, Is.Empty,
+                "Known dead overrides that no asset holds any more (drop the entry from RetiredSerializedFields.KnownDeadOverrides):\n" +
+                string.Join("\n", staleExceptions));
         }
 
         private void CollectOverrideOffenders(string assetPath, IEnumerable<GameObject> roots, bool isScene, Dictionary<Type, HashSet<string>> retiredByOwner)
@@ -160,9 +171,17 @@ namespace DreamVille.Tests.EditMode.Architecture
                         string where = $"{assetPath}: {SceneContentScan.HierarchyPathOf(instanceRoot.transform)} -> {modification.target.GetType().Name}.{head}";
 
                         if (retired.Contains(head))
+                        {
                             _overrideOffenders.Add(where + " (retired name)");
+                        }
                         else if (!FieldExists(modification.target, head))
-                            _overrideOffenders.Add(where + " (no such field)");
+                        {
+                            string key = KnownDeadOverrideKey(modification.target.GetType(), head);
+                            if (IsKnownDeadOverride(key))
+                                _knownDeadOverridesSeen.Add(key);
+                            else
+                                _overrideOffenders.Add(where + " (no such field)");
+                        }
                     }
                 }
             }
@@ -185,6 +204,11 @@ namespace DreamVille.Tests.EditMode.Architecture
             _fieldExists[key] = exists;
             return exists;
         }
+
+        private static string KnownDeadOverrideKey(Type owner, string field) => owner.FullName + "." + field;
+
+        private static bool IsKnownDeadOverride(string key)
+            => RetiredSerializedFields.KnownDeadOverrides.Any(entry => KnownDeadOverrideKey(entry.Owner, entry.Field) == key);
 
         private static string HeadOf(string propertyPath)
         {

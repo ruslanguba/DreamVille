@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace DreamVille.Configs
 {
@@ -7,7 +6,6 @@ namespace DreamVille.Configs
     [CreateAssetMenu(fileName = "AudioConfig", menuName = "DreamVille/Audio/Audio Config")]
     public sealed class AudioConfig : ScriptableObject
     {
-        [FormerlySerializedAs("StartVolume")]
         [Range(0f, 1f)]
         [SerializeField] private float _defaultVolume = 0.3f;
 

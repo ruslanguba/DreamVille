@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 using DreamVille.App;
@@ -21,7 +20,6 @@ namespace DreamVille.Bootstrap
         [SerializeField] private AudioConfig _audioConfig;
 
         [Header("Prefabs")]
-        [FormerlySerializedAs("_audioManagerPrefab")]
         [SerializeField] private AudioPlayer _audioPlayerPrefab;
 
         public override void InstallBindings()

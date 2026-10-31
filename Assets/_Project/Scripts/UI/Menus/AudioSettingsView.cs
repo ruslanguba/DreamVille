@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace DreamVille.UI.Menus
@@ -11,11 +10,8 @@ namespace DreamVille.UI.Menus
     /// </summary>
     public sealed class AudioSettingsView : MonoBehaviour, IAudioSettingsView
     {
-        // The pause menu prefab still stores the pre-rename keys until it is re-saved.
         [Header("Sliders")]
-        [FormerlySerializedAs("musicSlider")]
         [SerializeField] private Slider _musicSlider;
-        [FormerlySerializedAs("sfxSlider")]
         [SerializeField] private Slider _sfxSlider;
 
         public event Action<float> MusicVolumeEdited;

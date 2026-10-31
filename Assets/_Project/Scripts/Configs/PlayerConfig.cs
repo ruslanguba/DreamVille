@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace DreamVille.Configs
 {
@@ -8,17 +7,12 @@ namespace DreamVille.Configs
     public sealed class PlayerConfig : ScriptableObject
     {
         [Header("Movement")]
-        [FormerlySerializedAs("walkSpeed")]
         [SerializeField, Min(0f)] private float _walkSpeed = 5f;
-        [FormerlySerializedAs("acceleration")]
         [SerializeField, Min(0f)] private float _acceleration = 20f;
-        [FormerlySerializedAs("rotationSpeed")]
         [SerializeField, Min(0f)] private float _rotationSpeed = 12f;
 
         [Header("Jump and gravity")]
-        [FormerlySerializedAs("jumpHeight")]
         [SerializeField, Min(0f)] private float _jumpHeight = 2f;
-        [FormerlySerializedAs("gravity")]
         [SerializeField] private float _gravity = -9.81f;
         [SerializeField] private float _groundedStickSpeed = -2f;
 

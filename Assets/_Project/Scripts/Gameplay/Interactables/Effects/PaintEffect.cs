@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 using DreamVille.Scoring;
@@ -16,7 +15,6 @@ namespace DreamVille.Gameplay.Interactables.Effects
         [SerializeField] private Renderer[] _renderer;
         [SerializeField] private Material _colorChangeMaterial;
 
-        [FormerlySerializedAs("_maxHitPoints")]
         [SerializeField, Min(1)] private int _strokeCount = 5;
         [SerializeField] private float _scorePerStroke = 10f;
 

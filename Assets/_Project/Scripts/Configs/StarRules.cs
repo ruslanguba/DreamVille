@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace DreamVille.Configs
 {
@@ -8,7 +7,6 @@ namespace DreamVille.Configs
     [CreateAssetMenu(fileName = "StarRules", menuName = "DreamVille/Scoring/Star Rules")]
     public sealed class StarRules : ScriptableObject
     {
-        [FormerlySerializedAs("starThresholds")]
         [SerializeField] private float[] _thresholds;
 
         /// <summary>Total score needed for each star, for example [50, 100, 150].</summary>

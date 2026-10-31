@@ -1,7 +1,6 @@
 using System;
 using UnityEngine.InputSystem;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace DreamVille.Input
 {
@@ -14,7 +13,6 @@ namespace DreamVille.Input
         [SerializeField] private InputActionReference _jumpAction;
         [SerializeField] private InputActionReference _fireAction;
         [SerializeField] private InputActionReference _secondaryFire;
-        [FormerlySerializedAs("_recallAction")]
         [SerializeField] private InputActionReference _stopAction;
         [SerializeField] private InputActionReference _throwAction;
         [SerializeField] private InputActionReference _interactAction;

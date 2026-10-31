@@ -6,13 +6,14 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DreamVille.Tests.EditMode.Architecture
 {
     /// <summary>
-    /// Pins the naming rules of conventions §2 and §4 on the compiled runtime assemblies (spec 14 §5 items 4-12):
+    /// Pins the naming rules of conventions §2 and §4 on the compiled runtime assemblies (spec 14 §5 items 4-13 and 16):
     /// no public instance fields, <c>_camelCase</c> private fields, PascalCase constants, <c>[SerializeField]</c> only on
-    /// private fields, events without an <c>On</c> prefix, ScriptableObjects named after their role with a
+    /// private fields and no leftover <c>[FormerlySerializedAs]</c>, events without an <c>On</c> prefix, ScriptableObjects named after their role with a
     /// <c>DreamVille/</c> menu, and type names without underscores, long capitalised acronyms or a <c>Manager</c> suffix. Reflection, not source text: modifiers and attributes are facts of the compiled types,
     /// and compiler-generated members (closures, async state machines, backing fields) are skipped.
     /// </summary>
@@ -107,6 +108,23 @@ namespace DreamVille.Tests.EditMode.Architecture
                 .ToArray();
 
             Assert.That(offenders, Is.Empty, "[SerializeField] on a non-private field (it is either redundant or exposes data):\n" + string.Join("\n", offenders));
+        }
+
+        // The attribute is a migration tool (ADR 0010): it lives only inside a rename batch's editor session. Backing
+        // fields count too, since [field: FormerlySerializedAs] would hide there.
+        [Test]
+        public void Fields_CarryNoFormerlySerializedAs()
+        {
+            string[] offenders = UserTypes()
+                .SelectMany(type => type.GetFields(DeclaredMembers))
+                .Where(field => field.IsDefined(typeof(FormerlySerializedAsAttribute), false))
+                .Select(KeyOf)
+                .OrderBy(key => key, StringComparer.Ordinal)
+                .ToArray();
+
+            Assert.That(offenders, Is.Empty,
+                "[FormerlySerializedAs] outside a rename batch (re-serialize the data, record the old name in RetiredSerializedFields, drop the attribute):\n" +
+                string.Join("\n", offenders));
         }
 
         [Test]

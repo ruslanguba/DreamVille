@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace DreamVille.UI.Hud
 {
@@ -10,11 +9,11 @@ namespace DreamVille.UI.Hud
     public sealed class GameUIRoot : MonoBehaviour, IGameHudView
     {
         [Header("HUD Blocks")]
-        [SerializeField, FormerlySerializedAs("_ricochetUI")] private RicochetView _ricochet;
-        [SerializeField, FormerlySerializedAs("_pillowUI")] private PillowView _pillows;
-        [SerializeField, FormerlySerializedAs("_enemyCounterUI")] private EnemyCounterView _enemyCounter;
-        [SerializeField, FormerlySerializedAs("_scorePopupUI")] private ScorePopupView _scorePopup;
-        [SerializeField, FormerlySerializedAs("_starsUI")] private StarsView _stars;
+        [SerializeField] private RicochetView _ricochet;
+        [SerializeField] private PillowView _pillows;
+        [SerializeField] private EnemyCounterView _enemyCounter;
+        [SerializeField] private ScorePopupView _scorePopup;
+        [SerializeField] private StarsView _stars;
 
         public IScoreView Score => _scorePopup;
         public IStarsView Stars => _stars;

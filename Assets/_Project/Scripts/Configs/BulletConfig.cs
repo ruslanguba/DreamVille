@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace DreamVille.Configs
 {
@@ -7,16 +6,12 @@ namespace DreamVille.Configs
     [CreateAssetMenu(fileName = "BulletConfig", menuName = "DreamVille/Weapons/Bullet Config")]
     public sealed class BulletConfig : ScriptableObject
     {
-        [FormerlySerializedAs("Damage")]
         [SerializeField, Min(0f)] private float _damage = 10f;
 
-        [FormerlySerializedAs("Speed")]
         [SerializeField, Min(0.01f)] private float _speed = 15f;
 
-        [FormerlySerializedAs("LifeTime")]
         [SerializeField, Min(0.01f)] private float _lifeTime = 8f;
 
-        [FormerlySerializedAs("MaxCollisionCount")]
         [SerializeField, Min(1)] private int _maxCollisionCount = 6;
 
         [SerializeField, Min(0.01f)] private float _collisionRadius = 0.25f;

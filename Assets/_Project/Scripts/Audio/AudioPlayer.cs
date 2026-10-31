@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.Serialization;
 
 namespace DreamVille.Audio
 {
@@ -17,13 +16,10 @@ namespace DreamVille.Audio
         private const float MinNormalizedVolume = 0.001f;
 
         [Header("Audio Mixer")]
-        [FormerlySerializedAs("audioMixer")]
         [SerializeField] private AudioMixer _audioMixer;
 
         [Header("Audio Sources")]
-        [FormerlySerializedAs("musicSource")]
         [SerializeField] private AudioSource _musicSource;
-        [FormerlySerializedAs("sfxSource")]
         [SerializeField] private AudioSource _sfxSource;
 
         public void PlayMusic(AudioClip clip, bool loop)

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 using DreamVille.Gameplay.Weapons;
 
@@ -8,7 +7,6 @@ namespace DreamVille.Gameplay.Interactables.Effects
     /// <summary>Keeps the player's weapon hidden until this pickup is collected, then equips it.</summary>
     public sealed class EquipWeaponEffect : MonoBehaviour, IInteractionEffect
     {
-        [FormerlySerializedAs("pillowGun")]
         [SerializeField] private PillowGun _weapon;
 
         private void Awake()

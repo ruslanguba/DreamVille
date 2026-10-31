@@ -157,9 +157,8 @@ MonoBehaviour:
   _renderer:
   - {fileID: 0}
   _colorChangeMaterial: {fileID: 0}
-  _collider: {fileID: 0}
-  _steps: 5
-  _maxHitPoints: 5
+  _strokeCount: 5
+  _scorePerStroke: 10
 --- !u!114 &4830562394523103782
 MonoBehaviour:
   m_ObjectHideFlags: 0

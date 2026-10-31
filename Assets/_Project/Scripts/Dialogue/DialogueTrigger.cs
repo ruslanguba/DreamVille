@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 using DreamVille.Core.Players;
@@ -20,7 +19,6 @@ namespace DreamVille.Dialogue
 
         [SerializeField] private DialogueDefinition _definition;
 
-        [FormerlySerializedAs("deleteOnEnd")]
         [SerializeField] private bool _deleteOnEnd;
 
         private IPlayerZone _playerZone;

@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 using DreamVille.Gameplay.Damage;
@@ -16,7 +15,6 @@ namespace DreamVille.Gameplay.Enemies.Combat
     [RequireComponent(typeof(Rigidbody))]
     public sealed class EnemyProjectile : MonoBehaviour
     {
-        [FormerlySerializedAs("knockbackForce")]
         [SerializeField] private float _knockbackForce = 6f;
 
         private Rigidbody _body;

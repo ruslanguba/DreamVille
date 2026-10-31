@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 using DreamVille.Audio;
@@ -15,11 +14,9 @@ namespace DreamVille.Gameplay.Weapons
     public sealed class PillowGun : MonoBehaviour, IWeapon, IAimSource
     {
         [Tooltip("Where bullets leave the gun; its forward is the shot direction.")]
-        [FormerlySerializedAs("_spawn")]
         [SerializeField] private Transform _muzzle;
 
         [Tooltip("Seconds between two shots.")]
-        [FormerlySerializedAs("_shotPeriod")]
         [SerializeField, Min(0f)] private float _shotInterval = 0.5f;
 
         [SerializeField] private BulletConfig _config;

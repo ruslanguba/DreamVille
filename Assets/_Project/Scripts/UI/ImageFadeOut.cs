@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 using DreamVille.Core.Async;
@@ -15,7 +14,7 @@ namespace DreamVille.UI
     /// </summary>
     public sealed class ImageFadeOut : MonoBehaviour
     {
-        [SerializeField, FormerlySerializedAs("image")] private Image _image;
+        [SerializeField] private Image _image;
 
         [SerializeField, Min(0f), Tooltip("Seconds of game time the fade takes.")]
         private float _fadeDuration = 3f;

@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 using DreamVille.Audio;
@@ -20,7 +19,6 @@ namespace DreamVille.Gameplay.Enemies
         /// <summary>Raised once on death, right after <see cref="Killed"/>. Payload-free seam for objectives.</summary>
         public event Action<IMortal> Died;
 
-        [FormerlySerializedAs("_health")]
         [SerializeField] private float _maxHealth = 2f;
         [SerializeField] private AudioClip _clip;
 

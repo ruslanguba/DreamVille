@@ -1,7 +1,6 @@
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace DreamVille.UI.Dialogues
@@ -13,25 +12,17 @@ namespace DreamVille.UI.Dialogues
     /// </summary>
     public sealed class DialogueView : MonoBehaviour, IDialogueView
     {
-        [FormerlySerializedAs("panel")]
         [SerializeField] private Image _panel;
 
-        [FormerlySerializedAs("leftImage")]
         [SerializeField] private Image _leftImage;
-        [FormerlySerializedAs("rightImage")]
         [SerializeField] private Image _rightImage;
 
-        [FormerlySerializedAs("leftTextBackground")]
         [SerializeField] private Image _leftTextBackground;
-        [FormerlySerializedAs("rightTextBackground")]
         [SerializeField] private Image _rightTextBackground;
 
-        [FormerlySerializedAs("leftText")]
         [SerializeField] private TextMeshProUGUI _leftText;
-        [FormerlySerializedAs("rightText")]
         [SerializeField] private TextMeshProUGUI _rightText;
 
-        [FormerlySerializedAs("sizeOffset")]
         [SerializeField] private float _sizeOffset;
 
         [SerializeField] private Button _nextButton;

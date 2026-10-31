@@ -1,7 +1,6 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 using DreamVille.Core.Async;
 
@@ -11,11 +10,11 @@ namespace DreamVille.Gameplay.Npc
     [RequireComponent(typeof(Rigidbody))]
     public sealed class NpcMover : MonoBehaviour
     {
-        [SerializeField, FormerlySerializedAs("jumpForce")]
+        [SerializeField]
         [Tooltip("Upward velocity change of a jump, m/s.")]
         private float _jumpForce = 5f;
 
-        [SerializeField, FormerlySerializedAs("forwardForce")]
+        [SerializeField]
         [Tooltip("Forward velocity change of a jump, m/s.")]
         private float _forwardForce = 2f;
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 using DreamVille.Core.Async;
 
@@ -15,15 +14,15 @@ namespace DreamVille.Gameplay.Npc
     /// </summary>
     public sealed class NpcQueue : MonoBehaviour
     {
-        [SerializeField, FormerlySerializedAs("jumpers")]
+        [SerializeField]
         [Tooltip("Queue members, front first.")]
         private List<NpcMover> _jumpers;
 
-        [SerializeField, Min(0f), FormerlySerializedAs("moveDuration")]
+        [SerializeField, Min(0f)]
         [Tooltip("Seconds of game time everybody walks to the next slot.")]
         private float _moveDuration = 1f;
 
-        [SerializeField, Min(0f), FormerlySerializedAs("delayBetweenJumps")]
+        [SerializeField, Min(0f)]
         [Tooltip("Seconds of game time between the jump and the walk.")]
         private float _delayBetweenJumps = 1.5f;
 

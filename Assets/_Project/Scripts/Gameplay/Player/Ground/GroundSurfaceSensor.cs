@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace DreamVille.Gameplay.Player.Ground
@@ -12,10 +11,8 @@ namespace DreamVille.Gameplay.Player.Ground
     {
         private const int HitBufferSize = 8;
 
-        [FormerlySerializedAs("_checkSurfacePivot")]
         [SerializeField] private Transform _pivot;
 
-        [FormerlySerializedAs("radius")]
         [SerializeField, Min(0f)] private float _radius = 0.5f;
 
         [Tooltip("Layers that count as ground. Exclude the Player layer so the character's own colliders do not fill the buffer.")]
