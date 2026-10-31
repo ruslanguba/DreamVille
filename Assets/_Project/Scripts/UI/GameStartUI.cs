@@ -13,13 +13,13 @@ namespace DreamVille.UI
     public class GameStartUI : MonoBehaviour
     {
         [Header("Main Images")]
-        [SerializeField] private Image firstImage;
-        [SerializeField] private Image[] collageImages;
+        [SerializeField] private Image _firstImage;
+        [SerializeField] private Image[] _collageImages;
 
         [Header("Settings")]
-        [SerializeField] private float fadeTime = 1.2f;
-        [SerializeField] private float appearScale = 1.12f;
-        [SerializeField] private float firstScale = 1.08f;
+        [SerializeField] private float _fadeTime = 1.2f;
+        [SerializeField] private float _appearScale = 1.12f;
+        [SerializeField] private float _firstScale = 1.08f;
 
         [Header("Input")]
         [SerializeField] private InputActionReference _skipAction;
@@ -53,7 +53,7 @@ namespace DreamVille.UI
 
             await FadeAndGrowFirstAsync(token);
 
-            foreach (Image image in collageImages)
+            foreach (Image image in _collageImages)
             {
                 _skipRequested = false;
                 await ShowCollageImageAsync(image, token);
@@ -62,13 +62,13 @@ namespace DreamVille.UI
 
         private void InitImages()
         {
-            firstImage.SetAlpha(1f);
-            firstImage.transform.localScale = Vector3.one;
+            _firstImage.SetAlpha(1f);
+            _firstImage.transform.localScale = Vector3.one;
 
-            foreach (Image image in collageImages)
+            foreach (Image image in _collageImages)
             {
                 image.SetAlpha(0f);
-                image.transform.localScale = Vector3.one * appearScale;
+                image.transform.localScale = Vector3.one * _appearScale;
             }
         }
 
@@ -77,15 +77,15 @@ namespace DreamVille.UI
             await AnimateAsync(
                 progress =>
                 {
-                    firstImage.SetAlpha(Mathf.Lerp(1f, 0.5f, progress));
-                    firstImage.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.one * firstScale, progress);
+                    _firstImage.SetAlpha(Mathf.Lerp(1f, 0.5f, progress));
+                    _firstImage.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.one * _firstScale, progress);
                 },
                 token);
         }
 
         private async UniTask ShowCollageImageAsync(Image image, CancellationToken token)
         {
-            Vector3 startScale = Vector3.one * appearScale;
+            Vector3 startScale = Vector3.one * _appearScale;
 
             await AnimateAsync(
                 progress =>
@@ -104,10 +104,10 @@ namespace DreamVille.UI
         {
             float elapsed = 0f;
 
-            while (elapsed < fadeTime && !_skipRequested)
+            while (elapsed < _fadeTime && !_skipRequested)
             {
                 elapsed += Time.deltaTime;
-                apply(Mathf.Clamp01(elapsed / fadeTime));
+                apply(Mathf.Clamp01(elapsed / _fadeTime));
                 await UniTask.Yield(PlayerLoopTiming.Update, token);
             }
         }

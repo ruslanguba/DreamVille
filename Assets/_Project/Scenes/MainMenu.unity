@@ -5117,7 +5117,7 @@ GameObject:
   - component: {fileID: 1410168640}
   - component: {fileID: 1410168643}
   m_Layer: 5
-  m_Name: Quit Button Ru
+  m_Name: Quit Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

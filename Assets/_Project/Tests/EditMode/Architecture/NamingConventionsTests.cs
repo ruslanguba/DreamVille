@@ -51,11 +51,6 @@ namespace DreamVille.Tests.EditMode.Architecture
             "DreamVille.Gameplay.Enemies.Enemy.patrolPoints",
             "DreamVille.Gameplay.Enemies.EnemyRotationHandler.rotationSpeed",
             "DreamVille.Gameplay.Npc.NpcCanvasToggle.Canvas",
-            "DreamVille.UI.GameStartUI.appearScale",
-            "DreamVille.UI.GameStartUI.collageImages",
-            "DreamVille.UI.GameStartUI.fadeTime",
-            "DreamVille.UI.GameStartUI.firstImage",
-            "DreamVille.UI.GameStartUI.firstScale",
         };
 
         /// <summary>Every loaded DreamVille runtime assembly (the test assemblies excluded), ordered by name.</summary>

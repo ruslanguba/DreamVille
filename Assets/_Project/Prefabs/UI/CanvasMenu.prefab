@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2124759650917384108}
   - component: {fileID: 1797220839740731288}
   m_Layer: 5
-  m_Name: StartButton
+  m_Name: ContinueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1043,7 +1043,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3837238672838638274}
   m_Layer: 5
-  m_Name: Commics
+  m_Name: Comics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1415,7 +1415,7 @@ GameObject:
   - component: {fileID: 4354548665013796467}
   - component: {fileID: 861035886516936172}
   m_Layer: 5
-  m_Name: LeftCommics
+  m_Name: LeftComics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2929,7 +2929,7 @@ GameObject:
   - component: {fileID: 1497295787248610058}
   - component: {fileID: 7246967769261453273}
   m_Layer: 5
-  m_Name: RightCommics
+  m_Name: RightComics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3008,7 +3008,7 @@ GameObject:
   - component: {fileID: 8838784810742670639}
   - component: {fileID: 8135776207714910117}
   m_Layer: 5
-  m_Name: RestartButton (2)
+  m_Name: RestartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3432,7 +3432,7 @@ GameObject:
   - component: {fileID: 7854006284611805222}
   - component: {fileID: 8530064679199050255}
   m_Layer: 5
-  m_Name: SettingsButton (1)
+  m_Name: SettingsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
