@@ -416,10 +416,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: 3ddc719498228d940957e7eaf01d9c8f, type: 2}
-  _moveSpeed: 3
+  _moveSpeed: 5
   _chaseRange: 7
   _attackRange: 5
-  _attackCooldown: 2
+  _attackCooldown: 4
   _patrolPoints: []
   _attackSpawn: {fileID: 2066396746702385276}
 --- !u!114 &7867341581838299553
@@ -464,6 +464,7 @@ MonoBehaviour:
   _deathClip: {fileID: 8300000, guid: c9071bf4358e6ca41802daf7c9fab3d0, type: 3}
   _attackClip: {fileID: 8300000, guid: f4fffbfbee271d549b8981c0e5c91609, type: 3}
   _jumpClip: {fileID: 8300000, guid: 37439a704b1af2644ab712cc4a798ec8, type: 3}
+  _jumpPitchJitter: 0.1
   _footstepClips: []
   _stepInterval: 0.5
   _footstepPitchJitter: 0.1
