@@ -34,15 +34,15 @@ namespace DreamVille.Gameplay.Enemies
 
         [SerializeField] private EnemyConfig _config;
 
-        // Legacy names frozen by spec 03 §3.2: shipping scenes override these six paths on 66 prefab
-        // instances, and a rename is not guaranteed to carry the overrides over. Renamed in step 6.2.
+        // Level-design knobs: overridden per prefab instance and pinned by EnemyTuningSnapshotTests;
+        // archetype knobs live in EnemyConfig.
         [Header("Instance tuning")]
-        [SerializeField] private float moveSpeed = 3f;
-        [SerializeField] private float chaseRange = 7f;
-        [SerializeField] private float attackRange = 5f;
-        [SerializeField] private float attackCooldown = 2f;
-        [SerializeField] private Transform[] patrolPoints;
-        [SerializeField] private Transform attackSpawn;
+        [SerializeField] private float _moveSpeed = 3f;
+        [SerializeField] private float _chaseRange = 7f;
+        [SerializeField] private float _attackRange = 5f;
+        [SerializeField] private float _attackCooldown = 2f;
+        [SerializeField] private Transform[] _patrolPoints;
+        [SerializeField] private Transform _attackSpawn;
 
         private IPlayerMarker _player;
         private EnemyProjectile.Pool _projectiles;
@@ -114,8 +114,8 @@ namespace DreamVille.Gameplay.Enemies
                 return;
             }
 
-            _tuning = new EnemyTuning(moveSpeed, chaseRange, attackRange, attackCooldown);
-            _route = PatrolRoute.WithoutEmptySlots(patrolPoints);
+            _tuning = new EnemyTuning(_moveSpeed, _chaseRange, _attackRange, _attackCooldown);
+            _route = PatrolRoute.WithoutEmptySlots(_patrolPoints);
             _steering = new RigidbodySteering(_body);
             _animator = new EnemyAnimatorDriver(GetComponentInChildren<Animator>());
             _audio = _actorAudio != null ? new ActorAudioAdapter(_actorAudio) : (IEnemyAudio)new NullEnemyAudio();
@@ -192,13 +192,13 @@ namespace DreamVille.Gameplay.Enemies
             if (_config.Attack != EnemyAttackKind.ThrowProjectile)
                 return new NullEnemyAttack();
 
-            if (attackSpawn == null || _projectiles == null)
+            if (_attackSpawn == null || _projectiles == null)
             {
                 Debug.LogError($"[{nameof(Enemy)}] A throwing enemy needs an attack spawn point and a projectile pool.", this);
                 return new NullEnemyAttack();
             }
 
-            return new ProjectileAttack(_projectiles, attackSpawn, _config);
+            return new ProjectileAttack(_projectiles, _attackSpawn, _config);
         }
 
         private void OnStateChanged(EnemyStateId previous, EnemyStateId next) => StateChanged?.Invoke(previous, next);

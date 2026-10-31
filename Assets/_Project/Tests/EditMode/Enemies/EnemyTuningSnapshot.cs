@@ -18,15 +18,15 @@ namespace DreamVille.Tests.EditMode.Enemies
     /// </summary>
     internal static class EnemyTuningFields
     {
-        public const string MoveSpeed = "moveSpeed";
-        public const string ChaseRange = "chaseRange";
-        public const string AttackRange = "attackRange";
-        public const string AttackCooldown = "attackCooldown";
-        public const string PatrolPoints = "patrolPoints";
-        public const string AttackSpawn = "attackSpawn";
+        public const string MoveSpeed = "_moveSpeed";
+        public const string ChaseRange = "_chaseRange";
+        public const string AttackRange = "_attackRange";
+        public const string AttackCooldown = "_attackCooldown";
+        public const string PatrolPoints = "_patrolPoints";
+        public const string AttackSpawn = "_attackSpawn";
 
         /// <summary>Lives on <see cref="EnemyRotationHandler"/>, not on <see cref="Enemy"/>.</summary>
-        public const string RotationSpeed = "rotationSpeed";
+        public const string RotationSpeed = "_rotationSpeed";
     }
 
     /// <summary>One enemy of one scene or prefab: its key (asset and hierarchy path) and the level-design tuning resolved on it.</summary>

@@ -1,6 +1,7 @@
 using System;
 
 using DreamVille.Audio;
+using DreamVille.Gameplay.Enemies;
 using DreamVille.Gameplay.Environment;
 using DreamVille.Gameplay.Npc;
 using DreamVille.UI;
@@ -24,6 +25,10 @@ namespace DreamVille.Tests.EditMode.Architecture
 
             // Two fields were both called "pitch random"; each now names the clip group it jitters.
             (typeof(ActorAudio), new[] { "_pitchRandom", "randomClips", "randomInterval", "pitchRandom" }),
+
+            // target and throwForce left Enemy in step 4.2; their instance overrides were dead data until 6.2 dropped them.
+            (typeof(Enemy), new[] { "moveSpeed", "chaseRange", "attackRange", "attackCooldown", "patrolPoints", "attackSpawn", "target", "throwForce" }),
+            (typeof(EnemyRotationHandler), new[] { "rotationSpeed" }),
         };
     }
 }

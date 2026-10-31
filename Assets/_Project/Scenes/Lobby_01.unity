@@ -9297,19 +9297,19 @@ PrefabInstance:
     m_TransformParent: {fileID: 818387761}
     m_Modifications:
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: chaseRange
+      propertyPath: _chaseRange
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: patrolPoints.Array.size
+      propertyPath: _patrolPoints.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: 'patrolPoints.Array.data[0]'
+      propertyPath: '_patrolPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: 'patrolPoints.Array.data[1]'
+      propertyPath: '_patrolPoints.Array.data[1]'
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4237982897725304729, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
@@ -17356,27 +17356,27 @@ PrefabInstance:
     m_TransformParent: {fileID: 620868656}
     m_Modifications:
     - target: {fileID: 2730273762849173825, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: rotationSpeed
+      propertyPath: _rotationSpeed
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: moveSpeed
+      propertyPath: _moveSpeed
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: chaseRange
+      propertyPath: _chaseRange
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: patrolPoints.Array.size
+      propertyPath: _patrolPoints.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: 'patrolPoints.Array.data[0]'
+      propertyPath: '_patrolPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: 'patrolPoints.Array.data[1]'
+      propertyPath: '_patrolPoints.Array.data[1]'
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4237982897725304729, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
@@ -29479,27 +29479,27 @@ PrefabInstance:
     m_TransformParent: {fileID: 620868656}
     m_Modifications:
     - target: {fileID: 2730273762849173825, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: rotationSpeed
+      propertyPath: _rotationSpeed
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: moveSpeed
+      propertyPath: _moveSpeed
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: chaseRange
+      propertyPath: _chaseRange
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: patrolPoints.Array.size
+      propertyPath: _patrolPoints.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: 'patrolPoints.Array.data[0]'
+      propertyPath: '_patrolPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: 'patrolPoints.Array.data[1]'
+      propertyPath: '_patrolPoints.Array.data[1]'
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4237982897725304729, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
@@ -39371,27 +39371,27 @@ PrefabInstance:
     m_TransformParent: {fileID: 620868656}
     m_Modifications:
     - target: {fileID: 2730273762849173825, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: rotationSpeed
+      propertyPath: _rotationSpeed
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: moveSpeed
+      propertyPath: _moveSpeed
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: chaseRange
+      propertyPath: _chaseRange
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: patrolPoints.Array.size
+      propertyPath: _patrolPoints.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: 'patrolPoints.Array.data[0]'
+      propertyPath: '_patrolPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3312061001314859064, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}
-      propertyPath: 'patrolPoints.Array.data[1]'
+      propertyPath: '_patrolPoints.Array.data[1]'
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4237982897725304729, guid: bcb605e1352c3d94688462a2adf7e303, type: 3}

@@ -989,7 +989,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e3704e11a2c5294d8c9c5c2c4e57518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 8
+  _rotationSpeed: 8
 --- !u!114 &279553783653144266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1121,12 +1121,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: b033908115d14304da01eb071d65b5a0, type: 2}
-  moveSpeed: 5
-  chaseRange: 0
-  attackRange: 0
-  attackCooldown: 0
-  patrolPoints: []
-  attackSpawn: {fileID: 0}
+  _moveSpeed: 5
+  _chaseRange: 0
+  _attackRange: 0
+  _attackCooldown: 0
+  _patrolPoints: []
+  _attackSpawn: {fileID: 0}
 --- !u!114 &8068560695212955412
 MonoBehaviour:
   m_ObjectHideFlags: 0

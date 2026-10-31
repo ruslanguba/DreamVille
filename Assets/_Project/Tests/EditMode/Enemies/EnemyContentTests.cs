@@ -103,7 +103,7 @@ namespace DreamVille.Tests.EditMode.Enemies
                 AssignedConfig(walker, walker.name);
 
                 var serializedWalker = new SerializedObject(walker);
-                SerializedProperty patrolPoints = serializedWalker.FindProperty("patrolPoints");
+                SerializedProperty patrolPoints = serializedWalker.FindProperty("_patrolPoints");
 
                 Assert.That(patrolPoints.arraySize, Is.EqualTo(2), $"{walker.name} must have exactly two patrol points.");
                 for (int i = 0; i < patrolPoints.arraySize; i++)
@@ -132,7 +132,7 @@ namespace DreamVille.Tests.EditMode.Enemies
                 if (config.Attack != EnemyAttackKind.ThrowProjectile)
                     continue;
 
-                SerializedProperty attackSpawn = serializedEnemy.FindProperty("attackSpawn");
+                SerializedProperty attackSpawn = serializedEnemy.FindProperty("_attackSpawn");
                 Assert.That(attackSpawn.objectReferenceValue, Is.Not.Null, $"{context} throws projectiles but has no attackSpawn assigned.");
             }
         }

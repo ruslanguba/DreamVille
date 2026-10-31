@@ -12,8 +12,8 @@ namespace DreamVille.Gameplay.Enemies
         private const float MinSqrSpeed = 0.01f;
         private const float MinSqrDirection = 0.0001f;
 
-        // Legacy name frozen by spec 03 §3.2: 36 prefab instances override this path.
-        [SerializeField] private float rotationSpeed = 8f;
+        // Overridden per prefab instance and pinned by EnemyTuningSnapshotTests.
+        [SerializeField] private float _rotationSpeed = 8f;
 
         private Rigidbody _body;
 
@@ -50,7 +50,7 @@ namespace DreamVille.Gameplay.Enemies
                 return;
 
             Quaternion target = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, target, rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target, _rotationSpeed * Time.deltaTime);
         }
 
         private static Vector3 Flatten(Vector3 direction)

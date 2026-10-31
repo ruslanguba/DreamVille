@@ -43,20 +43,6 @@ namespace DreamVille.Tests.EditMode.Architecture
 
         private const string DreamVilleMenuPrefix = "DreamVille/";
 
-        // Serialized fields that keep their old names until their own batch of roadmap 6.2 (spec 14 B4a-B5) renames them
-        // together with the prefab-instance overrides that address them. The list can only shrink; it is deleted, with
-        // its self-test, when the last entry goes. Format: "Namespace.Type.field".
-        private static readonly string[] PendingSerializedRenames =
-        {
-            "DreamVille.Gameplay.Enemies.Enemy.attackCooldown",
-            "DreamVille.Gameplay.Enemies.Enemy.attackRange",
-            "DreamVille.Gameplay.Enemies.Enemy.attackSpawn",
-            "DreamVille.Gameplay.Enemies.Enemy.chaseRange",
-            "DreamVille.Gameplay.Enemies.Enemy.moveSpeed",
-            "DreamVille.Gameplay.Enemies.Enemy.patrolPoints",
-            "DreamVille.Gameplay.Enemies.EnemyRotationHandler.rotationSpeed",
-        };
-
         /// <summary>Every loaded DreamVille runtime assembly (the test assemblies excluded), ordered by name.</summary>
         internal static IReadOnlyList<Assembly> RuntimeAssemblies()
             => AppDomain.CurrentDomain.GetAssemblies()
@@ -79,7 +65,6 @@ namespace DreamVille.Tests.EditMode.Architecture
             string[] offenders = UserFields()
                 .Where(field => field.IsPublic && !field.IsStatic)
                 .Select(KeyOf)
-                .Where(key => !PendingSerializedRenames.Contains(key))
                 .OrderBy(key => key, StringComparer.Ordinal)
                 .ToArray();
 
@@ -95,8 +80,6 @@ namespace DreamVille.Tests.EditMode.Architecture
             foreach (FieldInfo field in UserFields())
             {
                 string key = KeyOf(field);
-                if (PendingSerializedRenames.Contains(key))
-                    continue;
 
                 if (IsConstant(field))
                 {
@@ -112,23 +95,6 @@ namespace DreamVille.Tests.EditMode.Architecture
             offenders.Sort(StringComparer.Ordinal);
 
             Assert.That(offenders, Is.Empty, "Fields that break conventions §2:\n" + string.Join("\n", offenders));
-        }
-
-        [Test]
-        public void PendingSerializedRenames_EveryEntryStillExists()
-        {
-            Dictionary<string, FieldInfo> fields = UserFields().ToDictionary(KeyOf, StringComparer.Ordinal);
-            var stale = new List<string>();
-
-            foreach (string key in PendingSerializedRenames)
-            {
-                if (!fields.TryGetValue(key, out FieldInfo field))
-                    stale.Add($"{key} (no such field: drop the entry)");
-                else if (!Violates(field))
-                    stale.Add($"{key} (already conventional: drop the entry)");
-            }
-
-            Assert.That(stale, Is.Empty, "The pending-rename list may only name fields that are still waiting for their rename:\n" + string.Join("\n", stale));
         }
 
         [Test]
@@ -295,17 +261,6 @@ namespace DreamVille.Tests.EditMode.Architecture
         }
 
         private static bool IsConstant(FieldInfo field) => field.IsLiteral || (field.IsStatic && field.IsInitOnly);
-
-        private static bool Violates(FieldInfo field)
-        {
-            if (field.IsPublic && !field.IsStatic)
-                return true;
-
-            if (IsConstant(field))
-                return !PascalCase.IsMatch(field.Name);
-
-            return !field.IsPublic && !UnderscoreCamelCase.IsMatch(field.Name);
-        }
 
         private static string KeyOf(FieldInfo field) => $"{field.DeclaringType.FullName}.{field.Name}";
     }
