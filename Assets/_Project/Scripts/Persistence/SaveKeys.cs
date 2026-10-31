@@ -6,7 +6,6 @@ namespace DreamVille.Persistence
     /// </summary>
     public static class SaveKeys
     {
-        // The volume keys double as AudioMixer parameter names; keep both verbatim.
         public const string MusicVolume = "MusicVolume";
         public const string SfxVolume = "SFXVolume";
 

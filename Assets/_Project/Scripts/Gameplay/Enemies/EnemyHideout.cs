@@ -19,7 +19,7 @@ namespace DreamVille.Gameplay.Enemies
     {
         private const float HiddenScale = 0.01f;
 
-        // Frozen names: prefab-instance overrides in Level_03, Level_04 and Max/* address these fields by property path.
+        // Overridden per instance in Level_03, Level_04 and Max/*; renames follow ADR 0010.
         [SerializeField] private List<Enemy> _enemies;
         [SerializeField] private List<Transform> _nextPointsTransform;
 

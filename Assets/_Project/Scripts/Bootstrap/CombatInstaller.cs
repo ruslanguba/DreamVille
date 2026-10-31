@@ -13,6 +13,9 @@ namespace DreamVille.Bootstrap
     /// </summary>
     public class CombatInstaller : MonoInstaller
     {
+        private const int EnemyProjectilePrewarmCount = 8;
+        private const string EnemyProjectileGroup = "EnemyProjectiles";
+
         [Header("Prefabs")]
         [SerializeField] private BulletSpawner _gameplaySystemsPrefab;
         [SerializeField] private EnemyProjectile _enemyProjectilePrefab;
@@ -39,9 +42,9 @@ namespace DreamVille.Bootstrap
 
             Container
                 .BindMemoryPool<EnemyProjectile, EnemyProjectile.Pool>()
-                .WithInitialSize(8)
+                .WithInitialSize(EnemyProjectilePrewarmCount)
                 .FromComponentInNewPrefab(_enemyProjectilePrefab)
-                .UnderTransformGroup("EnemyProjectiles");
+                .UnderTransformGroup(EnemyProjectileGroup);
 
             // Lives on the LevelSystems prefab in Prefabs/Utilities.
             Container.BindInterfacesTo<EnemyRegistry>().FromComponentInHierarchy().AsSingle();

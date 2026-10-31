@@ -8,7 +8,7 @@ namespace DreamVille.Gameplay.Interactables.Effects
     /// <summary>Plays a 2D sound effect through the audio service (a balloon pop). An empty clip is silent.</summary>
     public sealed class PlaySfxEffect : MonoBehaviour, IInteractionEffect
     {
-        // Frozen name: prefab-instance overrides in Level_01 address this field by property path.
+        // Overridden per instance in Level_01; renames follow ADR 0010.
         [SerializeField] private AudioClip _clip;
 
         private IAudioService _audio;

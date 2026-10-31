@@ -5,6 +5,9 @@ namespace DreamVille.Gameplay.Environment
     /// <summary>Moves a prop (a balloon) around a loop of points while spinning it; when hit, it floats upwards for a while and then resumes its route.</summary>
     public class PropsMover : MonoBehaviour
     {
+        private const float ArrivalDistance = 0.2f;
+        private const float FloatUpSpeedFactor = 2f;
+
         [SerializeField] private Transform _balloon;
         [SerializeField] private Transform[] _points;
         [SerializeField] private float _speed;
@@ -22,7 +25,7 @@ namespace DreamVille.Gameplay.Environment
             if (!_isFloating)
             {
                 float distance = Vector3.Distance(_balloon.transform.position, _points[_pointIndex].position);
-                if (distance < 0.2f)
+                if (distance < ArrivalDistance)
                 {
                     SetNextPoint();
                 }
@@ -32,7 +35,7 @@ namespace DreamVille.Gameplay.Environment
             else
             {
                 _timer -= Time.deltaTime;
-                _balloon.transform.position = Vector3.MoveTowards(_balloon.transform.position, _balloon.transform.position + Vector3.up, _speed * 2 * Time.deltaTime);
+                _balloon.transform.position = Vector3.MoveTowards(_balloon.transform.position, _balloon.transform.position + Vector3.up, _speed * FloatUpSpeedFactor * Time.deltaTime);
                 if (_timer <= 0)
                 {
                     SetNextPoint();

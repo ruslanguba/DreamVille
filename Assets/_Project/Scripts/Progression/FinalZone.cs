@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 
 using DreamVille.Dialogue;
+using DreamVille.Gameplay;
 
 namespace DreamVille.Progression
 {
@@ -13,8 +14,6 @@ namespace DreamVille.Progression
     [RequireComponent(typeof(Animator))]
     public class FinalZone : MonoBehaviour
     {
-        private const string OpenTrigger = "start";
-
         /// <summary>The final dialogue started; a nearby NPC can react to it.</summary>
         public event Action DialogueStarted;
 
@@ -66,7 +65,7 @@ namespace DreamVille.Progression
                 _audio.Stop();
 
             if (_animator != null)
-                _animator.SetTrigger(OpenTrigger);
+                _animator.SetTrigger(AnimParams.Start);
         }
 
         private void SetArmed(bool isArmed)

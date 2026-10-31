@@ -47,6 +47,7 @@ namespace DreamVille.Audio
 
         public void SetVolume(string mixerParameter, float normalized)
         {
+            // 20*log10: amplitude ratio to decibels
             float decibels = Mathf.Log10(Mathf.Clamp(normalized, MinNormalizedVolume, 1f)) * 20f;
             _audioMixer.SetFloat(mixerParameter, decibels);
         }

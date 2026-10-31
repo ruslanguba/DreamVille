@@ -5,6 +5,9 @@ namespace DreamVille.Persistence
     /// <summary>Default <see cref="IProgressRepository"/> backed by an <see cref="ISaveStorage"/>.</summary>
     public sealed class ProgressRepository : IProgressRepository
     {
+        // Persisted format of the completed flag: never change it, saved games already hold 1.
+        private const int CompletedFlag = 1;
+
         private readonly ISaveStorage _storage;
 
         public ProgressRepository(ISaveStorage storage)
@@ -42,7 +45,7 @@ namespace DreamVille.Persistence
             if (string.IsNullOrEmpty(levelId))
                 return false;
 
-            return _storage.GetInt(SaveKeys.Completed(levelId), 0) == 1;
+            return _storage.GetInt(SaveKeys.Completed(levelId), 0) == CompletedFlag;
         }
 
         public void MarkCompleted(string levelId)
@@ -53,7 +56,7 @@ namespace DreamVille.Persistence
                 return;
             }
 
-            _storage.SetInt(SaveKeys.Completed(levelId), 1);
+            _storage.SetInt(SaveKeys.Completed(levelId), CompletedFlag);
             _storage.Save();
         }
 

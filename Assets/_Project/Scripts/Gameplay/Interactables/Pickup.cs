@@ -18,7 +18,7 @@ namespace DreamVille.Gameplay.Interactables
     {
         private const float IdleSpinDegreesPerSecond = 60f;
 
-        // Frozen name: a prefab-instance override in Level_02 addresses this field by property path.
+        // Overridden per instance in Level_02 and Lobby_01; renames follow ADR 0010.
         [SerializeField] private float _scoreToAdd = 1f;
 
         [SerializeField, Min(0f)] private float _growDuration = 0.3f;

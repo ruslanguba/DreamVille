@@ -10,6 +10,8 @@ namespace DreamVille.Gameplay.Enemies.Presentation
     /// </summary>
     public sealed class EnemyAnimatorDriver : IEnemyAnimator
     {
+        private const int BaseLayer = 0;
+
         private readonly Animator _animator;
         private readonly HashSet<int> _parameterHashes = new HashSet<int>();
 
@@ -30,8 +32,8 @@ namespace DreamVille.Gameplay.Enemies.Presentation
 
         public void PlayLocomotion(float normalizedOffset)
         {
-            if (_animator != null && _animator.HasState(0, AnimParams.WalkState))
-                _animator.Play(AnimParams.WalkState, 0, normalizedOffset);
+            if (_animator != null && _animator.HasState(BaseLayer, AnimParams.WalkState))
+                _animator.Play(AnimParams.WalkState, BaseLayer, normalizedOffset);
         }
 
         private void SetBool(int hash, bool value)

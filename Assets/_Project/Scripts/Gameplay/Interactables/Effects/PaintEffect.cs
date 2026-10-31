@@ -11,7 +11,7 @@ namespace DreamVille.Gameplay.Interactables.Effects
     /// </summary>
     public sealed class PaintEffect : MonoBehaviour, IInteractionEffect
     {
-        // Frozen names: prefab-instance overrides in Lobby_02 address these fields by property path.
+        // Overridden per instance in Lobby_02; renames follow ADR 0010.
         [SerializeField] private Renderer[] _renderer;
         [SerializeField] private Material _colorChangeMaterial;
 

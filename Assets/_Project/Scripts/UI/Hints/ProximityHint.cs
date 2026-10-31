@@ -17,7 +17,7 @@ namespace DreamVille.UI.Hints
     /// </summary>
     public sealed class ProximityHint : MonoBehaviour
     {
-        // Serialized names are frozen: ProximityHint.prefab instances in seven scenes override them by property path.
+        // Overridden per instance in seven scenes (ProximityHint.prefab); renames follow ADR 0010.
         [SerializeField, Tooltip("UI root the hint shows. Starts inactive and is hidden again after the fade.")]
         private GameObject _object;
 

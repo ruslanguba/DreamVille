@@ -20,6 +20,7 @@ namespace DreamVille.UI
         [SerializeField] private float _fadeTime = 1.2f;
         [SerializeField] private float _appearScale = 1.12f;
         [SerializeField] private float _firstScale = 1.08f;
+        [SerializeField, Range(0f, 1f)] private float _firstFadeAlpha = 0.5f;
 
         [Header("Input")]
         [SerializeField] private InputActionReference _skipAction;
@@ -77,7 +78,7 @@ namespace DreamVille.UI
             await AnimateAsync(
                 progress =>
                 {
-                    _firstImage.SetAlpha(Mathf.Lerp(1f, 0.5f, progress));
+                    _firstImage.SetAlpha(Mathf.Lerp(1f, _firstFadeAlpha, progress));
                     _firstImage.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.one * _firstScale, progress);
                 },
                 token);

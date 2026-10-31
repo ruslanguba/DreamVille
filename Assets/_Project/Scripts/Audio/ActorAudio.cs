@@ -9,6 +9,7 @@ namespace DreamVille.Audio
         [SerializeField] private AudioClip _deathClip;
         [SerializeField] private AudioClip _attackClip;
         [SerializeField] private AudioClip _jumpClip;
+        [SerializeField] private float _jumpPitchJitter = 0.1f;
 
         [Header("Footsteps")]
         [SerializeField] private AudioClip[] _footstepClips;
@@ -71,7 +72,7 @@ namespace DreamVille.Audio
         {
             if (_jumpClip != null)
             {
-                _audioSource.pitch = Random.Range(0.9f, 1.1f); // Random pitch
+                _audioSource.pitch = 1f + Random.Range(-_jumpPitchJitter, _jumpPitchJitter);
                 _audioSource.PlayOneShot(_jumpClip);
             }
         }

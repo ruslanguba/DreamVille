@@ -7,13 +7,13 @@ namespace DreamVille.Configs
     public sealed class PlayerConfig : ScriptableObject
     {
         [Header("Movement")]
-        [SerializeField, Min(0f)] private float _walkSpeed = 5f;
+        [SerializeField, Min(0f)] private float _walkSpeed = 6f;
         [SerializeField, Min(0f)] private float _acceleration = 20f;
         [SerializeField, Min(0f)] private float _rotationSpeed = 12f;
 
         [Header("Jump and gravity")]
-        [SerializeField, Min(0f)] private float _jumpHeight = 2f;
-        [SerializeField] private float _gravity = -9.81f;
+        [SerializeField, Min(0f)] private float _jumpHeight = 5f;
+        [SerializeField] private float _gravity = -20f;
         [SerializeField] private float _groundedStickSpeed = -2f;
 
         [Header("Knockback")]
@@ -57,11 +57,11 @@ namespace DreamVille.Configs
 
 #if UNITY_INCLUDE_TESTS
         internal static PlayerConfig CreateForTests(
-            float walkSpeed = 5f,
+            float walkSpeed = 6f,
             float acceleration = 20f,
             float rotationSpeed = 12f,
-            float jumpHeight = 2f,
-            float gravity = -9.81f,
+            float jumpHeight = 5f,
+            float gravity = -20f,
             float groundedStickSpeed = -2f,
             float knockbackDecay = 10f,
             float knockbackStopSpeed = 0.1f,

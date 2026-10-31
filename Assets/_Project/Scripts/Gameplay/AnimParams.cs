@@ -20,6 +20,7 @@ namespace DreamVille.Gameplay
         public static readonly int IsApplause = Animator.StringToHash("isApplause");
         public static readonly int IsSwim = Animator.StringToHash("isSwim");
         public static readonly int Jump = Animator.StringToHash("jump");
+        public static readonly int Start = Animator.StringToHash("start");
 
         /// <summary>Animator state name, used with <see cref="Animator.Play(int, int, float)"/>.</summary>
         public static readonly int WalkState = Animator.StringToHash("Walk");

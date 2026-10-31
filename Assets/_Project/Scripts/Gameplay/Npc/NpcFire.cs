@@ -17,7 +17,9 @@ namespace DreamVille.Gameplay.Npc
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private Transform _spawn;
         [SerializeField] private Transform _target;
-        [SerializeField] private float _bulletSpeed = 2;
+
+        [SerializeField, Tooltip("Impulse per metre to the target: the launch vector is not normalized.")]
+        private float _bulletSpeed = 2;
 
         [SerializeField, Min(0f), Tooltip("Seconds of game time before each shot.")]
         private float _shootingRate = 3;
