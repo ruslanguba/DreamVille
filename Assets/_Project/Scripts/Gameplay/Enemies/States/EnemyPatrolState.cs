@@ -4,7 +4,11 @@ using DreamVille.Configs.Enemies;
 
 namespace DreamVille.Gameplay.Enemies.States
 {
-    /// <summary>Walks the enemy's patrol route until the player enters chase or attack range.</summary>
+    /// <summary>
+    /// Walks the enemy's patrol route until the player enters chase or attack range. Route progress survives
+    /// leaving and re-entering the state: after a chase the enemy heads for the point it was walking to, and a
+    /// route walked once (or a single post) is never walked again.
+    /// </summary>
     public sealed class EnemyPatrolState : EnemyStateBase
     {
         private int _index;
@@ -13,12 +17,6 @@ namespace DreamVille.Gameplay.Enemies.States
         public EnemyPatrolState(IEnemyContext context, EnemyStateMachine machine) : base(context, machine) { }
 
         public override EnemyStateId Id => EnemyStateId.Patrol;
-
-        public override void Enter()
-        {
-            _index = 0;
-            _hasStoppedAtEnd = false;
-        }
 
         public override void Tick(float deltaTime)
         {
@@ -62,7 +60,8 @@ namespace DreamVille.Gameplay.Enemies.States
 
         private void AdvancePoint()
         {
-            if (_context.Config.PatrolMode == PatrolMode.Loop)
+            // A one-point Loop would re-target the point it stands on and jitter there: it is a post, held like Once.
+            if (_context.Config.PatrolMode == PatrolMode.Loop && _context.PatrolPointCount > 1)
             {
                 _index = (_index + 1) % _context.PatrolPointCount;
                 return;

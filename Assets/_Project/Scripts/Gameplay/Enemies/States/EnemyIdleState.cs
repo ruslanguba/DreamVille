@@ -14,8 +14,16 @@ namespace DreamVille.Gameplay.Enemies.States
             _context.Steering.Stop();
             _context.Animator.SetMoving(false);
 
+            // Idle has no tick to finish a gradual turn, so it faces the player at once, and keeps that facing
+            // while the body settles instead of turning after its own drift.
+            _context.SetAutoFacing(false);
             if (_context.HasPlayer)
-                _context.FaceTowards(_context.PlayerPosition);
+                _context.SnapFacing(_context.PlayerPosition);
+        }
+
+        public override void Exit()
+        {
+            _context.SetAutoFacing(true);
         }
     }
 }

@@ -57,6 +57,17 @@ namespace DreamVille.Gameplay.Enemies
                 Die();
         }
 
+        /// <summary>Kills regardless of the immunity window (fall volumes). Does nothing once dead.</summary>
+        public void Kill(int hitCount)
+        {
+            if (IsDead)
+                return;
+
+            _collisionsCount = hitCount;
+            if (HitPoints.TakeDamage(HitPoints.Current))
+                Die();
+        }
+
         // Built on first damage rather than in Awake: an enemy damaged before it woke up still dies, and EditMode
         // tests can drive the component. Health is a plain class, so ??= is safe here.
         private Health HitPoints => _hitPoints ??= new Health(_maxHealth);

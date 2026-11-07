@@ -11,6 +11,8 @@ namespace DreamVille.Gameplay.Enemies.States
 
         public override void Enter()
         {
+            // Arrived: the body stops here instead of sliding on while the hideout opens its door.
+            _context.Steering.Stop();
             _context.EnterHideout();
         }
     }

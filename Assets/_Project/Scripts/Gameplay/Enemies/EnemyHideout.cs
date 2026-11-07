@@ -75,8 +75,7 @@ namespace DreamVille.Gameplay.Enemies
 
         private void StartEnemyRun()
         {
-            // The closet and fridge controllers declare isOpen as a Bool; the trigger call is kept as it always was.
-            _animator.SetTrigger(AnimParams.IsOpen);
+            _animator.SetBool(AnimParams.IsOpen, true);
             for (int i = _enemies.Count - 1; i >= 0; i--)
             {
                 int pointIndex = Random.Range(0, _nextPointsTransform.Count);
@@ -99,13 +98,15 @@ namespace DreamVille.Gameplay.Enemies
             try
             {
                 Transform body = enemy.transform;
-                Vector3 startPosition = body.position;
                 Vector3 endPosition = transform.position + Vector3.up;
-                Vector3 startScale = body.localScale;
                 Vector3 endScale = Vector3.one * HiddenScale;
 
                 _animator.SetBool(AnimParams.IsOpen, true);
                 await GameTime.DelayAsync(_openDuration, token);
+
+                // Read after the door has opened, where the enemy actually stands, so the shrink starts without a jump.
+                Vector3 startPosition = body.position;
+                Vector3 startScale = body.localScale;
 
                 await Tween.RunAsync(_hideDuration, progress =>
                 {

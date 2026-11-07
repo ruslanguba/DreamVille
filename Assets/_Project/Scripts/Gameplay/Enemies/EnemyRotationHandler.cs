@@ -24,11 +24,12 @@ namespace DreamVille.Gameplay.Enemies
 
         private void Update()
         {
-            Vector3 velocity = _body.linearVelocity;
-            if (velocity.sqrMagnitude < MinSqrSpeed)
+            // Horizontal motion only: a body falling straight down would otherwise turn after the noise in its drift.
+            Vector3 horizontalVelocity = Flatten(_body.linearVelocity);
+            if (horizontalVelocity.sqrMagnitude < MinSqrSpeed)
                 return;
 
-            RotateTowards(Flatten(velocity));
+            RotateTowards(horizontalVelocity);
         }
 
         /// <summary>Sets the facing slerp rate. Called once by <see cref="Enemy"/> in Awake.</summary>

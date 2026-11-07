@@ -28,5 +28,17 @@ namespace DreamVille.Tests.EditMode.Enemies
 
             Assert.That(acceleration, Is.EqualTo(new Vector3(0f, 0f, 8f)));
         }
+
+        [Test]
+        public void Acceleration_TowardsAPointAbove_HasNoVerticalComponent()
+        {
+            var direction = new Vector3(3f, 4f, 0f);
+            var fallingVelocity = new Vector3(0f, -2f, 0f);
+
+            Vector3 acceleration = SteeringMath.Acceleration(fallingVelocity, direction, targetSpeed: 5f, acceleration: 2f);
+
+            // Gravity alone moves the body vertically; the steering only matches the horizontal speed.
+            Assert.That(acceleration, Is.EqualTo(new Vector3(10f, 0f, 0f)));
+        }
     }
 }

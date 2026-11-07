@@ -4,9 +4,16 @@ using DreamVille.Configs.Enemies;
 
 namespace DreamVille.Gameplay.Enemies.States
 {
-    /// <summary>Stands its ground, faces the player and throws on a cooldown that survives re-entry.</summary>
+    /// <summary>
+    /// Stands its ground, faces the player and throws on a cooldown that survives re-entry. It keeps attacking
+    /// a little past its attack range, so a player backing off slowly does not flip it between attack and chase
+    /// every frame; once out, it chases when the player is in chase range and goes back to its route otherwise.
+    /// </summary>
     public sealed class EnemyAttackState : EnemyStateBase
     {
+        /// <summary>Metres past the attack range the enemy keeps attacking (hysteresis against the chase edge).</summary>
+        public const float AttackExitMargin = 0.5f;
+
         private float _cooldown;
 
         public EnemyAttackState(IEnemyContext context, EnemyStateMachine machine) : base(context, machine) { }
@@ -30,9 +37,9 @@ namespace DreamVille.Gameplay.Enemies.States
             _context.FaceTowards(_context.PlayerPosition);
 
             float distance = Vector3.Distance(_context.Position, _context.PlayerPosition);
-            if (distance > _context.Config.AttackRange)
+            if (distance > _context.Config.AttackRange + AttackExitMargin)
             {
-                _machine.ChangeState(EnemyStateId.Chase);
+                _machine.ChangeState(distance <= _context.Config.ChaseRange ? EnemyStateId.Chase : EnemyStateId.Patrol);
                 return;
             }
 

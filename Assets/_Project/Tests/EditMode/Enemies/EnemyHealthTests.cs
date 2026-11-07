@@ -85,6 +85,17 @@ namespace DreamVille.Tests.EditMode.Enemies
         }
 
         [Test]
+        public void Kill_WhileInvulnerable_RaisesKilledWithTheHitCount()
+        {
+            _health.SetVulnerable(false);
+
+            _health.Kill(1);
+
+            Assert.That(_events, Is.EqualTo(new[] { "Killed:1", "Died" }));
+            Assert.That(_health.IsDead, Is.True);
+        }
+
+        [Test]
         public void TakeDamage_WhenAKilledListenerThrows_StillRaisesDied()
         {
             _health.Killed += (enemy, hitCount) => throw new InvalidOperationException("listener failure");

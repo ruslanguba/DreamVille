@@ -24,6 +24,7 @@ namespace DreamVille.Tests.EditMode.Enemies
 
             _machine = new EnemyStateMachine(machine => new IEnemyState[]
             {
+                new EnemyPatrolState(_context, machine),
                 new EnemyChaseState(_context, machine),
                 new EnemyAttackState(_context, machine)
             });
@@ -91,7 +92,7 @@ namespace DreamVille.Tests.EditMode.Enemies
         }
 
         [Test]
-        public void Tick_WhenPlayerLeavesAttackRange_ReturnsToChaseAndRestoresAutoFacing()
+        public void Tick_WhenPlayerLeavesAttackRangeWithoutChaseRange_PatrolsAndRestoresAutoFacing()
         {
             _context.Config = Track(EnemyConfig.CreateForTests(moveSpeed: 0f, chaseRange: 0f, attackRange: 3f, attackCooldown: 2f));
             _context.HasPlayer = true;
@@ -100,8 +101,34 @@ namespace DreamVille.Tests.EditMode.Enemies
 
             _machine.Tick(0.1f);
 
-            Assert.That(_machine.CurrentState.Id, Is.EqualTo(EnemyStateId.Chase));
+            Assert.That(_machine.CurrentState.Id, Is.EqualTo(EnemyStateId.Patrol));
             Assert.That(_context.AutoFacing, Is.True);
+        }
+
+        [Test]
+        public void Tick_WhenPlayerLeavesAttackRangeWithinChaseRange_Chases()
+        {
+            _context.Config = Track(EnemyConfig.CreateForTests(moveSpeed: 5f, chaseRange: 7f, attackRange: 5f, attackCooldown: 4f));
+            _context.HasPlayer = true;
+            _context.PlayerPosition = new Vector3(6f, 0f, 0f);
+            _machine.Start(EnemyStateId.Attack);
+
+            _machine.Tick(0.1f);
+
+            Assert.That(_machine.CurrentState.Id, Is.EqualTo(EnemyStateId.Chase));
+        }
+
+        [Test]
+        public void Tick_JustBeyondAttackRange_KeepsAttacking()
+        {
+            _context.Config = Track(EnemyConfig.CreateForTests(moveSpeed: 5f, chaseRange: 7f, attackRange: 5f, attackCooldown: 4f));
+            _context.HasPlayer = true;
+            _context.PlayerPosition = new Vector3(5.3f, 0f, 0f);
+            _machine.Start(EnemyStateId.Attack);
+
+            _machine.Tick(0.1f);
+
+            Assert.That(_machine.CurrentState.Id, Is.EqualTo(EnemyStateId.Attack));
         }
     }
 }

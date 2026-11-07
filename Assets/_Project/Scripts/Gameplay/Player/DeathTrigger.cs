@@ -4,12 +4,9 @@ using DreamVille.Gameplay.Enemies;
 
 namespace DreamVille.Gameplay.Player
 {
-    /// <summary>Kill volume: returns the player to the last safe position and deals damage to an enemy that falls in.</summary>
+    /// <summary>Kill volume: returns the player to the last safe position and kills an enemy that falls in.</summary>
     public class DeathTrigger : MonoBehaviour
     {
-        // Twice the toughest enemy's 10 HP: the fall always kills.
-        private const float LethalDamage = 20f;
-
         // The kill scores like a direct hit: ScoreService multiplies the score per kill by this count.
         private const int KillHitCount = 1;
 
@@ -20,9 +17,10 @@ namespace DreamVille.Gameplay.Player
                 respawn.ReturnToSafePosition();
             }
 
+            // Kill, not damage: an enemy inside its spawn or flee immunity window must not fall forever.
             if (other.TryGetComponent(out EnemyHealth health))
             {
-                health.TakeDamage(LethalDamage, KillHitCount);
+                health.Kill(KillHitCount);
             }
         }
     }

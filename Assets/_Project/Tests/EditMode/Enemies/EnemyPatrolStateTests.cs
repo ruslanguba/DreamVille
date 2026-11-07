@@ -179,5 +179,42 @@ namespace DreamVille.Tests.EditMode.Enemies
             Assert.That(_context.Steering.AccelerateCount, Is.EqualTo(accelerateCountAtArrival));
             Assert.That(_context.Steering.StopCount, Is.GreaterThanOrEqualTo(1));
         }
+
+        [Test]
+        public void Enter_AfterAChase_ResumesTheRoute()
+        {
+            var pointA = new Vector3(0f, 0f, 0f);
+            var pointB = new Vector3(5f, 0f, 0f);
+            _context.PatrolPoints.Add(pointA);
+            _context.PatrolPoints.Add(pointB);
+            _context.Config = Track(EnemyConfig.CreateForTests(
+                patrolArriveRadius: 0.5f, moveSpeed: 2f, chaseRange: 7f, attackRange: 5f, attackCooldown: 2f));
+            _context.Position = pointA;
+            _machine.FixedTick(0.1f);
+            _context.Position = new Vector3(2f, 0f, 0f);
+
+            _machine.ChangeState(EnemyStateId.Chase);
+            _machine.ChangeState(EnemyStateId.Patrol);
+            _machine.FixedTick(0.1f);
+
+            Assert.That(_context.Steering.LastDirection, Is.EqualTo(pointB - _context.Position));
+        }
+
+        [Test]
+        public void FixedTick_OnAOnePointRoute_StopsAtThePoint()
+        {
+            var post = new Vector3(1f, 0f, 1f);
+            _context.PatrolPoints.Add(post);
+            _context.Config = Track(EnemyConfig.CreateForTests(
+                patrolArriveRadius: 0.5f, moveSpeed: 2f, chaseRange: 0f, attackRange: 0f, attackCooldown: 0f));
+            _context.Position = post;
+            _machine.FixedTick(0.1f);
+            int accelerateCountAtArrival = _context.Steering.AccelerateCount;
+
+            _machine.FixedTick(0.1f);
+
+            Assert.That(_context.Steering.AccelerateCount, Is.EqualTo(accelerateCountAtArrival));
+            Assert.That(_context.Steering.StopCount, Is.GreaterThanOrEqualTo(1));
+        }
     }
 }
