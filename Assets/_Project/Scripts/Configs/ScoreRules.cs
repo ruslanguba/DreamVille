@@ -8,7 +8,7 @@ namespace DreamVille.Configs
     {
         [SerializeField] private float _scorePerKill = 10f;
 
-        /// <summary>Score granted per killed enemy, before the ricochet multiplier.</summary>
+        /// <summary>Score granted per killed enemy, before the hit-count multiplier.</summary>
         public float ScorePerKill => _scorePerKill;
 
 #if UNITY_INCLUDE_TESTS

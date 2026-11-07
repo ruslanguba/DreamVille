@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
+using DreamVille.Core.Async;
 using DreamVille.Scoring;
 
 namespace DreamVille.Gameplay.Interactables
@@ -18,7 +19,6 @@ namespace DreamVille.Gameplay.Interactables
     {
         private const float IdleSpinDegreesPerSecond = 60f;
 
-        // Overridden per instance in Level_02 and Lobby_01; renames follow ADR 0010.
         [SerializeField] private float _scoreToAdd = 1f;
 
         [SerializeField, Min(0f)] private float _growDuration = 0.3f;
@@ -30,6 +30,7 @@ namespace DreamVille.Gameplay.Interactables
         private Collider _collider;
         private Vector3 _originalScale;
         private bool _collected;
+        private bool _isInitialized;
 
         [Inject]
         private void Construct(IScoreService score)
@@ -37,12 +38,7 @@ namespace DreamVille.Gameplay.Interactables
             _score = score;
         }
 
-        private void Awake()
-        {
-            _collider = GetComponent<Collider>();
-            _originalScale = transform.localScale;
-            _effects = EffectChain.FromComponents(this);
-        }
+        private void Awake() => EnsureInitialized();
 
         private void Update()
         {
@@ -56,6 +52,7 @@ namespace DreamVille.Gameplay.Interactables
             if (context.Source != InteractionSource.Touch || _collected)
                 return;
 
+            EnsureInitialized();
             _collected = true;
             _collider.enabled = false;
             _score.AddScore(_scoreToAdd);
@@ -63,32 +60,34 @@ namespace DreamVille.Gameplay.Interactables
             CollectAsync(context.Instigator, this.GetCancellationTokenOnDestroy()).Forget();
         }
 
+        // Lazy so that a touch arriving before Awake (or in an EditMode test, where Awake does not run) still works.
+        private void EnsureInitialized()
+        {
+            if (_isInitialized)
+                return;
+
+            _isInitialized = true;
+            _collider = GetComponent<Collider>();
+            _originalScale = transform.localScale;
+            _effects = EffectChain.FromComponents(this);
+        }
+
         private async UniTaskVoid CollectAsync(Transform target, CancellationToken token)
         {
             try
             {
-                float elapsed = 0f;
-                while (elapsed < _growDuration)
-                {
-                    elapsed += Time.deltaTime;
-                    transform.localScale = _originalScale * PickupTween.GrowScale(PickupTween.Progress(elapsed, _growDuration));
-                    await UniTask.Yield(PlayerLoopTiming.Update, token);
-                }
+                await Tween.RunAsync(_growDuration,
+                    progress => transform.localScale = _originalScale * PickupTween.GrowScale(progress), token);
 
-                elapsed = 0f;
                 Vector3 startPosition = transform.position;
-                while (elapsed < _flyDuration)
+                await Tween.RunAsync(_flyDuration, progress =>
                 {
-                    elapsed += Time.deltaTime;
-                    float progress = PickupTween.Progress(elapsed, _flyDuration);
-
                     // The collector moves with the player, so its position is read every frame.
                     if (target != null)
                         transform.position = Vector3.Lerp(startPosition, target.position, progress);
 
                     transform.localScale = _originalScale * PickupTween.FlyScale(progress);
-                    await UniTask.Yield(PlayerLoopTiming.Update, token);
-                }
+                }, token);
 
                 Destroy(gameObject);
             }

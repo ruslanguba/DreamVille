@@ -30,7 +30,10 @@ namespace DreamVille.Configs
         /// <summary>Radius of the bullet's sphere collider; the aim preview sweeps the same sphere.</summary>
         public float CollisionRadius => _collisionRadius;
 
-        /// <summary>Distance the bullet can travel before its lifetime ends (Speed × LifeTime).</summary>
+        /// <summary>
+        /// Upper bound of the distance the bullet covers before its lifetime ends (Speed × LifeTime). The bullet
+        /// prefab's rigidbody damping makes the real range shorter, so the aim preview may run past where a bullet dies.
+        /// </summary>
         public float MaxTravelDistance => _speed * _lifeTime;
 
 #if UNITY_INCLUDE_TESTS

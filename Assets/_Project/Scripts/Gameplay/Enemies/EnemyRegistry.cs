@@ -11,15 +11,13 @@ namespace DreamVille.Gameplay.Enemies
     /// The roster is collected in Awake, i.e. strictly before any container Initialize runs,
     /// so subscribers can read up-to-date state right away regardless of composition order.
     /// </summary>
-    public class EnemyRegistry : MonoBehaviour, IEnemyRegistry
+    public sealed class EnemyRegistry : MonoBehaviour, IEnemyRegistry
     {
         public event Action<int, int> EnemyKilled;
 
         public event Action AllEnemiesKilled;
 
         private readonly List<EnemyHealth> _alive = new();
-
-        public int TotalEnemies { get; private set; }
 
         public int RemainingEnemies => _alive.Count;
 
@@ -31,11 +29,9 @@ namespace DreamVille.Gameplay.Enemies
                 _alive.Add(enemy);
                 enemy.Killed += OnEnemyKilled;
             }
-
-            TotalEnemies = _alive.Count;
         }
 
-        private void OnEnemyKilled(EnemyHealth enemy, int collisionsCount)
+        private void OnEnemyKilled(EnemyHealth enemy, int hitCount)
         {
             enemy.Killed -= OnEnemyKilled;
 
@@ -43,7 +39,7 @@ namespace DreamVille.Gameplay.Enemies
                 return;
 
             // Isolated: the HUD, scoring and the level director listen independently; one failure must not stop the rest.
-            IsolatedEvent.Raise(EnemyKilled, _alive.Count, collisionsCount, this);
+            IsolatedEvent.Raise(EnemyKilled, _alive.Count, hitCount, this);
 
             if (_alive.Count == 0)
                 IsolatedEvent.Raise(AllEnemiesKilled, this);

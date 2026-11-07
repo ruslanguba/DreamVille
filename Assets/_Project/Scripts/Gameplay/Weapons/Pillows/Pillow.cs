@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DreamVille.Gameplay.Weapons.Pillow
+namespace DreamVille.Gameplay.Weapons.Pillows
 {
     /// <summary>
     /// A throwable pillow platform: the physics side of one <see cref="PillowSlot"/>.

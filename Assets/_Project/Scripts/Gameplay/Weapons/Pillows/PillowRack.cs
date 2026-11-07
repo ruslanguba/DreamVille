@@ -4,7 +4,7 @@ using UnityEngine;
 
 using DreamVille.Configs;
 
-namespace DreamVille.Gameplay.Weapons.Pillow
+namespace DreamVille.Gameplay.Weapons.Pillows
 {
     /// <summary>
     /// The F/R rules over a fixed set of slots, of which the first <see cref="Available"/> may be used.

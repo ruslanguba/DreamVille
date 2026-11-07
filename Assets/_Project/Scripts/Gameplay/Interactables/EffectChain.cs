@@ -6,7 +6,10 @@ using Object = UnityEngine.Object;
 
 namespace DreamVille.Gameplay.Interactables
 {
-    /// <summary>An ordered, immutable set of effects applied together. One failing effect does not cancel the rest.</summary>
+    /// <summary>
+    /// An ordered, immutable set of effects applied together. One failing effect does not cancel the rest.
+    /// Effects are collected as components, so one whose component is disabled still runs.
+    /// </summary>
     public sealed class EffectChain
     {
         private readonly IInteractionEffect[] _effects;

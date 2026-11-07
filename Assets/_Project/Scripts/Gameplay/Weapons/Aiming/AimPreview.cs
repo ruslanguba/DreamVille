@@ -20,7 +20,7 @@ namespace DreamVille.Gameplay.Weapons.Aiming
         private Vector3[] _points;
 
         [Inject]
-        public void Construct(IPlayerInput input, IAimSource aim, ISphereCaster caster)
+        private void Construct(IPlayerInput input, IAimSource aim, ISphereCaster caster)
         {
             _input = input;
             _aim = aim;

@@ -105,11 +105,39 @@ namespace DreamVille.Tests.EditMode.Scoring
         }
 
         [Test]
-        public void UnlockStar_PersistsStarCountThroughRepository()
+        public void AddScore_ReachingFirstThreshold_PersistsOneStar()
         {
             _service.AddScore(50f);
 
             Assert.That(_progress.GetStars(LevelId), Is.EqualTo(1));
+        }
+
+        [Test]
+        public void Constructor_WithNonAscendingThresholds_Throws()
+        {
+            float[][] invalidThresholds =
+            {
+                new[] { 50f, 50f, 150f },
+                new[] { 100f, 50f },
+                new[] { 0f, 50f },
+                new[] { -10f, 50f },
+            };
+
+            foreach (float[] thresholds in invalidThresholds)
+            {
+                StarRules rules = StarRules.CreateForTests(thresholds);
+                LevelDefinition level = LevelDefinition.CreateForTests("__test_scene", LevelId, rules);
+
+                try
+                {
+                    Assert.Throws<System.ArgumentException>(() => new StarProgressService(level, _progress), string.Join(", ", thresholds));
+                }
+                finally
+                {
+                    Object.DestroyImmediate(level);
+                    Object.DestroyImmediate(rules);
+                }
+            }
         }
     }
 }

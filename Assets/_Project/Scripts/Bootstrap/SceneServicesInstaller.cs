@@ -5,7 +5,7 @@ using DreamVille.Core.Players;
 using DreamVille.Dialogue;
 using DreamVille.Gameplay.Damage;
 using DreamVille.Gameplay.Player;
-using DreamVille.Gameplay.Weapons.Pillow;
+using DreamVille.Gameplay.Weapons.Pillows;
 using DreamVille.Input;
 
 namespace DreamVille.Bootstrap

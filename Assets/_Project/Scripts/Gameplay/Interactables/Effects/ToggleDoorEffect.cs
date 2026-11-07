@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace DreamVille.Gameplay.Interactables.Effects
 {
-    /// <summary>Opens a closed door and closes an open one through the Animator's <c>open</c>/<c>close</c> triggers.</summary>
+    /// <summary>Opens a closed door and closes an open one through the Animator's <c>isOpen</c> bool.</summary>
     [RequireComponent(typeof(Animator))]
     public sealed class ToggleDoorEffect : MonoBehaviour, IInteractionEffect
     {
@@ -19,7 +19,7 @@ namespace DreamVille.Gameplay.Interactables.Effects
         public void Apply(in InteractionContext context)
         {
             _isDoorOpen = !_isDoorOpen;
-            _animator.SetTrigger(_isDoorOpen ? AnimParams.Open : AnimParams.Close);
+            _animator.SetBool(AnimParams.IsOpen, _isDoorOpen);
         }
     }
 }

@@ -9,7 +9,10 @@ namespace DreamVille.Gameplay.Npc
         /// <summary>Mumbles and starts talking.</summary>
         void SetTalk();
 
-        /// <summary>Mumbles and applauds, then falls into talking after a short delay.</summary>
+        /// <summary>
+        /// Mumbles and applauds, then falls into talking after a short delay. Does nothing on a disabled NPC component,
+        /// while the other reactions still change the pose.
+        /// </summary>
         void SetApplause();
 
         /// <summary>Returns to the idle pose and stops any reaction sound.</summary>

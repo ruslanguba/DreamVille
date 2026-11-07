@@ -1,4 +1,4 @@
-namespace DreamVille.Gameplay.Weapons.Pillow
+namespace DreamVille.Gameplay.Weapons.Pillows
 {
     /// <summary>What a throw-or-recall press did, so the caller knows whether to start the recall loop.</summary>
     public enum PillowCommand

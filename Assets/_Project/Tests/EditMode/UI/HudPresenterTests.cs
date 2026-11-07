@@ -42,7 +42,6 @@ namespace DreamVille.Tests.EditMode.UI
         [Test]
         public void Initialize_ShowsRemainingEnemies()
         {
-            _enemies.TotalEnemies = 4;
             _enemies.RemainingEnemies = 4;
 
             _presenter.Initialize();

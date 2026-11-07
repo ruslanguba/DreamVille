@@ -12,11 +12,11 @@ namespace DreamVille.Gameplay.Npc
     {
         [SerializeField]
         [Tooltip("Upward velocity change of a jump, m/s.")]
-        private float _jumpForce = 5f;
+        private float _jumpForce = 8f;
 
         [SerializeField]
         [Tooltip("Forward velocity change of a jump, m/s.")]
-        private float _forwardForce = 2f;
+        private float _forwardForce = 3f;
 
         private Rigidbody _body;
         private Animator _animator;
@@ -50,14 +50,15 @@ namespace DreamVille.Gameplay.Npc
                 _animator.SetBool(AnimParams.IsMoving, true);
 
                 await Tween.RunAsync(duration, progress => transform.position = Vector3.Lerp(start, target, progress), move.Token);
-
-                _animator.SetBool(AnimParams.IsMoving, false);
             }
             finally
             {
-                // A superseding move has already disposed this source and replaced the field.
+                // A superseding move has already disposed this source and replaced the field; it owns the run flag now.
                 if (_moveCts == move)
+                {
+                    _animator.SetBool(AnimParams.IsMoving, false);
                     Cancellation.CancelAndDispose(ref _moveCts);
+                }
             }
         }
 

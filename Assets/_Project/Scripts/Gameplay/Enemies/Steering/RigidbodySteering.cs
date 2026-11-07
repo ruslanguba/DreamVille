@@ -12,8 +12,6 @@ namespace DreamVille.Gameplay.Enemies.Steering
             _body = body;
         }
 
-        public Vector3 Velocity => _body.linearVelocity;
-
         public void Accelerate(Vector3 direction, float targetSpeed, float acceleration)
             => _body.AddForce(SteeringMath.Acceleration(_body.linearVelocity, direction, targetSpeed, acceleration), ForceMode.Acceleration);
 

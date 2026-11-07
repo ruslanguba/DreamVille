@@ -1,7 +1,7 @@
 using UnityEngine;
 
 using DreamVille.Gameplay.Environment;
-using DreamVille.Gameplay.Weapons.Pillow;
+using DreamVille.Gameplay.Weapons.Pillows;
 
 namespace DreamVille.Gameplay.Player.Ground
 {

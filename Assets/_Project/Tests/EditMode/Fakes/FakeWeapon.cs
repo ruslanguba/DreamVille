@@ -9,8 +9,6 @@ namespace DreamVille.Tests.EditMode.Fakes
 
         public int TryShootCount { get; private set; }
 
-        public bool CanShoot() => IsReady;
-
         public bool TryShoot()
         {
             TryShootCount++;

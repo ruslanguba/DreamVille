@@ -2,7 +2,7 @@ using NUnit.Framework;
 using UnityEngine;
 
 using DreamVille.Configs;
-using DreamVille.Gameplay.Weapons.Pillow;
+using DreamVille.Gameplay.Weapons.Pillows;
 using DreamVille.Tests.EditMode.Fakes;
 using DreamVille.Tests.Support;
 

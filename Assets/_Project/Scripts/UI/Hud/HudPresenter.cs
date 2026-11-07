@@ -3,7 +3,7 @@ using Zenject;
 
 using DreamVille.Gameplay.Enemies;
 using DreamVille.Gameplay.Weapons.Bullets;
-using DreamVille.Gameplay.Weapons.Pillow;
+using DreamVille.Gameplay.Weapons.Pillows;
 using DreamVille.Scoring;
 
 namespace DreamVille.UI.Hud
@@ -15,7 +15,7 @@ namespace DreamVille.UI.Hud
     public sealed class HudPresenter : IInitializable, IDisposable
     {
         /// <summary>Hit count at which the first ricochet badge ("x2") appears.</summary>
-        public const int FirstBadgeRicochetCount = 2;
+        public const int FirstBadgeHitCount = 2;
 
         private readonly IGameHudView _view;
         private readonly IScoreService _score;
@@ -93,14 +93,14 @@ namespace DreamVille.UI.Hud
         }
 
         // Score for the kill is added by ScoringCoordinator; the HUD only shows what is left.
-        private void OnEnemyKilled(int remainingEnemies, int ricochetCount)
+        private void OnEnemyKilled(int remainingEnemies, int hitCount)
         {
             _view.EnemyCounter.SetRemaining(remainingEnemies);
         }
 
         private void OnBulletHit(BulletHitInfo hit)
         {
-            int badgeIndex = hit.RicochetCount - FirstBadgeRicochetCount;
+            int badgeIndex = hit.HitCount - FirstBadgeHitCount;
             if (badgeIndex < 0 || badgeIndex >= _view.Ricochet.BadgeCount)
                 return;
 

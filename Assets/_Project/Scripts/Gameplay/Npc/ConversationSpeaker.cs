@@ -4,9 +4,9 @@ namespace DreamVille.Gameplay.Npc
 {
     /// <summary>
     /// One speaker of an ambient two-NPC dialogue: shows the talk animation and the speech bubble together.
-    /// Driven by <see cref="NpcDialogueHandler"/>.
+    /// Driven by <see cref="AmbientConversation"/>.
     /// </summary>
-    public sealed class NpcHandler : MonoBehaviour
+    public sealed class ConversationSpeaker : MonoBehaviour
     {
         [SerializeField] private GameObject _dialogCanvas;
 
@@ -19,10 +19,10 @@ namespace DreamVille.Gameplay.Npc
         {
             _animator = GetComponentInChildren<Animator>();
             if (_animator == null)
-                Debug.LogError($"[{nameof(NpcHandler)}] '{name}' has no Animator in its children.", this);
+                Debug.LogError($"[{nameof(ConversationSpeaker)}] '{name}' has no Animator in its children.", this);
 
             if (_dialogCanvas == null)
-                Debug.LogError($"[{nameof(NpcHandler)}] '{name}' has no speech bubble assigned.", this);
+                Debug.LogError($"[{nameof(ConversationSpeaker)}] '{name}' has no speech bubble assigned.", this);
             else
                 _dialogCanvas.SetActive(false);
         }

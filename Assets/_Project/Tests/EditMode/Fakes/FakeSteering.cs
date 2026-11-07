@@ -7,8 +7,6 @@ namespace DreamVille.Tests.EditMode.Fakes
     /// <summary>Hand-written double for <see cref="ISteering"/>: records the last <see cref="Accelerate"/> call and how often each method fired.</summary>
     public sealed class FakeSteering : ISteering
     {
-        public Vector3 Velocity { get; set; }
-
         public Vector3 LastDirection { get; private set; }
 
         public float LastTargetSpeed { get; private set; }

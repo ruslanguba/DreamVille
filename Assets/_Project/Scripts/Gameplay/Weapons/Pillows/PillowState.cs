@@ -1,4 +1,4 @@
-namespace DreamVille.Gameplay.Weapons.Pillow
+namespace DreamVille.Gameplay.Weapons.Pillows
 {
     /// <summary>Where one pillow is in its throw-and-recall cycle.</summary>
     public enum PillowState

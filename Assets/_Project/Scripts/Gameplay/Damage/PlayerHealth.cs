@@ -24,7 +24,6 @@ namespace DreamVille.Gameplay.Damage
 
         public int Hits => _hits;
         public int MaxHits => _config.MaxHits;
-        public bool IsHurt => _hits > 0;
 
         /// <summary>Registers a hit, clamps at <see cref="MaxHits"/> and restarts the recovery timer.</summary>
         public void RegisterHit()

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DreamVille.Gameplay.Weapons.Pillow
+namespace DreamVille.Gameplay.Weapons.Pillows
 {
     /// <summary>The physical side of one pillow; implemented by the Pillow component, faked in tests.</summary>
     public interface IPillowBody

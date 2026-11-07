@@ -18,7 +18,7 @@ using DreamVille.Gameplay.Npc;
 using DreamVille.Gameplay.Player;
 using DreamVille.Gameplay.Player.Ground;
 using DreamVille.Gameplay.Weapons.Aiming;
-using DreamVille.Gameplay.Weapons.Pillow;
+using DreamVille.Gameplay.Weapons.Pillows;
 using DreamVille.Input;
 using DreamVille.Progression;
 using DreamVille.SceneManagement;

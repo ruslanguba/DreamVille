@@ -11,14 +11,14 @@ namespace DreamVille.Gameplay.Npc
     /// Ambient dialogue: the first speaker starts talking, then after every switch interval (game time)
     /// each speaker flips between talking and listening. Runs while the component is enabled.
     /// </summary>
-    public sealed class NpcDialogueHandler : MonoBehaviour
+    public sealed class AmbientConversation : MonoBehaviour
     {
         [SerializeField, Min(0f)]
         [Tooltip("Seconds of game time between two turns.")]
         private float _switchInterval = 5f;
 
         [SerializeField]
-        private NpcHandler[] _speakers;
+        private ConversationSpeaker[] _speakers;
 
         private CancellationTokenSource _loopCts;
         private bool _started;
@@ -27,7 +27,7 @@ namespace DreamVille.Gameplay.Npc
         {
             if (!HasValidSpeakers())
             {
-                Debug.LogError($"[{nameof(NpcDialogueHandler)}] '{name}' needs at least one speaker and no empty slots.", this);
+                Debug.LogError($"[{nameof(AmbientConversation)}] '{name}' needs at least one speaker and no empty slots.", this);
                 enabled = false;
             }
         }
@@ -68,7 +68,7 @@ namespace DreamVille.Gameplay.Npc
                 {
                     await GameTime.DelayAsync(_switchInterval, token);
 
-                    foreach (NpcHandler speaker in _speakers)
+                    foreach (ConversationSpeaker speaker in _speakers)
                         speaker.SwitchTalking();
                 }
             }
@@ -87,7 +87,7 @@ namespace DreamVille.Gameplay.Npc
             if (_speakers == null || _speakers.Length == 0)
                 return false;
 
-            foreach (NpcHandler speaker in _speakers)
+            foreach (ConversationSpeaker speaker in _speakers)
             {
                 if (speaker == null)
                     return false;

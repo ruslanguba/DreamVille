@@ -24,7 +24,7 @@ namespace DreamVille.Gameplay.Npc
 
         [SerializeField, Min(0f)]
         [Tooltip("Seconds of game time between the jump and the walk.")]
-        private float _delayBetweenJumps = 1.5f;
+        private float _delayBetweenJumps = 2f;
 
         private Vector3[] _slots;
         private RotatingQueue<NpcMover> _queue;

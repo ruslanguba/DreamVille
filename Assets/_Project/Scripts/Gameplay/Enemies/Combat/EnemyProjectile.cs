@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
+using DreamVille.Core.Async;
 using DreamVille.Gameplay.Damage;
 
 namespace DreamVille.Gameplay.Enemies.Combat
@@ -95,7 +96,7 @@ namespace DreamVille.Gameplay.Enemies.Combat
         {
             try
             {
-                await UniTask.Delay(TimeSpan.FromSeconds(lifetime), cancellationToken: token);
+                await GameTime.DelayAsync(lifetime, token);
                 Despawn();
             }
             catch (OperationCanceledException)

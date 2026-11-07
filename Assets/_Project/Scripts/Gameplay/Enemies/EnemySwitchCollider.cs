@@ -30,7 +30,7 @@ namespace DreamVille.Gameplay.Enemies
 
         private void OnDisable() => _health.Killed -= OnEnemyKilled;
 
-        private void OnEnemyKilled(EnemyHealth enemy, int ricochetCount)
+        private void OnEnemyKilled(EnemyHealth enemy, int hitCount)
         {
             _aliveCollider.enabled = false;
             _deadCollider.enabled = true;

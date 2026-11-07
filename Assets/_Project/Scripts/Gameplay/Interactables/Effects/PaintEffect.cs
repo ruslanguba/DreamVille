@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -11,7 +12,6 @@ namespace DreamVille.Gameplay.Interactables.Effects
     /// </summary>
     public sealed class PaintEffect : MonoBehaviour, IInteractionEffect
     {
-        // Overridden per instance in Lobby_02; renames follow ADR 0010.
         [SerializeField] private Renderer[] _renderer;
         [SerializeField] private Material _colorChangeMaterial;
 
@@ -20,6 +20,9 @@ namespace DreamVille.Gameplay.Interactables.Effects
 
         private IScoreService _score;
         private PaintProgress _progress;
+
+        // The per-renderer copies of the colour-change material; created here, so destroyed here.
+        private Material[] _materials = Array.Empty<Material>();
 
         [Inject]
         private void Construct(IScoreService score)
@@ -38,8 +41,20 @@ namespace DreamVille.Gameplay.Interactables.Effects
             }
 
             // Every renderer gets its own copy so the paint ramp of this object does not leak into others.
-            foreach (Renderer target in _renderer)
-                target.material = new Material(_colorChangeMaterial);
+            _materials = new Material[_renderer.Length];
+            for (int i = 0; i < _renderer.Length; i++)
+            {
+                _materials[i] = new Material(_colorChangeMaterial);
+                _renderer[i].material = _materials[i];
+            }
+        }
+
+        private void OnDestroy()
+        {
+            foreach (Material material in _materials)
+                Destroy(material);
+
+            _materials = Array.Empty<Material>();
         }
 
         public void Apply(in InteractionContext context)
@@ -48,8 +63,8 @@ namespace DreamVille.Gameplay.Interactables.Effects
                 return;
 
             _score.AddScore(_scorePerStroke);
-            foreach (Renderer target in _renderer)
-                target.material.SetFloat(ShaderProps.Transient, _progress.Transient);
+            foreach (Material material in _materials)
+                material.SetFloat(ShaderProps.Transient, _progress.Transient);
         }
     }
 }

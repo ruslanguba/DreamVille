@@ -14,7 +14,7 @@ namespace DreamVille.Gameplay.Npc
     /// only changes state when a reaction is requested, and every new reaction supersedes a pending applause.
     /// </summary>
     [RequireComponent(typeof(NpcAnimationHandler))]
-    public class NpcReactionController : MonoBehaviour, INpcReactions
+    public sealed class NpcReactionController : MonoBehaviour, INpcReactions
     {
         private const float ApplauseDuration = 3f;
 

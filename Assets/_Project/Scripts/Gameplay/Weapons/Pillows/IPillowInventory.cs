@@ -1,6 +1,6 @@
 using System;
 
-namespace DreamVille.Gameplay.Weapons.Pillow
+namespace DreamVille.Gameplay.Weapons.Pillows
 {
     /// <summary>Pillow unlocks as the current level sees them. Implemented by Progression, consumed by the player.</summary>
     public interface IPillowInventory

@@ -4,7 +4,7 @@ using UnityEngine;
 
 using DreamVille.Gameplay.Environment;
 using DreamVille.Gameplay.Player.Ground;
-using DreamVille.Gameplay.Weapons.Pillow;
+using DreamVille.Gameplay.Weapons.Pillows;
 
 namespace DreamVille.Tests.EditMode.Player
 {

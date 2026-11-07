@@ -8,26 +8,23 @@ namespace DreamVille.Gameplay.Weapons.Bullets
     /// Facade over <see cref="BulletPool"/> and <see cref="BulletEventRelay"/>: fetches a
     /// bullet, places and initializes it, and registers it for hit relaying.
     /// </summary>
-    public class BulletSpawner : MonoBehaviour, IBulletSpawner
+    public sealed class BulletSpawner : MonoBehaviour, IBulletSpawner
     {
         [SerializeField] private BulletPool _pool;
         [SerializeField] private BulletEventRelay _eventRelay;
 
-        /// <summary>The pool this spawner draws bullets from. Exposed so the installer binds the same instance.</summary>
-        public BulletPool Pool => _pool;
-
         /// <summary>The relay every spawned bullet reports its hits to.</summary>
         public BulletEventRelay HitRelay => _eventRelay;
 
-        /// <summary>Gets a bullet from the pool, positions it and arms it with <paramref name="bulletConfig"/>.</summary>
-        public Bullet SpawnBullet(Vector3 position, Quaternion rotation, BulletConfig bulletConfig)
+        /// <inheritdoc />
+        public void Fire(in ShotRay shot, BulletConfig config)
         {
             Bullet bullet = _pool.Get();
-            bullet.transform.SetPositionAndRotation(position, rotation);
+            bullet.transform.SetPositionAndRotation(shot.Origin, shot.Rotation);
 
-            bullet.Init(bulletConfig);
+            bullet.Init(config);
             _eventRelay.Register(bullet);
-            return bullet;
+            bullet.Launch(shot.Direction);
         }
     }
 }

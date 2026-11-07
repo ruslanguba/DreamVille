@@ -26,7 +26,7 @@ namespace DreamVille.Tests.EditMode.Scoring
         }
 
         [Test]
-        public void HandleEnemyKilled_WithRicochets_MultipliesScorePerKillByRicochetCount()
+        public void HandleEnemyKilled_WithHitCount_MultipliesScorePerKillByHitCount()
         {
             _service.HandleEnemyKilled(3);
 
@@ -34,29 +34,27 @@ namespace DreamVille.Tests.EditMode.Scoring
         }
 
         [Test]
-        public void AddScore_RaisesScoreAddedWithDeltaAndTotalScoreChangedWithRunningTotal()
+        public void AddScore_RaisesScoreAddedWithDelta()
         {
             float? addedDelta = null;
-            float? totalAfterChange = null;
             _service.ScoreAdded += delta => addedDelta = delta;
-            _service.TotalScoreChanged += total => totalAfterChange = total;
 
             _service.AddScore(15f);
 
             Assert.That(addedDelta, Is.EqualTo(15f));
-            Assert.That(totalAfterChange, Is.EqualTo(15f));
+            Assert.That(_service.TotalScore, Is.EqualTo(15f));
         }
 
         [Test]
         public void HandleEnemyKilled_CalledTwice_AccumulatesTotalScore()
         {
-            var totals = new List<float>();
-            _service.TotalScoreChanged += totals.Add;
+            var deltas = new List<float>();
+            _service.ScoreAdded += deltas.Add;
 
             _service.HandleEnemyKilled(1);
             _service.HandleEnemyKilled(2);
 
-            Assert.That(totals, Is.EqualTo(new[] { 10f, 30f }));
+            Assert.That(deltas, Is.EqualTo(new[] { 10f, 20f }));
             Assert.That(_service.TotalScore, Is.EqualTo(30f));
         }
     }

@@ -2,15 +2,15 @@ using UnityEngine;
 
 namespace DreamVille.Gameplay.Weapons.Bullets
 {
-    /// <summary>What a bullet hit: the target, the point, the damage and how many ricochets it made before the hit.</summary>
+    /// <summary>What a bullet hit: the target, the point, the damage and the hit count (1 for the first contact, 2 after one ricochet, and so on).</summary>
     public readonly struct BulletHitInfo
     {
-        public BulletHitInfo(GameObject target, Vector3 hitPoint, float damage, int ricochetCount)
+        public BulletHitInfo(GameObject target, Vector3 hitPoint, float damage, int hitCount)
         {
             Target = target;
             HitPoint = hitPoint;
             Damage = damage;
-            RicochetCount = ricochetCount;
+            HitCount = hitCount;
         }
 
         public GameObject Target { get; }
@@ -19,6 +19,6 @@ namespace DreamVille.Gameplay.Weapons.Bullets
 
         public float Damage { get; }
 
-        public int RicochetCount { get; }
+        public int HitCount { get; }
     }
 }

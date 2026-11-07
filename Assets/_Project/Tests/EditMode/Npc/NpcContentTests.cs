@@ -93,8 +93,8 @@ namespace DreamVille.Tests.EditMode.Npc
         [Test]
         public void NpcDialoguePrefab_KeepsTwoSpeakersAndFiveSecondInterval()
         {
-            NpcDialogueHandler dialogue = LoadPrefab(NpcDialoguePrefabPath).GetComponent<NpcDialogueHandler>();
-            Assert.That(dialogue, Is.Not.Null, $"{NpcDialoguePrefabPath} has no {nameof(NpcDialogueHandler)} on its root.");
+            AmbientConversation dialogue = LoadPrefab(NpcDialoguePrefabPath).GetComponent<AmbientConversation>();
+            Assert.That(dialogue, Is.Not.Null, $"{NpcDialoguePrefabPath} has no {nameof(AmbientConversation)} on its root.");
 
             var serialized = new SerializedObject(dialogue);
             SerializedProperty speakers = serialized.FindProperty("_speakers");

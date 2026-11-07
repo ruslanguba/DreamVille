@@ -46,25 +46,21 @@ namespace DreamVille.Audio
             ApplyMusicVolume(_settings.TryGetMusicVolume(out float music) ? music : _config.DefaultVolume);
             ApplySfxVolume(_settings.TryGetSfxVolume(out float sfx) ? sfx : _config.DefaultVolume);
 
-            _scenes.SceneLoaded += PlaySceneMusic;
+            _scenes.SceneLoaded += OnSceneLoaded;
 
             // The scene that was active when the service was created never raises SceneLoaded.
-            PlaySceneMusic(_scenes.ActiveSceneName);
+            OnSceneLoaded(_scenes.ActiveSceneName);
         }
 
         public void Dispose()
         {
-            _scenes.SceneLoaded -= PlaySceneMusic;
+            _scenes.SceneLoaded -= OnSceneLoaded;
 
             // The sliders write on every frame of a drag; the disk is touched once, here.
             _settings.Flush();
         }
 
         public void PlaySfx(AudioClip clip) => _output.PlaySfx(clip);
-
-        public void PlayMusic(AudioClip clip, bool loop = true) => _output.PlayMusic(clip, loop);
-
-        public void StopMusic() => _output.StopMusic();
 
         public void SetMusicVolume(float normalized)
         {
@@ -78,7 +74,7 @@ namespace DreamVille.Audio
             _settings.SetSfxVolume(normalized);
         }
 
-        private void PlaySceneMusic(string sceneName)
+        private void OnSceneLoaded(string sceneName)
         {
             SceneDefinition definition = _catalog.FindBySceneName(sceneName);
 

@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 using DreamVille.Configs;
+using DreamVille.Core.Async;
 using DreamVille.Core.Events;
 
 namespace DreamVille.Gameplay.Weapons.Bullets
@@ -13,7 +14,7 @@ namespace DreamVille.Gameplay.Weapons.Bullets
     /// collisions or its lifetime expires, then returns itself to the owning <see cref="BulletPool"/>.
     /// </summary>
     [RequireComponent(typeof(Rigidbody), typeof(SphereCollider))]
-    public class Bullet : MonoBehaviour
+    public sealed class Bullet : MonoBehaviour
     {
         /// <summary>Raised on every collision while the bullet is in flight.</summary>
         public event Action<BulletHitInfo> Hit;
@@ -118,7 +119,7 @@ namespace DreamVille.Gameplay.Weapons.Bullets
         {
             try
             {
-                await UniTask.Delay(TimeSpan.FromSeconds(lifeTime), cancellationToken: token);
+                await GameTime.DelayAsync(lifeTime, token);
                 ReturnToPool();
             }
             catch (OperationCanceledException)

@@ -2,7 +2,7 @@ using UnityEngine;
 using Zenject;
 
 using DreamVille.Dialogue;
-using DreamVille.Gameplay.Weapons.Pillow;
+using DreamVille.Gameplay.Weapons.Pillows;
 
 namespace DreamVille.Progression.Pillows
 {

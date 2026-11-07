@@ -3,7 +3,7 @@ using UnityEngine;
 namespace DreamVille.Gameplay.Environment
 {
     /// <summary>Moves a prop (a balloon) around a loop of points while spinning it; when hit, it floats upwards for a while and then resumes its route.</summary>
-    public class PropsMover : MonoBehaviour
+    public sealed class PropsMover : MonoBehaviour
     {
         private const float ArrivalDistance = 0.2f;
         private const float FloatUpSpeedFactor = 2f;

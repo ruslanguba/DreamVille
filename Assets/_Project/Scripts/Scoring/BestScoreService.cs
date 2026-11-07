@@ -4,7 +4,7 @@ using DreamVille.Persistence;
 namespace DreamVille.Scoring
 {
     /// <summary>Best score record for one level, keyed by the level's save-file id.</summary>
-    public class BestScoreService : IBestScoreService
+    public sealed class BestScoreService : IBestScoreService
     {
         private readonly string _levelId;
         private readonly IProgressRepository _progress;

@@ -3,6 +3,8 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
+using DreamVille.Core.Async;
+
 namespace DreamVille.Gameplay.Interactables.Effects
 {
     /// <summary>
@@ -40,7 +42,7 @@ namespace DreamVille.Gameplay.Interactables.Effects
             try
             {
                 if (activation.Delay > 0f)
-                    await UniTask.Delay(TimeSpan.FromSeconds(activation.Delay), cancellationToken: token);
+                    await GameTime.DelayAsync(activation.Delay, token);
 
                 activation.Target.SetActive(true);
             }

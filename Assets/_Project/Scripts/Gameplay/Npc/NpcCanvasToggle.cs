@@ -5,9 +5,18 @@ using DreamVille.Core.Players;
 namespace DreamVille.Gameplay.Npc
 {
     /// <summary>Shows the NPC's world-space canvas while the player stands in the trigger and hides it when the player leaves.</summary>
-    public class NpcCanvasToggle : MonoBehaviour
+    public sealed class NpcCanvasToggle : MonoBehaviour
     {
         [SerializeField] private GameObject _canvas;
+
+        private void Awake()
+        {
+            if (_canvas == null)
+            {
+                Debug.LogError($"[{nameof(NpcCanvasToggle)}] '{name}' has no canvas assigned; nothing to toggle.", this);
+                enabled = false;
+            }
+        }
 
         private void Start()
         {

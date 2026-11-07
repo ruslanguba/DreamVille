@@ -4,40 +4,51 @@ namespace DreamVille.Audio
 {
     /// <summary>An actor's sounds from one AudioSource: death, attack and jump one-shots, footsteps while it moves, and random ambient clips on a timer.</summary>
     [RequireComponent(typeof(AudioSource))]
-    public class ActorAudio : MonoBehaviour, IActorAudio
+    public sealed class ActorAudio : MonoBehaviour, IActorAudio
     {
-        private AudioSource _audioSource;
-
-        // Also resolved on first use, so the component works before Awake (EditMode tests).
-        private AudioSource Source => _audioSource != null ? _audioSource : _audioSource = GetComponent<AudioSource>();
         [SerializeField] private AudioClip _deathClip;
         [SerializeField] private AudioClip _attackClip;
         [SerializeField] private AudioClip _jumpClip;
-        [SerializeField] private float _jumpPitchJitter = 0.1f;
+
+        [SerializeField, Min(0f), Tooltip("Maximum random pitch offset of a jump, either way.")]
+        private float _jumpPitchJitter = 0.1f;
 
         [Header("Footsteps")]
         [SerializeField] private AudioClip[] _footstepClips;
-        [SerializeField] private float _stepInterval = 0.5f;
-        [SerializeField] private float _footstepPitchJitter = 0.1f;
 
-        private int _lastFootstepIndex = -1;
+        [SerializeField, Min(0f), Tooltip("Seconds of game time between two steps while moving.")]
+        private float _stepInterval = 0.5f;
+
+        [SerializeField, Min(0f), Tooltip("Maximum random pitch offset of a step, either way.")]
+        private float _footstepPitchJitter = 0.1f;
 
         [Header("Random Clips")]
         [SerializeField] private AudioClip[] _randomClips;
-        [SerializeField] private Vector2 _randomClipInterval = new Vector2(3f, 7f);
-        [SerializeField] private float _randomClipPitchJitter = 0.15f;
 
+        [SerializeField, Tooltip("Seconds of game time between two random clips: x is the shortest wait, y the longest.")]
+        private Vector2 _randomClipInterval = new Vector2(3f, 7f);
+
+        [SerializeField, Min(0f), Tooltip("Maximum random pitch offset of a random clip, either way.")]
+        private float _randomClipPitchJitter = 0.15f;
+
+        private AudioSource _audioSource;
+        private int _lastFootstepIndex = -1;
         private float _nextRandomTime;
         private float _stepTimer;
+
+        // Also resolved on first use, so the component works before Awake (EditMode tests).
+        private AudioSource Source => _audioSource != null ? _audioSource : _audioSource = GetComponent<AudioSource>();
 
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
         }
+
         private void Start()
         {
             ScheduleNextRandom();
         }
+
         private void Update()
         {
             // Play a random ambient clip whenever the timer runs out.
@@ -47,41 +58,20 @@ namespace DreamVille.Audio
                 ScheduleNextRandom();
             }
         }
-        private void PlayRandomClip()
-        {
-            if (_randomClips.Length == 0) return;
 
-            Source.pitch = 1f + Random.Range(-_randomClipPitchJitter, _randomClipPitchJitter);
-            var clip = _randomClips[Random.Range(0, _randomClips.Length)];
-            Source.PlayOneShot(clip);
-        }
-
-        private void ScheduleNextRandom()
-        {
-            _nextRandomTime = Time.time + Random.Range(_randomClipInterval.x, _randomClipInterval.y);
-        }
         public void PlayDeath() => PlayAtNeutralPitch(_deathClip);
 
         public void PlayAttack() => PlayAtNeutralPitch(_attackClip);
 
-        // The source is shared with the jittered jump and footsteps; a plain one-shot must not inherit their pitch.
-        private void PlayAtNeutralPitch(AudioClip clip)
-        {
-            if (clip == null)
-                return;
-
-            Source.pitch = 1f;
-            Source.PlayOneShot(clip);
-        }
-
         public void PlayJump()
         {
-            if (_jumpClip != null)
-            {
-                Source.pitch = 1f + Random.Range(-_jumpPitchJitter, _jumpPitchJitter);
-                Source.PlayOneShot(_jumpClip);
-            }
+            if (_jumpClip == null)
+                return;
+
+            Source.pitch = 1f + Random.Range(-_jumpPitchJitter, _jumpPitchJitter);
+            Source.PlayOneShot(_jumpClip);
         }
+
         public void TickFootsteps(bool isMoving)
         {
             if (!isMoving)
@@ -96,6 +86,31 @@ namespace DreamVille.Audio
                 PlayStep();
                 _stepTimer = _stepInterval;
             }
+        }
+
+        private void PlayRandomClip()
+        {
+            if (_randomClips.Length == 0)
+                return;
+
+            Source.pitch = 1f + Random.Range(-_randomClipPitchJitter, _randomClipPitchJitter);
+            AudioClip clip = _randomClips[Random.Range(0, _randomClips.Length)];
+            Source.PlayOneShot(clip);
+        }
+
+        private void ScheduleNextRandom()
+        {
+            _nextRandomTime = Time.time + Random.Range(_randomClipInterval.x, _randomClipInterval.y);
+        }
+
+        // The source is shared with the jittered jump and footsteps; a plain one-shot must not inherit their pitch.
+        private void PlayAtNeutralPitch(AudioClip clip)
+        {
+            if (clip == null)
+                return;
+
+            Source.pitch = 1f;
+            Source.PlayOneShot(clip);
         }
 
         private void PlayStep()
@@ -116,6 +131,5 @@ namespace DreamVille.Audio
             Source.pitch = 1f + Random.Range(-_footstepPitchJitter, _footstepPitchJitter);
             Source.PlayOneShot(_footstepClips[index]);
         }
-
     }
 }

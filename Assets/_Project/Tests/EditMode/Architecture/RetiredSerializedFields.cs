@@ -60,7 +60,7 @@ namespace DreamVille.Tests.EditMode.Architecture
             (typeof(Pickup), new[] { "_upScaleTime", "_hideScaleTime" }),
             (typeof(EquipWeaponEffect), new[] { "pillowGun" }),
             (typeof(PaintEffect), new[] { "_maxHitPoints" }),
-            (typeof(NpcDialogueHandler), new[] { "_timer", "_handler" }),
+            (typeof(AmbientConversation), new[] { "_timer", "_handler" }),
             (typeof(NpcMover), new[] { "jumpForce", "forwardForce" }),
             (typeof(NpcQueue), new[] { "jumpers", "moveDuration", "delayBetweenJumps" }),
             (typeof(GroundSurfaceSensor), new[] { "_checkSurfacePivot", "radius" }),

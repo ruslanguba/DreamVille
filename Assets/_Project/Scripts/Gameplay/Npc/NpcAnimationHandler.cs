@@ -18,9 +18,6 @@ namespace DreamVille.Gameplay.Npc
         /// <summary>Authored start mood; read by content tests.</summary>
         public NpcState StartState => _startState;
 
-        /// <summary>Last written mood; null before Start unless a state was requested earlier.</summary>
-        public NpcState? State => _state?.Current;
-
         private void Awake()
         {
             Animator animator = GetComponentInChildren<Animator>();

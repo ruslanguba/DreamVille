@@ -7,7 +7,7 @@ using DreamVille.Input;
 namespace DreamVille.Gameplay.Weapons
 {
     /// <summary>Zooms the third-person camera with the mouse wheel by changing the orbital follow radius within [min, max].</summary>
-    public class CameraZoom : MonoBehaviour
+    public sealed class CameraZoom : MonoBehaviour
     {
         [SerializeField] private float _minZoom;
         [SerializeField] private float _maxZoom;

@@ -7,7 +7,7 @@ namespace DreamVille.Gameplay.Player
 {
     /// <summary>
     /// Teleports the player back above the last safe position. Lives on the child whose trigger collider
-    /// a <see cref="DeathTrigger"/> touches.
+    /// a <see cref="Environment.DeathTrigger"/> touches.
     /// </summary>
     public sealed class PlayerRespawn : MonoBehaviour
     {

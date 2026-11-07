@@ -1,6 +1,6 @@
 using System;
 
-using DreamVille.Gameplay.Weapons.Pillow;
+using DreamVille.Gameplay.Weapons.Pillows;
 
 namespace DreamVille.Tests.EditMode.Fakes
 {

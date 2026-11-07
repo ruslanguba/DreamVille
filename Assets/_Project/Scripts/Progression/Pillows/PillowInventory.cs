@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 using DreamVille.Configs;
-using DreamVille.Gameplay.Weapons.Pillow;
+using DreamVille.Gameplay.Weapons.Pillows;
 using DreamVille.Persistence;
 
 namespace DreamVille.Progression.Pillows

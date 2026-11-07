@@ -10,14 +10,13 @@ namespace DreamVille.Tests.EditMode.Fakes
         public event Action<int, int> EnemyKilled;
         public event Action AllEnemiesKilled;
 
-        public int TotalEnemies { get; set; }
         public int RemainingEnemies { get; set; }
 
-        /// <summary>Raises one kill with <paramref name="remaining"/> enemies left and the killing hit's ricochet count.</summary>
-        public void RaiseEnemyKilled(int remaining, int ricochets)
+        /// <summary>Raises one kill with <paramref name="remaining"/> enemies left and the killing hit's hit count.</summary>
+        public void RaiseEnemyKilled(int remaining, int hitCount)
         {
             RemainingEnemies = remaining;
-            EnemyKilled?.Invoke(remaining, ricochets);
+            EnemyKilled?.Invoke(remaining, hitCount);
         }
 
         public void RaiseAllEnemiesKilled()

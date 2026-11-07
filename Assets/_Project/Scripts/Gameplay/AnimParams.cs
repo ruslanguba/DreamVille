@@ -12,7 +12,6 @@ namespace DreamVille.Gameplay
         public static readonly int MoveDirection = Animator.StringToHash("moveDirection");
         public static readonly int AnimSpeedMultiplier = Animator.StringToHash("animSpeedMultiplier");
         public static readonly int Open = Animator.StringToHash("open");
-        public static readonly int Close = Animator.StringToHash("close");
         public static readonly int IsOpen = Animator.StringToHash("isOpen");
         public static readonly int IsEnemy = Animator.StringToHash("isEnemy");
         public static readonly int IsTalk = Animator.StringToHash("isTalk");

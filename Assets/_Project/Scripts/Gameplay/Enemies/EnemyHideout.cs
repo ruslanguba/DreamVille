@@ -19,7 +19,6 @@ namespace DreamVille.Gameplay.Enemies
     {
         private const float HiddenScale = 0.01f;
 
-        // Overridden per instance in Level_03, Level_04 and Max/*; renames follow ADR 0010.
         [SerializeField] private List<Enemy> _enemies;
         [SerializeField] private List<Transform> _nextPointsTransform;
 
@@ -32,6 +31,9 @@ namespace DreamVille.Gameplay.Enemies
         [SerializeField, Min(0f), Tooltip("Seconds of game time between the shrink and the door closing.")]
         private float _closeDuration;
 
+        // The enemies hidden right now. Starts as a copy of the authored _enemies, which is never written at runtime.
+        private readonly List<Enemy> _hidden = new();
+
         private Animator _animator;
 
         private void Awake()
@@ -39,17 +41,31 @@ namespace DreamVille.Gameplay.Enemies
             _animator = GetComponentInChildren<Animator>();
             if (_animator == null)
                 Debug.LogError($"[{nameof(EnemyHideout)}] No Animator on this object or its children.", this);
+
+            if (_enemies == null)
+                return;
+
+            foreach (Enemy enemy in _enemies)
+                Track(enemy);
         }
 
         private void Start()
         {
-            foreach (Enemy enemy in _enemies)
+            foreach (Enemy enemy in _hidden)
             {
                 enemy.transform.position = transform.position;
                 enemy.gameObject.SetActive(false);
             }
 
             CloseDoor();
+        }
+
+        private void OnDestroy()
+        {
+            foreach (Enemy enemy in _hidden)
+                enemy.Destroyed -= OnEnemyDestroyed;
+
+            _hidden.Clear();
         }
 
         public void Apply(in InteractionContext context)
@@ -62,29 +78,30 @@ namespace DreamVille.Gameplay.Enemies
             if (enemy == null)
                 return;
 
-            // One absorption per arriving enemy; concurrent absorptions share the door, as they always did.
+            // One absorption per arriving enemy; concurrent absorptions share the door animator.
             AbsorbAsync(enemy, this.GetCancellationTokenOnDestroy()).Forget();
         }
 
         private void CloseDoor()
         {
             _animator.SetBool(AnimParams.IsOpen, false);
-            if (_enemies.Count > 0)
+            if (_hidden.Count > 0)
                 _animator.SetBool(AnimParams.IsEnemy, true);
         }
 
         private void StartEnemyRun()
         {
             _animator.SetBool(AnimParams.IsOpen, true);
-            for (int i = _enemies.Count - 1; i >= 0; i--)
+            for (int i = _hidden.Count - 1; i >= 0; i--)
             {
                 int pointIndex = Random.Range(0, _nextPointsTransform.Count);
-                Enemy enemy = _enemies[i];
+                Enemy enemy = _hidden[i];
                 enemy.transform.position = transform.position + transform.forward;
                 enemy.gameObject.SetActive(true);
                 enemy.transform.localScale = Vector3.one;
                 enemy.FleeTo(_nextPointsTransform[pointIndex]);
-                _enemies.RemoveAt(i);
+                enemy.Destroyed -= OnEnemyDestroyed;
+                _hidden.RemoveAt(i);
             }
         }
 
@@ -130,11 +147,7 @@ namespace DreamVille.Gameplay.Enemies
 
         private void Stow(Enemy enemy, Vector3 position, Vector3 scale)
         {
-            if (!_enemies.Contains(enemy))
-                _enemies.Add(enemy);
-
-            enemy.Destroyed -= RemoveEnemy;
-            enemy.Destroyed += RemoveEnemy;
+            Track(enemy);
             CloseDoor();
 
             Transform body = enemy.transform;
@@ -143,9 +156,18 @@ namespace DreamVille.Gameplay.Enemies
             enemy.gameObject.SetActive(false);
         }
 
-        private void RemoveEnemy(Enemy enemy)
+        private void Track(Enemy enemy)
         {
-            _enemies.Remove(enemy);
+            if (_hidden.Contains(enemy))
+                return;
+
+            _hidden.Add(enemy);
+            enemy.Destroyed += OnEnemyDestroyed;
+        }
+
+        private void OnEnemyDestroyed(Enemy enemy)
+        {
+            _hidden.Remove(enemy);
         }
     }
 }

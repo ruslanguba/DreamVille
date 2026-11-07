@@ -26,7 +26,7 @@ namespace DreamVille.Gameplay.Weapons
         private ShotCooldown _cooldown;
 
         [Inject]
-        public void Construct(IBulletSpawner spawner, IActorAudio audio)
+        private void Construct(IBulletSpawner spawner, IActorAudio audio)
         {
             _spawner = spawner;
             _audio = audio;
@@ -53,22 +53,19 @@ namespace DreamVille.Gameplay.Weapons
         }
 
         /// <inheritdoc />
-        public bool CanShoot() => isActiveAndEnabled && _cooldown.IsReady(Time.time);
-
-        /// <inheritdoc />
         public bool TryShoot()
         {
             if (!CanShoot())
                 return false;
 
-            ShotRay ray = Aim;
-            Bullet bullet = _spawner.SpawnBullet(ray.Origin, ray.Rotation, _config);
-            bullet.Launch(ray.Direction);
+            _spawner.Fire(Aim, _config);
 
             _audio.PlayAttack();
             _cooldown.Consume(Time.time);
             return true;
         }
+
+        private bool CanShoot() => isActiveAndEnabled && _cooldown.IsReady(Time.time);
 
         /// <summary>Equips the gun (shows it and lets it fire); called by the gun pickup.</summary>
         public void Activate() => gameObject.SetActive(true);

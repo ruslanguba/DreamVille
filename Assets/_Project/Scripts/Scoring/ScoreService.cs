@@ -1,16 +1,14 @@
 using System;
-using UnityEngine;
 
 using DreamVille.Configs;
 using DreamVille.Core.Events;
 
 namespace DreamVille.Scoring
 {
-    /// <summary>The run's score: a kill is worth ScorePerKill times its ricochets, other sources add points directly; raises the added amount and the new total.</summary>
-    public class ScoreService : IScoreService
+    /// <summary>The run's score: a kill is worth ScorePerKill times its hit count (a direct kill counts 1), other sources add points directly; raises the added amount.</summary>
+    public sealed class ScoreService : IScoreService
     {
         public event Action<float> ScoreAdded;
-        public event Action<float> TotalScoreChanged;
 
         private readonly ScoreRules _rules;
         private float _totalScore;
@@ -22,15 +20,15 @@ namespace DreamVille.Scoring
             _rules = rules;
         }
 
-        public void HandleEnemyKilled(int ricochetCount)
+        public void HandleEnemyKilled(int hitCount)
         {
-            float score = CalculateScore(ricochetCount);
+            float score = CalculateScore(hitCount);
             AddScore(score);
         }
 
-        private float CalculateScore(int ricochets)
+        private float CalculateScore(int hitCount)
         {
-            float score = _rules.ScorePerKill * ricochets;
+            float score = _rules.ScorePerKill * hitCount;
             return score;
         }
 
@@ -39,7 +37,6 @@ namespace DreamVille.Scoring
             _totalScore += score;
             // Isolated: the HUD and the star progress listen independently.
             IsolatedEvent.Raise(ScoreAdded, score);
-            TotalScoreChanged?.Invoke(_totalScore);
         }
     }
 }

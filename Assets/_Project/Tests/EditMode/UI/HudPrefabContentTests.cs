@@ -71,7 +71,7 @@ namespace DreamVille.Tests.EditMode.UI
 
             int badgeCount = new SerializedObject(ricochet).FindProperty("_images").arraySize;
 
-            Assert.That(badgeCount, Is.EqualTo(bulletConfig.MaxCollisionCount - HudPresenter.FirstBadgeRicochetCount + 1),
+            Assert.That(badgeCount, Is.EqualTo(bulletConfig.MaxCollisionCount - HudPresenter.FirstBadgeHitCount + 1),
                 "One badge per ricochet count from the first badge up to BulletConfig.MaxCollisionCount.");
         }
 

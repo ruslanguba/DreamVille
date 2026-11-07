@@ -7,7 +7,7 @@ namespace DreamVille.Gameplay.Weapons.Bullets
     /// Queue-based object pool for <see cref="Bullet"/> instances. Lazily instantiates
     /// new bullets as demand exceeds supply.
     /// </summary>
-    public class BulletPool : MonoBehaviour
+    public sealed class BulletPool : MonoBehaviour
     {
         [SerializeField] private Bullet _prefab;
 

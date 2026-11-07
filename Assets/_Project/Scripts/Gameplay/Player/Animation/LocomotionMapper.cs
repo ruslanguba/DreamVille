@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace DreamVille.Gameplay.Player.Animation
 {
-    /// <summary>Pure mapping of stick input to the animator locomotion codes (PlayerMovement.cs today), quirks preserved.</summary>
+    /// <summary>Pure mapping of stick input to the animator locomotion codes.</summary>
     public static class LocomotionMapper
     {
         public const float DeadZone = 0.05f;
@@ -28,7 +28,7 @@ namespace DreamVille.Gameplay.Player.Animation
             }
             else if (backward)
             {
-                // Backward + right plays the left strafe clip, and vice versa - a deliberate quirk of the original mapping.
+                // Backward mirrors the strafe: backward + right selects the left strafe clip, and vice versa.
                 direction = right ? MoveDirection.StrafeLeft : left ? MoveDirection.StrafeRight : MoveDirection.Forward;
                 multiplier = -1f;
             }

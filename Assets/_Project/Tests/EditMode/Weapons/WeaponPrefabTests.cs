@@ -5,7 +5,7 @@ using UnityEngine;
 using DreamVille.Gameplay.Weapons;
 using DreamVille.Gameplay.Weapons.Aiming;
 using DreamVille.Gameplay.Weapons.Bullets;
-using DreamVille.Gameplay.Weapons.Pillow;
+using DreamVille.Gameplay.Weapons.Pillows;
 
 namespace DreamVille.Tests.EditMode.Weapons
 {

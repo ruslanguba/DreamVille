@@ -10,9 +10,9 @@ namespace DreamVille.Tests.EditMode.Fakes
     {
         public event Action<BulletHitInfo> BulletHit;
 
-        public void RaiseHit(int ricochetCount, Vector3 hitPoint)
+        public void RaiseHit(int hitCount, Vector3 hitPoint)
         {
-            BulletHit?.Invoke(new BulletHitInfo(null, hitPoint, 0f, ricochetCount));
+            BulletHit?.Invoke(new BulletHitInfo(null, hitPoint, 0f, hitCount));
         }
     }
 }

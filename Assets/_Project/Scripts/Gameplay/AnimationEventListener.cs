@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 
-namespace DreamVille.Gameplay.Player
+namespace DreamVille.Gameplay
 {
     /// <summary>Receives the walk cycle's jump animation event and forwards it to code as <see cref="JumpFrameReached"/>.</summary>
-    public class AnimationEventListener : MonoBehaviour
+    public sealed class AnimationEventListener : MonoBehaviour
     {
         public event Action JumpFrameReached;
 

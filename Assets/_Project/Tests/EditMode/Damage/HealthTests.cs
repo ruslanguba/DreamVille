@@ -15,52 +15,42 @@ namespace DreamVille.Tests.EditMode.Damage
         }
 
         [Test]
-        public void TakeDamage_ReducesCurrentAndRaisesChanged()
+        public void TakeDamage_ReducesCurrent()
         {
             var health = new Health(100f);
-            float? changedTo = null;
-            health.Changed += value => changedTo = value;
 
             health.TakeDamage(30f);
 
             Assert.That(health.Current, Is.EqualTo(70f));
-            Assert.That(changedTo, Is.EqualTo(70f));
         }
 
         [Test]
-        public void TakeDamage_HitThatReachesZero_ReturnsTrueAndRaisesDiedOnce()
+        public void TakeDamage_HitThatReachesZero_ReturnsTrueAndKills()
         {
             var health = new Health(50f);
-            int diedCount = 0;
-            health.Died += () => diedCount++;
 
             bool killingHit = health.TakeDamage(50f);
 
             Assert.That(killingHit, Is.True);
-            Assert.That(diedCount, Is.EqualTo(1));
+            Assert.That(health.IsDead, Is.True);
         }
 
         [Test]
-        public void TakeDamage_AfterDeath_ReturnsFalseAndRaisesNothing()
+        public void TakeDamage_AfterDeath_ReturnsFalse()
         {
             var health = new Health(10f);
             health.TakeDamage(10f);
-            bool anyEventRaised = false;
-            health.Changed += _ => anyEventRaised = true;
-            health.Died += () => anyEventRaised = true;
 
             bool result = health.TakeDamage(5f);
 
             Assert.That(result, Is.False);
-            Assert.That(anyEventRaised, Is.False);
+            Assert.That(health.Current, Is.EqualTo(0f));
         }
 
         [Test]
         public void TakeDamage_NonPositiveAmount_IsIgnored()
         {
             var health = new Health(10f);
-            bool anyEventRaised = false;
-            health.Changed += _ => anyEventRaised = true;
 
             bool zeroResult = health.TakeDamage(0f);
             bool negativeResult = health.TakeDamage(-1f);
@@ -68,7 +58,6 @@ namespace DreamVille.Tests.EditMode.Damage
             Assert.That(zeroResult, Is.False);
             Assert.That(negativeResult, Is.False);
             Assert.That(health.Current, Is.EqualTo(10f));
-            Assert.That(anyEventRaised, Is.False);
         }
     }
 }

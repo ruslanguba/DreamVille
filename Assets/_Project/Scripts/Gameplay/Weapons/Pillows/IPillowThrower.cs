@@ -1,6 +1,6 @@
 using System;
 
-namespace DreamVille.Gameplay.Weapons.Pillow
+namespace DreamVille.Gameplay.Weapons.Pillows
 {
     /// <summary>What the HUD and the level see of the player's pillows: state to pull, not deltas to count.</summary>
     public interface IPillowThrower

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace DreamVille.Gameplay.Weapons.Pillow
+namespace DreamVille.Gameplay.Weapons.Pillows
 {
     /// <summary>
     /// State machine of one pillow: Stowed → Flying → (Placed) → Returning → Stowed.

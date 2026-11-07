@@ -6,12 +6,12 @@ using Zenject;
 
 using DreamVille.Audio;
 using DreamVille.Configs.Enemies;
+using DreamVille.Core.Async;
 using DreamVille.Core.Players;
 using DreamVille.Gameplay.Enemies.Combat;
 using DreamVille.Gameplay.Enemies.Presentation;
 using DreamVille.Gameplay.Enemies.States;
 using DreamVille.Gameplay.Enemies.Steering;
-using DreamVille.Gameplay.Player;
 
 using Random = UnityEngine.Random;
 
@@ -26,9 +26,6 @@ namespace DreamVille.Gameplay.Enemies
     [RequireComponent(typeof(Rigidbody), typeof(EnemyHealth), typeof(EnemyRotationHandler))]
     public sealed class Enemy : MonoBehaviour, IEnemyContext
     {
-        /// <summary>Arguments: previous state, next state.</summary>
-        public event Action<EnemyStateId, EnemyStateId> StateChanged;
-
         /// <summary>Raised from OnDestroy so hideouts can drop their reference to this enemy.</summary>
         public event Action<Enemy> Destroyed;
 
@@ -59,13 +56,8 @@ namespace DreamVille.Gameplay.Enemies
         private IEnemyHideout _fleeHideout;
         private CancellationTokenSource _immunityCts;
 
-        /// <summary>Valid from Awake onwards.</summary>
-        public EnemyStateId CurrentState => _machine != null && _machine.IsRunning
-            ? _machine.CurrentState.Id
-            : EnemyStateId.Idle;
-
         [Inject]
-        public void Construct(IPlayerMarker player, EnemyProjectile.Pool projectiles)
+        private void Construct(IPlayerMarker player, EnemyProjectile.Pool projectiles)
         {
             _player = player;
             _projectiles = projectiles;
@@ -84,7 +76,7 @@ namespace DreamVille.Gameplay.Enemies
             }
 
             _fleeTarget = destination;
-            _fleeHideout = destination == null ? null : destination.GetComponent<IEnemyHideout>();
+            _fleeHideout = destination.GetComponent<IEnemyHideout>();
 
             if (_machine != null && _machine.IsRunning)
                 _machine.ChangeState(EnemyStateId.FleeToHideout);
@@ -92,6 +84,8 @@ namespace DreamVille.Gameplay.Enemies
 
         // A destroyed component still compares non-null through an interface reference.
         private bool HasPlayer => _player is Component component ? component != null : _player != null;
+
+        private bool HasHideout => _fleeHideout is Component component ? component != null : _fleeHideout != null;
 
         private void Awake()
         {
@@ -126,11 +120,9 @@ namespace DreamVille.Gameplay.Enemies
                 new EnemyDeadState(this, machine)
             });
 
-            _machine.StateChanged += OnStateChanged;
             _health.Killed += OnEnemyKilled;
 
-            // A hideout releases its enemy on the same frame it activates it, so the flee target can
-            // already be set by the time this first Awake runs.
+            // A hideout activates its enemy and then calls FleeTo, so the first Awake can run with the flee target already set.
             _machine.Start(_fleeTarget != null ? EnemyStateId.FleeToHideout : _config.InitialState);
         }
 
@@ -165,16 +157,13 @@ namespace DreamVille.Gameplay.Enemies
                 _animator.PlayLocomotion(Random.Range(0f, _config.MaxLocomotionStartOffset));
         }
 
-        // Null only when Awake refused to build the machine; the component is disabled then.
+        // The machine is null only when Awake refused to build it; the component is disabled then.
         private void Update() => _machine?.Tick(Time.deltaTime);
 
         private void FixedUpdate() => _machine?.FixedTick(Time.fixedDeltaTime);
 
         private void OnDestroy()
         {
-            if (_machine != null)
-                _machine.StateChanged -= OnStateChanged;
-
             if (_health != null)
                 _health.Killed -= OnEnemyKilled;
 
@@ -195,15 +184,13 @@ namespace DreamVille.Gameplay.Enemies
             return new ProjectileAttack(_projectiles, _attackSpawn, _config);
         }
 
-        private void OnStateChanged(EnemyStateId previous, EnemyStateId next) => StateChanged?.Invoke(previous, next);
-
-        private void OnEnemyKilled(EnemyHealth health, int ricochetCount) => _machine.ChangeState(EnemyStateId.Dead);
+        private void OnEnemyKilled(EnemyHealth health, int hitCount) => _machine.ChangeState(EnemyStateId.Dead);
 
         private async UniTaskVoid BecomeVulnerableAsync(float delay, CancellationToken token)
         {
             try
             {
-                await UniTask.Delay(TimeSpan.FromSeconds(delay), cancellationToken: token);
+                await GameTime.DelayAsync(delay, token);
                 _health.SetVulnerable(true);
             }
             catch (OperationCanceledException)
@@ -250,12 +237,16 @@ namespace DreamVille.Gameplay.Enemies
 
         Vector3 IEnemyContext.FleeTargetPosition => _fleeTarget.position;
 
-        bool IEnemyContext.FleeTargetIsHideout => _fleeHideout != null;
+        bool IEnemyContext.FleeTargetIsHideout => HasHideout;
 
         // Empty slots were dropped in Awake, so every entry of the route is a live transform.
         Vector3 IEnemyContext.GetPatrolPoint(int index) => _route[index].position;
 
-        void IEnemyContext.EnterHideout() => _fleeHideout?.Receive(this);
+        void IEnemyContext.EnterHideout()
+        {
+            if (HasHideout)
+                _fleeHideout.Receive(this);
+        }
 
         void IEnemyContext.FaceTowards(Vector3 worldPoint) => _rotation.FaceTowards(worldPoint);
 

@@ -58,7 +58,7 @@ namespace DreamVille.Tests.EditMode.Progression
         }
 
         [Test]
-        public void EnemyKilled_WithRicochets_AddsScorePerKillTimesRicochets()
+        public void EnemyKilled_WithHitCount_AddsScorePerKillTimesHitCount()
         {
             _enemies.RaiseEnemyKilled(3, 3);
 

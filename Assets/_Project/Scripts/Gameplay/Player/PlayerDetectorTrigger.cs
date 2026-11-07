@@ -6,7 +6,7 @@ using DreamVille.Core.Players;
 namespace DreamVille.Gameplay.Player
 {
     /// <summary>Reports the player entering this trigger volume.</summary>
-    public class PlayerDetectorTrigger : MonoBehaviour, IPlayerZone
+    public sealed class PlayerDetectorTrigger : MonoBehaviour, IPlayerZone
     {
         public event Action PlayerEntered;
 

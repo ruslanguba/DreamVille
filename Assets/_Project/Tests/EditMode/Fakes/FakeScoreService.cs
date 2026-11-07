@@ -8,7 +8,6 @@ namespace DreamVille.Tests.EditMode.Fakes
     public sealed class FakeScoreService : IScoreService
     {
         public event Action<float> ScoreAdded;
-        public event Action<float> TotalScoreChanged;
 
         public float TotalScore { get; private set; }
 
@@ -18,10 +17,9 @@ namespace DreamVille.Tests.EditMode.Fakes
         {
             TotalScore += score;
             ScoreAdded?.Invoke(score);
-            TotalScoreChanged?.Invoke(TotalScore);
         }
 
-        public void HandleEnemyKilled(int ricochetCount)
+        public void HandleEnemyKilled(int hitCount)
         {
             HandleEnemyKilledCalls++;
         }

@@ -7,7 +7,7 @@ using DreamVille.Scoring;
 namespace DreamVille.Progression
 {
     /// <summary>
-    /// The level's scoring rules: a kill is worth score by its ricochet count, every score feeds the star
+    /// The level's scoring rules: a kill is worth score by its hit count, every score feeds the star
     /// meter, and clearing the level records the best score. Knows nothing about the HUD.
     /// </summary>
     /// <remarks>
@@ -47,9 +47,9 @@ namespace DreamVille.Progression
             _score.ScoreAdded -= OnScoreAdded;
         }
 
-        private void OnEnemyKilled(int remainingEnemies, int ricochetCount)
+        private void OnEnemyKilled(int remainingEnemies, int hitCount)
         {
-            _score.HandleEnemyKilled(ricochetCount);
+            _score.HandleEnemyKilled(hitCount);
         }
 
         // Every score (kills, pickups, paint) feeds the stars, not only kills.

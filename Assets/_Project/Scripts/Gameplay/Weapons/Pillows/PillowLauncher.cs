@@ -5,9 +5,10 @@ using UnityEngine;
 using Zenject;
 
 using DreamVille.Configs;
+using DreamVille.Core.Async;
 using DreamVille.Input;
 
-namespace DreamVille.Gameplay.Weapons.Pillow
+namespace DreamVille.Gameplay.Weapons.Pillows
 {
     /// <summary>
     /// Scene-facing pillow component on the player root: owns the scene references, the input subscription and
@@ -39,7 +40,7 @@ namespace DreamVille.Gameplay.Weapons.Pillow
         public int InHand => _rack?.InHand ?? 0;
 
         [Inject]
-        public void Construct(IPlayerInput input, Transform body, IPillowInventory inventory)
+        private void Construct(IPlayerInput input, Transform body, IPillowInventory inventory)
         {
             _input = input;
             _body = body;
@@ -130,7 +131,7 @@ namespace DreamVille.Gameplay.Weapons.Pillow
             try
             {
                 while (!_rack.StepReturn(_spawnPoint.position, Time.deltaTime))
-                    await UniTask.Yield(PlayerLoopTiming.Update, token);
+                    await GameTime.NextFrameAsync(token);
 
                 if (_returnCts != null && _returnCts.Token == token)
                     DisposeReturnSource();

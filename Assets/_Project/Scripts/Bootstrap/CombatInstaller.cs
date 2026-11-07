@@ -31,11 +31,6 @@ namespace DreamVille.Bootstrap
                 .NonLazy();
 
             Container
-                .Bind<BulletPool>()
-                .FromMethod(ctx => ctx.Container.Resolve<BulletSpawner>().Pool)
-                .AsSingle();
-
-            Container
                 .Bind<IBulletHitSource>()
                 .FromMethod(ctx => ctx.Container.Resolve<BulletSpawner>().HitRelay)
                 .AsSingle();
