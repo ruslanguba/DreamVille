@@ -3,6 +3,7 @@ using UnityEngine;
 namespace DreamVille.Audio
 {
     /// <summary>An actor's sounds from one AudioSource: death, attack and jump one-shots, footsteps while it moves, and random ambient clips on a timer.</summary>
+    [RequireComponent(typeof(AudioSource))]
     public class ActorAudio : MonoBehaviour, IActorAudio
     {
         private AudioSource _audioSource;

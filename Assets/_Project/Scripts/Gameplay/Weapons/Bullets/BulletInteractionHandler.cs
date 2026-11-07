@@ -5,6 +5,7 @@ using DreamVille.Gameplay.Interactables;
 namespace DreamVille.Gameplay.Weapons.Bullets
 {
     /// <summary>The shot sender: the <see cref="IInteractable"/> a bullet hits receives a shot interaction.</summary>
+    [RequireComponent(typeof(Bullet))]
     public sealed class BulletInteractionHandler : MonoBehaviour
     {
         private Bullet _bullet;

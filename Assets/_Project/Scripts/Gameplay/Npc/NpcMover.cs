@@ -7,7 +7,7 @@ using DreamVille.Core.Async;
 namespace DreamVille.Gameplay.Npc
 {
     /// <summary>A queue member's body: jumps out of the front slot and walks to a new slot.</summary>
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody), typeof(Animator))]
     public sealed class NpcMover : MonoBehaviour
     {
         [SerializeField]
@@ -26,12 +26,6 @@ namespace DreamVille.Gameplay.Npc
         {
             _body = GetComponent<Rigidbody>();
             _animator = GetComponent<Animator>();
-
-            if (_animator == null)
-            {
-                Debug.LogError($"[{nameof(NpcMover)}] '{name}' has no Animator.", this);
-                enabled = false;
-            }
         }
 
         private void OnDestroy()
