@@ -128,5 +128,32 @@ namespace DreamVille.Tests.EditMode.Dialogue
 
             Assert.That(_events, Does.Contain("DialogueEnded"));
         }
+
+        [Test]
+        public void DialogueStarted_WhenAnEarlierListenerThrows_StillReachesTheLaterOnes()
+        {
+            AssignDefinition(_definition);
+            _trigger.DialogueStarted += () => throw new InvalidOperationException("listener failure");
+            _trigger.DialogueStarted += () => _events.Add("LaterDialogueStarted");
+            LogAssert.Expect(LogType.Exception, new Regex("listener failure"));
+
+            _trigger.TriggerDialog();
+
+            Assert.That(_events, Does.Contain("LaterDialogueStarted"));
+        }
+
+        [Test]
+        public void DialogueEnded_WhenAnEarlierListenerThrows_StillReachesTheLaterOnes()
+        {
+            AssignDefinition(_definition);
+            _trigger.DialogueEnded += () => throw new InvalidOperationException("listener failure");
+            _trigger.DialogueEnded += () => _events.Add("LaterDialogueEnded");
+            LogAssert.Expect(LogType.Exception, new Regex("listener failure"));
+            _trigger.TriggerDialog();
+
+            _service.Finish();
+
+            Assert.That(_events, Does.Contain("LaterDialogueEnded"));
+        }
     }
 }

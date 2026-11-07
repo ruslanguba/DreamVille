@@ -8,7 +8,10 @@ using DreamVille.Core.Players;
 
 namespace DreamVille.Dialogue
 {
-    /// <summary>Starts a dialogue when the player enters its trigger zone.</summary>
+    /// <summary>
+    /// Starts a dialogue when the player enters its trigger zone. Each listener of its events runs on its own:
+    /// one that throws is logged and the others still run, so listener order is not part of the contract.
+    /// </summary>
     public class DialogueTrigger : MonoBehaviour, IDialogueTrigger
     {
         /// <summary>Raised after the dialogue service accepted this trigger's lines.</summary>
@@ -110,13 +113,19 @@ namespace DreamVille.Dialogue
 
         private void Raise(Action dialogueEvent)
         {
-            try
+            if (dialogueEvent == null)
+                return;
+
+            foreach (Delegate listener in dialogueEvent.GetInvocationList())
             {
-                dialogueEvent?.Invoke();
-            }
-            catch (Exception exception)
-            {
-                Debug.LogException(exception, this);
+                try
+                {
+                    ((Action)listener).Invoke();
+                }
+                catch (Exception exception)
+                {
+                    Debug.LogException(exception, this);
+                }
             }
         }
     }

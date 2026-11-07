@@ -2,7 +2,10 @@ using System;
 
 namespace DreamVille.Dialogue
 {
-    /// <summary>A dialogue zone as seen by level logic: when it runs, and whether it listens yet.</summary>
+    /// <summary>
+    /// A dialogue zone as seen by level logic: when it runs, and whether it listens yet. Each listener of its
+    /// events runs on its own: one that throws is logged and the others still run.
+    /// </summary>
     public interface IDialogueTrigger
     {
         /// <summary>Raised after the dialogue service accepted this trigger's lines.</summary>
