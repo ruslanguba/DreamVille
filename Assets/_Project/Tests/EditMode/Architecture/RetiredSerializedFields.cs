@@ -14,6 +14,7 @@ using DreamVille.Gameplay.Player.Ground;
 using DreamVille.Gameplay.Weapons;
 using DreamVille.Gameplay.Weapons.Aiming;
 using DreamVille.Input;
+using DreamVille.Progression;
 using DreamVille.UI;
 using DreamVille.UI.Dialogues;
 using DreamVille.UI.Hud;
@@ -71,6 +72,10 @@ namespace DreamVille.Tests.EditMode.Architecture
             (typeof(AudioSettingsView), new[] { "musicSlider", "sfxSlider" }),
             (typeof(DialogueView), new[] { "panel", "leftImage", "rightImage", "leftTextBackground", "rightTextBackground", "leftText", "rightText", "sizeOffset" }),
             (typeof(GameUIRoot), new[] { "_ricochetUI", "_pillowUI", "_enemyCounterUI", "_scorePopupUI", "_starsUI" }),
+            // 6.4: same-object components are required and fetched in Awake; runtime state is not data.
+            (typeof(FinalZone), new[] { "_animator", "_audio" }),
+            (typeof(ToggleDoorEffect), new[] { "_isOpen" }),
+            (typeof(CameraZoom), new[] { "_currentZoom" }),
         };
 
         /// <summary>

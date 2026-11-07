@@ -61,12 +61,6 @@ namespace DreamVille.Gameplay.Interactables.Effects
             [SerializeField] private GameObject _target;
             [SerializeField, Min(0f)] private float _delay;
 
-            public TimedActivation(GameObject target, float delay)
-            {
-                _target = target;
-                _delay = delay;
-            }
-
             public GameObject Target => _target;
 
             /// <summary>Seconds of scaled time between the first interaction and the activation.</summary>

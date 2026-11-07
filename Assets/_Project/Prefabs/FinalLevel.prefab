@@ -170,8 +170,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dialogue: {fileID: 4222001605948369635}
-  _animator: {fileID: 502724839092369748}
-  _audio: {fileID: 5725333945880483287}
   _mumbleClips:
   - {fileID: 8300000, guid: ad6fdbe40905f6b4eae4141c2f93cfc9, type: 3}
   - {fileID: 8300000, guid: 46c0551deedff0f479b48fb4f2ec1b54, type: 3}

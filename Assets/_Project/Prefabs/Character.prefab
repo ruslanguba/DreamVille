@@ -469,6 +469,7 @@ MonoBehaviour:
   _deathClip: {fileID: 8300000, guid: 10c90ca71be00c7459c672f4d6e75abc, type: 3}
   _attackClip: {fileID: 8300000, guid: 68ed0b58044f5ea4dbb0be8b86172d4c, type: 3}
   _jumpClip: {fileID: 8300000, guid: 37439a704b1af2644ab712cc4a798ec8, type: 3}
+  _jumpPitchJitter: 0.1
   _footstepClips:
   - {fileID: 8300000, guid: 6064fb6fd47fad140aff6ddee6c6bb21, type: 3}
   - {fileID: 8300000, guid: ad9849989dbbc8c48a2d23044fc8d061, type: 3}
@@ -591,7 +592,6 @@ MonoBehaviour:
   _minZoom: 1
   _maxZoom: 10
   _zoomSensitivity: 1
-  _currentZoom: 0
   _orbitalFollow: {fileID: 5047119252384295686}
 --- !u!114 &2139084518629686366
 MonoBehaviour:

@@ -11,7 +11,7 @@ namespace DreamVille.Progression
     /// open the path onward. It knows nothing about progress, NPCs or the wider scenario;
     /// those links are created by <see cref="LevelDirector"/>.
     /// </summary>
-    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(Animator), typeof(AudioSource))]
     public class FinalZone : MonoBehaviour
     {
         /// <summary>The final dialogue started; a nearby NPC can react to it.</summary>
@@ -20,17 +20,21 @@ namespace DreamVille.Progression
         /// <summary>The final dialogue finished; the path onward can be opened.</summary>
         public event Action DialogueFinished;
 
+        // Serialized, not required: the trigger destroys itself after the finale (deleteOnEnd),
+        // and Unity refuses to destroy a component another one requires.
+        [Tooltip("The zone's own dialogue, usually on this object. Empty only on scenery copies that never arm.")]
         [SerializeField] private DialogueTrigger _dialogue;
-        [SerializeField] private Animator _animator;
-        [SerializeField] private AudioSource _audio;
         [SerializeField] private AudioClip[] _mumbleClips;
+
+        private Animator _portalAnimator;
+        private AudioSource _audioSource;
+
+        private void Reset() => _dialogue = GetComponentInChildren<DialogueTrigger>(true);
 
         private void Awake()
         {
-            // References within a single prefab: includeInactive and a null check are required.
-            if (_dialogue == null) _dialogue = GetComponentInChildren<DialogueTrigger>(true);
-            if (_animator == null) _animator = GetComponent<Animator>();
-            if (_audio == null) _audio = GetComponent<AudioSource>();
+            _portalAnimator = GetComponent<Animator>();
+            _audioSource = GetComponent<AudioSource>();
 
             // The zone ignores the player until the level is won. The object stays active:
             // a disabled trigger lost its references and still caught the player's input.
@@ -61,11 +65,8 @@ namespace DreamVille.Progression
         /// <summary>Plays the portal-opening animation.</summary>
         public void OpenPortal()
         {
-            if (_audio != null)
-                _audio.Stop();
-
-            if (_animator != null)
-                _animator.SetTrigger(AnimParams.Start);
+            _audioSource.Stop();
+            _portalAnimator.SetTrigger(AnimParams.Start);
         }
 
         private void SetArmed(bool isArmed)
@@ -82,10 +83,10 @@ namespace DreamVille.Progression
 
         private void PlayMumble()
         {
-            if (_audio == null || _mumbleClips == null || _mumbleClips.Length == 0)
+            if (_mumbleClips == null || _mumbleClips.Length == 0)
                 return;
 
-            _audio.PlayOneShot(_mumbleClips[UnityEngine.Random.Range(0, _mumbleClips.Length)]);
+            _audioSource.PlayOneShot(_mumbleClips[UnityEngine.Random.Range(0, _mumbleClips.Length)]);
         }
 
         private void OnDialogueEnded() => DialogueFinished?.Invoke();

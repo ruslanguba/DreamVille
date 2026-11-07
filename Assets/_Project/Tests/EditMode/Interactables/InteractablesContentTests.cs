@@ -296,10 +296,6 @@ namespace DreamVille.Tests.EditMode.Interactables
             ToggleDoorEffect doorEffect = prefab.GetComponent<ToggleDoorEffect>();
             Assert.That(doorEffect, Is.Not.Null, $"{FridgeWithWalkersPrefabPath} has no ToggleDoorEffect.");
 
-            var serializedDoor = new SerializedObject(doorEffect);
-            Assert.That(serializedDoor.FindProperty("_isOpen").boolValue, Is.False,
-                $"{FridgeWithWalkersPrefabPath}: the fridge must start closed.");
-
             ActivateObjectsEffect activateEffect = prefab.GetComponent<ActivateObjectsEffect>();
             Assert.That(activateEffect, Is.Not.Null, $"{FridgeWithWalkersPrefabPath} has no ActivateObjectsEffect.");
 

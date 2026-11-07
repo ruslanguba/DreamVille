@@ -12,7 +12,6 @@ namespace DreamVille.Gameplay.Weapons
         [SerializeField] private float _minZoom;
         [SerializeField] private float _maxZoom;
         [SerializeField] private float _zoomSensitivity;
-        [SerializeField] private float _currentZoom;
         [SerializeField] private CinemachineOrbitalFollow _orbitalFollow;
 
         private IPlayerInput _input;
@@ -26,7 +25,6 @@ namespace DreamVille.Gameplay.Weapons
         private void OnEnable()
         {
             _input.Scroll += Zoom;
-            _currentZoom = _orbitalFollow.Radius;
         }
 
         private void OnDisable()
@@ -34,13 +32,8 @@ namespace DreamVille.Gameplay.Weapons
             _input.Scroll -= Zoom;
         }
 
+        // The radius is the only zoom state: nothing else writes it, so no copy can drift from it.
         public void Zoom(float zoom)
-        {
-            float newZoom = _currentZoom - zoom * _zoomSensitivity;
-            newZoom = Mathf.Clamp(newZoom, _minZoom, _maxZoom);
-
-            _currentZoom = newZoom;
-            _orbitalFollow.Radius = _currentZoom;
-        }
+            => _orbitalFollow.Radius = Mathf.Clamp(_orbitalFollow.Radius - zoom * _zoomSensitivity, _minZoom, _maxZoom);
     }
 }

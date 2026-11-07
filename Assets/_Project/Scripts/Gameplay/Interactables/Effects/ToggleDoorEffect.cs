@@ -6,7 +6,8 @@ namespace DreamVille.Gameplay.Interactables.Effects
     [RequireComponent(typeof(Animator))]
     public sealed class ToggleDoorEffect : MonoBehaviour, IInteractionEffect
     {
-        [SerializeField] private bool _isOpen;
+        // Runtime state, not data: the door starts closed.
+        private bool _isDoorOpen;
 
         private Animator _animator;
 
@@ -17,8 +18,8 @@ namespace DreamVille.Gameplay.Interactables.Effects
 
         public void Apply(in InteractionContext context)
         {
-            _isOpen = !_isOpen;
-            _animator.SetTrigger(_isOpen ? AnimParams.Open : AnimParams.Close);
+            _isDoorOpen = !_isDoorOpen;
+            _animator.SetTrigger(_isDoorOpen ? AnimParams.Open : AnimParams.Close);
         }
     }
 }
