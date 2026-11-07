@@ -389,7 +389,7 @@ namespace DreamVille.Tests.EditMode.Composition
                 return;
             }
 
-            FinalZone zone = found[0].FinalZone;
+            var zone = (FinalZone)found[0].FinalZone;
             Assert.That(zone, Is.Not.Null, $"{scenePath}'s LevelActors has a FinalNpc but no FinalZone.");
 
             float distance = Vector3.Distance(finalNpc.transform.position, zone.transform.position);

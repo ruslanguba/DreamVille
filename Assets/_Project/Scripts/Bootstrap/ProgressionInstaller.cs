@@ -37,7 +37,7 @@ namespace DreamVille.Bootstrap
             // Scene-scoped: availability is capped by this scene's LevelDefinition; the unlock count itself is persisted.
             Container.BindInterfacesTo<PillowInventory>().AsSingle();
 
-            Container.Bind<LevelActors>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<ILevelCast>().To<LevelActors>().FromComponentInHierarchy().AsSingle();
             Container.BindInterfacesTo<LevelDirector>().AsSingle();
         }
     }

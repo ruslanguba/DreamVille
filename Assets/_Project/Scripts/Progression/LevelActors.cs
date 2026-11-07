@@ -11,16 +11,15 @@ namespace DreamVille.Progression
     /// and only one of them is the real one.
     /// Required in every gameplay scene, on its own scene object; empty fields mean "no finale".
     /// </summary>
-    public class LevelActors : MonoBehaviour
+    public sealed class LevelActors : MonoBehaviour, ILevelCast
     {
         [SerializeField] private FinalZone _finalZone;
         [SerializeField] private NpcReactionController _finalNpc;
 
-        /// <summary>The zone that opens the path to the next level, or null when the level has none.</summary>
-        public FinalZone FinalZone => _finalZone != null ? _finalZone : null;
+        /// <inheritdoc />
+        public IFinalZone FinalZone => _finalZone != null ? _finalZone : null;
 
-        /// <summary>NPC standing in the final zone that reacts to the level outro, or null. A destroyed or
-        /// unassigned component is returned as a real null so the interface never hides Unity's fake-null.</summary>
+        /// <inheritdoc />
         public INpcReactions FinalNpc => _finalNpc != null ? _finalNpc : null;
     }
 }

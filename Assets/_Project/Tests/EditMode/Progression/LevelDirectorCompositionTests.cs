@@ -11,8 +11,8 @@ using DreamVille.Tests.EditMode.Fakes;
 namespace DreamVille.Tests.EditMode.Progression
 {
     /// <summary>
-    /// LevelActors is a hard requirement of LevelDirector: an optional cast once vanished from every gameplay
-    /// scene and the finale silently stopped working. Composition must now fail loudly instead.
+    /// The level cast is a hard requirement of LevelDirector: without it the finale would silently never run,
+    /// so composition must fail loudly instead.
     /// </summary>
     public class LevelDirectorCompositionTests
     {
@@ -31,7 +31,7 @@ namespace DreamVille.Tests.EditMode.Progression
         }
 
         [Test]
-        public void Resolve_WithoutLevelActors_Throws()
+        public void Resolve_WithoutLevelCast_Throws()
         {
             var container = new DiContainer();
             container.Bind<IEnemyRegistry>().FromInstance(new FakeEnemyRegistry());

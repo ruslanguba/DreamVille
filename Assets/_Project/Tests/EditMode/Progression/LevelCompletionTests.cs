@@ -17,7 +17,6 @@ namespace DreamVille.Tests.EditMode.Progression
     {
         private LevelDefinition _hub;
         private LevelDefinition _nextLevel;
-        private GameObject _actorsObject;
         private ProgressRepository _progress;
         private LevelDirector _director;
 
@@ -26,16 +25,14 @@ namespace DreamVille.Tests.EditMode.Progression
         {
             _hub = LevelDefinition.CreateForTests("Lobby_Test", "hub", maxPillows: 2);
             _nextLevel = LevelDefinition.CreateForTests("Level_Test", "next", maxPillows: 2);
-            _actorsObject = new GameObject("LevelActors");
             _progress = new ProgressRepository(new InMemorySaveStorage());
-            _director = new LevelDirector(new FakeEnemyRegistry(), _hub, _progress, _actorsObject.AddComponent<LevelActors>());
+            _director = new LevelDirector(new FakeEnemyRegistry(), _hub, _progress, new FakeLevelCast());
         }
 
         [TearDown]
         public void TearDown()
         {
             _director.Dispose();
-            Object.DestroyImmediate(_actorsObject);
             Object.DestroyImmediate(_hub);
             Object.DestroyImmediate(_nextLevel);
         }

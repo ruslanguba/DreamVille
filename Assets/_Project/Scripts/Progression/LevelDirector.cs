@@ -1,9 +1,11 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using Zenject;
 
 using DreamVille.Configs;
+using DreamVille.Core.Async;
 using DreamVille.Core.Scenes;
 using DreamVille.Gameplay.Enemies;
 using DreamVille.Gameplay.Npc;
@@ -14,33 +16,33 @@ namespace DreamVille.Progression
     /// <summary>
     /// The level's completion scenario in one place: winning arms the final zone, the final
     /// dialogue starting and finishing drives the final-zone NPC reaction, and the dialogue
-    /// finishing opens the path onward. Participants do not know about each other.
+    /// finishing opens the path onward before the NPC reacts. Participants do not know about each other.
     /// A level without enemies to beat (a hub) is completed from outside through <see cref="ILevelCompletion"/>.
     /// </summary>
-    public class LevelDirector : ILevelCompletion, IInitializable, IDisposable
+    public sealed class LevelDirector : ILevelCompletion, IInitializable, IDisposable
     {
         private readonly IEnemyRegistry _enemies;
         private readonly LevelDefinition _level;
         private readonly IProgressRepository _progress;
-        private readonly LevelActors _actors;
+        private readonly ILevelCast _cast;
         private readonly CancellationTokenSource _lifetime = new CancellationTokenSource();
 
         public LevelDirector(
             IEnemyRegistry enemies,
             LevelDefinition level,
             IProgressRepository progress,
-            LevelActors actors)
+            ILevelCast cast)
         {
             _enemies = enemies;
             _level = level;
             _progress = progress;
 
-            // Required on purpose: an optional cast once vanished from every scene without a single error.
-            _actors = actors != null ? actors : throw new ArgumentNullException(nameof(actors));
+            // Required: without the cast the finale would silently never run.
+            _cast = cast ?? throw new ArgumentNullException(nameof(cast));
         }
 
-        private FinalZone FinalZone => _actors.FinalZone;
-        private INpcReactions FinalNpc => _actors.FinalNpc;
+        private IFinalZone FinalZone => _cast.FinalZone;
+        private INpcReactions FinalNpc => _cast.FinalNpc;
 
         public void Initialize()
         {
@@ -51,7 +53,7 @@ namespace DreamVille.Progression
                 return;
 
             FinalZone.DialogueStarted += OnFinalDialogueStarted;
-            FinalZone.DialogueFinished += OnFinalDialogueFinished;
+            FinalZone.DialogueEnded += OnFinalDialogueEnded;
 
             // The zone exists but there are no enemies: "all killed" will never fire, so count it now.
             if (_enemies.RemainingEnemies == 0)
@@ -69,7 +71,13 @@ namespace DreamVille.Progression
                 return;
 
             FinalZone.DialogueStarted -= OnFinalDialogueStarted;
-            FinalZone.DialogueFinished -= OnFinalDialogueFinished;
+            FinalZone.DialogueEnded -= OnFinalDialogueEnded;
+        }
+
+        /// <inheritdoc />
+        public void CompleteLevel()
+        {
+            _progress.MarkCompleted(_level.LevelId);
         }
 
         /// <summary>
@@ -77,21 +85,20 @@ namespace DreamVille.Progression
         /// so an NPC greeting applied here would be overwritten by its own Start. Wait for the
         /// first Update, when every component has initialised its authored pose.
         /// </summary>
-        public void CompleteLevel()
-        {
-            _progress.MarkCompleted(_level.LevelId);
-        }
-
         private async UniTaskVoid CompleteAfterSceneStartAsync(CancellationToken token)
         {
             try
             {
-                await UniTask.Yield(PlayerLoopTiming.Update, token);
+                await GameTime.NextFrameAsync(token);
                 OnAllEnemiesKilled();
             }
             catch (OperationCanceledException)
             {
                 // The scene context was disposed before the first frame; nothing to complete.
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception);
             }
         }
 
@@ -110,12 +117,13 @@ namespace DreamVille.Progression
             FinalNpc?.SetApplause();
         }
 
-        private void OnFinalDialogueFinished()
+        private void OnFinalDialogueEnded()
         {
-            FinalNpc?.SetIdle();
-
+            // The path onward first: the NPC's reaction is decoration and must never block it.
             if (FinalZone != null)
                 FinalZone.OpenPortal();
+
+            FinalNpc?.SetIdle();
         }
     }
 }

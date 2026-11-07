@@ -12,13 +12,13 @@ namespace DreamVille.Progression
     /// those links are created by <see cref="LevelDirector"/>.
     /// </summary>
     [RequireComponent(typeof(Animator), typeof(AudioSource))]
-    public class FinalZone : MonoBehaviour
+    public sealed class FinalZone : MonoBehaviour, IFinalZone
     {
-        /// <summary>The final dialogue started; a nearby NPC can react to it.</summary>
+        /// <inheritdoc />
         public event Action DialogueStarted;
 
-        /// <summary>The final dialogue finished; the path onward can be opened.</summary>
-        public event Action DialogueFinished;
+        /// <inheritdoc />
+        public event Action DialogueEnded;
 
         // Serialized, not required: the trigger destroys itself after the finale (deleteOnEnd),
         // and Unity refuses to destroy a component another one requires.
@@ -36,8 +36,8 @@ namespace DreamVille.Progression
             _portalAnimator = GetComponent<Animator>();
             _audioSource = GetComponent<AudioSource>();
 
-            // The zone ignores the player until the level is won. The object stays active:
-            // a disabled trigger lost its references and still caught the player's input.
+            // The zone ignores the player until the level is won. It is disarmed rather than deactivated, so the
+            // trigger stays subscribed to its zone and simply ignores the player until armed.
             SetArmed(false);
         }
 
@@ -59,10 +59,10 @@ namespace DreamVille.Progression
             _dialogue.DialogueEnded -= OnDialogueEnded;
         }
 
-        /// <summary>Arms the zone: from this point the player's entry starts the final dialogue.</summary>
+        /// <inheritdoc />
         public void Arm() => SetArmed(true);
 
-        /// <summary>Plays the portal-opening animation.</summary>
+        /// <inheritdoc />
         public void OpenPortal()
         {
             _audioSource.Stop();
@@ -89,6 +89,6 @@ namespace DreamVille.Progression
             _audioSource.PlayOneShot(_mumbleClips[UnityEngine.Random.Range(0, _mumbleClips.Length)]);
         }
 
-        private void OnDialogueEnded() => DialogueFinished?.Invoke();
+        private void OnDialogueEnded() => DialogueEnded?.Invoke();
     }
 }
