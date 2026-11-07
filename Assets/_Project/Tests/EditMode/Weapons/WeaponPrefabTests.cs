@@ -4,6 +4,7 @@ using UnityEngine;
 
 using DreamVille.Gameplay.Weapons;
 using DreamVille.Gameplay.Weapons.Aiming;
+using DreamVille.Gameplay.Weapons.Bullets;
 using DreamVille.Gameplay.Weapons.Pillow;
 
 namespace DreamVille.Tests.EditMode.Weapons
@@ -17,6 +18,7 @@ namespace DreamVille.Tests.EditMode.Weapons
     public class WeaponPrefabTests
     {
         private const string CharacterPrefabPath = "Assets/_Project/Prefabs/Character.prefab";
+        private const string BulletPrefabPath = "Assets/_Project/Prefabs/Bullet.prefab";
 
         private static GameObject LoadPrefab()
         {
@@ -93,6 +95,22 @@ namespace DreamVille.Tests.EditMode.Weapons
             foreach (Component component in prefab.GetComponentsInChildren<Component>(true))
                 Assert.That(component.GetType().Name, Is.Not.EqualTo("WeaponController"),
                     "Character prefab still carries a WeaponController component; it must be a plain class only.");
+        }
+
+        [Test]
+        public void BulletPrefab_HitEffect_SimulatesInWorldSpace()
+        {
+            GameObject bullet = AssetDatabase.LoadAssetAtPath<GameObject>(BulletPrefabPath);
+            Assert.That(bullet, Is.Not.Null, $"{BulletPrefabPath} is missing.");
+            var handler = bullet.GetComponent<BulletVfxHandler>();
+            Assert.That(handler, Is.Not.Null, "Bullet prefab has no BulletVfxHandler.");
+
+            var effect = new SerializedObject(handler).FindProperty("_hitEffect").objectReferenceValue as ParticleSystem;
+
+            // The handler detaches the effect at Awake; in local space every earlier burst would follow the effect
+            // to the next hit point.
+            Assert.That(effect, Is.Not.Null, "BulletVfxHandler._hitEffect is not assigned.");
+            Assert.That(effect.main.simulationSpace, Is.EqualTo(ParticleSystemSimulationSpace.World));
         }
     }
 }
