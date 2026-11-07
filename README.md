@@ -59,7 +59,7 @@ _A gameplay GIF and screenshots are coming with the playable build._
   and the move fixed a shipped bug where English dialogues never started. Screen hints
   use a `Hints` table the same way, so the English game is English from the first lobby.
   [ADR 0009](Docs/adr/0009-data-driven-dialogues.md).
-- **687 EditMode tests that guard the wiring and the data.**
+- **697 EditMode tests that guard the wiring and the data.**
   [`SceneCompositionTests`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs)
   opens every build scene and checks its installers, catalog references and missing
   scripts, and prefab tests pin the player's composition, so a mis-wired scene fails a
@@ -67,7 +67,8 @@ _A gameplay GIF and screenshots are coming with the playable build._
   reviews: no asset keeps data under a renamed field's old name, and every enemy's
   tuning and archetype are pinned in a snapshot
   ([ADR 0010](Docs/adr/0010-renaming-serialized-fields.md),
-  [ADR 0011](Docs/adr/0011-enemy-archetypes.md)).
+  [ADR 0011](Docs/adr/0011-enemy-archetypes.md)); a content test proves every prefab
+  and scene has the components its scripts `[RequireComponent]`.
 
 ## Architecture
 
@@ -171,7 +172,7 @@ press Play.
 
 ## Tests
 
-Window → General → Test Runner → EditMode → Run All. 687 EditMode tests (685 pass, 2
+Window → General → Test Runner → EditMode → Run All. 697 EditMode tests (695 pass, 2
 intentionally skipped). PlayMode tests and CI are not set up yet.
 
 ## Status and roadmap
