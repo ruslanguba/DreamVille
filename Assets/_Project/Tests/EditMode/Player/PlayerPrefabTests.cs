@@ -110,6 +110,26 @@ namespace DreamVille.Tests.EditMode.Player
         }
 
         [Test]
+        public void Skins_FirstIsTheOnlyActiveOne()
+        {
+            GameObject prefab = LoadPrefab();
+            var skins = prefab.GetComponentInChildren<DreamVille.Gameplay.Player.Skins.PlayerSkins>(true);
+            Assert.That(skins, Is.Not.Null, "Character prefab has no PlayerSkins.");
+
+            SerializedProperty list = new SerializedObject(skins).FindProperty("_skins");
+            Assert.That(list.arraySize, Is.GreaterThan(0), "PlayerSkins has no skins.");
+
+            // PlayerSkins starts on skin 0; the prefab must show exactly that one, or the driver and the visible
+            // model disagree until the first skin change.
+            for (int i = 0; i < list.arraySize; i++)
+            {
+                var skin = list.GetArrayElementAtIndex(i).objectReferenceValue as Animator;
+                Assert.That(skin, Is.Not.Null, $"PlayerSkins._skins[{i}] is empty.");
+                Assert.That(skin.gameObject.activeSelf, Is.EqualTo(i == 0), $"Skin {i} ('{skin.name}') has the wrong active state.");
+            }
+        }
+
+        [Test]
         public void CharacterPrefab_HasExactlyOneGroundSensorAndOneRespawn()
         {
             GameObject prefab = LoadPrefab();

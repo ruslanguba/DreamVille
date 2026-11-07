@@ -9,8 +9,8 @@ using DreamVille.Input;
 namespace DreamVille.Gameplay.Player
 {
     /// <summary>
-    /// Camera-relative walking: accelerates toward the walk speed, turns the body away from the camera while moving,
-    /// and feeds locomotion to the animator and footsteps to the audio.
+    /// Camera-relative walking: accelerates toward the walk speed, stops at once on release, turns the body away from
+    /// the camera while moving, and feeds locomotion to the animator and footsteps to the audio.
     /// </summary>
     public sealed class PlayerMovement
     {
@@ -53,8 +53,10 @@ namespace DreamVille.Gameplay.Player
         {
             Vector2 moveInput = _input.Move;
 
-            float targetSpeed = moveInput.sqrMagnitude > MoveInputThreshold ? _config.WalkSpeed : 0f;
-            _currentSpeed = Mathf.MoveTowards(_currentSpeed, targetSpeed, _config.Acceleration * deltaTime);
+            // Acceleration shapes the start only: releasing the stick stops the body at once, and the animation,
+            // footsteps and turning below stop with it.
+            bool hasInput = moveInput.sqrMagnitude > MoveInputThreshold;
+            _currentSpeed = hasInput ? Mathf.MoveTowards(_currentSpeed, _config.WalkSpeed, _config.Acceleration * deltaTime) : 0f;
 
             // Forward follows the camera, right follows the body: strafing stays relative to where the character faces.
             Vector3 forward = Flatten(_camera.forward);

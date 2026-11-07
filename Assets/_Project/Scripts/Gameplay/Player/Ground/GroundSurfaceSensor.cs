@@ -47,7 +47,8 @@ namespace DreamVille.Gameplay.Player.Ground
             if (!enabled)
                 return;
 
-            int count = Physics.OverlapSphereNonAlloc(_pivot.position, _radius, _hits, _surfaceMask);
+            // Trigger volumes are not ground; they would only fill the fixed-size buffer.
+            int count = Physics.OverlapSphereNonAlloc(_pivot.position, _radius, _hits, _surfaceMask, QueryTriggerInteraction.Ignore);
             if (count == _hits.Length && !_bufferFullReported)
             {
                 _bufferFullReported = true;

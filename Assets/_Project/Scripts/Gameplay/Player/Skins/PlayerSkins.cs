@@ -27,7 +27,8 @@ namespace DreamVille.Gameplay.Player.Skins
                 return;
             }
 
-            _playerAnimator.SetAnimator(_skins[_skinIndex]);
+            // One source of truth: the visible skin and the animator driver both follow _skinIndex from the start.
+            ApplySkin();
         }
 
         public void SetSkin(int index)
