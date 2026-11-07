@@ -37,6 +37,9 @@ namespace DreamVille.Dialogue
 
         private void OnDisable()
         {
+            // Disabled mid-dialogue, the camera would miss DialogueEnded and come back on top.
+            _camera.Priority = IdlePriority;
+
             if (_dialogueTrigger == null)
                 return;
 

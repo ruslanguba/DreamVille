@@ -340,17 +340,12 @@ namespace DreamVille.Tests.EditMode.Composition
                 $"{scenePath} can never be completed: no armable FinalZone and no SceneTransitionTrigger with _completesLevel, so its level-select button stays locked.");
         }
 
-        /// <summary>A FinalZone the player can actually trigger: its dialogue is wired, directly or as a child.</summary>
+        /// <summary>
+        /// A FinalZone the player can actually trigger: its serialized dialogue is wired. The zone has no runtime
+        /// fallback, so a trigger that merely sits in its hierarchy does not count.
+        /// </summary>
         private static bool IsArmable(FinalZone zone)
-        {
-            var serializedZone = new SerializedObject(zone);
-            SerializedProperty dialogue = serializedZone.FindProperty("_dialogue");
-
-            if (dialogue.objectReferenceValue != null)
-                return true;
-
-            return zone.GetComponentInChildren<DialogueTrigger>(true) != null;
-        }
+            => new SerializedObject(zone).FindProperty("_dialogue").objectReferenceValue != null;
 
         [TestCaseSource(nameof(GameplayScenePaths))]
         public void GameplayScene_WithAFinalZone_HasLevelActorsPointingAtIt(string scenePath)

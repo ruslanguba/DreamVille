@@ -32,7 +32,7 @@ namespace DreamVille.Gameplay.Weapons
             _input.Scroll -= Zoom;
         }
 
-        // The radius is the only zoom state: nothing else writes it, so no copy can drift from it.
+        /// <summary>Positive scroll moves the camera closer; each step continues from the current orbit radius, clamped to [min, max].</summary>
         public void Zoom(float zoom)
             => _orbitalFollow.Radius = Mathf.Clamp(_orbitalFollow.Radius - zoom * _zoomSensitivity, _minZoom, _maxZoom);
     }

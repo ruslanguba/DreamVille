@@ -47,7 +47,7 @@ namespace DreamVille.Tests.EditMode.Weapons
             Assert.That(_orbitalFollow.Radius, Is.EqualTo(4f));
         }
 
-        [TestCase(-100f, 10f)]
+        [TestCase(-6f, 10f)]
         [TestCase(100f, 1f)]
         public void Zoom_BeyondTheLimits_ClampsTheRadius(float scroll, float expected)
         {

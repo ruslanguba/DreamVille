@@ -116,15 +116,17 @@ namespace DreamVille.Dialogue
             if (dialogueEvent == null)
                 return;
 
-            foreach (Delegate listener in dialogueEvent.GetInvocationList())
+            foreach (Action listener in dialogueEvent.GetInvocationList())
             {
                 try
                 {
-                    ((Action)listener).Invoke();
+                    listener.Invoke();
                 }
                 catch (Exception exception)
                 {
-                    Debug.LogException(exception, this);
+                    // Point the log at the listener that threw when it is a live Unity object.
+                    var listenerObject = listener.Target as UnityEngine.Object;
+                    Debug.LogException(exception, listenerObject != null ? listenerObject : this);
                 }
             }
         }
