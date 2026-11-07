@@ -2,46 +2,61 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
+using DreamVille.Core.Pause;
+
 namespace DreamVille.Dialogue
 {
-    /// <summary>Advances the current dialogue sentence when the configured input action fires.</summary>
+    /// <summary>
+    /// Advances the current dialogue sentence when the configured input action fires. Silent while the game is
+    /// paused: the pause menu covers the dialogue, and a line must not advance or end behind it.
+    /// </summary>
     public class DialogueInputHandler : MonoBehaviour
     {
         [SerializeField] private InputActionReference _nextAction;
 
+        private InputAction _next;
         private IDialogueService _dialogue;
+        private IPauseState _pause;
 
         [Inject]
-        public void Construct(IDialogueService dialogue)
+        private void Construct(IDialogueService dialogue, IPauseState pause)
         {
             _dialogue = dialogue;
+            _pause = pause;
+        }
+
+        private void Awake()
+        {
+            // Resolved once: InputActionReference is a ScriptableObject, so it is compared with Unity's null, never ?.
+            _next = _nextAction == null ? null : _nextAction.action;
+            if (_next == null)
+                Debug.LogError($"[{nameof(DialogueInputHandler)}] '{name}': {nameof(_nextAction)} is not assigned; dialogue lines cannot be advanced from the keyboard.", this);
         }
 
         private void OnEnable()
         {
-            if (_nextAction?.action == null)
-            {
-                Debug.LogWarning($"[{nameof(DialogueInputHandler)}] '{name}': {nameof(_nextAction)} is not assigned.", this);
+            if (_next == null)
                 return;
-            }
 
-            _nextAction.action.Enable();
-            _nextAction.action.performed += OnNextPerformed;
+            _next.Enable();
+            _next.performed += OnNextPerformed;
         }
 
         private void OnDisable()
         {
-            if (_nextAction?.action == null)
+            if (_next == null)
                 return;
 
-            _nextAction.action.performed -= OnNextPerformed;
-            _nextAction.action.Disable();
+            _next.performed -= OnNextPerformed;
+            _next.Disable();
         }
 
         private void OnNextPerformed(InputAction.CallbackContext _)
         {
-            if (_dialogue is { IsActive: true })
-                _dialogue.ShowNext();
+            if (_pause.IsPaused || !_dialogue.IsActive)
+                return;
+
+            _dialogue.ShowNext();
         }
     }
 }

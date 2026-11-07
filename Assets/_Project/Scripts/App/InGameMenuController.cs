@@ -9,7 +9,8 @@ namespace DreamVille.App
     /// <summary>
     /// In-game menu rules: Esc and Tab open or close the menu and pause the game, and the UI is told what to show.
     /// While a dialogue runs the player has no control; closing the menu during a dialogue restores time
-    /// but keeps the player's control off until the dialogue ends.
+    /// but keeps the player's control off until the dialogue ends. While the menu is open it alone decides
+    /// control: a dialogue that ends under it hands control back only when the menu closes.
     /// Pause, cursor and scene transitions themselves live in dedicated services.
     /// </summary>
     public class InGameMenuController : IInGameMenu, IInitializable, IDisposable
@@ -93,6 +94,10 @@ namespace DreamVille.App
 
         private void OnDialogueActiveChanged(bool isActive)
         {
+            // The menu owns control while it is open; Close() hands it back according to the dialogue state.
+            if (_pause.IsPaused)
+                return;
+
             _pause.SetPlayerControl(!isActive);
         }
     }

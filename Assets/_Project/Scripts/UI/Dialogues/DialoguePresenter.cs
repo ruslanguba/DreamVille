@@ -1,6 +1,7 @@
 using System;
 using Zenject;
 
+using DreamVille.Core.Pause;
 using DreamVille.Dialogue;
 
 namespace DreamVille.UI.Dialogues
@@ -13,11 +14,13 @@ namespace DreamVille.UI.Dialogues
     {
         private readonly IDialogueService _dialogue;
         private readonly IDialogueView _view;
+        private readonly IPauseState _pause;
 
-        public DialoguePresenter(IDialogueService dialogue, IDialogueView view)
+        public DialoguePresenter(IDialogueService dialogue, IDialogueView view, IPauseState pause)
         {
             _dialogue = dialogue ?? throw new ArgumentNullException(nameof(dialogue));
             _view = view ?? throw new ArgumentNullException(nameof(view));
+            _pause = pause ?? throw new ArgumentNullException(nameof(pause));
         }
 
         public void Initialize()
@@ -52,6 +55,10 @@ namespace DreamVille.UI.Dialogues
 
         private void OnNextRequested()
         {
+            // The pause menu owns the screen: a line must not advance, or end the dialogue, behind it.
+            if (_pause.IsPaused)
+                return;
+
             _dialogue.ShowNext();
         }
     }

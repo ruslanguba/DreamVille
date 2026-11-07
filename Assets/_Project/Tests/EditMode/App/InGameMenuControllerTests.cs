@@ -97,6 +97,34 @@ namespace DreamVille.Tests.EditMode.App
         }
 
         [Test]
+        public void DialogueEnds_WhilePaused_KeepsControlOffUntilMenuCloses()
+        {
+            _controller.Initialize();
+            _dialogue.SetActive(true);
+            _input.PressPause();
+            _log.Clear();
+
+            _dialogue.SetActive(false);
+
+            Assert.That(_log, Is.Empty);
+            Assert.That(_pause.IsPaused, Is.True);
+        }
+
+        [Test]
+        public void MenuClosed_AfterDialogueEndedWhilePaused_RestoresControl()
+        {
+            _controller.Initialize();
+            _dialogue.SetActive(true);
+            _input.PressPause();
+            _dialogue.SetActive(false);
+            _log.Clear();
+
+            _input.PressPause();
+
+            Assert.That(_log, Is.EqualTo(new[] { "MenuClosed", "Resume" }));
+        }
+
+        [Test]
         public void DialogueActiveChanged_TogglesPlayerControl()
         {
             _controller.Initialize();

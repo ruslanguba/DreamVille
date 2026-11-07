@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 using DreamVille.Core.Players;
@@ -5,7 +6,7 @@ using DreamVille.Core.Players;
 namespace DreamVille.App
 {
     /// <summary>Pause: time, player control and cursor mode.</summary>
-    public class PauseService : IPauseService
+    public class PauseService : IPauseService, IDisposable
     {
         private readonly IPlayerControlSwitch _playerControl;
         private readonly ICursorService _cursor;
@@ -30,6 +31,12 @@ namespace DreamVille.App
             Time.timeScale = 1f;
             IsPaused = false;
             SetPlayerControl(true);
+        }
+
+        /// <summary>Restores time when the scene ends: a scene never hands a frozen clock to the next one.</summary>
+        public void Dispose()
+        {
+            Time.timeScale = 1f;
         }
 
         public void SetPlayerControl(bool isEnabled)

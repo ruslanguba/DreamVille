@@ -52,6 +52,16 @@ namespace DreamVille.Tests.EditMode.App
         }
 
         [Test]
+        public void Dispose_WhilePaused_RestoresTimeScale()
+        {
+            _service.Pause();
+
+            _service.Dispose();
+
+            Assert.That(Time.timeScale, Is.EqualTo(1f));
+        }
+
+        [Test]
         public void SetPlayerControl_False_DoesNotChangeTimeScale()
         {
             Time.timeScale = 1f;

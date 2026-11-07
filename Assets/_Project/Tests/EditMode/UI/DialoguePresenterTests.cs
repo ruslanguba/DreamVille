@@ -14,6 +14,7 @@ namespace DreamVille.Tests.EditMode.UI
     {
         private FakeDialogueService _service;
         private FakeDialogueView _view;
+        private FakePauseService _pause;
         private DialoguePresenter _presenter;
 
         [SetUp]
@@ -21,7 +22,8 @@ namespace DreamVille.Tests.EditMode.UI
         {
             _service = new FakeDialogueService();
             _view = new FakeDialogueView();
-            _presenter = new DialoguePresenter(_service, _view);
+            _pause = new FakePauseService();
+            _presenter = new DialoguePresenter(_service, _view, _pause);
         }
 
         [TearDown]
@@ -82,6 +84,17 @@ namespace DreamVille.Tests.EditMode.UI
             _view.PressNext();
 
             Assert.That(_service.ShowNextCount, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void NextClicked_WhilePaused_DoesNotAdvance()
+        {
+            _presenter.Initialize();
+            _pause.Pause();
+
+            _view.PressNext();
+
+            Assert.That(_service.ShowNextCount, Is.EqualTo(0));
         }
 
         [Test]

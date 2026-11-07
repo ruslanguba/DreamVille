@@ -1,10 +1,10 @@
+using DreamVille.Core.Pause;
+
 namespace DreamVille.App
 {
     /// <summary>Owns the paused state of a level: time, player control and cursor mode.</summary>
-    public interface IPauseService
+    public interface IPauseService : IPauseState
     {
-        bool IsPaused { get; }
-
         void Pause();
 
         void Resume();
