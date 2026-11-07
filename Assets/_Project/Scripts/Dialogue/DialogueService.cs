@@ -4,6 +4,8 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
+using DreamVille.Core.Events;
+
 namespace DreamVille.Dialogue
 {
     /// <summary>
@@ -53,7 +55,8 @@ namespace DreamVille.Dialogue
         private void Activate()
         {
             IsActive = true;
-            ActiveChanged?.Invoke(true);
+            // Isolated: a throwing listener must not leave the service active with no run to end it.
+            IsolatedEvent.Raise(ActiveChanged, true);
         }
 
         private async UniTask PlayAsync(IReadOnlyList<DialogueLine> lines, CancellationToken cancellationToken)
@@ -116,7 +119,7 @@ namespace DreamVille.Dialogue
             // The field is cleared before the event: a listener may start the next conversation from it.
             _lineDismissed = null;
             IsActive = false;
-            ActiveChanged?.Invoke(false);
+            IsolatedEvent.Raise(ActiveChanged, false);
         }
     }
 }

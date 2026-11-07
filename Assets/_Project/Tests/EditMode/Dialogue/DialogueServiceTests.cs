@@ -287,6 +287,23 @@ namespace DreamVille.Tests.EditMode.Dialogue
         }
 
         [Test]
+        public void TryStart_WhenAnActiveChangedListenerThrows_StillEndsTheRun()
+        {
+            _service.ActiveChanged += isActive =>
+            {
+                if (isActive)
+                    throw new InvalidOperationException("listener failure");
+            };
+            LogAssert.Expect(LogType.Exception, new Regex("listener failure"));
+            RecordOutcome(Start(Line("first")));
+
+            _service.ShowNext();
+
+            Assert.That(_service.IsActive, Is.False);
+            Assert.That(_events, Is.EqualTo(new[] { "ActiveChanged:True", $"Line:{TextOf("first")}", "ActiveChanged:False", "Completed" }));
+        }
+
+        [Test]
         public void ProviderThrows_EndsRunAndLogsError()
         {
             _provider.Failure = new InvalidOperationException("table is missing");

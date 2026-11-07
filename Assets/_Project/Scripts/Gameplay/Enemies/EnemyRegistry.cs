@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
+using DreamVille.Core.Events;
+
 namespace DreamVille.Gameplay.Enemies
 {
     /// <summary>
@@ -40,10 +42,11 @@ namespace DreamVille.Gameplay.Enemies
             if (!_alive.Remove(enemy))
                 return;
 
-            EnemyKilled?.Invoke(_alive.Count, collisionsCount);
+            // Isolated: the HUD, scoring and the level director listen independently; one failure must not stop the rest.
+            IsolatedEvent.Raise(EnemyKilled, _alive.Count, collisionsCount, this);
 
             if (_alive.Count == 0)
-                AllEnemiesKilled?.Invoke();
+                IsolatedEvent.Raise(AllEnemiesKilled, this);
         }
 
         private void OnDestroy()

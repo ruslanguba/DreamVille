@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
+using DreamVille.Core.Events;
 using DreamVille.Core.Players;
 
 namespace DreamVille.Dialogue
@@ -88,7 +89,7 @@ namespace DreamVille.Dialogue
                 return;
 
             // A throwing listener must not cost the conversation its end: the portal and rewards wait for DialogueEnded.
-            Raise(DialogueStarted);
+            IsolatedEvent.Raise(DialogueStarted, this);
 
             try
             {
@@ -105,30 +106,10 @@ namespace DreamVille.Dialogue
                 Debug.LogException(exception, this);
             }
 
-            Raise(DialogueEnded);
+            IsolatedEvent.Raise(DialogueEnded, this);
 
             if (_deleteOnEnd)
                 Destroy(this);
-        }
-
-        private void Raise(Action dialogueEvent)
-        {
-            if (dialogueEvent == null)
-                return;
-
-            foreach (Action listener in dialogueEvent.GetInvocationList())
-            {
-                try
-                {
-                    listener.Invoke();
-                }
-                catch (Exception exception)
-                {
-                    // Point the log at the listener that threw when it is a live Unity object.
-                    var listenerObject = listener.Target as UnityEngine.Object;
-                    Debug.LogException(exception, listenerObject != null ? listenerObject : this);
-                }
-            }
         }
     }
 }

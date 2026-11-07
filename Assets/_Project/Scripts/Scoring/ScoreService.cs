@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 
 using DreamVille.Configs;
+using DreamVille.Core.Events;
 
 namespace DreamVille.Scoring
 {
@@ -36,7 +37,8 @@ namespace DreamVille.Scoring
         public void AddScore(float score)
         {
             _totalScore += score;
-            ScoreAdded?.Invoke(score);
+            // Isolated: the HUD and the star progress listen independently.
+            IsolatedEvent.Raise(ScoreAdded, score);
             TotalScoreChanged?.Invoke(_totalScore);
         }
     }

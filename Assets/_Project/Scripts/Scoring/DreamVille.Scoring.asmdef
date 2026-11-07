@@ -3,6 +3,7 @@
     "rootNamespace": "DreamVille.Scoring",
     "references": [
         "DreamVille.Configs",
+        "DreamVille.Core",
         "DreamVille.Persistence"
     ],
     "includePlatforms": [],

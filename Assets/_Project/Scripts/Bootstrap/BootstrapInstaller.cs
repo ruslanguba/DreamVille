@@ -9,7 +9,7 @@ namespace DreamVille.Bootstrap
     {
         public override void InstallBindings()
         {
-            Container.Bind<GameStartUI>().FromComponentInHierarchy().AsSingle().Lazy();
+            Container.Bind<IGameIntro>().To<GameStartUI>().FromComponentInHierarchy().AsSingle().Lazy();
 
             Container.BindInterfacesTo<GameBootstrap>().AsSingle();
         }

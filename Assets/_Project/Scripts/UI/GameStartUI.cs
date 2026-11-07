@@ -10,7 +10,7 @@ namespace DreamVille.UI
     /// <summary>
     /// Intro splash. It only shows the pictures; the game's entry point decides what comes next.
     /// </summary>
-    public class GameStartUI : MonoBehaviour
+    public class GameStartUI : MonoBehaviour, IGameIntro
     {
         [Header("Main Images")]
         [SerializeField] private Image _firstImage;
@@ -47,8 +47,8 @@ namespace DreamVille.UI
 
         private void OnSkipPerformed(InputAction.CallbackContext _) => _skipRequested = true;
 
-        /// <summary>Plays the whole intro. Completes when the last frame has been shown.</summary>
-        public async UniTask PlayAsync(CancellationToken token = default)
+        /// <inheritdoc />
+        public async UniTask PlayAsync(CancellationToken token)
         {
             InitImages();
 

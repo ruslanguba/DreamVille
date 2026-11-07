@@ -1,7 +1,8 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
+
+using DreamVille.Core.Events;
 
 namespace DreamVille.SceneManagement
 {
@@ -56,21 +57,7 @@ namespace DreamVille.SceneManagement
             }
         }
 
-        private void ReportProgress(float value)
-        {
-            var listeners = ProgressChanged;
-            if (listeners == null)
-                return;
-
-            foreach (Action<float> listener in listeners.GetInvocationList())
-            {
-                try { listener(value); }
-                catch (Exception exception)
-                {
-                    // Presentation failures must not release an in-flight transition.
-                    Debug.LogException(exception);
-                }
-            }
-        }
+        // Isolated: presentation failures must not release an in-flight transition.
+        private void ReportProgress(float value) => IsolatedEvent.Raise(ProgressChanged, value);
     }
 }

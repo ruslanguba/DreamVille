@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 using DreamVille.Configs;
+using DreamVille.Core.Events;
 
 namespace DreamVille.Gameplay.Weapons.Bullets
 {
@@ -78,7 +79,8 @@ namespace DreamVille.Gameplay.Weapons.Bullets
                 return;
 
             _hitCount++;
-            Hit?.Invoke(new BulletHitInfo(collision.gameObject, collision.GetContact(0).point, _config.Damage, _hitCount));
+            // Isolated: a throwing handler must not skip the others or the return to the pool below.
+            IsolatedEvent.Raise(Hit, new BulletHitInfo(collision.gameObject, collision.GetContact(0).point, _config.Damage, _hitCount), this);
 
             if (_hitCount >= _config.MaxCollisionCount)
                 ReturnToPool();

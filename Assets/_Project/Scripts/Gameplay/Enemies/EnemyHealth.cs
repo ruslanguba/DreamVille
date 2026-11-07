@@ -3,6 +3,7 @@ using UnityEngine;
 using Zenject;
 
 using DreamVille.Audio;
+using DreamVille.Core.Events;
 using DreamVille.Gameplay.Damage;
 
 namespace DreamVille.Gameplay.Enemies
@@ -52,22 +53,23 @@ namespace DreamVille.Gameplay.Enemies
                 return;
 
             _collisionsCount = collisionsCount;
-            if (_hitPoints.TakeDamage(damageValue))
+            if (HitPoints.TakeDamage(damageValue))
                 Die();
         }
 
-        private void Awake()
-        {
-            _hitPoints = new Health(_maxHealth);
-        }
+        // Built on first damage rather than in Awake: an enemy damaged before it woke up still dies, and EditMode
+        // tests can drive the component. Health is a plain class, so ??= is safe here.
+        private Health HitPoints => _hitPoints ??= new Health(_maxHealth);
 
         private void Die()
         {
             if (_clip != null)
                 _audio?.PlaySfx(_clip);
 
-            Killed?.Invoke(this, _collisionsCount);
-            Died?.Invoke(this);
+            // Isolated: one throwing listener must not keep the registry, the objective or the state machine from
+            // hearing about the death, or the level may never complete.
+            IsolatedEvent.Raise(Killed, this, _collisionsCount, this);
+            IsolatedEvent.Raise<IMortal>(Died, this, this);
         }
 
         private void OnDestroy()
