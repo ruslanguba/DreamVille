@@ -70,6 +70,10 @@ namespace DreamVille.UI.Hud
 
         private void OnScoreAdded(float delta)
         {
+            // A pickup worth nothing (a skin) adds no score; a "0" pop-up would only read as a bug.
+            if (delta <= 0f)
+                return;
+
             _view.Score.ShowAdded(delta);
         }
 

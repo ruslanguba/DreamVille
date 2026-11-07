@@ -47,9 +47,14 @@ namespace DreamVille.UI.Hud
             if (badgeIndex < 0 || badgeIndex >= _images.Length)
                 return;
 
+            // A point behind the camera projects to a mirrored screen position; such a hit is simply not shown.
+            Vector3 screenPoint = _camera.WorldToScreenPoint(worldPoint);
+            if (screenPoint.z < 0f)
+                return;
+
             Image badge = _images[badgeIndex];
             badge.gameObject.SetActive(true);
-            badge.rectTransform.position = _camera.WorldToScreenPoint(worldPoint);
+            badge.rectTransform.position = screenPoint;
 
             CancellationToken token = Cancellation.Restart(ref _hideCts[badgeIndex], this.GetCancellationTokenOnDestroy());
             HideAfterAsync(badge, token).Forget();

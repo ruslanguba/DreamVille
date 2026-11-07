@@ -115,6 +115,16 @@ namespace DreamVille.Tests.EditMode.UI
         }
 
         [Test]
+        public void ScoreAdded_Zero_ShowsNoPopup()
+        {
+            _presenter.Initialize();
+
+            _score.AddScore(0f);
+
+            Assert.That(_view.ScoreFake.Shown, Is.Empty);
+        }
+
+        [Test]
         public void StarProgressChanged_ForwardsIndexAndFill()
         {
             _presenter.Initialize();
