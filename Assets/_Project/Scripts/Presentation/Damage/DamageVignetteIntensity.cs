@@ -3,9 +3,8 @@ using UnityEngine;
 namespace DreamVille.Presentation.Damage
 {
     /// <summary>
-    /// Hit-count-to-vignette-intensity curve, ported from the old PlayerDamageReceiver.CalculateIntensity
-    /// and made total: the old code was only ever called after a hit, so "no hits" and a cap of one
-    /// had no defined answer. Here they read as no vignette and full vignette respectively.
+    /// Hit-count-to-vignette-intensity curve. Defined for every input, so callers need no guards:
+    /// no hits read as no vignette, and a hit count at or past the cap (including a cap of one) as a full vignette.
     /// </summary>
     public static class DamageVignetteIntensity
     {

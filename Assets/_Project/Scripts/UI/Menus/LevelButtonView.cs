@@ -21,14 +21,22 @@ namespace DreamVille.UI.Menus
 
         public LevelDefinition Level => _level;
 
+        private void Awake()
+        {
+            if (_button == null)
+                Debug.LogError($"[{nameof(LevelButtonView)}] {nameof(_button)} is not assigned.", this);
+        }
+
         private void OnEnable()
         {
-            _button.onClick.AddListener(OnButtonClicked);
+            if (_button != null)
+                _button.onClick.AddListener(OnButtonClicked);
         }
 
         private void OnDisable()
         {
-            _button.onClick.RemoveListener(OnButtonClicked);
+            if (_button != null)
+                _button.onClick.RemoveListener(OnButtonClicked);
         }
 
         /// <summary>Lights the first <paramref name="stars"/> star icons; a locked entry cannot be clicked.</summary>

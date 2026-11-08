@@ -18,16 +18,28 @@ namespace DreamVille.UI.Menus
 
         public event Action<float> SfxVolumeEdited;
 
+        private void Awake()
+        {
+            if (_musicSlider == null)
+                Debug.LogError($"[{nameof(AudioSettingsView)}] {nameof(_musicSlider)} is not assigned.", this);
+            if (_sfxSlider == null)
+                Debug.LogError($"[{nameof(AudioSettingsView)}] {nameof(_sfxSlider)} is not assigned.", this);
+        }
+
         private void OnEnable()
         {
-            _musicSlider.onValueChanged.AddListener(OnMusicSliderChanged);
-            _sfxSlider.onValueChanged.AddListener(OnSfxSliderChanged);
+            if (_musicSlider != null)
+                _musicSlider.onValueChanged.AddListener(OnMusicSliderChanged);
+            if (_sfxSlider != null)
+                _sfxSlider.onValueChanged.AddListener(OnSfxSliderChanged);
         }
 
         private void OnDisable()
         {
-            _musicSlider.onValueChanged.RemoveListener(OnMusicSliderChanged);
-            _sfxSlider.onValueChanged.RemoveListener(OnSfxSliderChanged);
+            if (_musicSlider != null)
+                _musicSlider.onValueChanged.RemoveListener(OnMusicSliderChanged);
+            if (_sfxSlider != null)
+                _sfxSlider.onValueChanged.RemoveListener(OnSfxSliderChanged);
         }
 
         public void ShowMusicVolume(float normalized)

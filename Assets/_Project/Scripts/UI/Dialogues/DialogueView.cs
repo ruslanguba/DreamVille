@@ -23,16 +23,15 @@ namespace DreamVille.UI.Dialogues
         [SerializeField] private TextMeshProUGUI _leftText;
         [SerializeField] private TextMeshProUGUI _rightText;
 
+        [Tooltip("Extra size, in canvas units, added to both axes of the icon of the current speaker.")]
         [SerializeField] private float _sizeOffset;
 
         [SerializeField] private Button _nextButton;
 
-        private float _positionOffset;
-
         private Vector2 _originalSize;
 
-        private Vector3 _leftOriginalPos;
-        private Vector3 _rightOriginalPos;
+        private Vector3 _leftOriginalPosition;
+        private Vector3 _rightOriginalPosition;
 
         public event Action NextRequested;
 
@@ -43,8 +42,8 @@ namespace DreamVille.UI.Dialogues
 
             _originalSize = _leftImage.rectTransform.sizeDelta;
 
-            _leftOriginalPos = _leftImage.rectTransform.localPosition;
-            _rightOriginalPos = _rightImage.rectTransform.localPosition;
+            _leftOriginalPosition = _leftImage.rectTransform.localPosition;
+            _rightOriginalPosition = _rightImage.rectTransform.localPosition;
 
             _panel.gameObject.SetActive(false);
         }
@@ -99,22 +98,23 @@ namespace DreamVille.UI.Dialogues
 
         private void ChangeIconsSize(bool isRight)
         {
-            // Pick the selected and the other icon.
             RectTransform selected = isRight ? _rightImage.rectTransform : _leftImage.rectTransform;
             RectTransform other = isRight ? _leftImage.rectTransform : _rightImage.rectTransform;
 
             other.sizeDelta = _originalSize;
             selected.sizeDelta = _originalSize;
 
-            _leftImage.rectTransform.localPosition = _leftOriginalPos;
-            _rightImage.rectTransform.localPosition = _rightOriginalPos;
+            _leftImage.rectTransform.localPosition = _leftOriginalPosition;
+            _rightImage.rectTransform.localPosition = _rightOriginalPosition;
 
-            // Grow the selected icon and offset it.
             selected.sizeDelta += Vector2.one * _sizeOffset;
-            _positionOffset = _sizeOffset / 2;
+
+            // With a centred pivot the icon grows by half the offset on each side; shifting it by that half
+            // keeps its outer bottom corner where it was, so only the top and inner edges move.
+            float positionOffset = _sizeOffset / 2f;
             Vector3 newPos = selected.localPosition;
-            newPos.y += _positionOffset;
-            newPos.x += isRight ? -_positionOffset : _positionOffset;
+            newPos.y += positionOffset;
+            newPos.x += isRight ? -positionOffset : positionOffset;
             selected.localPosition = newPos;
         }
     }

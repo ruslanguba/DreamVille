@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using Zenject;
 
+using DreamVille.Core.Async;
 using DreamVille.Core.Players;
 
 namespace DreamVille.Presentation.Damage
@@ -15,7 +16,9 @@ namespace DreamVille.Presentation.Damage
     [RequireComponent(typeof(Volume))]
     public sealed class DamageVignetteView : MonoBehaviour
     {
+        [Tooltip("Seconds (scaled time) to reach the intensity of a new hit.")]
         [SerializeField, Min(0f)] private float _hitFadeDuration = 2f;
+        [Tooltip("Seconds (scaled time) to fade the vignette out after the player recovers.")]
         [SerializeField, Min(0f)] private float _recoveryFadeDuration = 5f;
         [SerializeField, Range(0f, 1f)] private float _firstHitIntensity = 0.6f;
 
@@ -55,22 +58,12 @@ namespace DreamVille.Presentation.Damage
             _damage.Recovered -= OnRecovered;
 
             // A disabled view must not keep writing into the profile.
-            CancelFade();
+            Cancellation.CancelAndDispose(ref _fadeCts);
         }
 
         private void OnDestroy()
         {
-            CancelFade();
-        }
-
-        private void CancelFade()
-        {
-            if (_fadeCts == null)
-                return;
-
-            _fadeCts.Cancel();
-            _fadeCts.Dispose();
-            _fadeCts = null;
+            Cancellation.CancelAndDispose(ref _fadeCts);
         }
 
         private void OnHitsChanged(int hits)
@@ -86,10 +79,9 @@ namespace DreamVille.Presentation.Damage
 
         private void FadeTo(float target, float duration)
         {
-            CancelFade();
-            _fadeCts = CancellationTokenSource.CreateLinkedTokenSource(this.GetCancellationTokenOnDestroy());
+            CancellationToken token = Cancellation.Restart(ref _fadeCts, this.GetCancellationTokenOnDestroy());
 
-            FadeAsync(target, duration, _fadeCts.Token).Forget();
+            FadeAsync(target, duration, token).Forget();
         }
 
         private async UniTaskVoid FadeAsync(float target, float duration, CancellationToken token)
@@ -97,16 +89,8 @@ namespace DreamVille.Presentation.Damage
             try
             {
                 float start = _vignette.intensity.value;
-                float elapsed = 0f;
 
-                while (elapsed < duration)
-                {
-                    elapsed += Time.deltaTime;
-                    _vignette.intensity.value = Mathf.Lerp(start, target, elapsed / duration);
-                    await UniTask.Yield(PlayerLoopTiming.Update, token);
-                }
-
-                _vignette.intensity.value = target;
+                await Tween.RunAsync(duration, progress => _vignette.intensity.value = Mathf.Lerp(start, target, progress), token);
             }
             catch (OperationCanceledException)
             {

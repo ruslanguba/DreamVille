@@ -8,7 +8,6 @@
         "DreamVille.Core",
         "DreamVille.Dialogue",
         "DreamVille.Gameplay",
-        "DreamVille.Input",
         "DreamVille.Persistence",
         "DreamVille.SceneManagement",
         "DreamVille.Scoring",

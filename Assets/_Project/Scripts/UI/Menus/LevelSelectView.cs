@@ -14,18 +14,20 @@ namespace DreamVille.UI.Menus
     {
         [SerializeField] private LevelButtonView[] _buttons = Array.Empty<LevelButtonView>();
 
+        private LevelDefinition[] _levels;
+
         public event Action<LevelDefinition> LevelChosen;
 
-        public IReadOnlyList<LevelDefinition> Levels
-        {
-            get
-            {
-                var levels = new LevelDefinition[_buttons.Length];
-                for (int i = 0; i < _buttons.Length; i++)
-                    levels[i] = _buttons[i] != null ? _buttons[i].Level : null;
+        /// <summary>The buttons' levels in grid order; built once on first read (also before Awake, e.g. in content tests).</summary>
+        public IReadOnlyList<LevelDefinition> Levels => _levels ??= BuildLevels();
 
-                return levels;
-            }
+        private LevelDefinition[] BuildLevels()
+        {
+            var levels = new LevelDefinition[_buttons.Length];
+            for (int i = 0; i < _buttons.Length; i++)
+                levels[i] = _buttons[i] != null ? _buttons[i].Level : null;
+
+            return levels;
         }
 
         private void OnEnable()

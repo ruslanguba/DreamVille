@@ -4,6 +4,7 @@ using UnityEngine;
 
 using DreamVille.Bootstrap;
 using DreamVille.Configs;
+using DreamVille.UI;
 using DreamVille.UI.Hud;
 
 namespace DreamVille.Tests.EditMode.UI
@@ -89,6 +90,16 @@ namespace DreamVille.Tests.EditMode.UI
 
             Assert.That(hudRoot.GetComponent<IGameHudView>(), Is.Not.Null,
                 $"The prefab behind {nameof(UiInstaller)}._uiPrefab has no {nameof(IGameHudView)} component.");
+        }
+
+        [Test]
+        public void ParticleGraphics_AreNotRaycastTargets()
+        {
+            UIParticleSystem[] graphics = LoadHudPrefab().GetComponentsInChildren<UIParticleSystem>(true);
+
+            Assert.That(graphics, Is.Not.Empty, $"{HudPrefabPath} has no {nameof(UIParticleSystem)}.");
+            foreach (UIParticleSystem graphic in graphics)
+                Assert.That(graphic.raycastTarget, Is.False, $"{graphic.name} would swallow clicks meant for the buttons behind it.");
         }
 
         private static GameObject LoadHudPrefab()

@@ -11,7 +11,7 @@ namespace DreamVille.UI.Hud
         [SerializeField] private RectTransform _firstPosition;
         [SerializeField] private RectTransform _pillowsPanel;
         [SerializeField] private float _posOffset = 160f;
-        [SerializeField] private float _alphaHidden = 0f;
+        [SerializeField, Range(0f, 1f)] private float _alphaHidden = 0f;
 
         private readonly List<Image> _pillowIcons = new List<Image>();
 

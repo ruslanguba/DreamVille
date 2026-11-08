@@ -27,6 +27,9 @@ namespace DreamVille.UI.Hud
         private void Awake()
         {
             _camera = Camera.main;
+            if (_camera == null)
+                Debug.LogError($"[{nameof(RicochetView)}] No camera tagged MainCamera; badges cannot be placed.", this);
+
             _hideCts = new CancellationTokenSource[_images.Length];
 
             foreach (Image badge in _images)
