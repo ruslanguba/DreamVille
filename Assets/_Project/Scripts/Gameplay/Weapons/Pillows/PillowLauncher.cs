@@ -65,8 +65,8 @@ namespace DreamVille.Gameplay.Weapons.Pillows
             if (_rack == null)
                 return;   // Awake rejected the setup; stay inert even if re-enabled
 
-            _input.Throw += OnThrow;
-            _input.Stop += OnStop;
+            _input.ThrowPressed += OnThrow;
+            _input.StopPressed += OnStop;
             _inventory.AvailableChanged += OnAvailableChanged;
 
             // Catch up with an unlock that happened while this component was disabled.
@@ -78,8 +78,8 @@ namespace DreamVille.Gameplay.Weapons.Pillows
             if (_rack == null)
                 return;
 
-            _input.Throw -= OnThrow;
-            _input.Stop -= OnStop;
+            _input.ThrowPressed -= OnThrow;
+            _input.StopPressed -= OnStop;
             _inventory.AvailableChanged -= OnAvailableChanged;
             CancelReturn();
         }

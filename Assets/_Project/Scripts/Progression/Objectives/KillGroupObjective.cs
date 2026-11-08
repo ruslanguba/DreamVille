@@ -13,6 +13,7 @@ namespace DreamVille.Progression.Objectives
     {
         private readonly HashSet<IMortal> _members;
         private readonly HashSet<IMortal> _alive = new HashSet<IMortal>();
+        private bool _started;
 
         /// <exception cref="ArgumentNullException"><paramref name="members"/> is null.</exception>
         /// <exception cref="ArgumentException">The group is empty or contains a null member.</exception>
@@ -40,20 +41,18 @@ namespace DreamVille.Progression.Objectives
         /// </summary>
         public event Action Completed;
 
-        public bool IsStarted { get; private set; }
-
         public bool IsComplete { get; private set; }
 
         /// <summary>Distinct members still alive. Before <see cref="Start"/> every member counts.</summary>
-        public int Remaining => IsStarted ? _alive.Count : _members.Count;
+        public int Remaining => _started ? _alive.Count : _members.Count;
 
         /// <summary>Subscribes to the living members; completes immediately if none is left. Throws if called twice.</summary>
         public void Start()
         {
-            if (IsStarted)
+            if (_started)
                 throw new InvalidOperationException($"[{nameof(KillGroupObjective)}] Start was already called.");
 
-            IsStarted = true;
+            _started = true;
 
             foreach (IMortal member in _members)
             {

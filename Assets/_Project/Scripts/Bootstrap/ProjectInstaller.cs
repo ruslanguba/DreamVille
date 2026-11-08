@@ -13,7 +13,7 @@ namespace DreamVille.Bootstrap
     /// Application-scoped services: they survive scene loads.
     /// Installed on the ProjectContext, so no manual DontDestroyOnLoad is needed.
     /// </summary>
-    public class ProjectInstaller : MonoInstaller
+    public sealed class ProjectInstaller : MonoInstaller
     {
         [Header("Configs")]
         [SerializeField] private SceneCatalog _sceneCatalog;

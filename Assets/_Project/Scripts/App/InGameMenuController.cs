@@ -13,7 +13,7 @@ namespace DreamVille.App
     /// control: a dialogue that ends under it hands control back only when the menu closes.
     /// Pause, cursor and scene transitions themselves live in dedicated services.
     /// </summary>
-    public class InGameMenuController : IInGameMenu, IInitializable, IDisposable
+    public sealed class InGameMenuController : IInGameMenu, IInitializable, IDisposable
     {
         public event Action MenuOpened;
         public event Action MenuClosed;

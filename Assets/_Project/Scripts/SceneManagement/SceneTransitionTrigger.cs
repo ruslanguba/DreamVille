@@ -13,7 +13,7 @@ namespace DreamVille.SceneManagement
     /// Loads the target scene when the player enters this trigger volume. A hub's exit portal can also
     /// count as completing the current level, since the hub has nothing else to finish.
     /// </summary>
-    public class SceneTransitionTrigger : MonoBehaviour
+    public sealed class SceneTransitionTrigger : MonoBehaviour
     {
         [SerializeField] private SceneDefinition _target;
 
@@ -24,7 +24,7 @@ namespace DreamVille.SceneManagement
         private ILevelCompletion _levelCompletion;
 
         [Inject]
-        public void Construct(ISceneLoader sceneLoader, [InjectOptional] ILevelCompletion levelCompletion)
+        private void Construct(ISceneLoader sceneLoader, ILevelCompletion levelCompletion)
         {
             _sceneLoader = sceneLoader;
             _levelCompletion = levelCompletion;
@@ -43,20 +43,9 @@ namespace DreamVille.SceneManagement
             }
 
             if (_completesLevel)
-                CompleteLevel();
+                _levelCompletion.CompleteLevel();
 
             LoadTargetAsync().Forget();
-        }
-
-        private void CompleteLevel()
-        {
-            if (_levelCompletion == null)
-            {
-                Debug.LogError($"[{nameof(SceneTransitionTrigger)}] '{name}' completes the level, but the scene has no level to complete.", this);
-                return;
-            }
-
-            _levelCompletion.CompleteLevel();
         }
 
         private async UniTaskVoid LoadTargetAsync()

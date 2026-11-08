@@ -10,7 +10,7 @@ namespace DreamVille.Dialogue
     /// Advances the current dialogue sentence when the configured input action fires. Silent while the game is
     /// paused: the pause menu covers the dialogue, and a line must not advance or end behind it.
     /// </summary>
-    public class DialogueInputHandler : MonoBehaviour
+    public sealed class DialogueInputHandler : MonoBehaviour
     {
         [SerializeField] private InputActionReference _nextAction;
 

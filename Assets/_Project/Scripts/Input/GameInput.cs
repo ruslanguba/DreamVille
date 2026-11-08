@@ -16,50 +16,63 @@ namespace DreamVille.Input
         public event Action PausePressed;
         public event Action ComicsPressed;
 
+        // Resolved once in Awake; null when the reference is not assigned.
+        private InputAction _pause;
+        private InputAction _comics;
+
         // Delegates are cached: subscribe and unsubscribe must reference the same instance.
         private Action<InputAction.CallbackContext> _onPausePerformed;
         private Action<InputAction.CallbackContext> _onComicsPerformed;
 
         private void Awake()
         {
+            _pause = Resolve(_pauseAction, nameof(_pauseAction));
+            _comics = Resolve(_comicsAction, nameof(_comicsAction));
+
             _onPausePerformed = _ => PausePressed?.Invoke();
             _onComicsPerformed = _ => ComicsPressed?.Invoke();
         }
 
         private void OnEnable()
         {
-            EnableAllActions();
-            SubscribeEvents();
+            Enable(_pause, _onPausePerformed);
+            Enable(_comics, _onComicsPerformed);
         }
 
         private void OnDisable()
         {
-            UnsubscribeEvents();
-            DisableAllActions();
+            Disable(_pause, _onPausePerformed);
+            Disable(_comics, _onComicsPerformed);
         }
 
-        private void EnableAllActions()
+        // InputActionReference is a ScriptableObject: compared with Unity's null, never with ?.
+        private InputAction Resolve(InputActionReference reference, string fieldName)
         {
-            _pauseAction?.action?.Enable();
-            _comicsAction?.action?.Enable();
+            if (reference == null || reference.action == null)
+            {
+                Debug.LogError($"[{nameof(GameInput)}] '{name}': input action reference {fieldName} is not assigned.", this);
+                return null;
+            }
+
+            return reference.action;
         }
 
-        private void DisableAllActions()
+        private static void Enable(InputAction action, Action<InputAction.CallbackContext> onPerformed)
         {
-            _pauseAction?.action?.Disable();
-            _comicsAction?.action?.Disable();
+            if (action == null)
+                return;
+
+            action.Enable();
+            action.performed += onPerformed;
         }
 
-        private void SubscribeEvents()
+        private static void Disable(InputAction action, Action<InputAction.CallbackContext> onPerformed)
         {
-            if (_pauseAction?.action != null) _pauseAction.action.performed += _onPausePerformed;
-            if (_comicsAction?.action != null) _comicsAction.action.performed += _onComicsPerformed;
-        }
+            if (action == null)
+                return;
 
-        private void UnsubscribeEvents()
-        {
-            if (_pauseAction?.action != null) _pauseAction.action.performed -= _onPausePerformed;
-            if (_comicsAction?.action != null) _comicsAction.action.performed -= _onComicsPerformed;
+            action.performed -= onPerformed;
+            action.Disable();
         }
     }
 }

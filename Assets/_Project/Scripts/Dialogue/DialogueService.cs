@@ -17,7 +17,7 @@ namespace DreamVille.Dialogue
     /// <see cref="ShowNext"/> whenever the text provider completes synchronously (preloaded tables).
     /// A text that cannot be resolved is logged and ends the run like a dismissed last line.
     /// </remarks>
-    public class DialogueService : IDialogueService
+    public sealed class DialogueService : IDialogueService
     {
         public event Action<bool> ActiveChanged;
         public event Action<SpokenLine> LineShown;

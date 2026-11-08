@@ -20,7 +20,7 @@ namespace DreamVille.Progression.Pillows
         private IPillowInventory _inventory;
 
         [Inject]
-        public void Construct(IPillowInventory inventory)
+        private void Construct(IPillowInventory inventory)
         {
             _inventory = inventory;
         }

@@ -13,8 +13,6 @@ namespace DreamVille.Tests.EditMode.Fakes
         public event Action<int> StarUnlocked;
         public event Action<int, float> StarProgressChanged;
 
-        public int UnlockedStars { get; set; }
-
         public IReadOnlyList<float> AddedScores => _addedScores;
 
         public void AddScore(float score)

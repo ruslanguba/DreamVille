@@ -3,7 +3,7 @@ using UnityEngine;
 namespace DreamVille.App
 {
     /// <summary>Cursor mode for gameplay and for menus.</summary>
-    public class CursorService : ICursorService
+    public sealed class CursorService : ICursorService
     {
         public void UseGameplayMode()
         {

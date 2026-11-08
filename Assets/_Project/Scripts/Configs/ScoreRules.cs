@@ -6,7 +6,7 @@ namespace DreamVille.Configs
     [CreateAssetMenu(fileName = "ScoreRules", menuName = "DreamVille/Scoring/Score Rules")]
     public sealed class ScoreRules : ScriptableObject
     {
-        [SerializeField] private float _scorePerKill = 10f;
+        [SerializeField, Min(0f)] private float _scorePerKill = 10f;
 
         /// <summary>Score granted per killed enemy, before the hit-count multiplier.</summary>
         public float ScorePerKill => _scorePerKill;

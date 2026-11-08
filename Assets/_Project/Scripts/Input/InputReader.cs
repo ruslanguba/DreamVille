@@ -5,7 +5,7 @@ using UnityEngine;
 namespace DreamVille.Input
 {
     /// <summary>IPlayerInput over Input System action references; an action left unassigned in the Inspector reads as idle.</summary>
-    public class InputReader : MonoBehaviour, IPlayerInput
+    public sealed class InputReader : MonoBehaviour, IPlayerInput
     {
         [Header("Input Actions")]
         [SerializeField] private InputActionReference _moveAction;
@@ -24,15 +24,15 @@ namespace DreamVille.Input
         public bool IsFireHeld => _fire?.IsPressed() ?? false;
         public bool IsAimHeld => _secondary?.IsPressed() ?? false;
 
-        public event Action Jump;
+        public event Action JumpPressed;
         public event Action FirePressed;
         public event Action FireReleased;
         public event Action SecondaryFirePressed;
         public event Action SecondaryFireReleased;
-        public event Action Stop;
-        public event Action Throw;
+        public event Action StopPressed;
+        public event Action ThrowPressed;
         public event Action Interact;
-        public event Action<float> Scroll;
+        public event Action<float> Scrolled;
 
         // Resolved actions: null when the reference is not assigned in the inspector.
         private InputAction _move;
@@ -68,15 +68,15 @@ namespace DreamVille.Input
             _interact = Resolve(_interactAction, nameof(_interactAction));
             _scroll = Resolve(_scrollAction, nameof(_scrollAction));
 
-            _onJump = _ => Jump?.Invoke();
+            _onJump = _ => JumpPressed?.Invoke();
             _onFirePerformed = _ => FirePressed?.Invoke();
             _onFireCanceled = _ => FireReleased?.Invoke();
             _onSecondaryFirePerformed = _ => SecondaryFirePressed?.Invoke();
             _onSecondaryFireCanceled = _ => SecondaryFireReleased?.Invoke();
-            _onStop = _ => Stop?.Invoke();
-            _onThrow = _ => Throw?.Invoke();
+            _onStop = _ => StopPressed?.Invoke();
+            _onThrow = _ => ThrowPressed?.Invoke();
             _onInteract = _ => Interact?.Invoke();
-            _onScroll = ctx => Scroll?.Invoke(ctx.ReadValue<Vector2>().y);
+            _onScroll = ctx => Scrolled?.Invoke(ctx.ReadValue<Vector2>().y);
         }
 
         private InputAction Resolve(InputActionReference reference, string fieldName)

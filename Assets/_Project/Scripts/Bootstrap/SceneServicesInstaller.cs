@@ -14,7 +14,7 @@ namespace DreamVille.Bootstrap
     /// Scene-scoped services: they live exactly as long as the scene.
     /// Required in every scene that has a player or dialogues.
     /// </summary>
-    public class SceneServicesInstaller : MonoInstaller
+    public sealed class SceneServicesInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {
@@ -30,7 +30,7 @@ namespace DreamVille.Bootstrap
 
             Container.BindInterfacesTo<PauseService>().AsSingle();
             Container.BindInterfacesTo<GameFlowService>().AsSingle();
-            Container.BindInterfacesTo<InGameMenuController>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<InGameMenuController>().AsSingle();
         }
     }
 }

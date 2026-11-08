@@ -39,12 +39,12 @@ namespace DreamVille.Gameplay.Player
 
         public void Initialize()
         {
-            _input.Jump += OnJump;
+            _input.JumpPressed += OnJump;
         }
 
         public void Dispose()
         {
-            _input.Jump -= OnJump;
+            _input.JumpPressed -= OnJump;
         }
 
         /// <summary>Launches the player if grounded; returns false and changes nothing while airborne.</summary>

@@ -76,7 +76,6 @@ namespace DreamVille.Tests.EditMode.Scoring
             _service.AddScore(200f);
 
             Assert.That(unlocked, Is.EqualTo(new[] { 0, 1, 2 }));
-            Assert.That(_service.UnlockedStars, Is.EqualTo(3));
         }
 
         [Test]
@@ -101,7 +100,7 @@ namespace DreamVille.Tests.EditMode.Scoring
             _service.AddScore(160f);
 
             Assert.That(progressIndices, Has.None.GreaterThanOrEqualTo(3));
-            Assert.That(_service.UnlockedStars, Is.EqualTo(3));
+            Assert.That(_progress.GetStars(LevelId), Is.EqualTo(3));
         }
 
         [Test]

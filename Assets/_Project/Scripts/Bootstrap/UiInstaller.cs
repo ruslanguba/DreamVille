@@ -12,7 +12,7 @@ namespace DreamVille.Bootstrap
     /// it as a view interface and binds the presenter that drives it), the pause menu and its audio settings,
     /// whose views live in the scene's pause menu.
     /// </summary>
-    public class UiInstaller : MonoInstaller
+    public sealed class UiInstaller : MonoInstaller
     {
         [Header("Prefabs")]
         [SerializeField] private GameUIRoot _uiPrefab;

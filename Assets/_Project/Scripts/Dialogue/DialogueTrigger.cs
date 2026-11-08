@@ -13,7 +13,7 @@ namespace DreamVille.Dialogue
     /// Starts a dialogue when the player enters its trigger zone. Each listener of its events runs on its own:
     /// one that throws is logged and the others still run, so listener order is not part of the contract.
     /// </summary>
-    public class DialogueTrigger : MonoBehaviour, IDialogueTrigger
+    public sealed class DialogueTrigger : MonoBehaviour, IDialogueTrigger
     {
         /// <summary>Raised after the dialogue service accepted this trigger's lines.</summary>
         public event Action DialogueStarted;
@@ -29,7 +29,7 @@ namespace DreamVille.Dialogue
         private IDialogueService _service;
 
         [Inject]
-        public void Construct(IDialogueService service)
+        internal void Construct(IDialogueService service)
         {
             _service = service;
         }
@@ -46,16 +46,22 @@ namespace DreamVille.Dialogue
             _playerZone = GetComponentInChildren<IPlayerZone>(true);
 
             if (_playerZone != null)
-                _playerZone.PlayerEntered += TriggerDialog;
+                _playerZone.PlayerEntered += OnPlayerEntered;
         }
 
         private void OnDisable()
         {
             if (_playerZone != null)
-                _playerZone.PlayerEntered -= TriggerDialog;
+                _playerZone.PlayerEntered -= OnPlayerEntered;
         }
 
-        public void TriggerDialog()
+        private void OnPlayerEntered()
+        {
+            StartDialogue();
+        }
+
+        /// <summary>Plays this trigger's dialogue unless the trigger is disarmed or the service is busy.</summary>
+        public void StartDialogue()
         {
             if (!IsArmed)
                 return;
@@ -81,7 +87,7 @@ namespace DreamVille.Dialogue
             PlayAsync(this.GetCancellationTokenOnDestroy()).Forget();
         }
 
-        // Everything before the first await runs inside TriggerDialog, so DialogueStarted
+        // Everything before the first await runs inside StartDialogue, so DialogueStarted
         // is raised in the very call in which the service accepted the run.
         private async UniTaskVoid PlayAsync(CancellationToken destroyToken)
         {

@@ -1,6 +1,5 @@
-using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 using DreamVille.Configs;
 using DreamVille.SceneManagement;
@@ -8,7 +7,7 @@ using DreamVille.SceneManagement;
 namespace DreamVille.App
 {
     /// <summary>Scene transitions: restarting the level and leaving for the main menu.</summary>
-    public class GameFlowService : IGameFlowService
+    public sealed class GameFlowService : IGameFlowService
     {
         private readonly ISceneLoader _sceneLoader;
         private readonly IPauseService _pause;
@@ -25,29 +24,13 @@ namespace DreamVille.App
         {
             // Time must be restored before the load starts, otherwise the new scene begins with timeScale = 0.
             _pause.Resume();
-            RunTransitionAsync(_sceneLoader.ReloadActiveAsync()).Forget();
+            _sceneLoader.ReloadAndLogAsync(CancellationToken.None).Forget();
         }
 
         public void ExitToMenu()
         {
             _pause.Resume();
-            RunTransitionAsync(_sceneLoader.LoadAsync(_catalog.MainMenuScene.SceneName)).Forget();
-        }
-
-        private static async UniTaskVoid RunTransitionAsync(UniTask transition)
-        {
-            try
-            {
-                await transition;
-            }
-            catch (OperationCanceledException)
-            {
-                // Cancellation is not a failure; the loader keeps ownership of the native operation anyway.
-            }
-            catch (Exception exception)
-            {
-                Debug.LogException(exception);
-            }
+            _sceneLoader.LoadAndLogAsync(_catalog.MainMenuScene.SceneName, CancellationToken.None).Forget();
         }
     }
 }

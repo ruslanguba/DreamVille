@@ -86,7 +86,6 @@ namespace DreamVille.Tests.EditMode.Progression
             _enemies.RaiseEnemyKilled(1, 2);
 
             Assert.That(unlocked, Is.EqualTo(new[] { 0 }));
-            Assert.That(_stars.UnlockedStars, Is.EqualTo(1));
         }
 
         [Test]

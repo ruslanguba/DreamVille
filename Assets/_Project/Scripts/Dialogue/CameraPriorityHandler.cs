@@ -5,7 +5,7 @@ namespace DreamVille.Dialogue
 {
     /// <summary>Raises this Cinemachine camera above the gameplay camera while the parent DialogueTrigger's conversation runs, and drops it back when it ends.</summary>
     [RequireComponent(typeof(CinemachineCamera))]
-    public class CameraPriorityHandler : MonoBehaviour
+    public sealed class CameraPriorityHandler : MonoBehaviour
     {
         // The player camera keeps Cinemachine's default 0 (its priority is disabled), so 1 wins and -1 loses.
         private const int DialoguePriority = 1;

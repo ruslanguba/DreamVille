@@ -16,17 +16,17 @@ namespace DreamVille.Tests.EditMode.Fakes
 
         public bool IsAimHeld { get; set; }
 
-        public event Action Jump;
+        public event Action JumpPressed;
         public event Action FirePressed;
         public event Action FireReleased;
         public event Action SecondaryFirePressed;
         public event Action SecondaryFireReleased;
-        public event Action Stop;
-        public event Action Throw;
+        public event Action StopPressed;
+        public event Action ThrowPressed;
         public event Action Interact;
-        public event Action<float> Scroll;
+        public event Action<float> Scrolled;
 
-        public void RaiseJump() => Jump?.Invoke();
+        public void RaiseJumpPressed() => JumpPressed?.Invoke();
 
         public void RaiseFirePressed() => FirePressed?.Invoke();
 
@@ -36,12 +36,12 @@ namespace DreamVille.Tests.EditMode.Fakes
 
         public void RaiseSecondaryFireReleased() => SecondaryFireReleased?.Invoke();
 
-        public void RaiseStop() => Stop?.Invoke();
+        public void RaiseStopPressed() => StopPressed?.Invoke();
 
-        public void RaiseThrow() => Throw?.Invoke();
+        public void RaiseThrowPressed() => ThrowPressed?.Invoke();
 
         public void RaiseInteract() => Interact?.Invoke();
 
-        public void RaiseScroll(float delta) => Scroll?.Invoke(delta);
+        public void RaiseScrolled(float delta) => Scrolled?.Invoke(delta);
     }
 }

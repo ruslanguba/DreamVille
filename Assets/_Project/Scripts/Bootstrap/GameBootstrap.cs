@@ -14,7 +14,7 @@ namespace DreamVille.Bootstrap
     /// Game entry point: plays the intro and then loads the menu scene named by the catalog.
     /// The only place that knows the startup order. An intro that fails is logged and the menu still loads.
     /// </summary>
-    public class GameBootstrap : IInitializable, IDisposable
+    public sealed class GameBootstrap : IInitializable, IDisposable
     {
         private readonly ISceneLoader _sceneLoader;
         private readonly IGameIntro _intro;

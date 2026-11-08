@@ -91,12 +91,12 @@ namespace DreamVille.Tests.EditMode.Player
             ground.IsGrounded = true;
             jump.Initialize();
 
-            input.RaiseJump();
+            input.RaiseJumpPressed();
 
             Assert.That(animator.JumpTriggeredCount, Is.EqualTo(1));
 
             jump.Dispose();
-            input.RaiseJump();
+            input.RaiseJumpPressed();
 
             Assert.That(animator.JumpTriggeredCount, Is.EqualTo(1));
         }

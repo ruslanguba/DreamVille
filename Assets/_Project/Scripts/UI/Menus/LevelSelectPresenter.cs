@@ -62,28 +62,12 @@ namespace DreamVille.UI.Menus
             if (!IsPlayable(level))
                 return;
 
-            LoadAsync(level.SceneName, _lifetime.Token).Forget();
+            _sceneLoader.LoadAndLogAsync(level.SceneName, _lifetime.Token).Forget();
         }
 
         private bool IsPlayable(LevelDefinition level)
         {
             return level != null && (level.UnlockedByDefault || _progress.IsCompleted(level.LevelId));
-        }
-
-        private async UniTaskVoid LoadAsync(string sceneName, CancellationToken token)
-        {
-            try
-            {
-                await _sceneLoader.LoadAsync(sceneName, token);
-            }
-            catch (OperationCanceledException)
-            {
-                // The menu is disposed by the very load it requested; nothing to report.
-            }
-            catch (Exception exception)
-            {
-                Debug.LogException(exception);
-            }
         }
     }
 }

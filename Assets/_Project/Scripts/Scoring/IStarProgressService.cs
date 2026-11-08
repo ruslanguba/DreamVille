@@ -11,8 +11,6 @@ namespace DreamVille.Scoring
         /// <summary>Raised with the current star index and its normalized progress (0..1) toward the next threshold.</summary>
         event Action<int, float> StarProgressChanged;
 
-        int UnlockedStars { get; }
-
         void AddScore(float score);
     }
 }

@@ -57,11 +57,11 @@ namespace DreamVille.Tests.EditMode.Dialogue
         }
 
         [Test]
-        public void TriggerDialog_WhenAccepted_StartsItsDefinitionAndRaisesStartedInTheSameCall()
+        public void StartDialogue_WhenAccepted_StartsItsDefinitionAndRaisesStartedInTheSameCall()
         {
             AssignDefinition(_definition);
 
-            _trigger.TriggerDialog();
+            _trigger.StartDialogue();
 
             Assert.That(_service.StartCount, Is.EqualTo(1));
             Assert.That(_service.LastStartedDefinition, Is.SameAs(_definition));
@@ -72,7 +72,7 @@ namespace DreamVille.Tests.EditMode.Dialogue
         public void ServiceCompletes_RaisesDialogueEndedAfterActiveChangedFalse()
         {
             AssignDefinition(_definition);
-            _trigger.TriggerDialog();
+            _trigger.StartDialogue();
 
             _service.Finish();
 
@@ -80,37 +80,37 @@ namespace DreamVille.Tests.EditMode.Dialogue
         }
 
         [Test]
-        public void TriggerDialog_WhenDisarmed_DoesNotStart()
+        public void StartDialogue_WhenDisarmed_DoesNotStart()
         {
             AssignDefinition(_definition);
             _trigger.IsArmed = false;
 
-            _trigger.TriggerDialog();
+            _trigger.StartDialogue();
 
             Assert.That(_service.StartCount, Is.Zero);
             Assert.That(_events, Is.Empty);
         }
 
         [Test]
-        public void TriggerDialog_WithoutDefinition_LogsErrorAndDoesNotStart()
+        public void StartDialogue_WithoutDefinition_LogsErrorAndDoesNotStart()
         {
             LogAssert.Expect(LogType.Error, new Regex("has no dialogue definition assigned"));
 
-            _trigger.TriggerDialog();
+            _trigger.StartDialogue();
 
             Assert.That(_service.StartCount, Is.Zero);
             Assert.That(_events, Is.Empty);
         }
 
         [Test]
-        public void TriggerDialog_WhileAnotherDialogueRuns_LogsWarningAndDoesNotStart()
+        public void StartDialogue_WhileAnotherDialogueRuns_LogsWarningAndDoesNotStart()
         {
             AssignDefinition(_definition);
             _service.RaiseActiveChanged(true);
             _events.Clear();
             LogAssert.Expect(LogType.Warning, new Regex("a dialogue is already active"));
 
-            _trigger.TriggerDialog();
+            _trigger.StartDialogue();
 
             Assert.That(_service.StartCount, Is.Zero);
             Assert.That(_events, Is.Empty);
@@ -122,7 +122,7 @@ namespace DreamVille.Tests.EditMode.Dialogue
             AssignDefinition(_definition);
             _trigger.DialogueStarted += () => throw new InvalidOperationException("listener failure");
             LogAssert.Expect(LogType.Exception, new Regex("listener failure"));
-            _trigger.TriggerDialog();
+            _trigger.StartDialogue();
 
             _service.Finish();
 
@@ -137,7 +137,7 @@ namespace DreamVille.Tests.EditMode.Dialogue
             _trigger.DialogueStarted += () => _events.Add("LaterDialogueStarted");
             LogAssert.Expect(LogType.Exception, new Regex("listener failure"));
 
-            _trigger.TriggerDialog();
+            _trigger.StartDialogue();
 
             Assert.That(_events, Does.Contain("LaterDialogueStarted"));
         }
@@ -149,7 +149,7 @@ namespace DreamVille.Tests.EditMode.Dialogue
             _trigger.DialogueEnded += () => throw new InvalidOperationException("listener failure");
             _trigger.DialogueEnded += () => _events.Add("LaterDialogueEnded");
             LogAssert.Expect(LogType.Exception, new Regex("listener failure"));
-            _trigger.TriggerDialog();
+            _trigger.StartDialogue();
 
             _service.Finish();
 

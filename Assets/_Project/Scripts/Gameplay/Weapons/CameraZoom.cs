@@ -24,12 +24,12 @@ namespace DreamVille.Gameplay.Weapons
 
         private void OnEnable()
         {
-            _input.Scroll += Zoom;
+            _input.Scrolled += Zoom;
         }
 
         private void OnDisable()
         {
-            _input.Scroll -= Zoom;
+            _input.Scrolled -= Zoom;
         }
 
         /// <summary>Positive scroll moves the camera closer; each step continues from the current orbit radius, clamped to [min, max].</summary>

@@ -10,7 +10,7 @@ using DreamVille.Scoring;
 namespace DreamVille.Bootstrap
 {
     /// <summary>Score, stars, level completion and pillow unlocks. The level itself comes from the catalog.</summary>
-    public class ProgressionInstaller : MonoInstaller
+    public sealed class ProgressionInstaller : MonoInstaller
     {
         [Header("Configs")]
         [SerializeField] private SceneCatalog _catalog;

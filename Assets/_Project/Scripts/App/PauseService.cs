@@ -6,7 +6,7 @@ using DreamVille.Core.Players;
 namespace DreamVille.App
 {
     /// <summary>Pause: time, player control and cursor mode.</summary>
-    public class PauseService : IPauseService, IDisposable
+    public sealed class PauseService : IPauseService, IDisposable
     {
         private readonly IPlayerControlSwitch _playerControl;
         private readonly ICursorService _cursor;

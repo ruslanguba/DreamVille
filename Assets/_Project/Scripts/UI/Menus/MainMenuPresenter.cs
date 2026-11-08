@@ -73,7 +73,7 @@ namespace DreamVille.UI.Menus
                 return;
             }
 
-            LoadAsync(firstLevel.SceneName, _lifetime.Token).Forget();
+            _sceneLoader.LoadAndLogAsync(firstLevel.SceneName, _lifetime.Token).Forget();
         }
 
         private void OnQuitRequested()
@@ -84,22 +84,6 @@ namespace DreamVille.UI.Menus
         private void OnLocaleRequested(string localeCode)
         {
             _locales.Select(localeCode);
-        }
-
-        private async UniTaskVoid LoadAsync(string sceneName, CancellationToken token)
-        {
-            try
-            {
-                await _sceneLoader.LoadAsync(sceneName, token);
-            }
-            catch (OperationCanceledException)
-            {
-                // The menu is disposed by the very load it requested; nothing to report.
-            }
-            catch (Exception exception)
-            {
-                Debug.LogException(exception);
-            }
         }
     }
 }

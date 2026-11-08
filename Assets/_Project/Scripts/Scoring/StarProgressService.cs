@@ -23,8 +23,6 @@ namespace DreamVille.Scoring
         private float _totalScore;
         private int _currentStarIndex;
 
-        public int UnlockedStars => _currentStarIndex;
-
         /// <exception cref="ArgumentException">The level's star thresholds are not positive and strictly ascending.</exception>
         public StarProgressService(LevelDefinition level, IProgressRepository progress)
         {

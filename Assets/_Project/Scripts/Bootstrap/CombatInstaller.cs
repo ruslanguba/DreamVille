@@ -11,7 +11,7 @@ namespace DreamVille.Bootstrap
     /// Combat systems. The bullet pool, spawner, event relay and enemy projectile pool are
     /// created from prefabs, so they do not require objects pre-placed in the scene.
     /// </summary>
-    public class CombatInstaller : MonoInstaller
+    public sealed class CombatInstaller : MonoInstaller
     {
         private const int EnemyProjectilePrewarmCount = 8;
         private const string EnemyProjectileGroup = "EnemyProjectiles";

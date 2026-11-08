@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 using UnityEngine;
@@ -9,7 +12,7 @@ namespace DreamVille.Tests.EditMode.Architecture
 {
     /// <summary>
     /// Pins roadmap 6.1: code, comments and logs under <c>Assets/_Project/Scripts</c> are in English, and every public
-    /// type carries an XML summary. Player-facing text lives in the Localization tables, never in scripts.
+    /// type carries an XML summary, and a concrete class nobody derives from is <c>sealed</c>. Player-facing text lives in the Localization tables, never in scripts.
     /// </summary>
     public class CodeConventionsTests
     {
@@ -62,6 +65,52 @@ namespace DreamVille.Tests.EditMode.Architecture
             }
 
             Assert.That(offenders, Is.Empty, "Public types without an XML summary:\n" + string.Join("\n", offenders));
+        }
+
+        [Test]
+        public void ConcreteClasses_WithoutSubclasses_AreSealed()
+        {
+            // Subclasses are looked up in every DreamVille assembly, tests included: a base class a test fake derives from stays open.
+            Type[] allTypes = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(assembly => assembly.GetName().Name.StartsWith("DreamVille.", StringComparison.Ordinal))
+                .SelectMany(LoadableTypes)
+                .ToArray();
+            var baseTypes = new HashSet<Type>(allTypes
+                .Where(type => type.BaseType != null)
+                .Select(type => type.BaseType.IsGenericType ? type.BaseType.GetGenericTypeDefinition() : type.BaseType));
+
+            string[] offenders = NamingConventionsTests.RuntimeAssemblies()
+                .SelectMany(LoadableTypes)
+                .Where(type => type.IsClass && !type.IsAbstract && !type.IsSealed && !IsCompilerGenerated(type))
+                .Where(type => !baseTypes.Contains(type.IsGenericType ? type.GetGenericTypeDefinition() : type))
+                .Select(type => type.FullName)
+                .OrderBy(name => name, StringComparer.Ordinal)
+                .ToArray();
+
+            Assert.That(offenders, Is.Empty, "Concrete classes with no subclass must be sealed:\n" + string.Join("\n", offenders));
+        }
+
+        private static IEnumerable<Type> LoadableTypes(Assembly assembly)
+        {
+            try
+            {
+                return assembly.GetTypes();
+            }
+            catch (ReflectionTypeLoadException exception)
+            {
+                return exception.Types.Where(type => type != null);
+            }
+        }
+
+        private static bool IsCompilerGenerated(Type type)
+        {
+            for (Type current = type; current != null; current = current.DeclaringType)
+            {
+                if (current.IsDefined(typeof(CompilerGeneratedAttribute), false))
+                    return true;
+            }
+
+            return false;
         }
     }
 }
