@@ -21,16 +21,14 @@ namespace DreamVille.Tests.EditMode.Progression
     /// <summary>
     /// Content guards: pins how `Lobby_01`'s scenario shipped
     /// (2 + 2 kill groups, the doors, the guide) and the cross-scene
-    /// hardening (a required, scene-native `LevelActors`; the `LevelSystems`
-    /// prefab), so a future edit that silently drops a reference or reintroduces an added
-    /// component on a prefab instance turns into a red test instead of the `ebe83a3` regression.
+    /// hardening (a required, scene-native `LevelActors`; no missing prefab or script), so a future
+    /// edit that silently drops a reference or reintroduces an added component on a prefab instance
+    /// turns into a red test instead of the `ebe83a3` regression.
     /// </summary>
     public class LobbyContentTests
     {
         private const string CatalogAssetPath = "Assets/_Project/Settings/Levels/SceneCatalog.asset";
         private const string LobbyScenePath = "Assets/_Project/Scenes/Lobby_01.unity";
-        private const string LevelSystemsPrefabPath = "Assets/_Project/Prefabs/Utilities/LevelSystems.prefab";
-        private const string LevelSystemsPrefabGuid = "2cb29353ae990934096c7e001e02409b";
 
         private static readonly SceneCatalog Catalog = AssetDatabase.LoadAssetAtPath<SceneCatalog>(CatalogAssetPath);
 
@@ -253,22 +251,21 @@ namespace DreamVille.Tests.EditMode.Progression
         }
 
         [TestCaseSource(nameof(GameplayScenePaths))]
-        public void GameplayScene_HasOneLevelSystemsPrefabInstance(string scenePath)
+        public void GameplayScene_HasNoMissingPrefabOrScript(string scenePath)
         {
-            GameObject prefabAsset = AssetDatabase.LoadAssetAtPath<GameObject>(LevelSystemsPrefabPath);
-            Assert.That(prefabAsset, Is.Not.Null, $"{LevelSystemsPrefabPath} is missing.");
-            Assert.That(AssetDatabase.AssetPathToGUID(LevelSystemsPrefabPath), Is.EqualTo(LevelSystemsPrefabGuid),
-                "LevelSystems.prefab must keep its original GUID (renamed from LevelProgressSystem, not recreated).");
-
+            // Scene-only helper prefabs (the enemy registry once lived on one) are removed with their instances;
+            // a leftover would load as a missing prefab or a component with a missing script.
             OpenScene(scenePath);
 
-            GameObject[] instanceRoots = FindAll<Transform>()
-                .Select(t => t.gameObject)
-                .Where(go => PrefabUtility.GetNearestPrefabInstanceRoot(go) == go
-                    && PrefabUtility.GetCorrespondingObjectFromSource(go) == prefabAsset)
+            GameObject[] objects = FindAll<Transform>().Select(t => t.gameObject).ToArray();
+            string[] missingPrefabs = objects.Where(PrefabUtility.IsPrefabAssetMissing).Select(go => go.name).ToArray();
+            string[] missingScripts = objects
+                .Where(go => GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(go) > 0)
+                .Select(go => go.name)
                 .ToArray();
 
-            Assert.That(instanceRoots, Has.Length.EqualTo(1), $"{scenePath} must have exactly one LevelSystems.prefab instance.");
+            Assert.That(missingPrefabs, Is.Empty, $"{scenePath} has prefab instances whose prefab is missing.");
+            Assert.That(missingScripts, Is.Empty, $"{scenePath} has components whose script is missing.");
         }
     }
 }

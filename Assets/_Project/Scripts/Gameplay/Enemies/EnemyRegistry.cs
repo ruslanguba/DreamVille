@@ -1,17 +1,16 @@
-using System.Collections.Generic;
 using System;
-using UnityEngine;
+using System.Collections.Generic;
 
 using DreamVille.Core.Events;
 
 namespace DreamVille.Gameplay.Enemies
 {
     /// <summary>
-    /// Tracks the enemies alive in the current level.
-    /// The roster is collected in Awake, i.e. strictly before any container Initialize runs,
-    /// so subscribers can read up-to-date state right away regardless of composition order.
+    /// Tracks the enemies alive in the current level. The roster is every enemy in the scene, inactive ones included
+    /// (an enemy may be waiting for its wave); the container hands it over when it builds the registry, i.e. before
+    /// any Initialize runs, so subscribers can read up-to-date state right away regardless of composition order.
     /// </summary>
-    public sealed class EnemyRegistry : MonoBehaviour, IEnemyRegistry
+    public sealed class EnemyRegistry : IEnemyRegistry, IDisposable
     {
         public event Action<int, int> EnemyKilled;
 
@@ -19,16 +18,33 @@ namespace DreamVille.Gameplay.Enemies
 
         private readonly List<EnemyHealth> _alive = new();
 
-        public int RemainingEnemies => _alive.Count;
-
-        private void Awake()
+        public EnemyRegistry(List<EnemyHealth> enemies)
         {
-            // Inactive objects count too: an enemy may be waiting for its wave.
-            foreach (var enemy in FindObjectsByType<EnemyHealth>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+            if (enemies == null)
+                throw new ArgumentNullException(nameof(enemies));
+
+            foreach (EnemyHealth enemy in enemies)
             {
+                if (enemy == null || _alive.Contains(enemy))
+                    continue;
+
                 _alive.Add(enemy);
                 enemy.Killed += OnEnemyKilled;
             }
+        }
+
+        public int RemainingEnemies => _alive.Count;
+
+        /// <summary>Unsubscribes from the enemies still alive; deaths after this are not reported.</summary>
+        public void Dispose()
+        {
+            foreach (EnemyHealth enemy in _alive)
+            {
+                if (enemy != null)
+                    enemy.Killed -= OnEnemyKilled;
+            }
+
+            _alive.Clear();
         }
 
         private void OnEnemyKilled(EnemyHealth enemy, int hitCount)
@@ -39,19 +55,10 @@ namespace DreamVille.Gameplay.Enemies
                 return;
 
             // Isolated: the HUD, scoring and the level director listen independently; one failure must not stop the rest.
-            IsolatedEvent.Raise(EnemyKilled, _alive.Count, hitCount, this);
+            IsolatedEvent.Raise(EnemyKilled, _alive.Count, hitCount);
 
             if (_alive.Count == 0)
-                IsolatedEvent.Raise(AllEnemiesKilled, this);
-        }
-
-        private void OnDestroy()
-        {
-            foreach (var enemy in _alive)
-                if (enemy != null)
-                    enemy.Killed -= OnEnemyKilled;
-
-            _alive.Clear();
+                IsolatedEvent.Raise(AllEnemiesKilled);
         }
     }
 }

@@ -41,8 +41,9 @@ namespace DreamVille.Bootstrap
                 .FromComponentInNewPrefab(_enemyProjectilePrefab)
                 .UnderTransformGroup(EnemyProjectileGroup);
 
-            // Lives on the LevelSystems prefab in Prefabs/Utilities.
-            Container.BindInterfacesTo<EnemyRegistry>().FromComponentInHierarchy().AsSingle();
+            // The roster: every enemy in the scene, inactive ones included (an enemy may be waiting for its wave).
+            Container.Bind<EnemyHealth>().FromComponentsInHierarchy(includeInactive: true).AsCached().WhenInjectedInto<EnemyRegistry>();
+            Container.BindInterfacesTo<EnemyRegistry>().AsSingle();
         }
     }
 }
