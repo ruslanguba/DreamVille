@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 655dd7e2ee7c7644b8873b0c26ad0554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogCanvas: {fileID: 510588482365792108}
+  _speechBubble: {fileID: 510588482365792108}
 --- !u!4 &7074519433168988382 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3713420564973187889, guid: 1c09bef4a09c4aa468c52ee554f10cb3, type: 3}

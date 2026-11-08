@@ -12,7 +12,7 @@ namespace DreamVille.Gameplay.Interactables.Effects
     /// </summary>
     public sealed class PaintEffect : MonoBehaviour, IInteractionEffect
     {
-        [SerializeField] private Renderer[] _renderer;
+        [SerializeField] private Renderer[] _renderers;
         [SerializeField] private Material _colorChangeMaterial;
 
         [SerializeField, Min(1)] private int _strokeCount = 5;
@@ -41,11 +41,11 @@ namespace DreamVille.Gameplay.Interactables.Effects
             }
 
             // Every renderer gets its own copy so the paint ramp of this object does not leak into others.
-            _materials = new Material[_renderer.Length];
-            for (int i = 0; i < _renderer.Length; i++)
+            _materials = new Material[_renderers.Length];
+            for (int i = 0; i < _renderers.Length; i++)
             {
                 _materials[i] = new Material(_colorChangeMaterial);
-                _renderer[i].material = _materials[i];
+                _renderers[i].material = _materials[i];
             }
         }
 

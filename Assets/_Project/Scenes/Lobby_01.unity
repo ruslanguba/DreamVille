@@ -15766,9 +15766,9 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 4070374934291767179, guid: bd2d36de4b805bc448c33855109df72a, type: 3}
   _spawn: {fileID: 1572283551}
   _target: {fileID: 30025274}
-  _bulletSpeed: 2
-  _shootingRate: 1
-  _bulletLifeTime: 3
+  _launchImpulsePerMetre: 2
+  _shotInterval: 1
+  _bulletLifetime: 3
 --- !u!1001 &632575185
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42019,9 +42019,9 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 4070374934291767179, guid: bd2d36de4b805bc448c33855109df72a, type: 3}
   _spawn: {fileID: 1676103563}
   _target: {fileID: 1551238578}
-  _bulletSpeed: 2
-  _shootingRate: 2
-  _bulletLifeTime: 2
+  _launchImpulsePerMetre: 2
+  _shotInterval: 2
+  _bulletLifetime: 2
 --- !u!95 &1846324676
 Animator:
   serializedVersion: 7

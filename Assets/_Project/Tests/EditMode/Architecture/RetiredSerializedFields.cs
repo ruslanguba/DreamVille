@@ -13,6 +13,7 @@ using DreamVille.Gameplay.Npc;
 using DreamVille.Gameplay.Player.Ground;
 using DreamVille.Gameplay.Weapons;
 using DreamVille.Gameplay.Weapons.Aiming;
+using DreamVille.Gameplay.Weapons.Bullets;
 using DreamVille.Input;
 using DreamVille.Progression;
 using DreamVille.UI;
@@ -35,7 +36,7 @@ namespace DreamVille.Tests.EditMode.Architecture
             (typeof(NpcCanvasToggle), new[] { "Canvas" }),
 
             // _isInterracted was runtime state stored as data; it became the non-serialized _isFloating.
-            (typeof(PropsMover), new[] { "_baloon", "_isInterracted" }),
+            (typeof(PropsMover), new[] { "_baloon", "_isInterracted", "_rotation" }),
 
             // Two fields were both called "pitch random"; each now names the clip group it jitters.
             (typeof(ActorAudio), new[] { "_pitchRandom", "randomClips", "randomInterval", "pitchRandom" }),
@@ -54,12 +55,12 @@ namespace DreamVille.Tests.EditMode.Architecture
             (typeof(ScoreRules), new[] { "scorePerKill" }),
             (typeof(StarRules), new[] { "starThresholds" }),
             (typeof(DialogueTrigger), new[] { "deleteOnEnd" }),
-            (typeof(EnemyHealth), new[] { "_health" }),
+            (typeof(EnemyHealth), new[] { "_health", "_clip" }),
             (typeof(EnemyProjectile), new[] { "knockbackForce" }),
             (typeof(RandomFloating), new[] { "minY", "maxY", "stopTime" }),
             (typeof(Pickup), new[] { "_upScaleTime", "_hideScaleTime" }),
             (typeof(EquipWeaponEffect), new[] { "pillowGun" }),
-            (typeof(PaintEffect), new[] { "_maxHitPoints" }),
+            (typeof(PaintEffect), new[] { "_maxHitPoints", "_renderer" }),
             (typeof(AmbientConversation), new[] { "_timer", "_handler" }),
             (typeof(NpcMover), new[] { "jumpForce", "forwardForce" }),
             (typeof(NpcQueue), new[] { "jumpers", "moveDuration", "delayBetweenJumps" }),
@@ -67,7 +68,7 @@ namespace DreamVille.Tests.EditMode.Architecture
             (typeof(PillowGun), new[] { "_spawn", "_shotPeriod" }),
             (typeof(AimPreview), new[] { "line" }),
             (typeof(GameInput), new[] { "_tubAction" }),
-            (typeof(InputReader), new[] { "_recallAction" }),
+            (typeof(InputReader), new[] { "_recallAction", "_secondaryFire" }),
             (typeof(ImageFadeOut), new[] { "image" }),
             (typeof(AudioSettingsView), new[] { "musicSlider", "sfxSlider" }),
             (typeof(DialogueView), new[] { "panel", "leftImage", "rightImage", "leftTextBackground", "rightTextBackground", "leftText", "rightText", "sizeOffset" }),
@@ -77,6 +78,15 @@ namespace DreamVille.Tests.EditMode.Architecture
             (typeof(FinalZone), new[] { "_animator", "_audio" }),
             (typeof(ToggleDoorEffect), new[] { "_isOpen" }),
             (typeof(CameraZoom), new[] { "_currentZoom" }),
+
+            // 6.5: names follow the conventions; the rocket and balloon tunables moved to step-independent units
+            // (launch speed change 4 m/s, thrust 10 m/s², spin 30 deg/s; the values their old units gave at the
+            // shipped 0.02 s step and 60 fps cap).
+            (typeof(BulletVfxHandler), new[] { "_trailEffect" }),
+            (typeof(ConversationSpeaker), new[] { "_dialogCanvas" }),
+            (typeof(NpcFire), new[] { "_bulletSpeed", "_shootingRate", "_bulletLifeTime" }),
+            (typeof(PillowView), new[] { "_posOffset" }),
+            (typeof(RocketThrustEffect), new[] { "_thrustPower", "_continuousThrust" }),
         };
 
         /// <summary>

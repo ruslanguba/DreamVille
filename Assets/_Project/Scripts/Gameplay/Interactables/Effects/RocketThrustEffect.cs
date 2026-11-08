@@ -11,8 +11,12 @@ namespace DreamVille.Gameplay.Interactables.Effects
     {
         private const float SpinDegreesPerSecond = 600f;
 
-        [SerializeField] private float _thrustPower = 200f;
-        [SerializeField] private float _continuousThrust = 500f;
+        [SerializeField, Min(0f), Tooltip("Speed change in m/s the first hit gives along the rocket's forward, whatever its mass.")]
+        private float _launchSpeedChange = 4f;
+
+        [SerializeField, Min(0f), Tooltip("Acceleration in m/s² along the rocket's forward while it flies; independent of the physics step.")]
+        private float _thrustAcceleration = 10f;
+
         [SerializeField] private ParticleSystem _particle;
         [SerializeField, Min(0f)] private float _lifetimeAfterLaunch = 20f;
 
@@ -36,12 +40,12 @@ namespace DreamVille.Gameplay.Interactables.Effects
         private void FixedUpdate()
         {
             if (_launched)
-                _rigidbody.AddForce(transform.forward * (_continuousThrust * Time.fixedDeltaTime), ForceMode.Acceleration);
+                _rigidbody.AddForce(transform.forward * _thrustAcceleration, ForceMode.Acceleration);
         }
 
         public void Apply(in InteractionContext context)
         {
-            _rigidbody.AddForce(transform.forward * _thrustPower, ForceMode.Force);
+            _rigidbody.AddForce(transform.forward * _launchSpeedChange, ForceMode.VelocityChange);
             if (_particle != null)   // missing particles are reported once in Awake
                 _particle.Play();
             _launched = true;

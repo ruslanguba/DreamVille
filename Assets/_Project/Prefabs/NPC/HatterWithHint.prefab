@@ -1166,9 +1166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 655dd7e2ee7c7644b8873b0c26ad0554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogCanvas: {fileID: 1721840841373153184}
-  _rotationSpeed: 90
-  _isTalking: 0
+  _speechBubble: {fileID: 1721840841373153184}
 --- !u!1 &5923899124359166257
 GameObject:
   m_ObjectHideFlags: 0

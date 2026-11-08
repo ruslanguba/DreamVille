@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7813441055630180147}
   - component: {fileID: 1889121348758127190}
   m_Layer: 0
-  m_Name: Explosion Pilow
+  m_Name: PillowImpact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -10,7 +10,7 @@ namespace DreamVille.UI.Hud
         [SerializeField] private Image _iconPrefab;
         [SerializeField] private RectTransform _firstPosition;
         [SerializeField] private RectTransform _pillowsPanel;
-        [SerializeField] private float _posOffset = 160f;
+        [SerializeField] private float _positionOffset = 160f;
         [SerializeField, Range(0f, 1f)] private float _alphaHidden = 0f;
 
         private readonly List<Image> _pillowIcons = new List<Image>();
@@ -42,7 +42,7 @@ namespace DreamVille.UI.Hud
             for (int i = 0; i < count; i++)
             {
                 Image icon = Instantiate(_iconPrefab, _pillowsPanel);
-                icon.transform.localPosition = startPos + new Vector3(i * _posOffset, 0f, 0f);
+                icon.transform.localPosition = startPos + new Vector3(i * _positionOffset, 0f, 0f);
                 _pillowIcons.Add(icon);
             }
         }

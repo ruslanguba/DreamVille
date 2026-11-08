@@ -12,7 +12,7 @@ namespace DreamVille.Input
         [SerializeField] private InputActionReference _lookAction;
         [SerializeField] private InputActionReference _jumpAction;
         [SerializeField] private InputActionReference _fireAction;
-        [SerializeField] private InputActionReference _secondaryFire;
+        [SerializeField] private InputActionReference _secondaryFireAction;
         [SerializeField] private InputActionReference _stopAction;
         [SerializeField] private InputActionReference _throwAction;
         [SerializeField] private InputActionReference _interactAction;
@@ -62,7 +62,7 @@ namespace DreamVille.Input
             _look = Resolve(_lookAction, nameof(_lookAction));
             _jump = Resolve(_jumpAction, nameof(_jumpAction));
             _fire = Resolve(_fireAction, nameof(_fireAction));
-            _secondary = Resolve(_secondaryFire, nameof(_secondaryFire));
+            _secondary = Resolve(_secondaryFireAction, nameof(_secondaryFireAction));
             _stop = Resolve(_stopAction, nameof(_stopAction));
             _throw = Resolve(_throwAction, nameof(_throwAction));
             _interact = Resolve(_interactAction, nameof(_interactAction));

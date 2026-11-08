@@ -17100,7 +17100,7 @@ MonoBehaviour:
   _iconPrefab: {fileID: 3579374557252262132, guid: 035a63f862d7e714d9709783f7d3a5dc, type: 3}
   _firstPosition: {fileID: 5687270475727148779}
   _pillowsPanel: {fileID: 339637252212532548}
-  _posOffset: 160
+  _positionOffset: 160
   _alphaHidden: 0.2
 --- !u!114 &459705769865869607
 MonoBehaviour:

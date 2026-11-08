@@ -1136,7 +1136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 2
-  _clip: {fileID: 0}
+  _deathClip: {fileID: 0}
 --- !u!1 &6457692050475839496
 GameObject:
   m_ObjectHideFlags: 0

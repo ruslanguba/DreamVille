@@ -5609,7 +5609,7 @@ MonoBehaviour:
   - {fileID: 834384708}
   - {fileID: 917712321}
   _speed: 1
-  _rotation: 0.5
+  _spinDegreesPerSecond: 30
   _floatingTime: 10
 --- !u!114 &1588755104
 MonoBehaviour:

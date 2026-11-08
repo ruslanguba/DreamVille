@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hitEffect: {fileID: 2188494116773036597}
-  _trailEffect:
+  _trails:
   - {fileID: 9182459112444464927}
   - {fileID: 7322524940727416709}
 --- !u!1001 &6822048414388692519
@@ -245,7 +245,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1162816215219120947, guid: c0ecf252a1fbbd44bb95a237e9ed4969, type: 3}
       propertyPath: m_Name
-      value: Explosion Pilow
+      value: PillowImpact
       objectReference: {fileID: 0}
     - target: {fileID: 7258553411941806833, guid: c0ecf252a1fbbd44bb95a237e9ed4969, type: 3}
       propertyPath: m_LocalPosition.x

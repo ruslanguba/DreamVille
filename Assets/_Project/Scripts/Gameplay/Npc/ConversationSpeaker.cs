@@ -8,7 +8,7 @@ namespace DreamVille.Gameplay.Npc
     /// </summary>
     public sealed class ConversationSpeaker : MonoBehaviour
     {
-        [SerializeField] private GameObject _dialogCanvas;
+        [SerializeField] private GameObject _speechBubble;
 
         private Animator _animator;
 
@@ -21,10 +21,10 @@ namespace DreamVille.Gameplay.Npc
             if (_animator == null)
                 Debug.LogError($"[{nameof(ConversationSpeaker)}] '{name}' has no Animator in its children.", this);
 
-            if (_dialogCanvas == null)
+            if (_speechBubble == null)
                 Debug.LogError($"[{nameof(ConversationSpeaker)}] '{name}' has no speech bubble assigned.", this);
             else
-                _dialogCanvas.SetActive(false);
+                _speechBubble.SetActive(false);
         }
 
         public void SetTalking(bool isTalking)
@@ -34,8 +34,8 @@ namespace DreamVille.Gameplay.Npc
             if (_animator != null)
                 _animator.SetBool(AnimParams.IsTalk, isTalking);
 
-            if (_dialogCanvas != null)
-                _dialogCanvas.SetActive(isTalking);
+            if (_speechBubble != null)
+                _speechBubble.SetActive(isTalking);
         }
 
         public void SwitchTalking() => SetTalking(!IsTalking);

@@ -19,13 +19,13 @@ namespace DreamVille.Gameplay.Npc
         [SerializeField] private Transform _target;
 
         [SerializeField, Tooltip("Impulse per metre to the target: the launch vector is not normalized.")]
-        private float _bulletSpeed = 2;
+        private float _launchImpulsePerMetre = 2;
 
         [SerializeField, Min(0f), Tooltip("Seconds of game time before each shot.")]
-        private float _shootingRate = 3;
+        private float _shotInterval = 3;
 
         [SerializeField, Min(0f), Tooltip("Seconds of game time a bullet stays visible.")]
-        private float _bulletLifeTime = 2;
+        private float _bulletLifetime = 2;
 
         private GameObject _bullet;
         private Rigidbody _bulletBody;
@@ -86,10 +86,10 @@ namespace DreamVille.Gameplay.Npc
             {
                 while (true)
                 {
-                    await GameTime.DelayAsync(_shootingRate, token);
+                    await GameTime.DelayAsync(_shotInterval, token);
                     Launch();
 
-                    await GameTime.DelayAsync(_bulletLifeTime, token);
+                    await GameTime.DelayAsync(_bulletLifetime, token);
                     _bullet.SetActive(false);
                 }
             }
@@ -108,7 +108,7 @@ namespace DreamVille.Gameplay.Npc
             _bulletBody.linearVelocity = Vector3.zero;
             _bullet.transform.position = _spawn.position;
             _bullet.SetActive(true);
-            _bulletBody.AddForce(GetRandomDirection() * _bulletSpeed, ForceMode.Impulse);
+            _bulletBody.AddForce(GetRandomDirection() * _launchImpulsePerMetre, ForceMode.Impulse);
         }
 
         private Vector3 GetRandomDirection()

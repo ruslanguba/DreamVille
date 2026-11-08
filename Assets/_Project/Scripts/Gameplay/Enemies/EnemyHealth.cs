@@ -21,7 +21,7 @@ namespace DreamVille.Gameplay.Enemies
         public event Action<IMortal> Died;
 
         [SerializeField] private float _maxHealth = 2f;
-        [SerializeField] private AudioClip _clip;
+        [SerializeField] private AudioClip _deathClip;
 
         private IAudioService _audio;
         private Health _hitPoints;
@@ -84,7 +84,7 @@ namespace DreamVille.Gameplay.Enemies
 
         private void PlayDeathClip()
         {
-            if (_clip == null)
+            if (_deathClip == null)
                 return;
 
             if (_audio == null)
@@ -93,7 +93,7 @@ namespace DreamVille.Gameplay.Enemies
                 return;
             }
 
-            _audio.PlaySfx(_clip);
+            _audio.PlaySfx(_deathClip);
         }
 
         private void OnDestroy()

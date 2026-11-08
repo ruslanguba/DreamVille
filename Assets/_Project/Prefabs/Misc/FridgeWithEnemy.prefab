@@ -430,7 +430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 10
-  _clip: {fileID: 0}
+  _deathClip: {fileID: 0}
 --- !u!65 &4515699399336659508
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1450,7 +1450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 10
-  _clip: {fileID: 0}
+  _deathClip: {fileID: 0}
 --- !u!65 &9057902583474453891
 BoxCollider:
   m_ObjectHideFlags: 0

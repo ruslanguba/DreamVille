@@ -5261,7 +5261,7 @@ MonoBehaviour:
   - {fileID: 621595526}
   - {fileID: 1859898646}
   _speed: 2
-  _rotation: 0.5
+  _spinDegreesPerSecond: 30
   _floatingTime: 10
 --- !u!95 &951801513
 Animator:

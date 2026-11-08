@@ -7788,7 +7788,7 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 6f167c4f16cd00d4ba64df6557ac3e38, type: 2}
     - target: {fileID: 4514813654920402421, guid: 2daa2e8b996f9d743a0386422249969c, type: 3}
-      propertyPath: '_renderer.Array.data[0]'
+      propertyPath: '_renderers.Array.data[0]'
       value: 
       objectReference: {fileID: 1950852253}
     - target: {fileID: 8559938751972962783, guid: 2daa2e8b996f9d743a0386422249969c, type: 3}

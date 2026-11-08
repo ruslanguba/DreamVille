@@ -170,7 +170,7 @@ namespace DreamVille.Tests.EditMode.Npc
                 Assert.That(serialized.FindProperty("_spawn").objectReferenceValue, Is.Not.Null, $"'{shooter.name}' spawn.");
                 Assert.That(serialized.FindProperty("_target").objectReferenceValue, Is.Not.Null, $"'{shooter.name}' target.");
 
-                rhythms.Add((serialized.FindProperty("_shootingRate").floatValue, serialized.FindProperty("_bulletLifeTime").floatValue));
+                rhythms.Add((serialized.FindProperty("_shotInterval").floatValue, serialized.FindProperty("_bulletLifetime").floatValue));
             }
 
             Assert.That(rhythms, Is.EquivalentTo(new[] { (1f, 3f), (2f, 2f) }));

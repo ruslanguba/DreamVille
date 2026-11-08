@@ -196,10 +196,10 @@ namespace DreamVille.Tests.EditMode.Interactables
                     AssertFieldAssigned(effect, "_colorChangeMaterial", scenePath);
 
                     var serialized = new SerializedObject(effect);
-                    SerializedProperty renderers = serialized.FindProperty("_renderer");
+                    SerializedProperty renderers = serialized.FindProperty("_renderers");
 
                     Assert.That(renderers.arraySize, Is.GreaterThan(0),
-                        $"{scenePath}: '{effect.name}' PaintEffect._renderer is empty.");
+                        $"{scenePath}: '{effect.name}' PaintEffect._renderers is empty.");
 
                     for (int i = 0; i < renderers.arraySize; i++)
                         Assert.That(renderers.GetArrayElementAtIndex(i).objectReferenceValue, Is.Not.Null,
@@ -347,8 +347,9 @@ namespace DreamVille.Tests.EditMode.Interactables
             Assert.That(rocket, Is.Not.Null, $"{RocketPrefabPath} has no RocketThrustEffect.");
 
             var serialized = new SerializedObject(rocket);
-            Assert.That(serialized.FindProperty("_thrustPower").floatValue, Is.EqualTo(200f));
-            Assert.That(serialized.FindProperty("_continuousThrust").floatValue, Is.EqualTo(500f));
+            // Shipped feel: a 4 m/s kick, then 10 m/s² of thrust (what 200 N for one 0.02 s step and 500 x 0.02 were before).
+            Assert.That(serialized.FindProperty("_launchSpeedChange").floatValue, Is.EqualTo(4f));
+            Assert.That(serialized.FindProperty("_thrustAcceleration").floatValue, Is.EqualTo(10f));
             Assert.That(serialized.FindProperty("_lifetimeAfterLaunch").floatValue, Is.EqualTo(20f));
 
             var particle = serialized.FindProperty("_particle").objectReferenceValue as ParticleSystem;

@@ -11,7 +11,9 @@ namespace DreamVille.Gameplay.Environment
         [SerializeField] private Transform _balloon;
         [SerializeField] private Transform[] _points;
         [SerializeField] private float _speed;
-        [SerializeField] private float _rotation = 0.5f;
+        [SerializeField, Tooltip("Degrees per second the balloon spins around its forward axis while on its route.")]
+        private float _spinDegreesPerSecond = 30f;
+
 
         [SerializeField] private float _floatingTime = 10;
 
@@ -30,7 +32,7 @@ namespace DreamVille.Gameplay.Environment
                     SetNextPoint();
                 }
                 _balloon.transform.position = Vector3.MoveTowards(_balloon.transform.position, _points[_pointIndex].position, _speed * Time.deltaTime);
-                _balloon.transform.Rotate(0, 0, _rotation);
+                _balloon.transform.Rotate(0, 0, _spinDegreesPerSecond * Time.deltaTime);
             }
             else
             {

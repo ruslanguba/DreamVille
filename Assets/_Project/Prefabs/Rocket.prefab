@@ -4973,10 +4973,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8d55cf691c27c45be996ea80127cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _thrustPower: 200
-  _continuousThrust: 500
-  _audioSource: {fileID: 0}
+  _launchSpeedChange: 4
+  _thrustAcceleration: 10
   _particle: {fileID: 5593990552750119844}
+  _lifetimeAfterLaunch: 20
 --- !u!65 &8115802718256257723
 BoxCollider:
   m_ObjectHideFlags: 0

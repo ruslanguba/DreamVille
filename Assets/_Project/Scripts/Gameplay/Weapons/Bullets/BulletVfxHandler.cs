@@ -11,7 +11,7 @@ namespace DreamVille.Gameplay.Weapons.Bullets
     public sealed class BulletVfxHandler : MonoBehaviour
     {
         [SerializeField] private ParticleSystem _hitEffect;
-        [SerializeField] private TrailRenderer[] _trailEffect;
+        [SerializeField] private TrailRenderer[] _trails;
         private Bullet _bullet;
 
         private void Awake()
@@ -35,7 +35,7 @@ namespace DreamVille.Gameplay.Weapons.Bullets
 
         private void OnDisable()
         {
-            foreach (TrailRenderer trail in _trailEffect)
+            foreach (TrailRenderer trail in _trails)
             {
                 trail.Clear();
             }

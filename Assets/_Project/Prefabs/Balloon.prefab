@@ -345,7 +345,7 @@ MonoBehaviour:
   - {fileID: 5442383208674603518}
   - {fileID: 1979495797609185312}
   _speed: 2
-  _rotation: 0.5
+  _spinDegreesPerSecond: 30
   _floatingTime: 10
 --- !u!1001 &680219614370336493
 PrefabInstance:
