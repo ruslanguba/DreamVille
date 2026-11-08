@@ -7,6 +7,7 @@ using Zenject;
 
 using DreamVille.Audio;
 using DreamVille.Configs;
+using DreamVille.Gameplay;
 using DreamVille.Gameplay.Damage;
 using DreamVille.Gameplay.Player;
 using DreamVille.Gameplay.Player.Ground;
@@ -15,7 +16,7 @@ using DreamVille.Input;
 namespace DreamVille.Tests.EditMode.Player
 {
     /// <summary>
-    /// Content guards for spec 04 §3.5/§5 (roadmap 4.3): pins the shipped <see cref="Character.prefab"/>
+    /// Content guards: pins the shipped <c>Character.prefab</c>
     /// composition root so a future edit that removes the GameObjectContext, drops the config or
     /// reintroduces a stray ground sensor turns into a red test instead of a ZenjectException at Play.
     /// </summary>
@@ -88,7 +89,7 @@ namespace DreamVille.Tests.EditMode.Player
             SerializedProperty pivot = serializedSensor.FindProperty("_pivot");
             Assert.That(pivot.objectReferenceValue, Is.Not.Null, "GroundSurfaceSensor._pivot is not assigned.");
 
-            int playerLayer = LayerMask.NameToLayer("Player");
+            int playerLayer = LayerMask.NameToLayer(Layers.Player);
             Assert.That(playerLayer, Is.GreaterThanOrEqualTo(0), "The 'Player' layer is not defined in the project.");
             SerializedProperty surfaceMask = serializedSensor.FindProperty("_surfaceMask");
             Assert.That((surfaceMask.intValue & (1 << playerLayer)), Is.Zero,

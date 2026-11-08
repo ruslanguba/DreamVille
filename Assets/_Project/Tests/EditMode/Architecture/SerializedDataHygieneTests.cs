@@ -14,7 +14,7 @@ using DreamVille.Tests.EditMode.Composition;
 namespace DreamVille.Tests.EditMode.Architecture
 {
     /// <summary>
-    /// Guards spec 14 §5 items 14-15: once a serialized field has been renamed and its data migrated, no asset keeps
+    /// Guards the rename ledger (ADR 0010): once a serialized field has been renamed and its data migrated, no asset keeps
     /// data under the old name, neither in a component's own YAML nor as a prefab-instance override, and no field takes
     /// a retired name again (Unity would quietly load the stale data into it). Overrides on a ledger owner that point
     /// at a field which no longer exists count as well: they are dead data the editor can no longer show (the few pairs in

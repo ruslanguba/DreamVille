@@ -13,7 +13,7 @@ using DreamVille.Tests.EditMode.Fakes;
 namespace DreamVille.Tests.EditMode.Dialogue
 {
     /// <summary>
-    /// The trigger's half of the event contract (spec 11 R5): DialogueStarted in the accepting call,
+    /// The trigger's half of the event contract: DialogueStarted in the accepting call,
     /// DialogueEnded once the service completes, nothing when it may not start. deleteOnEnd stays off here:
     /// Destroy is not allowed in edit mode, and the smoke runs cover it.
     /// </summary>

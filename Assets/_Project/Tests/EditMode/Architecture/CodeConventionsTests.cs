@@ -11,7 +11,7 @@ using UnityEngine;
 namespace DreamVille.Tests.EditMode.Architecture
 {
     /// <summary>
-    /// Pins roadmap 6.1: code, comments and logs under <c>Assets/_Project/Scripts</c> are in English, and every public
+    /// Pins the language rule: code, comments and logs under <c>Assets/_Project/Scripts</c> are in English, and every public
     /// type carries an XML summary, and a concrete class nobody derives from is <c>sealed</c>. Player-facing text lives in the Localization tables, never in scripts.
     /// </summary>
     public class CodeConventionsTests

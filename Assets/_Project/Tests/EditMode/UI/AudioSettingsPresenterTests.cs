@@ -47,6 +47,30 @@ namespace DreamVille.Tests.EditMode.UI
         }
 
         [Test]
+        public void MusicVolumeEdited_ServiceRaisesChanged_WritesOnce()
+        {
+            _presenter.Initialize();
+
+            _view.EditMusicVolume(0.5f);
+
+            Assert.That(_settings.MusicWrites, Is.EqualTo(new[] { 0.5f }));
+            Assert.That(_view.MusicShown, Is.EqualTo(new[] { 0.3f, 0.5f }));
+        }
+
+        [Test]
+        public void Dispose_ThenEvents_DoNothing()
+        {
+            _presenter.Initialize();
+            _presenter.Dispose();
+
+            _view.EditMusicVolume(0.5f);
+            _settings.ChangeSfxVolumeElsewhere(0.9f);
+
+            Assert.That(_settings.MusicWrites, Is.Empty);
+            Assert.That(_view.SfxShown, Is.EqualTo(new[] { 0.4f }));
+        }
+
+        [Test]
         public void SfxVolumeEdited_WritesSfxVolume()
         {
             _presenter.Initialize();

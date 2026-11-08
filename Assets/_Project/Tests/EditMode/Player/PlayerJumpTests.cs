@@ -85,7 +85,7 @@ namespace DreamVille.Tests.EditMode.Player
         }
 
         [Test]
-        public void Initialize_ThenJumpInput_Jumps_AndDisposeUnsubscribes()
+        public void Initialize_ThenJumpInput_Jumps()
         {
             var jump = CreateJump(out FakeGroundSensor ground, out _, out FakePlayerAnimator animator, out _, out FakePlayerInput input);
             ground.IsGrounded = true;
@@ -94,11 +94,19 @@ namespace DreamVille.Tests.EditMode.Player
             input.RaiseJumpPressed();
 
             Assert.That(animator.JumpTriggeredCount, Is.EqualTo(1));
+        }
 
+        [Test]
+        public void Dispose_ThenJumpInput_DoesNotJump()
+        {
+            var jump = CreateJump(out FakeGroundSensor ground, out _, out FakePlayerAnimator animator, out _, out FakePlayerInput input);
+            ground.IsGrounded = true;
+            jump.Initialize();
             jump.Dispose();
+
             input.RaiseJumpPressed();
 
-            Assert.That(animator.JumpTriggeredCount, Is.EqualTo(1));
+            Assert.That(animator.JumpTriggeredCount, Is.EqualTo(0));
         }
     }
 }

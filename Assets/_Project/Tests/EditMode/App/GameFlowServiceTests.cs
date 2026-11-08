@@ -43,6 +43,19 @@ namespace DreamVille.Tests.EditMode.App
         }
 
         [Test]
+        public void ExitToMenu_ResumesBeforeLoading()
+        {
+            var callLog = new List<string>();
+            var pause = new FakePauseService(callLog);
+            var loader = new FakeSceneLoader(callLog);
+            var flow = new GameFlowService(loader, pause, _catalog);
+
+            flow.ExitToMenu();
+
+            Assert.That(callLog, Is.EqualTo(new[] { "Resume", "Load:" + MenuSceneName }));
+        }
+
+        [Test]
         public void ExitToMenu_LoadsTheMenuSceneFromTheCatalog()
         {
             var pause = new FakePauseService();

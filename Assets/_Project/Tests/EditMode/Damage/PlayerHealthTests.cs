@@ -5,7 +5,7 @@ using UnityEngine;
 using DreamVille.Configs;
 using DreamVille.Gameplay.Damage;
 
-namespace DreamVille.Tests.EditMode.Player
+namespace DreamVille.Tests.EditMode.Damage
 {
     /// <summary><see cref="PlayerHealth"/> hit counting and recovery timer.</summary>
     public class PlayerHealthTests

@@ -11,7 +11,7 @@ using UnityEngine.Serialization;
 namespace DreamVille.Tests.EditMode.Architecture
 {
     /// <summary>
-    /// Pins the naming rules of conventions §2 and §4 on the compiled runtime assemblies (spec 14 §5 items 4-13 and 16):
+    /// Pins the naming rules of conventions §2 and §4 on the compiled runtime assemblies:
     /// no public instance fields, <c>_camelCase</c> private fields, PascalCase constants, <c>[SerializeField]</c> only on
     /// private fields and no leftover <c>[FormerlySerializedAs]</c>, events without an <c>On</c> prefix, ScriptableObjects named after their role with a
     /// <c>DreamVille/</c> menu, and type names without underscores, long capitalised acronyms or a <c>Manager</c> suffix. Reflection, not source text: modifiers and attributes are facts of the compiled types,

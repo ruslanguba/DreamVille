@@ -19,9 +19,9 @@ using DreamVille.Progression.Lobby;
 namespace DreamVille.Tests.EditMode.Progression
 {
     /// <summary>
-    /// Content guards for spec 07 batch 4 (§5 group D): pins how `Lobby_01`'s scenario shipped
-    /// (2 + 2 kill groups per user decision D10, the doors, the guide) and the cross-scene
-    /// hardening from batch 3 (a required, scene-native `LevelActors`; the renamed `LevelSystems`
+    /// Content guards: pins how `Lobby_01`'s scenario shipped
+    /// (2 + 2 kill groups, the doors, the guide) and the cross-scene
+    /// hardening (a required, scene-native `LevelActors`; the `LevelSystems`
     /// prefab), so a future edit that silently drops a reference or reintroduces an added
     /// component on a prefab instance turns into a red test instead of the `ebe83a3` regression.
     /// </summary>
@@ -42,6 +42,7 @@ namespace DreamVille.Tests.EditMode.Progression
         }
 
         private string _originalScenePath;
+        private bool _scenesOpened;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -56,11 +57,17 @@ namespace DreamVille.Tests.EditMode.Progression
                 Assert.That(activeScene.isDirty, Is.False, dirtySceneMessage);
             else
                 Assume.That(!activeScene.isDirty, dirtySceneMessage);
+
+            _scenesOpened = true;
         }
 
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
+            // Never reopen a scene when the setup was skipped: that would discard the user's unsaved changes.
+            if (!_scenesOpened)
+                return;
+
             if (string.IsNullOrEmpty(_originalScenePath))
                 EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
             else
@@ -129,7 +136,7 @@ namespace DreamVille.Tests.EditMode.Progression
 
             bool hasLegacyProgress = FindAll<Component>()
                 .Any(component => component != null && component.GetType().FullName == "DreamVille.Progression.Lobby1Progress");
-            Assert.That(hasLegacyProgress, Is.False, "Lobby1Progress must not exist anywhere in Lobby_01 (deleted, spec 07 batch 2).");
+            Assert.That(hasLegacyProgress, Is.False, "Lobby1Progress must not exist anywhere in Lobby_01 (deleted).");
 
             int missingScripts = EditorSceneManager.GetActiveScene().GetRootGameObjects()
                 .Sum(GameObjectUtility.GetMonoBehavioursWithMissingScriptCount);

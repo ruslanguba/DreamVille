@@ -16,7 +16,7 @@ using DreamVille.UI.Hints;
 namespace DreamVille.Tests.EditMode.UI
 {
     /// <summary>
-    /// Guards spec 13 (roadmap 5.5): every proximity hint text is driven by a <see cref="LocalizeStringEvent"/> on the
+    /// Every proximity hint text is driven by a <see cref="LocalizeStringEvent"/> on the
     /// "Hints" string table, its Russian entry is the text the scene shows, and the table holds nothing else.
     /// </summary>
     public class HintLocalizationContentTests

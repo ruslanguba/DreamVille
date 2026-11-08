@@ -7,8 +7,6 @@ namespace DreamVille.Audio
     {
         void PlayMusic(AudioClip clip, bool loop);
 
-        void StopMusic();
-
         void PlaySfx(AudioClip clip);
 
         /// <summary>Applies a 0..1 value to a mixer parameter as decibels.</summary>

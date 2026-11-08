@@ -15,7 +15,7 @@ using DreamVille.UI.Hints;
 namespace DreamVille.Tests.EditMode.UI
 {
     /// <summary>
-    /// Guards spec 12 §5 items 4-10: every <see cref="ProximityHint"/> in the scenes keeps the target, timings and
+    /// Every <see cref="ProximityHint"/> in the scenes keeps the target, timings and
     /// text recorded in <see cref="ProximityHintSnapshot"/>, points at a hidden target that has something to show,
     /// owns an enabled trigger collider and shares its target with no other hint; the host prefab writes its
     /// defaults into the asset. The scan of all scenes runs once in the fixture setup; tests then work on plain

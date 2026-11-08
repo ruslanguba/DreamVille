@@ -1,3 +1,4 @@
+using System.Threading;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -23,6 +24,8 @@ namespace DreamVille.Tests.EditMode.UI
         private FakeApplicationQuitter _quitter;
         private FakeLocaleSelector _locales;
         private MainMenuPresenter _presenter;
+        private SceneCatalog _emptyCatalog;
+        private MainMenuPresenter _emptyCatalogPresenter;
 
         [SetUp]
         public void SetUp()
@@ -42,6 +45,8 @@ namespace DreamVille.Tests.EditMode.UI
         public void TearDown()
         {
             _presenter.Dispose();
+            _emptyCatalogPresenter?.Dispose();
+            Object.DestroyImmediate(_emptyCatalog);
             Object.DestroyImmediate(_catalog);
             Object.DestroyImmediate(_secondLevel);
             Object.DestroyImmediate(_firstLevel);
@@ -68,16 +73,26 @@ namespace DreamVille.Tests.EditMode.UI
         [Test]
         public void NewGameRequested_EmptyCatalog_LogsErrorAndDoesNotLoad()
         {
-            SceneCatalog emptyCatalog = SceneCatalog.CreateForTests(null, null);
-            MainMenuPresenter presenter = CreatePresenter(emptyCatalog);
-            presenter.Initialize();
+            _emptyCatalog = SceneCatalog.CreateForTests(null, null);
+            _emptyCatalogPresenter = CreatePresenter(_emptyCatalog);
+            _emptyCatalogPresenter.Initialize();
             LogAssert.Expect(LogType.Error, $"[{nameof(MainMenuPresenter)}] The scene catalog has no first level; a new game cannot start.");
 
             _view.PressNewGame();
 
             Assert.That(_loader.Calls, Is.Empty);
-            presenter.Dispose();
-            Object.DestroyImmediate(emptyCatalog);
+        }
+
+        [Test]
+        public void Dispose_CancelsAPendingLoad()
+        {
+            _presenter.Initialize();
+            _view.PressNewGame();
+            CancellationToken token = _loader.LastToken;
+
+            _presenter.Dispose();
+
+            Assert.That(token.IsCancellationRequested, Is.True);
         }
 
         [Test]

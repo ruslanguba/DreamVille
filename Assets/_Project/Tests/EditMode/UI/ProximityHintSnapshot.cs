@@ -37,7 +37,7 @@ namespace DreamVille.Tests.EditMode.UI
     }
 
     /// <summary>
-    /// The resolved settings of every live <c>ProximityHint</c> (spec 12 §2.2, measured in batch B0): scene
+    /// The resolved settings of every live <c>ProximityHint</c>: scene
     /// overrides on top of the prefab, including the values that only exist as C# initializers.
     /// A changed trigger, target, duration or text must be changed here on purpose.
     /// </summary>

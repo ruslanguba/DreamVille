@@ -28,9 +28,9 @@ using DreamVille.UI.Menus;
 namespace DreamVille.Tests.EditMode.Composition
 {
     /// <summary>
-    /// Guards spec 01 §3.7/§3.8 and spec 02 §3.2: opens every enabled build scene and checks its
+    /// Opens every enabled build scene and checks its
     /// composition root instead of trusting a GUID scan of the scene file, because
-    /// installers reach into nested prefabs (conventions §9, roadmap step 3.7). Scene roles and
+    /// installers reach into nested prefabs (conventions §9). Scene roles and
     /// level identity come from the shipped SceneCatalog asset, never from a scene name literal.
     /// </summary>
     public class SceneCompositionTests
@@ -47,6 +47,7 @@ namespace DreamVille.Tests.EditMode.Composition
         }
 
         private string _originalScenePath;
+        private bool _scenesOpened;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -62,11 +63,17 @@ namespace DreamVille.Tests.EditMode.Composition
                 Assert.That(activeScene.isDirty, Is.False, dirtySceneMessage);
             else
                 Assume.That(!activeScene.isDirty, dirtySceneMessage);
+
+            _scenesOpened = true;
         }
 
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
+            // Never reopen a scene when the setup was skipped: that would discard the user's unsaved changes.
+            if (!_scenesOpened)
+                return;
+
             if (string.IsNullOrEmpty(_originalScenePath))
                 EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
             else
@@ -130,7 +137,7 @@ namespace DreamVille.Tests.EditMode.Composition
         }
 
         /// <summary>Avoids referencing DreamVille.Progression from the test assembly for one
-        /// optional component; see spec 01 §3.2 (Tests.EditMode reference list).</summary>
+        /// optional component.</summary>
         private static bool HasLevelActors()
             => FindAll<Component>().Any(component => component.GetType().FullName == "DreamVille.Progression.LevelActors");
 
@@ -146,7 +153,7 @@ namespace DreamVille.Tests.EditMode.Composition
 
         /// <summary>
         /// A UGUI graphic is drawn only under a Canvas. Level_02's hints once sat under a plain level object and never
-        /// appeared (spec 12 F1); every hint target must live under a screen-space canvas.
+        /// appeared; every hint target must live under a screen-space canvas.
         /// </summary>
         [TestCaseSource(nameof(GameplayScenePaths))]
         public void GameplayScene_EveryHintTargetIsUnderAScreenSpaceCanvas(string scenePath)
@@ -240,7 +247,7 @@ namespace DreamVille.Tests.EditMode.Composition
         }
 
         /// <summary>
-        /// The dialogue canvas no longer creates an EventSystem at runtime (spec 11 B3), so every gameplay scene
+        /// The dialogue canvas no longer creates an EventSystem at runtime, so every gameplay scene
         /// must bring exactly one for the Next button and the pause menu to receive clicks.
         /// </summary>
         [TestCaseSource(nameof(GameplayScenePaths))]
@@ -281,7 +288,7 @@ namespace DreamVille.Tests.EditMode.Composition
             OpenScene(scenePath);
 
             Assert.That(FindAll<GroundSurfaceSensor>(), Has.Length.EqualTo(1),
-                $"{scenePath} must have exactly one GroundSurfaceSensor on the player (spec 04 §2.2 stray-component drift).");
+                $"{scenePath} must have exactly one GroundSurfaceSensor on the player (a stray second sensor breaks ground detection).");
         }
 
         [TestCaseSource(nameof(GameplayScenePaths))]
@@ -290,7 +297,7 @@ namespace DreamVille.Tests.EditMode.Composition
             OpenScene(scenePath);
 
             Assert.That(FindAll<AimPreview>(), Has.Length.EqualTo(1),
-                $"{scenePath} must have exactly one AimPreview (spec 05 §2.2 duplicate BounceRayTrajectory drift).");
+                $"{scenePath} must have exactly one AimPreview (a duplicate draws a second trajectory).");
         }
 
         [TestCaseSource(nameof(GameplayScenePaths))]

@@ -32,6 +32,14 @@ namespace DreamVille.Tests.EditMode.Presentation
         }
 
         [Test]
+        public void Calculate_AboveMaxHits_ClampsToFull()
+        {
+            float intensity = DamageVignetteIntensity.Calculate(hits: 7, maxHits: 3, firstHitIntensity: 0.6f);
+
+            Assert.That(intensity, Is.EqualTo(1f));
+        }
+
+        [Test]
         public void Calculate_MiddleHit_LerpsBetweenFirstAndOne()
         {
             float intensity = DamageVignetteIntensity.Calculate(hits: 2, maxHits: 3, firstHitIntensity: 0.6f);

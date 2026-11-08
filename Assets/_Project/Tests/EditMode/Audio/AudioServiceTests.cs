@@ -120,6 +120,36 @@ namespace DreamVille.Tests.EditMode.Audio
         }
 
         [Test]
+        public void PlaySfx_ForwardsTheClip()
+        {
+            AudioClip clip = Track(AudioClip.Create("sfx", 1, 1, 8000, false));
+
+            _service.PlaySfx(clip);
+
+            Assert.That(_output.LastSfxClip, Is.SameAs(clip));
+        }
+
+        [Test]
+        public void SetMusicVolume_RaisesMusicVolumeChanged()
+        {
+            float? raised = null;
+            _service.MusicVolumeChanged += value => raised = value;
+
+            _service.SetMusicVolume(0.2f);
+
+            Assert.That(raised, Is.EqualTo(0.2f));
+        }
+
+        [Test]
+        public void SetSfxVolume_PersistsTheValue()
+        {
+            _service.SetSfxVolume(0.8f);
+
+            Assert.That(_settings.TryGetSfxVolume(out float stored), Is.True);
+            Assert.That(stored, Is.EqualTo(0.8f));
+        }
+
+        [Test]
         public void SetSfxVolume_RaisesSfxVolumeChanged()
         {
             float? raised = null;

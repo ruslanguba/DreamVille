@@ -17,7 +17,7 @@ using DreamVille.UI.Menus;
 namespace DreamVille.Tests.EditMode.UI
 {
     /// <summary>
-    /// Guards spec 10 §5 C1–C4: every menu button in <c>MainMenu</c> and in the pause menu (as nested in
+    /// Every menu button in <c>MainMenu</c> and in the pause menu (as nested in
     /// <c>GameManager.prefab</c>, the asset the gameplay scenes instantiate) does something, every Inspector
     /// call still resolves, and the pause view keeps its references and the nested localization components.
     /// </summary>
@@ -36,6 +36,7 @@ namespace DreamVille.Tests.EditMode.UI
         };
 
         private string _originalScenePath;
+        private bool _scenesOpened;
         private GameObject _gameManager;
 
         [OneTimeSetUp]
@@ -51,6 +52,8 @@ namespace DreamVille.Tests.EditMode.UI
             else
                 Assume.That(!activeScene.isDirty, dirtySceneMessage);
 
+            _scenesOpened = true;
+
             _gameManager = PrefabUtility.LoadPrefabContents(GameManagerPrefabPath);
         }
 
@@ -59,6 +62,10 @@ namespace DreamVille.Tests.EditMode.UI
         {
             if (_gameManager != null)
                 PrefabUtility.UnloadPrefabContents(_gameManager);
+
+            // Never reopen a scene when the setup was skipped: that would discard the user's unsaved changes.
+            if (!_scenesOpened)
+                return;
 
             if (string.IsNullOrEmpty(_originalScenePath))
                 EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
@@ -82,6 +89,25 @@ namespace DreamVille.Tests.EditMode.UI
             }
 
             Assert.That(failures, Is.Empty, "Unresolved button calls:\n" + string.Join("\n", failures));
+        }
+
+        [Test]
+        public void MenuButtons_NoPersistentCallTargetsAProjectScript()
+        {
+            var offenders = new List<string>();
+
+            foreach (Button button in AllMenuButtons())
+            {
+                for (int i = 0; i < button.onClick.GetPersistentEventCount(); i++)
+                {
+                    Object target = button.onClick.GetPersistentTarget(i);
+                    string targetNamespace = target == null ? null : target.GetType().Namespace;
+                    if (targetNamespace != null && targetNamespace.StartsWith("DreamVille"))
+                        offenders.Add($"{PathOf(button)} -> {target.GetType().Name}.{button.onClick.GetPersistentMethodName(i)}");
+                }
+            }
+
+            Assert.That(offenders, Is.Empty, "Buttons must reach project scripts through a view binding (ADR 0008): " + string.Join(", ", offenders));
         }
 
         [Test]

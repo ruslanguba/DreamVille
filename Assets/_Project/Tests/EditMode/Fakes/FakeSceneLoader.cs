@@ -22,6 +22,9 @@ namespace DreamVille.Tests.EditMode.Fakes
 
         public IReadOnlyList<string> Calls => _calls;
 
+        /// <summary>The token of the most recent call.</summary>
+        public CancellationToken LastToken { get; private set; }
+
 #pragma warning disable CS0067 // never raised: no test drives progress reporting through this fake.
         public event Action<float> ProgressChanged;
 #pragma warning restore CS0067
@@ -30,12 +33,14 @@ namespace DreamVille.Tests.EditMode.Fakes
 
         public UniTask LoadAsync(string sceneName, CancellationToken token = default)
         {
+            LastToken = token;
             _calls.Add($"Load:{sceneName}");
             return UniTask.CompletedTask;
         }
 
         public UniTask ReloadActiveAsync(CancellationToken token = default)
         {
+            LastToken = token;
             _calls.Add("ReloadActive");
             return UniTask.CompletedTask;
         }

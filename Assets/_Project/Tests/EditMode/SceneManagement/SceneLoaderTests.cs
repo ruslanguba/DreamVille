@@ -15,20 +15,72 @@ namespace DreamVille.Tests.EditMode.SceneManagement
     public class SceneLoaderTests
     {
         [Test]
-        public void LoadAsync_ForwardsSceneNameToBackendAndSetsIsLoadingUntilBackendCompletes()
+        public void LoadAsync_ForwardsSceneNameToBackendAndSetsIsLoading()
         {
             var backend = new FakeSceneLoadingBackend();
             var loader = new SceneLoader(backend);
 
-            UniTask task = loader.LoadAsync("Level1");
+            loader.LoadAsync("Level1");
 
             Assert.That(backend.RequestedSceneNames, Is.EqualTo(new[] { "Level1" }));
             Assert.That(loader.IsLoading, Is.True);
+        }
+
+        [Test]
+        public void LoadAsync_WhenBackendCompletes_ReleasesIsLoadingAndSucceeds()
+        {
+            var backend = new FakeSceneLoadingBackend();
+            var loader = new SceneLoader(backend);
+            UniTask task = loader.LoadAsync("Level1");
 
             backend.CompleteRequest(0);
 
             Assert.That(loader.IsLoading, Is.False);
             Assert.That(task.Status, Is.EqualTo(UniTaskStatus.Succeeded));
+        }
+
+        [Test]
+        public void LoadAsync_WhenBackendThrows_ReleasesIsLoadingAndRethrows()
+        {
+            var backend = new FakeSceneLoadingBackend();
+            var loader = new SceneLoader(backend);
+            UniTask task = loader.LoadAsync("Level1");
+
+            backend.FailRequest(0, new InvalidOperationException("load failed"));
+
+            Assert.That(loader.IsLoading, Is.False);
+            Assert.That(task.Status, Is.EqualTo(UniTaskStatus.Faulted));
+            Assert.Throws<InvalidOperationException>(() => task.GetAwaiter().GetResult());
+        }
+
+        [Test]
+        public void LoadAsync_CancelledMidLoad_HoldsIsLoadingUntilTheBackendFinishes()
+        {
+            var backend = new FakeSceneLoadingBackend();
+            var loader = new SceneLoader(backend);
+            using var cts = new CancellationTokenSource();
+            UniTask task = loader.LoadAsync("Level1", cts.Token);
+
+            cts.Cancel();
+
+            Assert.That(loader.IsLoading, Is.True);
+            Assert.That(task.Status, Is.EqualTo(UniTaskStatus.Pending));
+
+            backend.CompleteRequest(0);
+
+            Assert.That(loader.IsLoading, Is.False);
+            Assert.That(task.Status, Is.EqualTo(UniTaskStatus.Canceled));
+        }
+
+        [Test]
+        public void ReloadActiveAsync_LoadsTheActiveScene()
+        {
+            var backend = new FakeSceneLoadingBackend { ActiveSceneName = "Level2" };
+            var loader = new SceneLoader(backend);
+
+            loader.ReloadActiveAsync();
+
+            Assert.That(backend.RequestedSceneNames, Is.EqualTo(new[] { "Level2" }));
         }
 
         [Test]

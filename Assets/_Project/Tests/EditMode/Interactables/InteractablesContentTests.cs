@@ -14,7 +14,7 @@ using DreamVille.Gameplay.Weapons;
 namespace DreamVille.Tests.EditMode.Interactables
 {
     /// <summary>
-    /// Guards spec 06 §5 group C: pins the interaction content wiring (which pickup gives what score,
+    /// Pins the interaction content wiring (which pickup gives what score,
     /// which effect has a host, which reference is assigned) so a scene or prefab edit cannot silently
     /// drop an effect's host or reference. Opens every scene through <see cref="EditorSceneManager"/> and
     /// every prefab through <see cref="AssetDatabase"/>, for the same reason as SceneCompositionTests:
@@ -42,6 +42,7 @@ namespace DreamVille.Tests.EditMode.Interactables
         };
 
         private string _originalScenePath;
+        private bool _scenesOpened;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -55,11 +56,17 @@ namespace DreamVille.Tests.EditMode.Interactables
                 Assert.That(activeScene.isDirty, Is.False, dirtySceneMessage);
             else
                 Assume.That(!activeScene.isDirty, dirtySceneMessage);
+
+            _scenesOpened = true;
         }
 
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
+            // Never reopen a scene when the setup was skipped: that would discard the user's unsaved changes.
+            if (!_scenesOpened)
+                return;
+
             if (string.IsNullOrEmpty(_originalScenePath))
                 EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
             else
@@ -218,7 +225,7 @@ namespace DreamVille.Tests.EditMode.Interactables
         }
 
         [Test]
-        public void PickupScores_MatchThePreMigrationValues()
+        public void PickupScores_MatchShippedValues()
         {
             Pickup collectablePrefabPickup = LoadPrefab(CollectablePrefabPath).GetComponent<Pickup>();
             AssertScore(collectablePrefabPickup, 100f, CollectablePrefabPath);

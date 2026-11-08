@@ -10,7 +10,7 @@ using DreamVille.Gameplay.Environment;
 namespace DreamVille.Tests.EditMode.Environment
 {
     /// <summary>
-    /// Guards spec 08 §5 G5 and §8 Q5: the Level_01 balloons keep their drift tuning after the
+    /// The Level_01 balloons keep their drift tuning after the
     /// <see cref="RandomFloating"/> field renames, and no balloon is steered by two components again.
     /// </summary>
     public class FloatingPropsContentTests
@@ -19,6 +19,7 @@ namespace DreamVille.Tests.EditMode.Environment
         private const int BalloonCount = 14;
 
         private string _originalScenePath;
+        private bool _scenesOpened;
         private RandomFloating[] _floatingProps;
 
         [OneTimeSetUp]
@@ -34,6 +35,8 @@ namespace DreamVille.Tests.EditMode.Environment
             else
                 Assume.That(!activeScene.isDirty, dirtySceneMessage);
 
+            _scenesOpened = true;
+
             EditorSceneManager.OpenScene(Level01ScenePath, OpenSceneMode.Single);
             _floatingProps = Object.FindObjectsByType<RandomFloating>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         }
@@ -41,6 +44,10 @@ namespace DreamVille.Tests.EditMode.Environment
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
+            // Never reopen a scene when the setup was skipped: that would discard the user's unsaved changes.
+            if (!_scenesOpened)
+                return;
+
             if (string.IsNullOrEmpty(_originalScenePath))
                 EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
             else

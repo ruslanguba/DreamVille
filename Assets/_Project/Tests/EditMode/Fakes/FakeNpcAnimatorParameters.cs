@@ -4,17 +4,13 @@ using DreamVille.Gameplay.Npc;
 
 namespace DreamVille.Tests.EditMode.Fakes
 {
-    /// <summary>Hand-written <see cref="INpcAnimatorParameters"/> double: records every bool write in call order.</summary>
+    /// <summary>Hand-written <see cref="INpcAnimatorParameters"/> double: keeps the last bool written to each parameter.</summary>
     public sealed class FakeNpcAnimatorParameters : INpcAnimatorParameters
     {
-        private readonly List<(int Hash, bool Value)> _writes = new List<(int Hash, bool Value)>();
         private readonly Dictionary<int, bool> _values = new Dictionary<int, bool>();
-
-        public IReadOnlyList<(int Hash, bool Value)> Writes => _writes;
 
         public void SetBool(int parameterHash, bool value)
         {
-            _writes.Add((parameterHash, value));
             _values[parameterHash] = value;
         }
 
@@ -25,7 +21,6 @@ namespace DreamVille.Tests.EditMode.Fakes
 
         public void ClearWrites()
         {
-            _writes.Clear();
             _values.Clear();
         }
     }

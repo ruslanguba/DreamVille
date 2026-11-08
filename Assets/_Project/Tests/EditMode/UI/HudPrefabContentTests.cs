@@ -10,7 +10,7 @@ using DreamVille.UI.Hud;
 namespace DreamVille.Tests.EditMode.UI
 {
     /// <summary>
-    /// Guards spec 09 §5 group H: the HUD prefab still carries every view after the views were renamed and
+    /// The HUD prefab still carries every view after the views were renamed and
     /// moved, and its content matches the rules the presenter indexes into (stars per level, one ricochet
     /// badge per hit count). The views ignore out-of-range indices, so a mismatch would otherwise be silent.
     /// </summary>

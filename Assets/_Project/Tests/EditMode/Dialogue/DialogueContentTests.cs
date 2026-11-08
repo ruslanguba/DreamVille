@@ -14,7 +14,7 @@ using DreamVille.Dialogue;
 namespace DreamVille.Tests.EditMode.Dialogue
 {
     /// <summary>
-    /// Guards spec 11 §5 items 19-26: every dialogue line of the game lives in a <see cref="DialogueDefinition"/>
+    /// Every dialogue line of the game lives in a <see cref="DialogueDefinition"/>
     /// whose text sits in the "Dialogues" string table, byte-for-byte equal to the checked-in
     /// <c>DialogueSnapshot.tsv</c>, and the table itself stays clean (no empty, Smart, orphaned or shared keys).
     /// The scan of all scenes and prefabs runs once in the fixture setup; tests then work on plain data and

@@ -40,8 +40,8 @@ namespace DreamVille.Tests.EditMode.Architecture
             // Two fields were both called "pitch random"; each now names the clip group it jitters.
             (typeof(ActorAudio), new[] { "_pitchRandom", "randomClips", "randomInterval", "pitchRandom" }),
 
-            // target and throwForce left Enemy in step 4.2; their instance overrides were dead data until 6.2 dropped them.
-            // 6.3: tuning moved to EnemyConfig archetypes (the underscored names, and the handler's rotation speed).
+            // target and throwForce left Enemy; their instance overrides were dead data.
+            // Tuning moved to EnemyConfig archetypes (the underscored names, and the handler's rotation speed).
             (typeof(Enemy), new[] { "moveSpeed", "chaseRange", "attackRange", "attackCooldown", "patrolPoints", "attackSpawn", "target", "throwForce", "_moveSpeed", "_chaseRange", "_attackRange", "_attackCooldown" }),
             (typeof(EnemyRotationHandler), new[] { "rotationSpeed", "_rotationSpeed" }),
 
@@ -81,12 +81,12 @@ namespace DreamVille.Tests.EditMode.Architecture
 
         /// <summary>
         /// Dead overrides on a ledger owner that address a field which no longer exists and are too widespread for a
-        /// rename batch to drop (spec 14 B6.2: more than about five assets). The override scan tolerates exactly these
+        /// rename batch to drop (more than about five assets). The override scan tolerates exactly these
         /// owner-field pairs; retired names stay forbidden. The list can only shrink.
         /// </summary>
         public static readonly (Type Owner, string Field, string Reason)[] KnownDeadOverrides =
         {
-            (typeof(InputReader), "_interractAction", "the player instance in 9 assets; dropped with the other dead overrides in roadmap 6.5"),
+            (typeof(InputReader), "_interractAction", "the player instance in 9 assets; dropped together with the other dead overrides"),
         };
     }
 }

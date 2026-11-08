@@ -10,8 +10,8 @@ using DreamVille.Gameplay.Weapons.Pillows;
 namespace DreamVille.Tests.EditMode.Weapons
 {
     /// <summary>
-    /// Content guards for spec 05 §5 batch 3 (roadmap 4.4/4.5): pins the shipped
-    /// <see cref="Character.prefab"/> weapon wiring so a future edit that leaves the muzzle
+    /// Content guards: pins the shipped
+    /// <c>Character.prefab</c> weapon wiring so a future edit that leaves the muzzle
     /// unassigned, forgets a pillow slot or resurrects <c>WeaponController</c> as a component
     /// turns into a red test instead of a silent misfire at Play.
     /// </summary>

@@ -11,7 +11,7 @@ namespace DreamVille.Tests.EditMode.Progression
 {
     /// <summary>
     /// A hub has no enemies and no final zone, so its exit portal completes it through
-    /// <see cref="DreamVille.Core.Scenes.ILevelCompletion"/> (spec 10 §8 Q2).
+    /// <see cref="DreamVille.Core.Scenes.ILevelCompletion"/>.
     /// </summary>
     public class LevelCompletionTests
     {

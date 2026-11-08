@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.TestTools.Utils;
 
 using DreamVille.Gameplay.Weapons.Pillows;
 using DreamVille.Tests.EditMode.Fakes;
@@ -107,7 +108,7 @@ namespace DreamVille.Tests.EditMode.Weapons
             Assert.That(arrived, Is.False);
             Assert.That(_slot.State, Is.EqualTo(PillowState.Returning));
             Assert.That(_body.LastCall, Is.EqualTo(nameof(IPillowBody.MoveTo)));
-            Assert.That(_body.Position, Is.EqualTo(new Vector3(0f, 0f, 3.8f)));
+            Assert.That(_body.Position, Is.EqualTo(new Vector3(0f, 0f, 3.8f)).Using(Vector3EqualityComparer.Instance));
         }
 
         [Test]
@@ -119,7 +120,7 @@ namespace DreamVille.Tests.EditMode.Weapons
             bool started = _slot.TryBeginReturn(ReturnPoint, snapDistance: 10f);
 
             Assert.That(started, Is.True);
-            Assert.That(_body.ReturnStart, Is.EqualTo(new Vector3(0f, 0f, 5f)));
+            Assert.That(_body.ReturnStart, Is.EqualTo(new Vector3(0f, 0f, 5f)).Using(Vector3EqualityComparer.Instance));
         }
 
         [Test]

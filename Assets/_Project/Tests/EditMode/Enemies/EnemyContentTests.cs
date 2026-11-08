@@ -111,6 +111,20 @@ namespace DreamVille.Tests.EditMode.Enemies
         }
 
         [Test]
+        public void ConfigsWithoutAttack_HaveNoAttackRange()
+        {
+            string[] offenders = LoadEnemyConfigs()
+                .Where(config => config.Attack == EnemyAttackKind.None && config.AttackRange > 0f)
+                .Select(config => $"{config.name} (attackRange {config.AttackRange})")
+                .OrderBy(offender => offender, StringComparer.Ordinal)
+                .ToArray();
+
+            Assert.That(offenders, Is.Empty,
+                "An enemy without an attack still enters the attack state inside its attack range and plays the attack cue, " +
+                "so 'no attack' must mean an attack range of 0:\n" + string.Join("\n", offenders));
+        }
+
+        [Test]
         public void ThrowingEnemyConfigs_HavePositiveRangeCooldownAndTurnSpeed()
         {
             string[] offenders = LoadEnemyConfigs()

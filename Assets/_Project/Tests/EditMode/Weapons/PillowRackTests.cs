@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.TestTools.Utils;
 
 using DreamVille.Configs;
 using DreamVille.Gameplay.Weapons.Pillows;
@@ -64,7 +65,7 @@ namespace DreamVille.Tests.EditMode.Weapons
 
             Assert.That(command, Is.EqualTo(PillowCommand.Thrown));
             Assert.That(_first.LastCall, Is.EqualTo(nameof(IPillowBody.Launch)));
-            Assert.That(_first.LaunchImpulse, Is.EqualTo(Vector3.forward * 10f));
+            Assert.That(_first.LaunchImpulse, Is.EqualTo(Vector3.forward * 10f).Using(Vector3EqualityComparer.Instance));
             Assert.That(_second.LastCall, Is.EqualTo(nameof(IPillowBody.Stow)));
             Assert.That(_rack.InHand, Is.EqualTo(1));
         }
@@ -179,9 +180,9 @@ namespace DreamVille.Tests.EditMode.Weapons
             _first.Position = new Vector3(0f, 0f, 0.05f);
             _rack.ThrowOrRecall(Launch, ReturnPoint);
 
-            bool stillReturning = _rack.StepReturn(ReturnPoint, deltaTime: 1f);
+            bool arrived = _rack.StepReturn(ReturnPoint, deltaTime: 1f);
 
-            Assert.That(stillReturning, Is.True);
+            Assert.That(arrived, Is.True);
             Assert.That(_rack.IsReturning, Is.False);
             Assert.That(_rack.InHand, Is.EqualTo(2));
         }
@@ -202,11 +203,11 @@ namespace DreamVille.Tests.EditMode.Weapons
             _first.Position = new Vector3(0f, 0f, 5f);
             _rack.ThrowOrRecall(Launch, ReturnPoint);
 
-            bool stillReturning = _rack.StepReturn(ReturnPoint, deltaTime: 0.1f);
+            bool arrived = _rack.StepReturn(ReturnPoint, deltaTime: 0.1f);
 
-            Assert.That(stillReturning, Is.False);
+            Assert.That(arrived, Is.False);
             Assert.That(_first.LastCall, Is.EqualTo(nameof(IPillowBody.MoveTo)));
-            Assert.That(_first.Position, Is.EqualTo(new Vector3(0f, 0f, 3.8f)));
+            Assert.That(_first.Position, Is.EqualTo(new Vector3(0f, 0f, 3.8f)).Using(Vector3EqualityComparer.Instance));
         }
 
         [Test]

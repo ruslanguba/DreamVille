@@ -1,3 +1,4 @@
+using System.Threading;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -108,6 +109,18 @@ namespace DreamVille.Tests.EditMode.UI
             _view.Choose(_secondLevel);
 
             Assert.That(_loader.Calls, Is.Empty);
+        }
+
+        [Test]
+        public void Dispose_CancelsAPendingLoad()
+        {
+            _presenter.Initialize();
+            _view.Choose(_lobby);
+            CancellationToken token = _loader.LastToken;
+
+            _presenter.Dispose();
+
+            Assert.That(token.IsCancellationRequested, Is.True);
         }
 
         [Test]

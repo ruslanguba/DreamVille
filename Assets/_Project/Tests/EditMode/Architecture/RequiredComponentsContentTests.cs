@@ -14,7 +14,7 @@ namespace DreamVille.Tests.EditMode.Architecture
     /// <summary>
     /// [RequireComponent] acts only when a script is added, so a prefab or scene saved before the attribute existed can
     /// still lack what a script takes from its own GameObject. Every DreamVille script in every prefab and scene has the
-    /// components its attributes require (spec 16 §5 items 3-4). The scene scan runs once in the fixture setup and keeps
+    /// components its attributes require. The scene scan runs once in the fixture setup and keeps
     /// plain strings, because opening the next scene unloads the previous one.
     /// </summary>
     public class RequiredComponentsContentTests

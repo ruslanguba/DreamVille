@@ -7,7 +7,7 @@ using DreamVille.Configs;
 namespace DreamVille.Tests.EditMode.Weapons
 {
     /// <summary>
-    /// Content guards for spec 05 §3.2/§4.2: pins the shipped <see cref="BulletConfig"/> and
+    /// Content guards: pins the shipped <see cref="BulletConfig"/> and
     /// <see cref="PillowConfig"/> assets so a designer edit cannot desync the bullet's collider
     /// radius from the aim preview's sweep, or ship a pillow tuning that stalls the recall loop.
     /// </summary>

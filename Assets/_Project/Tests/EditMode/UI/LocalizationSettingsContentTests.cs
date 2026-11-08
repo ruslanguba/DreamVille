@@ -9,10 +9,10 @@ using UnityEngine.Localization.Settings;
 namespace DreamVille.Tests.EditMode.UI
 {
     /// <summary>
-    /// Guards spec 10 §8 Q1 (the language the player picks is remembered between launches, so the
-    /// Localization package's PlayerPrefs selector must run before the operating-system language) and
-    /// spec 11 §8 Q1 (an English line that has no English text falls back to Russian instead of showing
-    /// "No translation found").
+    /// Guards two rules: the language the player picks is remembered between launches (the
+    /// Localization package's PlayerPrefs selector runs before the operating-system language), and
+    /// an English line that has no English text falls back to Russian instead of showing
+    /// "No translation found".
     /// </summary>
     public class LocalizationSettingsContentTests
     {

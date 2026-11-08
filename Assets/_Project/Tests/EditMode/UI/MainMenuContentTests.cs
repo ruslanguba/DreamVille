@@ -9,7 +9,7 @@ using DreamVille.UI;
 namespace DreamVille.Tests.EditMode.UI
 {
     /// <summary>
-    /// Guards spec 08 §5 G6: the main-menu logos keep fading after <see cref="ImageFadeOut"/> moved to the UI
+    /// The main-menu logos keep fading after <see cref="ImageFadeOut"/> moved to the UI
     /// assembly and its image field was renamed (same script GUID, same values).
     /// </summary>
     public class MainMenuContentTests
@@ -18,6 +18,7 @@ namespace DreamVille.Tests.EditMode.UI
         private const int LogoCount = 3;
 
         private string _originalScenePath;
+        private bool _scenesOpened;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -31,11 +32,17 @@ namespace DreamVille.Tests.EditMode.UI
                 Assert.That(activeScene.isDirty, Is.False, dirtySceneMessage);
             else
                 Assume.That(!activeScene.isDirty, dirtySceneMessage);
+
+            _scenesOpened = true;
         }
 
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
+            // Never reopen a scene when the setup was skipped: that would discard the user's unsaved changes.
+            if (!_scenesOpened)
+                return;
+
             if (string.IsNullOrEmpty(_originalScenePath))
                 EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
             else

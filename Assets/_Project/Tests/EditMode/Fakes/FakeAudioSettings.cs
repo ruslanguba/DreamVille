@@ -6,8 +6,8 @@ using DreamVille.Audio;
 namespace DreamVille.Tests.EditMode.Fakes
 {
     /// <summary>
-    /// Volume settings set by the test. Records every <c>Set*</c> call; the change events are raised
-    /// only through <see cref="ChangeMusicVolumeElsewhere"/> and <see cref="ChangeSfxVolumeElsewhere"/>.
+    /// Volume settings set by the test. Records every <c>Set*</c> call and, like the real service, raises the matching change event
+    /// from it; <see cref="ChangeMusicVolumeElsewhere"/> and <see cref="ChangeSfxVolumeElsewhere"/> raise it without a write.
     /// </summary>
     public sealed class FakeAudioSettings : IAudioSettings
     {
@@ -29,12 +29,14 @@ namespace DreamVille.Tests.EditMode.Fakes
         {
             _musicWrites.Add(normalized);
             MusicVolume = normalized;
+            MusicVolumeChanged?.Invoke(normalized);
         }
 
         public void SetSfxVolume(float normalized)
         {
             _sfxWrites.Add(normalized);
             SfxVolume = normalized;
+            SfxVolumeChanged?.Invoke(normalized);
         }
 
         public void ChangeMusicVolumeElsewhere(float normalized)

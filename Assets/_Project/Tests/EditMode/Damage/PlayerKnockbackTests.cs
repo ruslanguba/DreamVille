@@ -5,7 +5,7 @@ using UnityEngine;
 using DreamVille.Configs;
 using DreamVille.Gameplay.Damage;
 
-namespace DreamVille.Tests.EditMode.Player
+namespace DreamVille.Tests.EditMode.Damage
 {
     /// <summary><see cref="PlayerKnockback"/> impulse application and decay.</summary>
     public class PlayerKnockbackTests

@@ -3,6 +3,7 @@
     "rootNamespace": "DreamVille.Tests.Support",
     "references": [
         "DreamVille.Configs",
+        "DreamVille.Core",
         "DreamVille.Gameplay"
     ],
     "includePlatforms": [],

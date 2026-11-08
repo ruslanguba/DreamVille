@@ -12,9 +12,9 @@ using DreamVille.Gameplay.Npc;
 namespace DreamVille.Tests.EditMode.Npc
 {
     /// <summary>
-    /// Guards spec 08 §5 group G (NPC part): pins the authored NPC start poses, the hatter dialogue timing,
+    /// Pins the authored NPC start poses, the hatter dialogue timing,
     /// the two Lobby_01 queues and the Lobby_01 shooters, so a renamed serialized field that lost its value
-    /// or a "cleanup" that removes a queue turns into a red test. Values come from the batch-0 baseline.
+    /// or a "cleanup" that removes a queue turns into a red test.
     /// </summary>
     public class NpcContentTests
     {
@@ -27,6 +27,7 @@ namespace DreamVille.Tests.EditMode.Npc
         private const int NpcsPerQueue = 6;
 
         private string _originalScenePath;
+        private bool _scenesOpened;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -40,11 +41,17 @@ namespace DreamVille.Tests.EditMode.Npc
                 Assert.That(activeScene.isDirty, Is.False, dirtySceneMessage);
             else
                 Assume.That(!activeScene.isDirty, dirtySceneMessage);
+
+            _scenesOpened = true;
         }
 
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
+            // Never reopen a scene when the setup was skipped: that would discard the user's unsaved changes.
+            if (!_scenesOpened)
+                return;
+
             if (string.IsNullOrEmpty(_originalScenePath))
                 EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
             else

@@ -32,11 +32,6 @@ namespace DreamVille.Audio
             _musicSource.Play();
         }
 
-        public void StopMusic()
-        {
-            _musicSource.Stop();
-        }
-
         public void PlaySfx(AudioClip clip)
         {
             if (clip == null)

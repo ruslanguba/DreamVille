@@ -9,7 +9,7 @@ using DreamVille.UI.Dialogues;
 namespace DreamVille.Tests.EditMode.UI
 {
     /// <summary>
-    /// Guards spec 11 B3: the dialogue canvas prefab keeps every view reference, and its Next button reaches the
+    /// The dialogue canvas prefab keeps every view reference, and its Next button reaches the
     /// presenter only through the code binding — no Inspector call into a project script (ADR 0008 rule).
     /// </summary>
     public class DialogueCanvasPrefabTests

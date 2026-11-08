@@ -13,7 +13,7 @@ using DreamVille.Progression.Pillows;
 namespace DreamVille.Tests.EditMode.Progression
 {
     /// <summary>
-    /// Content guards for spec 05 §4.4: pins the shipped per-level pillow caps and the single
+    /// Content guards: pins the shipped per-level pillow caps and the single
     /// Lobby_02 dialogue grant, so a designer edit cannot silently reopen an early level to
     /// pillows or duplicate the unlock source into another scene.
     /// </summary>
@@ -34,6 +34,7 @@ namespace DreamVille.Tests.EditMode.Progression
         };
 
         private string _originalScenePath;
+        private bool _scenesOpened;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -48,11 +49,17 @@ namespace DreamVille.Tests.EditMode.Progression
                 Assert.That(activeScene.isDirty, Is.False, dirtySceneMessage);
             else
                 Assume.That(!activeScene.isDirty, dirtySceneMessage);
+
+            _scenesOpened = true;
         }
 
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
+            // Never reopen a scene when the setup was skipped: that would discard the user's unsaved changes.
+            if (!_scenesOpened)
+                return;
+
             if (string.IsNullOrEmpty(_originalScenePath))
                 EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
             else

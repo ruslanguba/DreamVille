@@ -10,8 +10,8 @@ namespace DreamVille.Tests.EditMode.Architecture
 {
     /// <summary>
     /// Timed logic under <c>Assets/_Project/Scripts</c> waits through UniTask with an explicit token
-    /// (<c>DreamVille.Core.Async</c>, ADR 0006), never through coroutines or string Invoke. Roadmap 5.4 retired the last
-    /// coroutine files, so the allow-list is empty; it stays as the place for a deliberate exception, each entry with
+    /// (<c>DreamVille.Core.Async</c>, ADR 0006), never through coroutines or string Invoke. No coroutine file is left,
+    /// so the allow-list is empty; it stays as the place for a deliberate exception, each entry with
     /// its reason.
     /// </summary>
     public class CoroutineGuardTests
