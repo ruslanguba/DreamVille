@@ -47,11 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startState: 2
-  _isTalk: 0
-  _isGreeting: 1
-  _isApplause: 0
   _isSwim: 0
-  _isIdle: 0
 --- !u!82 &7591065477749087352
 AudioSource:
   m_ObjectHideFlags: 0

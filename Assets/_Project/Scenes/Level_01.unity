@@ -4040,10 +4040,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1793419508162467940, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
-      propertyPath: _globalVolume
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2139006390638360639, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.4779668
@@ -4188,14 +4184,6 @@ PrefabInstance:
       propertyPath: _config
       value: 
       objectReference: {fileID: 11400000, guid: 9cd4245fdfd6695448fcfac1693068c4, type: 2}
-    - target: {fileID: 7863899753236708386, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
-      propertyPath: _interactAction
-      value: 
-      objectReference: {fileID: 3315331455547496477, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
-    - target: {fileID: 7863899753236708386, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
-      propertyPath: _interractAction
-      value: 
-      objectReference: {fileID: 3315331455547496477, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
     - target: {fileID: 8294079474913875000, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0

@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Level_Lobby_01
   m_EditorClassIdentifier: 
   _sceneName: Lobby_01
-  _displayName: Lobby 1
   _music: {fileID: 8300000, guid: ade2132c17636504598294e7f1d7244a, type: 3}
   _sceneAsset: {fileID: 102900000, guid: 8f2cb2f93f8f6e149b027c6b88a41b8a, type: 3}
   _levelId: 1

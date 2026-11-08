@@ -13,8 +13,10 @@ namespace DreamVille.Bootstrap
     public sealed class ProgressionInstaller : MonoInstaller
     {
         [Header("Configs")]
-        [SerializeField] private SceneCatalog _catalog;
         [SerializeField] private ScoreRules _scoreRules;
+
+        // The project-wide catalog bound by ProjectInstaller: one source of truth instead of a second serialized copy.
+        [Inject] private SceneCatalog _sceneCatalog;
 
         public override void InstallBindings()
         {
@@ -22,7 +24,7 @@ namespace DreamVille.Bootstrap
 
             // Fail fast: a gameplay scene missing from the catalog is a content error, and a half-installed
             // scene would only surface it later as unrelated resolve failures.
-            if (_catalog.FindBySceneName(sceneName) is not LevelDefinition level)
+            if (_sceneCatalog.FindBySceneName(sceneName) is not LevelDefinition level)
                 throw new InvalidOperationException($"[{nameof(ProgressionInstaller)}] Scene '{sceneName}' has no LevelDefinition in the catalog.");
 
             Container.BindInstance(level).AsSingle();

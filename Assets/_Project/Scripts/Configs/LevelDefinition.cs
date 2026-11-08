@@ -35,7 +35,7 @@ namespace DreamVille.Configs
             int maxPillows = 0)
         {
             var level = CreateInstance<LevelDefinition>();
-            level.SetSceneForTests(sceneName, displayName: null, music);
+            level.SetSceneForTests(sceneName, music);
             level._levelId = levelId;
             level._starRules = starRules;
             level._unlockedByDefault = unlockedByDefault;

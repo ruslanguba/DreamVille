@@ -417,13 +417,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveAction: {fileID: 4389176827924906922, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
-  _lookAction: {fileID: -1377444166432921221, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
   _jumpAction: {fileID: 1230241358133591586, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
   _fireAction: {fileID: 7399247830237181157, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
   _secondaryFireAction: {fileID: -6507731803240713867, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
   _stopAction: {fileID: -140423579040724872, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
   _throwAction: {fileID: 2036044140802393820, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
-  _interactAction: {fileID: 3315331455547496477, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
   _scrollAction: {fileID: -3965661978932412175, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
 --- !u!114 &1793419508162467940
 MonoBehaviour:
@@ -477,9 +475,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6eb2d68b359602247977f30802fd045d, type: 3}
   _stepInterval: 1.2
   _footstepPitchJitter: 0.1
-  _randomClips: []
-  _randomClipInterval: {x: 3, y: 7}
-  _randomClipPitchJitter: 0.15
 --- !u!82 &6129635068301384898
 AudioSource:
   m_ObjectHideFlags: 0

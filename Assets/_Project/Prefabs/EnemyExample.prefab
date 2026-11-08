@@ -463,9 +463,6 @@ MonoBehaviour:
   _footstepClips: []
   _stepInterval: 0.5
   _footstepPitchJitter: 0.1
-  _randomClips: []
-  _randomClipInterval: {x: 3, y: 7}
-  _randomClipPitchJitter: 0.15
 --- !u!82 &9154407491824944599
 AudioSource:
   m_ObjectHideFlags: 0

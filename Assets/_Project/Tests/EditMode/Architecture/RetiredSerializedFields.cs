@@ -4,6 +4,7 @@ using DreamVille.Audio;
 using DreamVille.Bootstrap;
 using DreamVille.Configs;
 using DreamVille.Dialogue;
+using DreamVille.Gameplay.Damage;
 using DreamVille.Gameplay.Enemies;
 using DreamVille.Gameplay.Enemies.Combat;
 using DreamVille.Gameplay.Environment;
@@ -39,7 +40,8 @@ namespace DreamVille.Tests.EditMode.Architecture
             (typeof(PropsMover), new[] { "_baloon", "_isInterracted", "_rotation" }),
 
             // Two fields were both called "pitch random"; each now names the clip group it jitters.
-            (typeof(ActorAudio), new[] { "_pitchRandom", "randomClips", "randomInterval", "pitchRandom" }),
+            // 6.5 removed the random clip group itself: it was empty in every component.
+            (typeof(ActorAudio), new[] { "_pitchRandom", "randomClips", "randomInterval", "pitchRandom", "_randomClips", "_randomClipInterval", "_randomClipPitchJitter" }),
 
             // target and throwForce left Enemy; their instance overrides were dead data.
             // Tuning moved to EnemyConfig archetypes (the underscored names, and the handler's rotation speed).
@@ -68,7 +70,8 @@ namespace DreamVille.Tests.EditMode.Architecture
             (typeof(PillowGun), new[] { "_spawn", "_shotPeriod" }),
             (typeof(AimPreview), new[] { "line" }),
             (typeof(GameInput), new[] { "_tubAction" }),
-            (typeof(InputReader), new[] { "_recallAction", "_secondaryFire" }),
+            // 6.5: the camera reads its own look action, and nothing used interact.
+            (typeof(InputReader), new[] { "_recallAction", "_secondaryFire", "_lookAction", "_interactAction", "_interractAction" }),
             (typeof(ImageFadeOut), new[] { "image" }),
             (typeof(AudioSettingsView), new[] { "musicSlider", "sfxSlider" }),
             (typeof(DialogueView), new[] { "panel", "leftImage", "rightImage", "leftTextBackground", "rightTextBackground", "leftText", "rightText", "sizeOffset" }),
@@ -87,16 +90,15 @@ namespace DreamVille.Tests.EditMode.Architecture
             (typeof(NpcFire), new[] { "_bulletSpeed", "_shootingRate", "_bulletLifeTime" }),
             (typeof(PillowView), new[] { "_posOffset" }),
             (typeof(RocketThrustEffect), new[] { "_thrustPower", "_continuousThrust" }),
-        };
 
-        /// <summary>
-        /// Dead overrides on a ledger owner that address a field which no longer exists and are too widespread for a
-        /// rename batch to drop (more than about five assets). The override scan tolerates exactly these
-        /// owner-field pairs; retired names stay forbidden. The list can only shrink.
-        /// </summary>
-        public static readonly (Type Owner, string Field, string Reason)[] KnownDeadOverrides =
-        {
-            (typeof(InputReader), "_interractAction", "the player instance in 9 assets; dropped together with the other dead overrides"),
+            // 6.5: dead data. The level comes from the project catalog and the display name was never shown.
+            (typeof(ProgressionInstaller), new[] { "_catalog" }),
+            (typeof(SceneDefinition), new[] { "_displayName" }),
+            (typeof(LevelDefinition), new[] { "_displayName" }),
+
+            // 6.5: data and overrides left behind by fields removed before the ledger existed.
+            (typeof(PlayerDamageReceiver), new[] { "_globalVolume" }),
+            (typeof(NpcAnimationHandler), new[] { "_isGreeting", "_isIdle", "_isTalk", "_isApplause" }),
         };
     }
 }

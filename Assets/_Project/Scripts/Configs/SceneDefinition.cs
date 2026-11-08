@@ -7,14 +7,10 @@ namespace DreamVille.Configs
     public class SceneDefinition : ScriptableObject
     {
         [SerializeField] private string _sceneName;
-        [SerializeField] private string _displayName;
         [SerializeField] private AudioClip _music;
 
         /// <summary>Name the scene is registered under in Build Settings.</summary>
         public string SceneName => _sceneName;
-
-        /// <summary>Human-readable name for menus and logs.</summary>
-        public string DisplayName => _displayName;
 
         /// <summary>Background music for this scene. May be null (the bootstrap scene is silent).</summary>
         public AudioClip Music => _music;
@@ -31,18 +27,17 @@ namespace DreamVille.Configs
 #endif
 
 #if UNITY_INCLUDE_TESTS
-        internal static SceneDefinition CreateForTests(string sceneName, AudioClip music = null, string displayName = null)
+        internal static SceneDefinition CreateForTests(string sceneName, AudioClip music = null)
         {
             var definition = CreateInstance<SceneDefinition>();
-            definition.SetSceneForTests(sceneName, displayName, music);
+            definition.SetSceneForTests(sceneName, music);
             return definition;
         }
 
         /// <summary>Fills the serialized scene identity of a hand-built instance.</summary>
-        internal void SetSceneForTests(string sceneName, string displayName, AudioClip music)
+        internal void SetSceneForTests(string sceneName, AudioClip music)
         {
             _sceneName = sceneName;
-            _displayName = displayName;
             _music = music;
         }
 #endif

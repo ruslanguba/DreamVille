@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Level_02
   m_EditorClassIdentifier: 
   _sceneName: Level_02
-  _displayName: Level 2
   _music: {fileID: 8300000, guid: 70934f2ea4853fb4d9e68c29b329009b, type: 3}
   _sceneAsset: {fileID: 102900000, guid: 89d14b201321f5942825a594d15beb1d, type: 3}
   _levelId: 3

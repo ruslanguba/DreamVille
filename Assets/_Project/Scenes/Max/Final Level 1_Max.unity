@@ -1428,7 +1428,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe105fefc3ded04bb9365910f9eeab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _catalog: {fileID: 0}
   _scoreRules: {fileID: 11400000, guid: 3f8a94fa75fc4f24797cea2918a3ed0f, type: 2}
 --- !u!114 &416550931
 MonoBehaviour:
@@ -1490,14 +1489,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 309058373999330152, guid: 7c42b3e06d71bc64f8faa167bb0138d4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3607670399235884844, guid: 7c42b3e06d71bc64f8faa167bb0138d4, type: 3}
-      propertyPath: _isIdle
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3607670399235884844, guid: 7c42b3e06d71bc64f8faa167bb0138d4, type: 3}
-      propertyPath: _isGreeting
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3607670399235884844, guid: 7c42b3e06d71bc64f8faa167bb0138d4, type: 3}

@@ -2270,7 +2270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe105fefc3ded04bb9365910f9eeab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _catalog: {fileID: 0}
   _scoreRules: {fileID: 11400000, guid: 3f8a94fa75fc4f24797cea2918a3ed0f, type: 2}
 --- !u!114 &664740368
 MonoBehaviour:
@@ -7280,10 +7279,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1793419508162467940, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
-      propertyPath: _globalVolume
-      value: 
-      objectReference: {fileID: 832575518}
     - target: {fileID: 2139006390638360639, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.6633188
@@ -7588,10 +7583,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7863899753236708386, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
-      propertyPath: _interractAction
-      value: 
-      objectReference: {fileID: 3315331455547496477, guid: 4c92c3c2f526f174e9016441e4b60b91, type: 3}
     - target: {fileID: 8822167447810253032, guid: 75155ea04ae1a2b46b3bcfd7725b629e, type: 3}
       propertyPath: m_Mass
       value: 1

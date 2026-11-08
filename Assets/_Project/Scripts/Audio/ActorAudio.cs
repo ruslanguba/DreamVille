@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace DreamVille.Audio
 {
-    /// <summary>An actor's sounds from one AudioSource: death, attack and jump one-shots, footsteps while it moves, and random ambient clips on a timer.</summary>
+    /// <summary>An actor's sounds from one AudioSource: death, attack and jump one-shots, and footsteps while it moves.</summary>
     [RequireComponent(typeof(AudioSource))]
     public sealed class ActorAudio : MonoBehaviour, IActorAudio
     {
@@ -22,18 +22,8 @@ namespace DreamVille.Audio
         [SerializeField, Min(0f), Tooltip("Maximum random pitch offset of a step, either way.")]
         private float _footstepPitchJitter = 0.1f;
 
-        [Header("Random Clips")]
-        [SerializeField] private AudioClip[] _randomClips;
-
-        [SerializeField, Tooltip("Seconds of game time between two random clips: x is the shortest wait, y the longest.")]
-        private Vector2 _randomClipInterval = new Vector2(3f, 7f);
-
-        [SerializeField, Min(0f), Tooltip("Maximum random pitch offset of a random clip, either way.")]
-        private float _randomClipPitchJitter = 0.15f;
-
         private AudioSource _audioSource;
         private int _lastFootstepIndex = -1;
-        private float _nextRandomTime;
         private float _stepTimer;
 
         // Also resolved on first use, so the component works before Awake (EditMode tests).
@@ -42,21 +32,6 @@ namespace DreamVille.Audio
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
-        }
-
-        private void Start()
-        {
-            ScheduleNextRandom();
-        }
-
-        private void Update()
-        {
-            // Play a random ambient clip whenever the timer runs out.
-            if (Time.time >= _nextRandomTime)
-            {
-                PlayRandomClip();
-                ScheduleNextRandom();
-            }
         }
 
         public void PlayDeath() => PlayAtNeutralPitch(_deathClip);
@@ -86,21 +61,6 @@ namespace DreamVille.Audio
                 PlayStep();
                 _stepTimer = _stepInterval;
             }
-        }
-
-        private void PlayRandomClip()
-        {
-            if (_randomClips.Length == 0)
-                return;
-
-            Source.pitch = 1f + Random.Range(-_randomClipPitchJitter, _randomClipPitchJitter);
-            AudioClip clip = _randomClips[Random.Range(0, _randomClips.Length)];
-            Source.PlayOneShot(clip);
-        }
-
-        private void ScheduleNextRandom()
-        {
-            _nextRandomTime = Time.time + Random.Range(_randomClipInterval.x, _randomClipInterval.y);
         }
 
         // The source is shared with the jittered jump and footsteps; a plain one-shot must not inherit their pitch.
