@@ -59,7 +59,7 @@ _A gameplay GIF and screenshots are coming with the playable build._
   and the move fixed a shipped bug where English dialogues never started. Screen hints
   use a `Hints` table the same way, so the English game is English from the first lobby.
   [ADR 0009](Docs/adr/0009-data-driven-dialogues.md).
-- **697 EditMode tests that guard the wiring and the data.**
+- **809 EditMode tests that guard the wiring and the data.**
   [`SceneCompositionTests`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs)
   opens every build scene and checks its installers, catalog references and missing
   scripts, and prefab tests pin the player's composition, so a mis-wired scene fails a
@@ -107,13 +107,13 @@ graph LR
     end
 
     Audio --> Configs & Core & Persistence
-    Scoring --> Configs & Persistence
+    Scoring --> Configs & Core & Persistence
     SceneManagement --> Configs & Core
     Dialogue --> Core
     Gameplay --> Audio & Configs & Core & Input & Scoring
     Progression --> Configs & Core & Dialogue & Gameplay & Persistence & Scoring
     App --> Configs & Core & Dialogue & Input & SceneManagement
-    UI --> App & Audio & Configs & Core & Dialogue & Gameplay & Input & Persistence & SceneManagement & Scoring
+    UI --> App & Audio & Configs & Core & Dialogue & Gameplay & Persistence & SceneManagement & Scoring
     Presentation --> Core
     Bootstrap --> App & Audio & Configs & Core & Dialogue & Gameplay & Input & Persistence & Progression & SceneManagement & Scoring & UI
 ```
@@ -130,7 +130,7 @@ makes `LevelSelectPresenter` ask `ISceneLoader` to load its `LevelDefinition`'s 
 - [`Bootstrap/ProjectInstaller.cs`](Assets/_Project/Scripts/Bootstrap/ProjectInstaller.cs) — the app-lifetime composition root: every project-scope binding in one file. [`GameplaySceneContext.prefab`](Assets/_Project/Prefabs/Bootstrap/GameplaySceneContext.prefab) is the installer set shared by the six gameplay scenes.
 - [`Gameplay/Enemies/States/EnemyStateMachine.cs`](Assets/_Project/Scripts/Gameplay/Enemies/States/EnemyStateMachine.cs) — guarded enemy state machine; [`Enemy.cs`](Assets/_Project/Scripts/Gameplay/Enemies/Enemy.cs) is the thin MonoBehaviour its seven states see through `IEnemyContext`, and seven `EnemyConfig` archetype assets hold the tuning ([ADR 0011](Docs/adr/0011-enemy-archetypes.md)).
 - [`Gameplay/Player/PlayerInstaller.cs`](Assets/_Project/Scripts/Gameplay/Player/PlayerInstaller.cs) — the player prefab's own composition root; [`PlayerMotor.cs`](Assets/_Project/Scripts/Gameplay/Player/PlayerMotor.cs) shows the fixed per-frame order.
-- [`Gameplay/Weapons/Pillow/PillowRack.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowRack.cs) — the throw / recall / freeze rules of the core mechanic as a plain, unit-tested class; [`PillowLauncher.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Pillow/PillowLauncher.cs) is the thin shell with a cancellable UniTask recall loop.
+- [`Gameplay/Weapons/Pillows/PillowRack.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Pillows/PillowRack.cs) — the throw / recall / freeze rules of the core mechanic as a plain, unit-tested class; [`PillowLauncher.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Pillows/PillowLauncher.cs) is the thin shell with a cancellable UniTask recall loop.
 - [`Gameplay/Weapons/Aiming/BouncePath.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Aiming/BouncePath.cs) — the ricochet preview as pure math behind an `ISphereCaster` seam; the gun and the preview read one `ShotRay`, so the line ends where the bullet dies.
 - [`Gameplay/Interactables/EffectChain.cs`](Assets/_Project/Scripts/Gameplay/Interactables/EffectChain.cs) — turns sibling `IInteractionEffect` components into one ordered, fault-isolated call; [`Interactable.cs`](Assets/_Project/Scripts/Gameplay/Interactables/Interactable.cs) is its host.
 - [`Progression/LevelDirector.cs`](Assets/_Project/Scripts/Progression/LevelDirector.cs) — level completion as a plain class: no MonoBehaviour, no `Update` polling.
@@ -172,7 +172,7 @@ press Play.
 
 ## Tests
 
-Window → General → Test Runner → EditMode → Run All. 697 EditMode tests (695 pass, 2
+Window → General → Test Runner → EditMode → Run All. 809 EditMode tests (807 pass, 2
 intentionally skipped). PlayMode tests and CI are not set up yet.
 
 ## Status and roadmap
@@ -194,6 +194,11 @@ intentionally skipped). PlayMode tests and CI are not set up yet.
   completable through its portal (ADRs 0007-0009). Screen hints are one `ProximityHint`
   on UniTask, pinned by a content snapshot; it retired the last coroutines (5.4, ADR 0006
   update). Hint texts are localized ru/en (5.5).
+- **Review and polish.** English code and assets, serialized names under a rename ledger,
+  enemy archetypes, and a final review of every module. Shared events are raised through
+  `IsolatedEvent`, so one throwing listener cannot stall a level, a dialogue or a load.
+  The pause menu owns time and control while it is open: a dialogue ending under it
+  hands nothing back, and leaving the scene always restores time (ADRs 0010, 0011).
 
 **Next:** CI with game-ci and a playable build.
 

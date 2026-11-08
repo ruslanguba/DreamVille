@@ -42,7 +42,7 @@ reference any third-party package before; `DreamVille.Core.asmdef` now reference
 | Pattern | Token | Starts | Stops | Used for |
 |---|---|---|---|---|
 | **One-shot, object-bound** | `this.GetCancellationTokenOnDestroy()`, linked into a per-operation `CancellationTokenSource` where a new call supersedes the old one or a second object's death must end it too | on request | destroy, supersede, or completion | [`EnemyHideout.AbsorbAsync`](../../Assets/_Project/Scripts/Gameplay/Enemies/EnemyHideout.cs) (linked to both the hideout's and the enemy's destroy token), [`ImageFadeOut`](../../Assets/_Project/Scripts/UI/ImageFadeOut.cs) (main-menu logo fade), `NpcMover.MoveToAsync`, `NpcReactionController`'s applause-then-talk, [`ProximityHint`](../../Assets/_Project/Scripts/UI/Hints/ProximityHint.cs) (added in 5.4) |
-| **Endless ambient loop, enable-bound** | `_loopCts` created when the loop starts, cancelled and disposed in `OnDisable` | first in `Start`, again in `OnEnable` once `Start` has already run (a `_started` flag) | `OnDisable` (deactivation, destroy, scene unload) | [`NpcDialogueHandler`](../../Assets/_Project/Scripts/Gameplay/Npc/NpcDialogueHandler.cs) (hatters alternating), [`NpcQueue`](../../Assets/_Project/Scripts/Gameplay/Npc/NpcQueue.cs) (queue jumps), `NpcFire` (NPC shooters), `RandomFloating` (balloon drift) |
+| **Endless ambient loop, enable-bound** | `_loopCts` created when the loop starts, cancelled and disposed in `OnDisable` | first in `Start`, again in `OnEnable` once `Start` has already run (a `_started` flag) | `OnDisable` (deactivation, destroy, scene unload) | [`AmbientConversation`](../../Assets/_Project/Scripts/Gameplay/Npc/AmbientConversation.cs) (hatters alternating; `NpcDialogueHandler` until 6.5), [`NpcQueue`](../../Assets/_Project/Scripts/Gameplay/Npc/NpcQueue.cs) (queue jumps), `NpcFire` (NPC shooters), `RandomFloating` (balloon drift) |
 
 The destroy token alone is the wrong choice for an endless loop: a loop that outlives
 `OnDisable` keeps calling `Animator.SetBool` on a deactivated NPC (Unity logs "Animator
@@ -116,7 +116,7 @@ have `hasExitTime = false`, and every transition into `Idle` requires all three 
 flags off, so exactly one transition is valid when `SetState` switches moods and none of
 them waits for an exit time. This closes roadmap 2.11 hypothesis B (the "pluh animation
 switching" bug) and is verified by
-[`PluhNpcControllerTests`](../../Assets/_Project/Tests/EditMode/NPC/PluhNpcControllerTests.cs).
+[`PluhNpcControllerTests`](../../Assets/_Project/Tests/EditMode/Npc/PluhNpcControllerTests.cs).
 
 ## Consequences
 

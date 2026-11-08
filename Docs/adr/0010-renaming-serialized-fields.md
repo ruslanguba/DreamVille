@@ -81,6 +81,14 @@ unchanged across a rename.
   `InputReader._interractAction` on the player in nine assets, is listed by name; the
   hygiene test tolerates exactly that pair and fails once the data is gone, so the list
   can only shrink.
+- 2026-11-08 (step 6.5): the list is gone. The final clean-up dropped that pair together
+  with the other dead overrides on the player and NPC instances (`_globalVolume`,
+  `_isGreeting`, `_isIdle`), and the fields removed in that step (`_lookAction`,
+  `_interactAction`, the `ActorAudio` random clips, `ProgressionInstaller._catalog`,
+  `SceneDefinition._displayName`) entered the ledger the same way. The hygiene test now
+  tolerates no dead override on a ledger owner. The roughly 1,800 overrides whose target
+  objects left their source prefab are still deferred: they load into nothing, and
+  dropping them is a scene-by-scene job of its own.
 - The "frozen serialized name" passages of ADR 0005 and ADR 0009 are superseded by this
   record; those fields are free to be renamed by the procedure above. The dead dialogue
   strings ADR 0009 left on Lobby_01's `FinalLevel` instance were removed in 6.2.
