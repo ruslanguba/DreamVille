@@ -124,14 +124,16 @@ scene carries the same `GameplaySceneContext.prefab` (`SceneServicesInstaller`,
 `MainMenuContext.prefab`. Runtime flow: the `GameStart` scene plays the intro, then
 `GameBootstrap` loads the scene `SceneCatalog` names as the main menu; a level button
 makes `LevelSelectPresenter` ask `ISceneLoader` to load its `LevelDefinition`'s scene.
+[`Docs/ARCHITECTURE.md`](Docs/ARCHITECTURE.md) has the full installer table and the flow
+diagrams (menu to level, shooting, level completion, save and load).
 
 ## Where to look first
 
 - [`Bootstrap/ProjectInstaller.cs`](Assets/_Project/Scripts/Bootstrap/ProjectInstaller.cs) — the app-lifetime composition root: every project-scope binding in one file. [`GameplaySceneContext.prefab`](Assets/_Project/Prefabs/Bootstrap/GameplaySceneContext.prefab) is the installer set shared by the six gameplay scenes.
-- [`Gameplay/Enemies/States/EnemyStateMachine.cs`](Assets/_Project/Scripts/Gameplay/Enemies/States/EnemyStateMachine.cs) — guarded enemy state machine; [`Enemy.cs`](Assets/_Project/Scripts/Gameplay/Enemies/Enemy.cs) is the thin MonoBehaviour its seven states see through `IEnemyContext`, and seven `EnemyConfig` archetype assets hold the tuning ([ADR 0011](Docs/adr/0011-enemy-archetypes.md)).
+- [`Gameplay/Enemies/States/EnemyStateMachine.cs`](Assets/_Project/Scripts/Gameplay/Enemies/States/EnemyStateMachine.cs) — guarded enemy state machine; [`Enemy.cs`](Assets/_Project/Scripts/Gameplay/Enemies/Enemy.cs) is the thin MonoBehaviour its seven states see through `IEnemyContext`, and seven `EnemyConfig` archetype assets hold the tuning ([ADR 0011](Docs/adr/0011-enemy-archetypes.md), [deep dive](Docs/modules/enemy-state-machine.md)).
 - [`Gameplay/Player/PlayerInstaller.cs`](Assets/_Project/Scripts/Gameplay/Player/PlayerInstaller.cs) — the player prefab's own composition root; [`PlayerMotor.cs`](Assets/_Project/Scripts/Gameplay/Player/PlayerMotor.cs) shows the fixed per-frame order.
 - [`Gameplay/Weapons/Pillows/PillowRack.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Pillows/PillowRack.cs) — the throw / recall / freeze rules of the core mechanic as a plain, unit-tested class; [`PillowLauncher.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Pillows/PillowLauncher.cs) is the thin shell with a cancellable UniTask recall loop.
-- [`Gameplay/Weapons/Aiming/BouncePath.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Aiming/BouncePath.cs) — the ricochet preview as pure math behind an `ISphereCaster` seam; the gun and the preview read one `ShotRay`, so the line ends where the bullet dies.
+- [`Gameplay/Weapons/Aiming/BouncePath.cs`](Assets/_Project/Scripts/Gameplay/Weapons/Aiming/BouncePath.cs) — the ricochet preview as pure math behind an `ISphereCaster` seam; the gun and the preview read one `ShotRay`, so the line bounces exactly as often as the bullet ([deep dive](Docs/modules/aim-and-ricochet.md)).
 - [`Gameplay/Interactables/EffectChain.cs`](Assets/_Project/Scripts/Gameplay/Interactables/EffectChain.cs) — turns sibling `IInteractionEffect` components into one ordered, fault-isolated call; [`Interactable.cs`](Assets/_Project/Scripts/Gameplay/Interactables/Interactable.cs) is its host.
 - [`Progression/LevelDirector.cs`](Assets/_Project/Scripts/Progression/LevelDirector.cs) — level completion as a plain class: no MonoBehaviour, no `Update` polling.
 - [`UI/Hud/HudPresenter.cs`](Assets/_Project/Scripts/UI/Hud/HudPresenter.cs) — the HUD as MVP: a plain presenter over small view interfaces, tested with fakes. [`DialoguePresenter.cs`](Assets/_Project/Scripts/UI/Dialogues/DialoguePresenter.cs) and [`LevelSelectPresenter.cs`](Assets/_Project/Scripts/UI/Menus/LevelSelectPresenter.cs) follow the same pattern.
