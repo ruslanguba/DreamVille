@@ -122,8 +122,8 @@ pins it.
   Unity MCP session and is not committed.
 - **One deliberate content loss.** Level_02's finale keeps its single Russian line. Its three
   English lines were unrelated to it and were dropped on the author's decision; they are kept
-  word for word in the body of commit `ba5b900`. The other 50 English lines were translated
-  and approved by the author in `c3230f7`.
+  word for word in the body of commit `17bcf1c`. The other 50 English lines were translated
+  and approved by the author in `65a6a6a`.
 - **New assembly edges.** `UI -> Dialogue` for `IDialogueService` events and `SpokenLine`.
   `Dialogue` gains `UniTask` and `Unity.ResourceManager`, the latter only to name
   `AsyncOperationHandle<string>`. No cycle: `Dialogue` references no other DreamVille

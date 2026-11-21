@@ -54,13 +54,13 @@ for "never chases".
   reference with no new override. `Stalker`, `RapidSentry`, `Sentry` and `Lookout` are
   copies of it, so every knob except the five numbers equals the old `Thrower`. `Runner` and
   `Walker` kept their names.
-- **Two commits, on purpose.** `d467dbb` changed values only (`fix(enemies)`, gameplay):
+- **Two commits, on purpose.** `140cac0` changed values only (`fix(enemies)`, gameplay):
   every enemy now held the numbers of its archetype. Its 80 changed rows in
   [`EnemyTuningSnapshot.tsv`](../../Assets/_Project/Tests/EditMode/Enemies/EnemyTuningSnapshot.tsv)
   were reviewed one by one, next to Play Mode measurements taken before and after.
-  `e2d8a7b` moved them (`refactor(enemies)`): the numbers went onto the config assets and
+  `31b6bee` moved them (`refactor(enemies)`): the numbers went onto the config assets and
   the per-instance fields and overrides left the enemies. Its snapshot diff only appends a
-  `config` column; the first nine columns are byte-identical to the file after `d467dbb`.
+  `config` column; the first nine columns are byte-identical to the file after `140cac0`.
   A reviewer can tell a balance change from a refactor because they are not in one diff.
 - **Tests hold the rules.**
   [`EnemyContentTests`](../../Assets/_Project/Tests/EditMode/Enemies/EnemyContentTests.cs)
