@@ -175,7 +175,7 @@ press Play.
 ## Tests
 
 Window → General → Test Runner → EditMode → Run All. 809 EditMode tests (807 pass, 2
-intentionally skipped). PlayMode tests and CI are not set up yet.
+intentionally skipped). There are no PlayMode tests yet.
 
 ## Status and roadmap
 
@@ -202,7 +202,7 @@ intentionally skipped). PlayMode tests and CI are not set up yet.
   The pause menu owns time and control while it is open: a dialogue ending under it
   hands nothing back, and leaving the scene always restores time (ADRs 0010, 0011).
 
-**Next:** CI with game-ci and a playable build.
+**Next:** a playable build of this version.
 
 ## Documentation
 
