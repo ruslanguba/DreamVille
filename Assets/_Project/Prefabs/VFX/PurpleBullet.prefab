@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3867036612678835001}
   - component: {fileID: 2845905157086503317}
   - component: {fileID: 7390847657541394481}
+  - component: {fileID: 8772509352193770336}
   m_Layer: 0
   m_Name: PurpleBullet
   m_TagString: Untagged
@@ -98,6 +99,8 @@ VFXRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_StaticBatchInfo:
@@ -117,6 +120,23 @@ VFXRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
+--- !u!114 &8772509352193770336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2910417849756200007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2b412a9313703242968db1e4886ba33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DreamVille.Gameplay::DreamVille.Gameplay.Rendering.VisualEffectSupportSwitch
+  _visualEffects:
+  - {fileID: 2910417849756200007}
+  _fallbacks: []
