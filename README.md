@@ -66,7 +66,7 @@ Combat, a lobby dialogue, a level with its HUD and the main menu (English locale
   and the move fixed a shipped bug where English dialogues never started. Screen hints
   use a `Hints` table the same way, so the English game is English from the first lobby.
   [ADR 0009](Docs/adr/0009-data-driven-dialogues.md).
-- **809 EditMode tests that guard the wiring and the data.**
+- **818 EditMode tests that guard the wiring and the data.**
   [`SceneCompositionTests`](Assets/_Project/Tests/EditMode/Composition/SceneCompositionTests.cs)
   opens every build scene and checks its installers, catalog references and missing
   scripts, and prefab tests pin the player's composition, so a mis-wired scene fails a
@@ -181,7 +181,7 @@ press Play.
 
 ## Tests
 
-Window → General → Test Runner → EditMode → Run All. 809 EditMode tests (807 pass, 2
+Window → General → Test Runner → EditMode → Run All. 818 EditMode tests (816 pass, 2
 intentionally skipped). There are no PlayMode tests yet.
 
 ## Status and roadmap
