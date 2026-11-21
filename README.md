@@ -12,7 +12,14 @@ architecture refactor documented below is the author's.
 
 ## Screenshots
 
-_A gameplay GIF and screenshots are coming with the playable build._
+<p align="center">
+  <img src="Docs/media/combat.jpg" width="49%" alt="A pillow shot with its trail flies towards a purple nightmare enemy">
+  <img src="Docs/media/dialogue.jpg" width="49%" alt="The camp instructor greets the player in a data-driven dialogue">
+  <img src="Docs/media/world.jpg" width="49%" alt="A cloud level with the enemy counter and star progress in the HUD">
+  <img src="Docs/media/menu.jpg" width="49%" alt="The main menu, a child's bedroom with letter-block buttons">
+</p>
+
+Combat, a lobby dialogue, a level with its HUD and the main menu (English locale, 1920×1080).
 
 ## Highlights
 
